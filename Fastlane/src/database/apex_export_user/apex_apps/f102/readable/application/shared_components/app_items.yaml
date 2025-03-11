@@ -1,0 +1,14 @@
+---
+- # ====== Application Item: LAST_VIEW =========================
+  id: 2370053064616196135
+  identification: 
+    name: LAST_VIEW
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093873575
+

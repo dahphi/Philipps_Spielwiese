@@ -1,0 +1,25 @@
+---
+- # ====== Authentication: APEX Auth ===========================
+  id: 8206257542632240402
+  identification: 
+    name: APEX Auth
+
+  subscription: 
+    version-number: 1089078566
+
+  settings: 
+    type: Oracle APEX Accounts
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: false
+
+  session-sharing: 
+    cookie-name: ORA_WWV_PACKAGED_APPLICATIONS
+    secure: false
+
+  real-application-security: 
+    ras-mode: Disabled
+

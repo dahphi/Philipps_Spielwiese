@@ -1,0 +1,73 @@
+---
+- # ====== Static Application File: box-plot-explained.gif =====
+  id: 295266905464970634
+  identification: 
+    file-name: box-plot-explained.gif
+
+  attributes: 
+    mime-type: image/gif
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-32.png ======
+  id: 543717244404428877
+  identification: 
+    file-name: icons/app-icon-32.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-192.png =====
+  id: 543717424525428893
+  identification: 
+    file-name: icons/app-icon-192.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-512.png =====
+  id: 543717724260428911
+  identification: 
+    file-name: icons/app-icon-512.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: legend/Acme.png ============
+  id: 3928390685131646810
+  identification: 
+    file-name: legend/Acme.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: legend/Deli.png ============
+  id: 3928390876370646827
+  identification: 
+    file-name: legend/Deli.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: legend/Shop.png ============
+  id: 3928391165696646829
+  identification: 
+    file-name: legend/Shop.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: legend/Store.png ===========
+  id: 3928391482228646833
+  identification: 
+    file-name: legend/Store.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+

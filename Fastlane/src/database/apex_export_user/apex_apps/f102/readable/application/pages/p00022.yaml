@@ -1,0 +1,767 @@
+---
+# ====== Page: Funnel ========================================
+id: 22
+identification: 
+  name: Funnel
+  alias: FUNNEL
+  title: Funnel
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Funnel (3D Effect) ==========================
+  id: 241797075218825245
+  identification: 
+    name: Funnel (3D Effect)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    - t-Form--stretchInputs
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: 3DfunnelTarget
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: Render your Funnel chart in 3D by setting the <a href="&OJCHART_API_URL.#styleDefaults.threeDEffect" target="_blank">threeDEffect</a> attribute of the ojChart API. Edit the chart, and view the code snippet in the JavaScript Code attribute.<p/>
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 241797318248825247
+    chart: 
+      type: Funnel
+
+    appearance: 
+      orientation: Vertical
+
+    layout: 
+      maximum-width: 500
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    value: 
+      format: Decimal
+      decimal-places: 0
+      format-scaling: Automatic
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      hide-and-show-behavior: Rescale
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ){
+        
+            // Set chart initialization options
+            options.styleDefaults = {
+                threeDEffect: "on" 
+            };
+            return options;
+        }
+
+    series: 
+    - # ====== Series: Series 1 ====================================
+      id: 241797382380825248
+      identification: 
+        name: Series 1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select b.quantity, b.customer, 100 TARGET_VAL
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and a.product_id = 5
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: CUSTOMER
+        value: QUANTITY
+
+      label: 
+        show: true
+        position: Automatic
+
+- # ====== Region: Funnel (Target Value) =======================
+  id: 552412543494009774
+  identification: 
+    name: Funnel (Target Value)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    - t-Form--stretchInputs
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: funnelTarget
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: Drill down to a segment of the chart, to display its associated information above the chart. To drill using a mouse, click on a segment of the chart.  To drill using a keyboard, use the arrow keys to navigate to a segment of the chart, and hit Enter.
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 552412923049009777
+    chart: 
+      type: Funnel
+
+    appearance: 
+      orientation: Vertical
+
+    layout: 
+      maximum-width: 500
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    value: 
+      format: Decimal
+      decimal-places: 0
+      format-scaling: Automatic
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      hide-and-show-behavior: Rescale
+
+    series: 
+    - # ====== Series: Series 1 ====================================
+      id: 552413271007009778
+      identification: 
+        name: Series 1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select b.quantity, b.customer, 100 TARGET_VAL
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and a.product_id = 5
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: CUSTOMER
+        value: QUANTITY
+        target-value: TARGET_VAL
+
+      link: 
+        type: Redirect to URL
+        target: "javascript:$s(\"P22_SERIES\",'&CUSTOMER. Sales: $&QUANTITY., Target: $&TARGET_VAL.');"
+
+      label: 
+        show: true
+        position: Automatic
+
+- # ====== Region: Funnel (Target Value) Chart Information =====
+  id: 552415104815042859
+  identification: 
+    name: Funnel (Target Value) Chart Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates various attributes of a Funnel chart.<p/>
+      
+      <strong>Target Value</strong> - Use the series-level attribute to define a target value for the chart. When target values are set on a data item, the value attribute defines the filled area within the slice and the target value attribute represents the value of the whole slice.<p/>
+      <strong>Link Target</strong> - Use the series-level attribute to define a link on the selection of a segment of the chart.  In this example, the link is using JavaScript to set a page item to the value of the currently selected data point.  The link target is referencing columns in the SQL query using &amp;COLUMN_NAME. syntax.<p/>
+      
+      <p>
+      For more information on the Funnel chart, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=funnelChart&demo=targetValues" target="_blank">Funnel Chart: Target Values</a> and <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=funnelChart&demo=selection" target="_blank">Funnel Chart: Selection</a> examples.
+
+  layout: 
+    sequence: 10
+    parent-region: Funnel (Target Value) # 552412543494009774
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: About this page =============================
+  id: 552415751159060399
+  identification: 
+    name: About this page
+    type: Static Content
+
+  source: 
+    html-code: <p>&PRODUCT_NAME. native Funnel charts, using Oracle JET Data Visualizations, are showcased on this page. Funnel charts are useful for viewing data for stages of a process, such as the stages of a sales process. The area of a funnel slice is proportional to its value for the corresponding stage. Use of target values helps display additional context. Explore the wide range of chart attributes declaratively available with our native charts, to format and customise the style of your charts.</p>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--customIcons
+    - t-Alert--info
+    icon: fa-funnel-chart
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Funnel ( Multi-select Selection Mode) =======
+  id: 606648228886454260
+  identification: 
+    name: Funnel ( Multi-select Selection Mode)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    - t-Form--stretchInputs
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: funnel
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: Select a segment of the chart, to display its associated information above the chart. Hold the Ctrl key while clicking on multiple items.
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 606648362136454262
+    chart: 
+      type: Funnel
+
+    appearance: 
+      orientation: Vertical
+
+    layout: 
+      maximum-width: 500
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    value: 
+      format-scaling: Automatic
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      hide-and-show-behavior: Rescale
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ) {   
+            // Set Selection Mode to Multiple chart elements
+            options.selectionMode = "multiple";
+                
+            // Initialize the component with the optionChange callback specified
+            options.optionChange = function( event, ui ) {
+                if ( ui[ "option" ] === "selection" ) {
+                    var items = " ";
+                    if( ui['value'] ){
+                        for( var i = 0; i < ui['value'].length; i++ ){
+                            if(ui['value'][i]) {
+                                items += "    " + ui['value'][i]['series'] + "<br/>";
+                            } 
+                        }
+                        $s( "P22_SERIES_2", items );
+                    }  
+                }
+            };
+            return options;
+        }
+
+    series: 
+    - # ====== Series: Series 1 ====================================
+      id: 606648482170454263
+      identification: 
+        name: Series 1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select b.quantity, b.customer, 100 TARGET_VAL
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and a.product_id = 5
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: CUSTOMER
+        value: QUANTITY
+        target-value: TARGET_VAL
+
+      label: 
+        show: true
+        position: Automatic
+
+- # ====== Region: Region Display Selector =====================
+  id: 606648613549454264
+  identification: 
+    name: Region Display Selector
+    type: Region Display Selector
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: No
+
+- # ====== Region: Funnel (Multi-select Selection Mode) Chart In
+  id: 606648707122454265
+  identification: 
+    name: Funnel (Multi-select Selection Mode) Chart Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates multi-selection of data points on a Funnel chart, using custom JavaScript.<p/>
+      
+      <strong>JavaScript Code</strong> - Use the chart-level attribute to define custom JavaScript, to set the attribute <strong>selectionMode</strong> for the chart. By default, a user can declaratively define links based upon the selection of a data point.  If you wish to apply alternative selection handling on your chart, such as using multi-selection, this must be defined via JavaScript.  You can also define an 'optionChange' listener on the chart, based upon the click action. In that 'optionChange' listener, define the action you want to occur when a data point selection is detected. In this example, a page item with the label 'Series' will be updated to display the data point name(s).  The code snippet used is as follows:
+      <pre>
+      function( options ) {   
+          // Set Selection Mode to Multiple chart elements
+          options.selectionMode = "multiple";
+              
+          // Initialize the component with the optionChange callback specified
+          options.optionChange = function( event, ui ) {
+              if ( ui[ "option" ] === "selection" ) {
+                  var items = " ";
+                  if( ui['value'] ){
+                      for( var i = 0; i < ui['value'].length; i++ ){
+                          if(ui['value'][i]) {
+                              items += "    " + ui['value'][i]['series'] + "<br/>";
+                          } 
+                      }
+                      $s( "P22_SERIES_2", items );
+                  }  
+              }
+          };
+          return options;
+      }
+      </pre>
+      <p/>
+      <p>
+      For more information on the Funnel chart, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=funnelChart&demo=selection" target="_blank">Funnel Chart: Selection</a> example.
+
+  layout: 
+    sequence: 10
+    parent-region: Funnel ( Multi-select Selection Mode) # 606648228886454260
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: breadcrumb ==================================
+  id: 806336512392561546
+  identification: 
+    name: breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P22_SERIES ===============================
+  id: 577798158751301653
+  identification: 
+    name: P22_SERIES
+    type: Display Only
+
+  label: 
+    label: 'Selected:'
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: Funnel (Target Value) # 552412543494009774
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22_SERIES_2 =============================
+  id: 606648299175454261
+  identification: 
+    name: P22_SERIES_2
+    type: Display Only
+
+  label: 
+    label: 'Selected:'
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: Funnel ( Multi-select Selection Mode) # 606648228886454260
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+

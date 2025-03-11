@@ -1,0 +1,24 @@
+---
+- # ====== Supporting Object:  =================================
+  id: 2578483891733624512
+  prerequisites: 
+    free-space: 100
+    system-privileges: 
+    - CREATE PROCEDURE
+    - CREATE TABLE
+    - CREATE TRIGGER
+    - CREATE VIEW
+
+  installation: 
+    object-names: 
+    - EBA_DEMO_CHART_TASKS
+    - EBA_DEMO_CHART_PROJECTS
+    - EBA_DEMO_CHART_EMP
+    - EBA_DEMO_CHART_DEPT
+    - EBA_DEMO_CHART_POPULATION
+    - EBA_DEMO_CHART_STOCKS
+    - EBA_DEMO_CHART_GRADES
+    - EBA_DEMO_CHART_SAMPLES
+    - EBA_DEMO_CHART_SAMPLE_NAMES
+    - EBA_DEMO_CHART_SAMPLE_DATA
+

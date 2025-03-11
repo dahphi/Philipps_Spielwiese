@@ -1,0 +1,2936 @@
+---
+- # ====== Plugin: Translated Message ==========================
+  id: 328197695216309122
+  identification: 
+    name: Translated Message
+    internal-name: COM.ORACLE.APEX.TRANSLATED_MESSAGE
+    type: Region
+
+  advanced: 
+    quick-pick: false
+
+  subscription: 
+    master: 
+      referenced-id: 1367551240532222793
+
+    subscribe-component-settings: true
+
+  source: 
+    pl/sql-code: |
+      function render (
+          p_region              in apex_plugin.t_region,
+          p_plugin              in apex_plugin.t_plugin,
+          p_is_printer_friendly in boolean )
+          return apex_plugin.t_region_render_result
+      is
+          c_message     constant varchar2(255) := p_region.attribute_01;
+          c_add_p_tags  constant varchar2(1) := p_region.attribute_12;
+      
+          type subs_t is varray(10) of varchar2(4000);
+          type colnos_t is varray(10) of pls_integer;
+      
+          c_subs_columns constant subs_t :=
+              subs_t (
+                  p_region.attribute_02,
+                  p_region.attribute_03,
+                  p_region.attribute_04,
+                  p_region.attribute_05,
+                  p_region.attribute_06,
+                  p_region.attribute_07,
+                  p_region.attribute_08,
+                  p_region.attribute_09,
+                  p_region.attribute_10,
+                  p_region.attribute_11
+              );
+      
+          l_column_value_list apex_plugin_util.t_column_value_list2;
+          l_subs_column_nos colnos_t := colnos_t( null, null, null, null, null, null, null, null, null, null );
+      
+          l_subs subs_t := subs_t( null, null, null, null, null,
+                                   null, null, null, null, null );
+          l_label varchar2(50);
+          l_message clob;
+      begin
+          if p_region.source is not null then
+              -- Read the data based on the region source query
+              l_column_value_list := apex_plugin_util.get_data2 (
+                                         p_sql_statement  => p_region.source,
+                                         p_min_columns    => 1,
+                                         p_max_columns    => null,
+                                         p_component_name => p_region.name );
+      
+              -- Get the actual column# for faster access and also verify that the data type
+              -- of the column matches with what we are looking for
+              for i in 0..9 loop
+                  l_label := 'Substitution Column '
+                              ||to_char(i)||' (%'||to_char(i)||')';
+                  l_subs_column_nos(i+1) := apex_plugin_util.get_column_no (
+                                              p_attribute_label   => l_label,
+                                              p_column_alias      => c_subs_columns(i+1),
+                                              p_column_value_list => l_column_value_list,
+                                              p_is_required       => false,
+                                              p_data_type         => apex_plugin_util.c_data_type_varchar2 );
+              end loop;
+      
+              -- Set the column values of the first row so that apex_plugin_util.replace_substitutions
+              -- can do substitutions for columns contained in the region source query.
+              apex_plugin_util.set_component_values (
+                  p_column_value_list => l_column_value_list,
+                  p_row_num           => 1 );
+      
+              -- get the substitution values
+              for i in 0..9 loop
+                  if l_subs_column_nos(i+1) is not null then
+                      l_subs(i+1) := apex_plugin_util.escape (
+                                      apex_plugin_util.get_value_as_varchar2 (
+                                          p_data_type => l_column_value_list(l_subs_column_nos(i+1)).data_type,
+                                          p_value     => l_column_value_list(l_subs_column_nos(i+1)).value_list(1) ),
+                                      p_region.escape_output );
+                  end if;
+              end loop;
+          end if;
+      
+          l_message := apex_application.do_substitutions(
+              apex_lang.message( p_name => c_message,
+                                 p0     => l_subs(1),
+                                 p1     => l_subs(2),
+                                 p2     => l_subs(3),
+                                 p3     => l_subs(4),
+                                 p4     => l_subs(5),
+                                 p5     => l_subs(6),
+                                 p6     => l_subs(7),
+                                 p7     => l_subs(8),
+                                 p8     => l_subs(9),
+                                 p9     => l_subs(10)
+                            )
+              );
+          if c_add_p_tags = 'Y' and instr( l_message, '<p' ) = 0 then
+              l_message := '<p>'||l_message||'</p>';
+          end if;
+          sys.htp.p(l_message);
+          return null;
+      end;
+
+  callbacks: 
+    api-interface: Function
+    render-procedure/function-name: render
+
+  standard-attributes: 
+    attributes: 
+    - Region Source is SQL Statement [Deprecated]
+    - Has "Escape Special Characters" Region Attribute
+
+  custom-attributes: 
+    substitute-attribute-values: true
+
+  information: 
+    version: 5.0.1
+    help-text: |
+      <p>This region plug-in is used to allow text messages to readily be translated into different languages. Up to nine values can be substituted into the text message.</p>
+      <p>The text message, with appropriate substitution variables, must be defined as a system message.</p>
+
+  standard-attributes: 
+  - # ====== Standard Attribute: SOURCE_SQL ======================
+    id: 328202744172309148
+    identification: 
+      name: SOURCE_SQL
+
+    value: 
+      required: false
+
+    settings: 
+      minimum-columns: 1
+
+    examples: 
+      examples: This SQL is optional. If the message you are translating has substitutions built in (%0 through %9), select the values you wish to replace them with within Attributes.
+
+  custom-attributes: 
+  - # ====== Custom Attribute: Text Message ======================
+    id: 328197860655309134
+    identification: 
+      static-id: attribute_01
+      attribute: 1
+      name: Text Message
+      scope: Component
+
+    layout: 
+      sequence: 10
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    help: 
+      help-text: Enter the name of the Text Message (from shared components) to be displayed.
+
+  - # ====== Custom Attribute: Substitution Column 0 (%0) ========
+    id: 328198336770309138
+    identification: 
+      static-id: attribute_02
+      attribute: 2
+      name: Substitution Column 0 (%0)
+      scope: Component
+
+    layout: 
+      sequence: 20
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%0</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 1 (%1) ========
+    id: 328198736058309139
+    identification: 
+      static-id: attribute_03
+      attribute: 3
+      name: Substitution Column 1 (%1)
+      scope: Component
+
+    layout: 
+      sequence: 30
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%1</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 2 (%2) ========
+    id: 328199133949309139
+    identification: 
+      static-id: attribute_04
+      attribute: 4
+      name: Substitution Column 2 (%2)
+      scope: Component
+
+    layout: 
+      sequence: 40
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%2</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 3 (%3) ========
+    id: 328199474359309140
+    identification: 
+      static-id: attribute_05
+      attribute: 5
+      name: Substitution Column 3 (%3)
+      scope: Component
+
+    layout: 
+      sequence: 50
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%3</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 4 (%4) ========
+    id: 328199885154309142
+    identification: 
+      static-id: attribute_06
+      attribute: 6
+      name: Substitution Column 4 (%4)
+      scope: Component
+
+    layout: 
+      sequence: 60
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%4</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 5 (%5) ========
+    id: 328200309189309142
+    identification: 
+      static-id: attribute_07
+      attribute: 7
+      name: Substitution Column 5 (%5)
+      scope: Component
+
+    layout: 
+      sequence: 70
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%5</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 6 (%6) ========
+    id: 328200715002309143
+    identification: 
+      static-id: attribute_08
+      attribute: 8
+      name: Substitution Column 6 (%6)
+      scope: Component
+
+    layout: 
+      sequence: 80
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%6</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 7 (%7) ========
+    id: 328201105850309143
+    identification: 
+      static-id: attribute_09
+      attribute: 9
+      name: Substitution Column 7 (%7)
+      scope: Component
+
+    layout: 
+      sequence: 90
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%7</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 8 (%8) ========
+    id: 328201491565309144
+    identification: 
+      static-id: attribute_10
+      attribute: 10
+      name: Substitution Column 8 (%8)
+      scope: Component
+
+    layout: 
+      sequence: 100
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%8</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Substitution Column 9 (%9) ========
+    id: 328201887378309144
+    identification: 
+      static-id: attribute_11
+      attribute: 11
+      name: Substitution Column 9 (%9)
+      scope: Component
+
+    layout: 
+      sequence: 110
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query which is used to replace any <strong>%9</strong> values in the displayed message.
+
+  - # ====== Custom Attribute: Add Paragraph Tags ================
+    id: 328202265577309145
+    identification: 
+      static-id: attribute_12
+      attribute: 12
+      name: Add Paragraph Tags
+      scope: Component
+
+    layout: 
+      sequence: 120
+
+    settings: 
+      type: Yes/No
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+
+    default: 
+      value: Y
+
+    help: 
+      help-text: |
+        <p>Select whether paragraph tags are added around the text message.</p>
+        <p>Note: If the message already starts with a paragraph tag, no changes are made.</p>
+
+- # ====== Plugin: Source Display ==============================
+  id: 1317793087277935008
+  identification: 
+    name: Source Display
+    internal-name: COM.ORACLE.APEX.DISPLAY_SOURCE
+    type: Region
+
+  advanced: 
+    quick-pick: false
+
+  subscription: 
+    master: 
+      referenced-id: 1305119942933551255
+
+    subscribe-component-settings: true
+
+  source: 
+    pl/sql-code: |
+      function render (
+              p_region              in apex_plugin.t_region,
+              p_plugin              in apex_plugin.t_plugin,
+              p_is_printer_friendly in boolean )
+          return apex_plugin.t_region_render_result
+      is
+          -- It's better to have named variables instead of using the generic ones,
+          -- makes the code more readable. We are using the same defaults for the
+          -- required attributes as in the plug-in attribute configuration, because
+          -- they can still be null. Keep them in sync!
+          c_region_static_id    constant varchar2(255) := p_region.attribute_01;
+          c_highlight_page_item constant varchar2(255) := p_region.attribute_02;
+      
+          l_highlight_term varchar2(4000) := '';
+      
+          cursor sql_csr( d_region_static_id in varchar2 ) is
+              select source_type, 10 seq, null series_name, region_source source
+              from apex_application_page_regions
+              where application_id = :APP_ID
+                  and page_id = :APP_PAGE_ID
+                  and static_id = d_region_static_id
+                  and ( source_type_code like 'PLUGIN%'
+                      or source_type_code like 'STATIC_TEXT%'
+                      or source_type in (
+                          'Calendar',
+                          'Easy Calendar',
+                          'Interactive Report',
+                          'Interactive Grid',
+                          'List View',
+                          'Report',
+                          'PL/SQL',
+                          'Tabular Form'
+                      )
+                  )
+              union all
+              select reg.source_type, 10 seq, null series_name, to_clob(tr.tree_query) source
+              from apex_application_page_regions reg,
+                  apex_application_page_trees tr
+              where reg.application_id = :APP_ID
+                  and reg.page_id = :APP_PAGE_ID
+                  and reg.static_id = d_region_static_id
+                  and tr.application_id = reg.application_id
+                  and tr.page_id = reg.page_id
+                  and tr.region_id = reg.region_id
+                  and reg.source_type in ('JavaScript Tree')
+              union all
+              select reg.source_type, 10 seq, null series_name, to_clob(list_query) source
+              from apex_application_page_regions reg,
+                  apex_application_lists li
+              where reg.application_id = :APP_ID
+                  and reg.page_id = :APP_PAGE_ID
+                  and reg.static_id = d_region_static_id
+                  and li.application_id = reg.application_id
+                  and li.list_id = reg.list_id
+                  and reg.source_type in ( 'List' )
+              order by 1, 2;
+          sql_rec sql_csr%ROWTYPE;
+      begin
+          if c_highlight_page_item is not null then
+              l_highlight_term := apex_escape.html(trim(lower(v(c_highlight_page_item))));
+          end if;
+      
+          for sql_rec in sql_csr( c_region_static_id ) loop
+              if sql_rec.series_name is not null then
+                  sys.htp.p('<p><strong>'||apex_escape.html(sql_rec.series_name)||':</strong></p>');
+              end if;
+              sys.htp.p('<pre>');
+              if l_highlight_term is not null then
+                  sys.htp.p(replace(apex_escape.html(sql_rec.source),
+                      l_highlight_term,'<span class="highlight">'||l_highlight_term||'</span>'));
+              else
+                  sys.htp.p(apex_escape.html(sql_rec.source));
+              end if;
+              sys.htp.p('</pre>');
+          end loop;
+      
+          return null;
+      end render;
+
+  callbacks: 
+    api-interface: Function
+    render-procedure/function-name: render
+
+  custom-attributes: 
+    substitute-attribute-values: true
+
+  information: 
+    version: 5.0.1
+    help-text: This region plug-in is used to display the SQL Source region of an accompanying region.
+
+  custom-attributes: 
+  - # ====== Custom Attribute: Region Static ID ==================
+    id: 621627740683917954
+    identification: 
+      static-id: attribute_01
+      attribute: 1
+      name: Region Static ID
+      scope: Component
+
+    layout: 
+      sequence: 10
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    help: 
+      help-text: Enter the static ID as defined in the target region's attributes section.
+
+  - # ====== Custom Attribute: Highlight Term Page Item ==========
+    id: 621628137478917954
+    identification: 
+      static-id: attribute_02
+      attribute: 2
+      name: Highlight Term Page Item
+      scope: Component
+
+    layout: 
+      sequence: 20
+
+    settings: 
+      type: Page Item
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+
+    help: 
+      help-text: If you wish to have a term in your region source highlighted, create a page item and select it here.
+
+- # ====== Plugin: HTML 5 Bar Chart ============================
+  id: 1533969940127923198
+  identification: 
+    name: HTML 5 Bar Chart
+    internal-name: COM.ORACLE.APEX.HTML5_BAR_CHART
+    type: Region
+
+  advanced: 
+    quick-pick: false
+
+  subscription: 
+    master: 
+      referenced-id: 3608178075541198815
+
+    subscribe-component-settings: true
+
+  source: 
+    pl/sql-code: |
+      function render (
+          p_region in apex_plugin.t_region,
+          p_plugin in apex_plugin.t_plugin,
+          p_is_printer_friendly in boolean
+      ) return apex_plugin.t_region_render_result is
+      begin
+          sys.htp.prn('<div id="'||apex_escape.html_attribute(p_region.static_id)||'_chart" class="hbc">');
+          sys.htp.prn('</div>');
+          
+          apex_javascript.add_onload_code (
+              p_code => 'com_oracle_apex_html5_bar_chart('||
+                  apex_javascript.add_value(p_region.static_id)||
+                  '{'||
+                      -- Why is this attribute needed if is not used?
+                      apex_javascript.add_attribute(
+                          'pageItems', 
+                          apex_plugin_util.page_item_names_to_jquery(p_region.ajax_items_to_submit)
+                      )||
+                      apex_javascript.add_attribute(
+                          'ajaxIdentifier', 
+                          apex_plugin.get_ajax_identifier, 
+                          FALSE, 
+                          FALSE
+                      )||
+                  '}'||
+              ');'
+          );
+          
+          return null;
+      end render;
+      
+      function ajax (
+          p_region in apex_plugin.t_region,
+          p_plugin in apex_plugin.t_plugin
+      ) return apex_plugin.t_region_ajax_result is
+          -- Map region attributes to function constants
+          -- MODERN, CLASSIC
+          c_chart_type                 constant varchar2(7)     := p_region.attribute_15;
+          -- MODERN, MODERN_2, SOLAR, METRO, CUSTOM, COLUMN
+          c_color_scheme               constant varchar2(8)     := p_region.attribute_17;
+          c_custom_chart_colors        constant varchar2(4000)  := p_region.attribute_10;
+          c_color_column               constant varchar2(255)   := p_region.attribute_19;
+          -- NONE, IMAGE, ICON, INITIALS
+          c_icon_type                  constant varchar2(8)     := case when c_chart_type = 'ICON' then p_region.attribute_01 end;
+          c_label_column               constant varchar2(255)   := p_region.attribute_02;
+          c_label_link                 constant varchar2(255)   := p_region.attribute_03;
+          c_value_column               constant varchar2(255)   := p_region.attribute_04;
+          c_value_link                 constant varchar2(255)   := p_region.attribute_05;
+          c_value_format_mask          constant varchar2(4000)  := p_region.attribute_21;
+      
+          -- ABOVE, AROUND
+          c_text_position              varchar2(6)              := p_region.attribute_18;
+          c_chart_css_classes          constant varchar2(32767) := p_region.attribute_06;
+          c_image_url                  constant varchar2(4000)  := p_region.attribute_07;
+          c_css_icon_class_name        constant varchar2(255)   := p_region.attribute_08;
+          c_initials_column            constant varchar2(255)   := p_region.attribute_09;
+          -- ABSOLUTE, RELATIVE
+          c_bar_width_calculation      constant varchar2(8)     := p_region.attribute_16;
+          c_display                    constant varchar2(19)    := p_region.attribute_11;
+          c_prefix_for_value           constant varchar2(4000)  := p_region.attribute_12;
+          c_postfix_for_value          constant varchar2(4000)  := p_region.attribute_13;
+          c_maximum_rows               constant number          := p_region.attribute_14;
+          c_message_when_no_data_found constant varchar2(4000)  := p_region.attribute_20;
+          
+          l_color_column_number        pls_integer;
+          l_label_column_number        pls_integer;
+          l_value_column_number        pls_integer;
+          l_initials_column_number     pls_integer;
+          
+          l_column_value_list          apex_plugin_util.t_column_value_list2;
+          
+          l_color                      varchar2(4000)           := NULL;
+          l_label                      varchar2(4000)           := NULL;
+          l_label_link                 varchar2(4000)           := NULL;
+          l_value                      varchar2(4000)           := NULL;
+          l_display_value              varchar2(4000)           := NULL;
+          l_value_link                 varchar2(4000)           := NULL;
+          l_image_url                  varchar2(4000)           := NULL;
+          l_css_icon_class_name        varchar2(4000)           := NULL;
+          l_initials                   varchar2(4000)           := NULL;
+          l_message_when_no_data_found varchar2(4000)           := NULL;
+      
+          l_custom_chart_colors_table  apex_application_global.vc_arr2;
+          l_custom_chart_colors        varchar2(32767)          := NULL;
+      begin
+          l_column_value_list := apex_plugin_util.get_data2(
+                                     P_SQL_STATEMENT  => p_region.source,
+                                     P_MIN_COLUMNS    => 1,
+                                     P_MAX_COLUMNS    => NULL,
+                                     P_COMPONENT_NAME => p_region.name,
+                                     P_MAX_ROWS => c_maximum_rows);
+      
+          l_color_column_number := apex_plugin_util.get_column_no (
+                                       p_attribute_label   => 'Color Column',
+                                       p_column_alias      => c_color_column,
+                                       p_column_value_list => l_column_value_list,
+                                       p_is_required       => c_color_scheme = 'COLUMN',
+                                       P_data_type         => apex_plugin_util.c_data_type_varchar2);
+          l_label_column_number := apex_plugin_util.get_column_no (
+                                       p_attribute_label   => 'Label Column',
+                                       p_column_alias      => c_label_column,
+                                       p_column_value_list => l_column_value_list,
+                                       p_is_required       => TRUE,
+                                       P_data_type         => apex_plugin_util.c_data_type_varchar2);
+          l_value_column_number := apex_plugin_util.get_column_no (
+                                       p_attribute_label   => 'Value Column',
+                                       p_column_alias      => c_value_column,
+                                       p_column_value_list => l_column_value_list,
+                                       p_is_required       => TRUE,
+                                       P_data_type         => apex_plugin_util.c_data_type_varchar2);
+          if c_icon_type = 'INITIALS' then
+              l_initials_column_number := apex_plugin_util.get_column_no (
+                                              p_attribute_label   => 'Initials Column',
+                                              p_column_alias      => c_initials_column,
+                                              p_column_value_list => l_column_value_list,
+                                              p_is_required       => true,
+                                              P_data_type         => apex_plugin_util.c_data_type_varchar2);
+          end if;
+          -- begin output as JSON
+          owa_util.mime_header('application/json', FALSE);
+          sys.htp.p('Cache-Control: no-store');
+          sys.htp.p('Pragma: no-cache');
+          owa_util.http_header_close;
+          
+          if c_color_scheme = 'CUSTOM' then
+              l_custom_chart_colors_table := apex_util.string_to_table(case when c_custom_chart_colors is not NULL then TRIM(BOTH '''' from apex_escape.js_literal(c_custom_chart_colors)) end, ':');
+              l_custom_chart_colors := '"color_scheme":[';
+              for I in l_custom_chart_colors_table.first .. l_custom_chart_colors_table.last loop
+                  if I > 1 then
+                      l_custom_chart_colors := l_custom_chart_colors||',';
+                  end if;
+                  l_custom_chart_colors := l_custom_chart_colors||'"'||l_custom_chart_colors_table(I)||'"';
+              end loop;
+              l_custom_chart_colors := l_custom_chart_colors||'],';
+          end if;
+      
+          l_message_when_no_data_found := apex_escape.html_whitelist(
+                                              apex_plugin_util.replace_substitutions (
+                                                  p_value  => c_message_when_no_data_found,
+                                                  p_escape => FALSE));
+      
+          sys.htp.prn(
+              '{'||
+                  apex_javascript.add_attribute (
+                      'chart_type',
+                      c_chart_type,
+                      FALSE,
+                      TRUE
+                  ));
+          sys.htp.prn(
+              apex_javascript.add_attribute (
+                  'message_when_no_data_found',
+                  l_message_when_no_data_found,
+                  TRUE,
+                  TRUE
+              ));
+          sys.htp.prn(
+              apex_javascript.add_attribute (
+                  'chart_css_class_names',
+                  c_chart_css_classes,
+                  TRUE,
+                  TRUE
+              ));
+          sys.htp.prn(
+              apex_javascript.add_attribute (
+                  'icon_type',
+                  c_icon_type,
+                  TRUE,
+                  TRUE
+              ));
+          if c_color_scheme = 'CUSTOM' then
+              sys.htp.prn(
+                  l_custom_chart_colors
+              );
+          else
+              sys.htp.prn(
+                  apex_javascript.add_attribute (
+                      'color_scheme',
+                      c_color_scheme,
+                      TRUE,
+                      TRUE
+                  ));
+          end if;
+          sys.htp.prn(
+                  apex_javascript.add_attribute (
+                      'text_position',
+                      c_text_position,
+                      FALSE,
+                      TRUE
+                  )||
+                  apex_javascript.add_attribute (
+                      'bar_width_calculation',
+                      c_bar_width_calculation,
+                      FALSE,
+                      TRUE
+                  )||
+                  apex_javascript.add_attribute (
+                      'display',
+                      c_display,
+                      FALSE,
+                      TRUE
+                  )||
+                  case 
+                    when c_display in ('VALUE') then
+                        apex_javascript.add_attribute (
+                            'prefix_for_value',
+                            c_prefix_for_value,
+                            TRUE,
+                            TRUE
+                        )||
+                        apex_javascript.add_attribute (
+                            'postfix_for_value',
+                            c_postfix_for_value,
+                            TRUE,
+                            TRUE
+                        )
+                  end||
+                  '"items":['
+          );
+          
+          --for l_row_number in l_column_value_list(1).value_list.first .. l_column_value_list(1).value_list.last loop
+          for l_row_number in 1 .. l_column_value_list(1).value_list.count loop
+              begin
+                  apex_plugin_util.set_component_values (
+                      p_column_value_list => l_column_value_list,
+                      p_row_num => l_row_number 
+                  );
+                  
+                  if l_row_number > 1 then
+                    sys.htp.prn(', ');
+                  end if;
+                  
+                  sys.htp.prn('{');
+                  
+                  l_label := apex_plugin_util.escape (
+                      apex_plugin_util.get_value_as_varchar2 (
+                          P_data_type => l_column_value_list(l_label_column_number).data_type,
+                          p_value => l_column_value_list(l_label_column_number).value_list(l_row_number)
+                      ),
+                      p_region.escape_output
+                  );
+                  sys.htp.prn(
+                    apex_javascript.add_attribute (
+                          'label',
+                          l_label,
+                          FALSE
+                    ));
+                  l_label_link := 
+                      case 
+                          when c_label_link is not NULL then 
+                              apex_util.prepare_url (
+                                  apex_plugin_util.replace_substitutions (
+                                      p_value  => c_label_link,
+                                      p_escape => FALSE
+                                  ))
+                      end;
+                  sys.htp.prn(
+                    apex_javascript.add_attribute (
+                          'label_link',
+                          l_label_link
+                      ));
+                  
+                  l_value := apex_plugin_util.escape (
+                                 apex_plugin_util.get_value_as_varchar2 (
+                                     P_data_type => l_column_value_list(l_value_column_number).data_type,
+                                     p_value => l_column_value_list(l_value_column_number).value_list(l_row_number)),
+                                 p_region.escape_output);
+                  --
+                  l_display_value :=
+                      case 
+                          when c_value_format_mask is not NULL then
+                            to_char(to_number(l_value),c_value_format_mask)
+                          else
+                            l_value
+                      end;
+      
+                  sys.htp.prn(
+                    apex_javascript.add_attribute (
+                          'display_value',
+                          l_display_value,
+                          FALSE,
+                          TRUE
+                      ));
+                  --
+                  sys.htp.prn(
+                    apex_javascript.add_attribute (
+                          'value',
+                          l_value,
+                          FALSE,
+                          c_value_link is not NULL or l_color_column_number is not NULL or c_chart_type = 'ICON'
+                      ));
+      
+                  l_value_link := 
+                      case 
+                          when c_value_link is not NULL then 
+                              apex_util.prepare_url (
+                                  apex_plugin_util.replace_substitutions (
+                                      p_value  => c_value_link,
+                                      p_escape => FALSE
+                                  ))
+                      end;
+                   sys.htp.prn(
+                    apex_javascript.add_attribute (
+                          'value_link',
+                          l_value_link,
+                          TRUE,
+                          l_color_column_number is not NULL or c_chart_type = 'ICON'
+                      ));
+                  if l_color_column_number is not NULL then
+                      l_color := apex_plugin_util.escape (
+                                     apex_plugin_util.get_value_as_varchar2 (
+                                         P_data_type => l_column_value_list(l_color_column_number).data_type,
+                                         p_value => l_column_value_list(l_color_column_number).value_list(l_row_number)),
+                                     p_region.escape_output);
+                      sys.htp.prn(
+                          apex_javascript.add_attribute (
+                              'color',
+                              l_color,
+                              FALSE,
+                              c_chart_type = 'ICON'
+                          ));
+                  end if;
+                  if c_icon_type = 'IMAGE' then
+                      l_image_url := 
+                          case 
+                              when c_image_url is not NULL then 
+                                  apex_util.prepare_url (
+                                      apex_plugin_util.replace_substitutions (
+                                          p_value  => c_image_url,
+                                          p_escape => FALSE
+                                      ))
+                          end;
+                      sys.htp.prn(
+                          apex_javascript.add_attribute (
+                              'image_url',
+                              l_image_url,
+                              FALSE,
+                              FALSE
+                          ));
+                  elsif c_icon_type = 'ICON' then
+                      l_css_icon_class_name := apex_plugin_util.replace_substitutions (
+                                                   p_value  => c_css_icon_class_name,
+                                                   p_escape => TRUE);
+                      sys.htp.prn(
+                          apex_javascript.add_attribute (
+                              'icon_css_class_name',
+                              l_css_icon_class_name,
+                              FALSE,
+                              FALSE
+                          ));
+                  elsif c_icon_type = 'INITIALS' then
+                      l_initials := apex_plugin_util.escape (
+                                        apex_plugin_util.get_value_as_varchar2 (
+                                            P_data_type => l_column_value_list(l_initials_column_number).data_type,
+                                            p_value => l_column_value_list(l_initials_column_number).value_list(l_row_number)),
+                                        p_region.escape_output);
+                      sys.htp.prn(
+                          apex_javascript.add_attribute (
+                              'initials',
+                              l_initials,
+                              FALSE,
+                              FALSE
+                          ));
+                  end if;
+                  
+                  sys.htp.prn('}');
+                  
+                  apex_plugin_util.clear_component_values;
+              exception
+                  when OTHERS then
+                      apex_plugin_util.clear_component_values;
+                      raise;
+              end;
+          end loop;
+          sys.htp.prn(
+                  ']'||
+              '}'
+          );
+          
+          return NULL;
+      end ajax;
+
+  callbacks: 
+    api-interface: Function
+    render-procedure/function-name: render
+    ajax-procedure/function-name: ajax
+
+  standard-attributes: 
+    attributes: 
+    - Region Source is SQL Statement [Deprecated]
+    - Has "Page Items to Submit" Attribute
+    - Has "Escape Special Characters" Region Attribute
+
+  custom-attributes: 
+    substitute-attribute-values: false
+
+  files: 
+    file-prefix: '#IMAGE_PREFIX#plugins/com.oracle.apex.html5_bar_chart/1.1/'
+
+  css: 
+    file-urls: 
+    - '#PLUGIN_FILES#com_oracle_apex_html5_bar_chart#MIN#.css'
+
+  javascript: 
+    file-urls: 
+    - '#PLUGIN_FILES#com_oracle_apex_html5_bar_chart#MIN#.js'
+
+  information: 
+    version: 20.2
+    about-url: 'http://apex.oracle.com/plugins'
+    help-text: <p>This plugin draws horizontal bar charts containing labels, values and even icons</p>
+
+  standard-attributes: 
+  - # ====== Standard Attribute: SOURCE_SQL ======================
+    id: 334645584732849970
+    identification: 
+      name: SOURCE_SQL
+
+    value: 
+      required: true
+
+    settings: 
+      minimum-columns: 1
+
+  custom-attributes: 
+  - # ====== Custom Attribute: Icon Type =========================
+    id: 334624580516849956
+    identification: 
+      static-id: attribute_01
+      attribute: 1
+      name: Icon Type
+      scope: Component
+
+    layout: 
+      sequence: 100
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: INITIALS
+
+    condition: 
+      depending-on-custom-attribute: Display Type # 334632594798849962
+      depending-on-condition-type: equal to
+      expression: ICON
+      always-evaluate: true
+
+    help: 
+      help-text: Select the icon type to be displayed.
+
+    entries: 
+    - # ====== Entry: Image ========================================
+      id: 334624894324849956
+      entry: 
+        sequence: 10
+        display: Image
+        return: IMAGE
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: Displays an image HTML element on the left side of the chart.
+
+    - # ====== Entry: CSS Icon =====================================
+      id: 334625415285849957
+      entry: 
+        sequence: 20
+        display: CSS Icon
+        return: ICON
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: Displays an icon with the given CSS class.
+
+    - # ====== Entry: Initials =====================================
+      id: 334625911034849957
+      entry: 
+        sequence: 30
+        display: Initials
+        return: INITIALS
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: Displays a colored circle containing the first two initials for each entry.
+
+  - # ====== Custom Attribute: Label Column ======================
+    id: 334626406854849957
+    identification: 
+      static-id: attribute_02
+      attribute: 2
+      name: Label Column
+      scope: Component
+
+    layout: 
+      sequence: 10
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query that holds the labels for the chart.
+
+  - # ====== Custom Attribute: Label Link Target =================
+    id: 334626868756849958
+    identification: 
+      static-id: attribute_03
+      attribute: 3
+      name: Label Link Target
+      scope: Component
+
+    layout: 
+      sequence: 30
+
+    settings: 
+      type: Link to Target Page/URL
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+
+    help: 
+      help-text: <p>Enter a target page to be called when the user clicks a label.</p>
+
+    examples: 
+      examples: |
+        <p>Example 1: URL to navigate to page 10 and set P10_EMPNO to the EMPNO value of the clicked entry.
+        <pre>f?p=&amp;APP_ID.:10:&amp;APP_SESSION.::&amp;DEBUG.:RP,10:P10_EMPNO:&amp;EMPNO.</pre>
+        </p>
+        <p>Example 2: Display the EMPNO value of the clicked entry in a JavaScript alert
+        <pre>javascript:alert('current empno: &amp;EMPNO.');</pre>
+        </p>
+
+  - # ====== Custom Attribute: Value Column ======================
+    id: 334627275574849958
+    identification: 
+      static-id: attribute_04
+      attribute: 4
+      name: Value Column
+      scope: Component
+
+    layout: 
+      sequence: 20
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: |
+        <p>Select the column from the region SQL Query that holds the values for the chart.</p>
+        <p>Note: This value is not displayed on the chart items when the chart has been configured to display the bar width percentage instead.</p>
+
+  - # ====== Custom Attribute: Value Link Target =================
+    id: 334627634325849958
+    identification: 
+      static-id: attribute_05
+      attribute: 5
+      name: Value Link Target
+      scope: Component
+
+    layout: 
+      sequence: 40
+
+    settings: 
+      type: Link to Target Page/URL
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+
+    help: 
+      help-text: <p>Enter a target page to be called when the user clicks a value.</p>
+
+    examples: 
+      examples: |
+        <p>Example 1: URL to navigate to page 10 and set P10_EMPNO to the EMPNO value of the clicked entry.
+        <pre>f?p=&amp;APP_ID.:10:&amp;APP_SESSION.::&amp;DEBUG.:RP,10:P10_EMPNO:&amp;EMPNO.</pre>
+        </p>
+        <p>Example 2: Display the EMPNO value of the clicked entry in a JavaScript alert
+        <pre>javascript:alert('current empno: &amp;EMPNO.');</pre>
+        </p>
+
+  - # ====== Custom Attribute: CSS Class Names ===================
+    id: 334628080316849958
+    identification: 
+      static-id: attribute_06
+      attribute: 6
+      name: CSS Class Names
+      scope: Component
+
+    layout: 
+      sequence: 190
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+
+    help: 
+      help-text: <p>Enter CSS class names to be added to the root element of the chart separated with spaces.</p>
+
+  - # ====== Custom Attribute: Image URL =========================
+    id: 334628465267849958
+    identification: 
+      static-id: attribute_07
+      attribute: 7
+      name: Image URL
+      scope: Component
+
+    layout: 
+      sequence: 120
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    condition: 
+      depending-on-custom-attribute: Icon Type # 334624580516849956
+      depending-on-condition-type: equal to
+      expression: IMAGE
+      always-evaluate: true
+
+    help: 
+      help-text: <p>Enter the Image URL to be displayed as the chart icon. This attribute supports Substitution strings, such as query columns, <strong>&amp;IMAGE_URL.</strong>. Notice that substitutions with no value will be replaced with an empty string.</p>
+
+  - # ====== Custom Attribute: Icon CSS Class Name ===============
+    id: 334628789240849959
+    identification: 
+      static-id: attribute_08
+      attribute: 8
+      name: Icon CSS Class Name
+      scope: Component
+
+    layout: 
+      sequence: 110
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    condition: 
+      depending-on-custom-attribute: Icon Type # 334624580516849956
+      depending-on-condition-type: equal to
+      expression: ICON
+      always-evaluate: true
+
+    help: 
+      help-text: <p>Enter the Icon CSS Class Name.</p>
+
+  - # ====== Custom Attribute: Initials Column ===================
+    id: 334629191335849960
+    identification: 
+      static-id: attribute_09
+      attribute: 9
+      name: Initials Column
+      scope: Component
+
+    layout: 
+      sequence: 130
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    condition: 
+      depending-on-custom-attribute: Icon Type # 334624580516849956
+      depending-on-condition-type: equal to
+      expression: INITIALS
+      always-evaluate: true
+
+    help: 
+      help-text: |
+        <p>Select the column from the region SQL Query that holds the initials to be displayed as an icon.</p>
+        <p>Note: If the columns has more than two letters than the icon will includes three ellipses (...). Therefore, it is not recommended to use the label column.</p>
+
+  - # ====== Custom Attribute: Custom Colors =====================
+    id: 334629663403849960
+    identification: 
+      static-id: attribute_10
+      attribute: 10
+      name: Custom Colors
+      scope: Component
+
+    layout: 
+      sequence: 170
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    condition: 
+      depending-on-custom-attribute: Color Scheme # 334635415393849963
+      depending-on-condition-type: in list
+      expression: CUSTOM
+      always-evaluate: true
+
+    help: 
+      help-text: <p>Enter a list of CSS supported colors separated by colons.</p>
+
+  - # ====== Custom Attribute: Value Display =====================
+    id: 334630012203849960
+    identification: 
+      static-id: attribute_11
+      attribute: 11
+      name: Value Display
+      scope: Component
+
+    layout: 
+      sequence: 50
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: VALUE
+
+    help: 
+      help-text: <p>Select whether to display  the item value or the percentage as the right most text in the chart.</p>
+
+    entries: 
+    - # ====== Entry: Value ========================================
+      id: 334630426803849961
+      entry: 
+        sequence: 10
+        display: Value
+        return: VALUE
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Percentage ===================================
+      id: 334630898913849961
+      entry: 
+        sequence: 20
+        display: Percentage
+        return: BAR_WIDTH
+
+      advanced: 
+        quick-pick: false
+
+  - # ====== Custom Attribute: Value Prefix ======================
+    id: 334631406151849961
+    identification: 
+      static-id: attribute_12
+      attribute: 12
+      name: Value Prefix
+      scope: Component
+
+    layout: 
+      sequence: 60
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: true
+
+    condition: 
+      depending-on-custom-attribute: Value Display # 334630012203849960
+      depending-on-condition-type: in list
+      expression: VALUE
+      always-evaluate: true
+
+    help: 
+      help-text: <p>Enter the text that prefixes the value.<p>
+
+  - # ====== Custom Attribute: Value Suffix ======================
+    id: 334631850888849961
+    identification: 
+      static-id: attribute_13
+      attribute: 13
+      name: Value Suffix
+      scope: Component
+
+    layout: 
+      sequence: 70
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: true
+
+    condition: 
+      depending-on-custom-attribute: Value Display # 334630012203849960
+      depending-on-condition-type: in list
+      expression: VALUE
+      always-evaluate: true
+
+    help: 
+      help-text: Enter the text that is appended to the value.
+
+  - # ====== Custom Attribute: Maximum Rows ======================
+    id: 334632275137849962
+    identification: 
+      static-id: attribute_14
+      attribute: 14
+      name: Maximum Rows
+      scope: Component
+
+    layout: 
+      sequence: 180
+
+    settings: 
+      type: Integer
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: 5
+
+    help: 
+      help-text: |
+        <p>Enter the maximum number of items to be displayed inside the region.</p>
+        <p>Note: Bar width calculations are based on the number of items displayed.</p>
+
+  - # ====== Custom Attribute: Display Type ======================
+    id: 334632594798849962
+    identification: 
+      static-id: attribute_15
+      attribute: 15
+      name: Display Type
+      scope: Component
+
+    layout: 
+      sequence: 90
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: TEXT
+
+    help: 
+      help-text: <p>Select how to display the chart information.</p>
+
+    entries: 
+    - # ====== Entry: Icon Chart ===================================
+      id: 334633030186849962
+      entry: 
+        sequence: 10
+        display: Icon Chart
+        return: ICON
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: Displays bars with the label and value above and add an icon on the left.
+
+    - # ====== Entry: Text Chart ===================================
+      id: 334633566862849962
+      entry: 
+        sequence: 20
+        display: Text Chart
+        return: TEXT
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: Displays bars with the label and value either above or inline with the bar.
+
+  - # ====== Custom Attribute: Bar Width Calculation =============
+    id: 334634046607849963
+    identification: 
+      static-id: attribute_16
+      attribute: 16
+      name: Bar Width Calculation
+      scope: Component
+
+    layout: 
+      sequence: 80
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: ABSOLUTE
+
+    help: 
+      help-text: <p>Select how to calculate the width of the bars in the chart.</p>
+
+    entries: 
+    - # ====== Entry: Absolute =====================================
+      id: 334634391942849963
+      entry: 
+        sequence: 10
+        display: Absolute
+        return: ABSOLUTE
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: 100% bar width is represented by the maximum value displayed.
+
+    - # ====== Entry: Relative =====================================
+      id: 334634895332849963
+      entry: 
+        sequence: 20
+        display: Relative
+        return: RELATIVE
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: 100% bar width is represented by the sum of the values of all the displayed chart items.
+
+  - # ====== Custom Attribute: Color Scheme ======================
+    id: 334635415393849963
+    identification: 
+      static-id: attribute_17
+      attribute: 17
+      name: Color Scheme
+      scope: Component
+
+    layout: 
+      sequence: 150
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: MODERN
+
+    help: 
+      help-text: <p>Select the color scheme used to render the chart.</p>
+
+    entries: 
+    - # ====== Entry: Default ======================================
+      id: 334635824186849964
+      entry: 
+        sequence: 5
+        display: Default
+        return: DEFAULT
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Theme Colors =================================
+      id: 334636372287849964
+      entry: 
+        sequence: 10
+        display: Theme Colors
+        return: MODERN
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Modern 2 =====================================
+      id: 334636859607849964
+      entry: 
+        sequence: 20
+        display: Modern 2
+        return: MODERN_2
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Solar ========================================
+      id: 334637309859849964
+      entry: 
+        sequence: 30
+        display: Solar
+        return: SOLAR
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Metro ========================================
+      id: 334637827455849965
+      entry: 
+        sequence: 40
+        display: Metro
+        return: METRO
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Custom =======================================
+      id: 334638318116849965
+      entry: 
+        sequence: 50
+        display: Custom
+        return: CUSTOM
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: SQL Query Column =============================
+      id: 334638842505849965
+      entry: 
+        sequence: 60
+        display: SQL Query Column
+        return: COLUMN
+
+      advanced: 
+        quick-pick: false
+
+  - # ====== Custom Attribute: Text Position =====================
+    id: 334639358345849966
+    identification: 
+      static-id: attribute_18
+      attribute: 18
+      name: Text Position
+      scope: Component
+
+    layout: 
+      sequence: 140
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: AROUND
+
+    condition: 
+      depending-on-custom-attribute: Display Type # 334632594798849962
+      depending-on-condition-type: in list
+      expression: TEXT
+      always-evaluate: true
+
+    help: 
+      help-text: <p>Select where to display the text within the chart.</p>
+
+    entries: 
+    - # ====== Entry: Above ========================================
+      id: 334639774353849966
+      entry: 
+        sequence: 10
+        display: Above
+        return: ABOVE
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: The label and value are displayed above the bar, to the left and right sides of the chart.
+
+    - # ====== Entry: Inline =======================================
+      id: 334640235330849966
+      entry: 
+        sequence: 20
+        display: Inline
+        return: AROUND
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: The label, bar, and value are all displayed in a single line.
+
+  - # ====== Custom Attribute: Colors Column =====================
+    id: 334640696582849966
+    identification: 
+      static-id: attribute_19
+      attribute: 19
+      name: Colors Column
+      scope: Component
+
+    layout: 
+      sequence: 160
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    condition: 
+      depending-on-custom-attribute: Color Scheme # 334635415393849963
+      depending-on-condition-type: in list
+      expression: COLUMN
+      always-evaluate: true
+
+    help: 
+      help-text: |
+        <p>Select the column from the region SQL Query that holds the color codes for the chart. The color can be set using hex values or as the name of the color.</p>
+        <p>Note: If no column is entered then the color will automatically be calculated.</p>
+
+    examples: 
+      examples: |
+        <dl>
+          <dt>Hexadecimal (hex) notation</dt><dd><pre>#FF3377</pre>;</dd>
+          <dt>HTML colors</dt><dd><pre>blue</pre>.</dd>
+        </dl>
+
+  - # ====== Custom Attribute: Message When No Data Found ========
+    id: 334641092759849967
+    identification: 
+      static-id: attribute_20
+      attribute: 20
+      name: Message When No Data Found
+      scope: Component
+
+    layout: 
+      sequence: 200
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: true
+
+    default: 
+      value: No data found.
+
+    help: 
+      help-text: <p>Enter the message to be displayed when no data is found.</p>
+
+  - # ====== Custom Attribute: Format Mask =======================
+    id: 334641565544849967
+    identification: 
+      static-id: attribute_21
+      attribute: 21
+      name: Format Mask
+      scope: Component
+
+    layout: 
+      sequence: 25
+
+    settings: 
+      type: Text
+      common: true
+      show-in-wizard: false
+      required: false
+      translatable: true
+
+    condition: 
+      depending-on-custom-attribute: Value Display # 334630012203849960
+      depending-on-condition-type: equal to
+      expression: VALUE
+      always-evaluate: true
+
+    help: 
+      help-text: 'Enter a numerical format mask to apply to the value column.  You can learn more about format models here: https://docs.oracle.com/cd/B28359_01/server.111/b28286/sql_elements004.htm'
+
+    examples: 
+      examples: 999G999G999G999G999G990
+
+- # ====== Plugin: Sample Apps Footer ==========================
+  id: 1674031908922615582
+  identification: 
+    name: Sample Apps Footer
+    internal-name: COM.ORACLE.APEX.SAMPLEAPPFOOTER
+    type: Region
+
+  advanced: 
+    quick-pick: false
+
+  subscription: 
+    master: 
+      referenced-id: 1660759070362076804
+
+    subscribe-component-settings: true
+
+  source: 
+    pl/sql-code: |
+      function render (   p_region in apex_plugin.t_region,
+                          p_plugin in apex_plugin.t_plugin,
+                          p_is_printer_friendly in boolean )
+              return apex_plugin.t_region_render_result is
+      begin
+          sys.htp.p('<ul class="t-Cards t-Cards--sampleAppsFooter t-Cards--featured force-fa-lg t-Cards--displayIcons t-Cards--hideBody t-Cards--animColorFill">');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/twitter" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-twitter" style="color: #1da1f2"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">Twitter</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/linkedin" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-linkedin" style="color: #0077b5"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">LinkedIn</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/facebook" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-facebook" style="color: #3b5998"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">Facebook</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/youtube" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-youtube" style="color: red"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">YouTube</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-apex" style="color: #707070"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">apex.oracle.com</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/community" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-users" style="color: #707070"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">Oracle APEX Community</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/forum" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-comments-o" style="color: #707070"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">Discussion Forums</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('<li class="t-Cards-item">');
+          sys.htp.p('  <div class="t-Card">');
+          sys.htp.p('    <a href="https://apex.oracle.com/autonomous" target="_blank" class="t-Card-wrap">');
+          sys.htp.p('      <div class="t-Card-icon"><span class="t-Icon fa fa-cloud" style="color: #707070"></span></div>');
+          sys.htp.p('      <div class="t-Card-titleWrap"><h3 class="t-Card-title">Autonomous Database + APEX</h3></div>');
+          sys.htp.p('    </a>');
+          sys.htp.p('  </div>');
+          sys.htp.p('</li>');
+          sys.htp.p('</ul>');
+          return null;
+      end render;
+
+  callbacks: 
+    api-interface: Function
+    render-procedure/function-name: render
+
+  custom-attributes: 
+    substitute-attribute-values: true
+
+  information: 
+    version: 5.0.1
+    help-text: |
+      <p>This region plug-in is used to display a custom footer at the bottom of pages with large icons for navigating to other sites such as twitter and linkedin.</p>
+      <p>Note: This plug-in should be customized to meet your specific requirements, rather than used as is.</p>
+
+- # ====== Plugin: Badge List ==================================
+  id: 2125444737630420496
+  identification: 
+    name: Badge List
+    internal-name: COM.ORACLE.APEX.BADGE_LIST
+    type: Region
+
+  advanced: 
+    quick-pick: false
+
+  subscription: 
+    master: 
+      referenced-id: 1557719565043480755
+
+    subscribe-component-settings: true
+
+  source: 
+    pl/sql-code: |
+      function render (
+          p_region              in apex_plugin.t_region,
+          p_plugin              in apex_plugin.t_plugin,
+          p_is_printer_friendly in boolean )
+          return apex_plugin.t_region_render_result is
+      begin
+          apex_javascript.add_onload_code (
+              p_code => 'com_oracle_apex_badgelist('||
+                  apex_javascript.add_value(p_region.static_id)||
+                  '{'||
+                      -- why is this attribute needed if is not used?
+                      apex_javascript.add_attribute(
+                          'pageItems', 
+                          apex_plugin_util.page_item_names_to_jquery(p_region.ajax_items_to_submit)
+                      )||
+                      apex_javascript.add_attribute(
+                          'ajaxIdentifier', 
+                          apex_plugin.get_ajax_identifier, 
+                          false, 
+                          false
+                      )||
+                  '}'||
+              ');'
+          );
+      --    CSS for Big Value List
+      --    apex_css.add_file (
+      --        p_name      => 'com_oracle_apex_badge_list',
+      --        p_directory => p_plugin.file_prefix );
+          -- Start the list
+      
+      
+          -- It's time to emit the selected rows
+      
+      
+          return null;
+      
+      end render;
+      
+      function ajax (
+          p_region in apex_plugin.t_region,
+          p_plugin in apex_plugin.t_plugin
+      ) return apex_plugin.t_region_ajax_result 
+      is
+          -- It's better to have named variables instead of using the generic ones,
+          -- makes the code more readable. We are using the same defaults for the
+          -- required attributes as in the plug-in attribute configuration, because
+          -- they can still be null. Keep them in sync!
+          c_top_label_column    constant varchar2(255) := p_region.attribute_09;
+          c_value_column        constant varchar2(255) := p_region.attribute_02;
+          c_bottom_label_column constant varchar2(255) := p_region.attribute_01;
+          c_percent_column      constant varchar2(255) := p_region.attribute_03;
+          c_link_target         constant varchar2(255) := p_region.attribute_04;
+          
+          c_layout            constant varchar2(1)   := p_region.attribute_05;
+          c_chart_size        constant varchar2(3)   := p_region.attribute_06;
+          c_chart_type        constant varchar2(3)   := p_region.attribute_07;
+          c_colored           constant varchar2(1)   := p_region.attribute_08;
+      
+          l_bottom_label_column_no pls_integer;
+          l_top_label_column_no    pls_integer;
+          l_value_column_no        pls_integer;
+          l_percent_column_no      pls_integer;
+          l_column_value_list      apex_plugin_util.t_column_value_list2;
+          
+          l_top_label      varchar2(4000);
+          l_value             varchar2(4000);
+          l_bottom_label      varchar2(4000);
+          l_percent           number;
+          l_url               varchar2(4000);
+          l_class             varchar2(255);
+      
+      begin
+          apex_json.initialize_output (
+              p_http_cache => false );
+              -- Read the data based on the region source query
+          l_column_value_list := apex_plugin_util.get_data2 (
+                                     p_sql_statement  => p_region.source,
+                                     p_min_columns    => 2,
+                                     p_max_columns    => null,
+                                     p_component_name => p_region.name );
+      
+          -- Get the actual column# for faster access and also verify that the data type
+          -- of the column matches with what we are looking for
+          l_top_label_column_no := apex_plugin_util.get_column_no (
+            p_attribute_label   => 'Top Label',
+            p_column_alias      => c_top_label_column,
+            p_column_value_list => l_column_value_list,
+            p_is_required       => false,
+            p_data_type         => apex_plugin_util.c_data_type_varchar2
+          );
+      
+          l_value_column_no   := apex_plugin_util.get_column_no (
+                                     p_attribute_label   => 'Value',
+                                     p_column_alias      => c_value_column,
+                                     p_column_value_list => l_column_value_list,
+                                     p_is_required       => true,
+                                     p_data_type         => apex_plugin_util.c_data_type_varchar2 );
+      
+          -- Get the actual column# for faster access and also verify that the data type
+          -- of the column matches with what we are looking for
+          l_bottom_label_column_no := apex_plugin_util.get_column_no (
+            p_attribute_label   => 'Bottom Label',
+            p_column_alias      => c_bottom_label_column,
+            p_column_value_list => l_column_value_list,
+            p_is_required       => false,
+            p_data_type         => apex_plugin_util.c_data_type_varchar2
+          );
+                                            
+          l_percent_column_no := apex_plugin_util.get_column_no (
+                                   p_attribute_label   => 'Percent',
+                                   p_column_alias      => c_percent_column,
+                                   p_column_value_list => l_column_value_list,
+                                   p_is_required       => false,
+                                   p_data_type         => apex_plugin_util.c_data_type_number );
+          
+          -- begin output as json
+          owa_util.mime_header('application/json', false);
+          htp.p('cache-control: no-cache');
+          htp.p('pragma: no-cache');
+          owa_util.http_header_close;
+       --   l_message_when_no_data_found := apex_escape.html_whitelist(
+        --      apex_plugin_util.replace_substitutions (
+         --             p_value  => c_message_when_no_data_found,
+         --             p_escape => false
+          --        )
+          --    );
+          apex_json.open_object();
+          apex_json.write('layout', c_layout); 
+          apex_json.write('chart_size', c_chart_size); 
+          apex_json.write('chart_type', c_chart_type); 
+          apex_json.write('colored', c_colored); 
+          apex_json.open_array('data');
+          for l_row_num in 1 .. l_column_value_list(1).value_list.count loop
+              begin
+                  apex_json.open_object(); 
+                  -- Set the column values of our current row so that apex_plugin_util.replace_substitutions
+                  -- can do substitutions for columns contained in the region source query.
+                  apex_plugin_util.set_component_values (
+                      p_column_value_list => l_column_value_list,
+                      p_row_num           => l_row_num );
+      
+                  if l_top_label_column_no is not null
+                  then
+                    -- get the top label
+                    l_top_label := 
+                       apex_plugin_util.get_value_as_varchar2 (
+                           p_data_type => l_column_value_list(l_top_label_column_no).data_type,
+                           p_value     => l_column_value_list(l_top_label_column_no).value_list(l_row_num) );
+      
+                    apex_json.write('topLabel', l_top_label); 
+                  end if;
+                  
+                  -- get the value
+                  l_value := apex_plugin_util.get_value_as_varchar2 (
+                                     p_data_type => l_column_value_list(l_value_column_no).data_type,
+                                     p_value     => l_column_value_list(l_value_column_no).value_list(l_row_num) );
+      
+                  apex_json.write('value', l_value); 
+      
+                  if l_bottom_label_column_no is not null
+                  then
+                    -- get the bottom label
+                    l_bottom_label := 
+                       apex_plugin_util.get_value_as_varchar2 (
+                           p_data_type => l_column_value_list(l_bottom_label_column_no).data_type,
+                           p_value     => l_column_value_list(l_bottom_label_column_no).value_list(l_row_num) );
+      
+                    apex_json.write('bottomLabel', l_bottom_label); 
+                  end if;
+      
+                  -- get percent
+                  if l_percent_column_no is not null then
+                      l_percent := l_column_value_list(l_percent_column_no).value_list(l_row_num).number_value;
+                      apex_json.    write('percent', l_percent); 
+                  end if;
+      
+                  -- get the link target if it does exist
+                  if c_link_target is not null then
+                      l_url := apex_util.prepare_url (
+                                   apex_plugin_util.replace_substitutions (
+                                       p_value  => c_link_target,
+                                       p_escape => false ));
+                      apex_json.    write('url', l_url);                
+                  end if;
+                  
+                  apex_json.close_object();        
+      
+      
+                  apex_plugin_util.clear_component_values;
+              exception when others then
+                  apex_plugin_util.clear_component_values;
+                  raise;
+              end;
+          end loop;
+          apex_json.close_all();
+          
+          return null;
+      exception when others then
+          htp.p('error: '||apex_escape.html(sqlerrm));
+          return null;
+      end ajax;
+      
+      
+      
+
+  callbacks: 
+    api-interface: Function
+    render-procedure/function-name: render
+    ajax-procedure/function-name: ajax
+
+  standard-attributes: 
+    attributes: 
+    - Region Source is SQL Statement [Deprecated]
+    - Has "Page Items to Submit" Attribute
+    - Has "Escape Special Characters" Region Attribute
+
+  custom-attributes: 
+    substitute-attribute-values: false
+
+  files: 
+    file-prefix: '#IMAGE_PREFIX#plugins/com.oracle.apex.badgelist/2.0/'
+
+  javascript: 
+    file-urls: 
+    - '#PLUGIN_FILES#com_oracle_apex_badgelist.js'
+
+  information: 
+    version: 5.0.2
+    about-url: 'http://apex.oracle.com/plugins'
+    help-text: |
+      <p>Badge lists are useful for displaying a region with a small number of counts for important statistics. For example, in Bug Tracker, this plug-in is used to show the total bugs, open bugs, open high priority bugs, and open critical severity bugs.</p>
+      <p>This plug-in is suitable for adding to the Home page to show important summary information.</p>
+
+  standard-attributes: 
+  - # ====== Standard Attribute: SOURCE_SQL ======================
+    id: 1031867135715102861
+    identification: 
+      name: SOURCE_SQL
+
+    value: 
+      required: true
+
+    settings: 
+      minimum-columns: 2
+
+    examples: 
+      examples: |
+        <pre>
+        select 'Open'               as label,
+               to_char(320,'9G990') as value,
+               13                   as percent
+          from dual
+         union all
+        select 'Closed'             as label,
+               to_char(87,'9G990')  as value,
+               70                   as percent
+          from dual
+        </pre>
+
+  custom-attributes: 
+  - # ====== Custom Attribute: Bottom Label ======================
+    id: 1031853470515102850
+    identification: 
+      static-id: attribute_01
+      attribute: 1
+      name: Bottom Label
+      scope: Component
+
+    layout: 
+      sequence: 25
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query that holds the labels for the badges.
+
+  - # ====== Custom Attribute: Value =============================
+    id: 1031853912677102851
+    identification: 
+      static-id: attribute_02
+      attribute: 2
+      name: Value
+      scope: Component
+
+    layout: 
+      sequence: 20
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+      data-types: 
+      - Varchar2
+
+    help: 
+      help-text: Select the column from the region SQL Query that holds the values for the badges.
+
+  - # ====== Custom Attribute: Percent ===========================
+    id: 1031854327447102851
+    identification: 
+      static-id: attribute_03
+      attribute: 3
+      name: Percent
+      scope: Component
+
+    layout: 
+      sequence: 30
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Number
+
+    condition: 
+      depending-on-custom-attribute: Badge Style # 1031861890761102856
+      depending-on-condition-type: equal to
+      expression: PERCENT
+      always-evaluate: true
+
+    help: 
+      help-text: Select the column from the region SQL Query that holds the percentage values for the badges. Percentages will be displayed together with the value within the badge.
+
+  - # ====== Custom Attribute: Link Target =======================
+    id: 1031854755116102852
+    identification: 
+      static-id: attribute_04
+      attribute: 4
+      name: Link Target
+      scope: Component
+
+    layout: 
+      sequence: 40
+
+    settings: 
+      type: Link to Target Page/URL
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+
+    help: 
+      help-text: <p>Enter a target page to be called when the user clicks a badge entry.</p>
+
+    examples: 
+      examples: |
+        <p>Example 1: URL to navigate to page 10 and set P10_EMPNO to the EMPNO value of the clicked entry.
+        <pre>f?p=&amp;APP_ID.:10:&amp;APP_SESSION.::&amp;DEBUG.:RP,10:P10_EMPNO:&amp;EMPNO.</pre>
+        </p>
+        <p>Example 2: Display the EMPNO value of the clicked entry in a JavaScript alert
+        <pre>javascript:alert('current empno: &amp;EMPNO.');</pre>
+        </p>
+
+  - # ====== Custom Attribute: Layout ============================
+    id: 1031855148309102852
+    identification: 
+      static-id: attribute_05
+      attribute: 5
+      name: Layout
+      scope: Component
+
+    layout: 
+      sequence: 50
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: false
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: 0
+
+    help: 
+      help-text: <p>Select the layout to determine how the badge list is displayed.</p>
+
+    entries: 
+    - # ====== Entry: 5 columns ====================================
+      id: 1031855540352102852
+      entry: 
+        sequence: 50
+        display: 5 columns
+        return: 5
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: |
+          <p>Displays a maximum of fix badges per row. Therefore, if there are seven badges they are displayed on two rows.</p>
+          <p>Note: on smaller displays where the badges cannot be displayed appropriately, the responsive region will revert to less column and additional rows. For example, seven badges may be displayed as three columns on three rows, instead of five columns on two rows.</p>
+
+    - # ====== Entry: Fit to Page ==================================
+      id: 1031855977851102853
+      entry: 
+        sequence: 5
+        display: Fit to Page
+        return: 0
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: |
+          <p>Sizes the badges to stretch across the page. The width of each badge will be determined by the number of badges and the display width.</p>
+          <p>Note: Badges will not wrap when displayed on smaller devices.</p>
+
+    - # ====== Entry: Float to Left ================================
+      id: 1031856504890102853
+      entry: 
+        sequence: 7
+        display: Float to Left
+        return: F
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: <p>Sizes the badges based on the width of the label for each badge. All badges will be displayed to the left of the region.</p>
+
+    - # ====== Entry: 1 column =====================================
+      id: 1031856984135102853
+      entry: 
+        sequence: 10
+        display: 1 column
+        return: 1
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: Displays only one badge per row. Therefore, if there are three badges they are displayed on three rows.
+
+    - # ====== Entry: 2 columns ====================================
+      id: 1031857503385102854
+      entry: 
+        sequence: 20
+        display: 2 columns
+        return: 2
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: Displays only two badges per row. Therefore, if there are three badges they are displayed on two rows.
+
+    - # ====== Entry: 3 columns ====================================
+      id: 1031857985991102854
+      entry: 
+        sequence: 30
+        display: 3 columns
+        return: 3
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: <p>Displays a maximum of three badges per row. Therefore, if there are four badges they are displayed on two rows.</p>
+
+    - # ====== Entry: 4 columns ====================================
+      id: 1031858550907102854
+      entry: 
+        sequence: 40
+        display: 4 columns
+        return: 4
+
+      advanced: 
+        quick-pick: false
+
+      help: 
+        help-text: <p>Displays a maximum of four badges per row. Therefore, if there are six badges they are displayed on two rows.</p>
+
+  - # ====== Custom Attribute: Badge Size ========================
+    id: 1031858994287102855
+    identification: 
+      static-id: attribute_06
+      attribute: 6
+      name: Badge Size
+      scope: Component
+
+    layout: 
+      sequence: 70
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: false
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: L
+
+    condition: 
+      depending-on-custom-attribute: Badge Style # 1031861890761102856
+      depending-on-condition-type: not equal to
+      expression: BOX
+      always-evaluate: true
+
+    help: 
+      help-text: Select the size of badge to display.
+
+    entries: 
+    - # ====== Entry: Small ========================================
+      id: 1031859441060102855
+      entry: 
+        sequence: 0
+        display: Small
+        return: S
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Medium =======================================
+      id: 1031859860509102855
+      entry: 
+        sequence: 10
+        display: Medium
+        return: M
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Large ========================================
+      id: 1031860439198102856
+      entry: 
+        sequence: 20
+        display: Large
+        return: L
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Extra Large ==================================
+      id: 1031860926914102856
+      entry: 
+        sequence: 30
+        display: Extra Large
+        return: B
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Extra Extra Large ============================
+      id: 1031861358949102856
+      entry: 
+        sequence: 40
+        display: Extra Extra Large
+        return: XXL
+
+      advanced: 
+        quick-pick: false
+
+  - # ====== Custom Attribute: Badge Style =======================
+    id: 1031861890761102856
+    identification: 
+      static-id: attribute_07
+      attribute: 7
+      name: Badge Style
+      scope: Component
+
+    layout: 
+      sequence: 1
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: BOX
+
+    help: 
+      help-text: Select the shape of the badges to display.
+
+    entries: 
+    - # ====== Entry: Default ======================================
+      id: 1031862341286102857
+      entry: 
+        sequence: 10
+        display: Default
+        return: BOX
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Circular =====================================
+      id: 1031862775527102857
+      entry: 
+        sequence: 20
+        display: Circular
+        return: DOT
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: Default with Percent =========================
+      id: 1031863317761102857
+      entry: 
+        sequence: 15
+        display: Default with Percent
+        return: PERCENT
+
+      advanced: 
+        quick-pick: false
+
+  - # ====== Custom Attribute: Color =============================
+    id: 1031863769370102858
+    identification: 
+      static-id: attribute_08
+      attribute: 8
+      name: Color
+      scope: Component
+
+    layout: 
+      sequence: 80
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: N
+
+    help: 
+      help-text: Select if the badges should be displayed in different colors, or without colors.
+
+    entries: 
+    - # ====== Entry: Yes ==========================================
+      id: 1031864221275102858
+      entry: 
+        sequence: 10
+        display: Yes
+        return: Y
+
+      advanced: 
+        quick-pick: false
+
+    - # ====== Entry: No ===========================================
+      id: 1031864687647102858
+      entry: 
+        sequence: 20
+        display: No
+        return: N
+
+      advanced: 
+        quick-pick: false
+
+  - # ====== Custom Attribute: Top Label =========================
+    id: 1031865202076102859
+    identification: 
+      static-id: attribute_09
+      attribute: 9
+      name: Top Label
+      scope: Component
+
+    layout: 
+      sequence: 10
+
+    settings: 
+      type: Region SQL Statement Column
+      common: true
+      show-in-wizard: true
+      required: false
+      translatable: false
+      data-types: 
+      - Varchar2
+
+- # ====== Plugin: JET Legend ==================================
+  id: 3664825230175935974
+  identification: 
+    name: JET Legend
+    internal-name: COM.APEX.LEGEND.JET
+    type: Region
+
+  advanced: 
+    quick-pick: false
+
+  subscription: 
+    master: 
+      referenced-id: 23378667355681730253
+
+    subscribe-component-settings: true
+
+  source: 
+    pl/sql-code: |
+      /*
+       * render - function to create placeholder div tag, and initialise the new legend component
+       */
+      function render ( 
+          p_region                in  apex_plugin.t_region, 
+          p_plugin                in  apex_plugin.t_plugin,
+          p_is_printer_friendly   in  boolean 
+      ) return apex_plugin.t_region_render_result 
+      is
+      begin
+          -- Add new placeholder div for legend component
+          sys.htp.p ( '<div id="' || apex_escape.html_attribute( p_region.static_id ) || '_jet"  />' );
+        
+          -- Initialise the legend
+          apex_javascript.add_onload_code( 
+              p_code => 'jet.legend.init(' || apex_escape.js_literal( '#' || apex_escape.css_selector( p_region.static_id ||'_jet' )) || ',' ||
+                                              apex_escape.js_literal( apex_plugin.get_ajax_identifier ) || ')' );
+        
+          return null;
+      end render;
+      
+      /*
+       * ajax - function to process SQL query, and output JSON data for legend
+       */
+      function ajax (
+          p_region    in  apex_plugin.t_region,
+          p_plugin    in  apex_plugin.t_plugin 
+      ) return apex_plugin.t_region_ajax_result
+      is
+        l_column_value_list  apex_plugin_util.t_column_value_list;
+      begin  
+      
+        -- Process SQL query
+        l_column_value_list := apex_plugin_util.get_data (
+                                   p_sql_statement      => p_region.source,
+                                   p_min_columns        => 2,
+                                   p_max_columns        => 3,
+                                   p_component_name     => p_region.name );
+        
+        -- Construct JSON object for legend
+        apex_json.open_object;
+      
+        -- Add Attributes
+        apex_json.write('orientation',   p_region.attribute_01);
+        apex_json.write('halign', p_region.attribute_02);
+        apex_json.write('valign', p_region.attribute_03);
+        apex_json.write('hideAndShowBehavior', p_region.attribute_04);
+        
+        -- Populate legend items array with values returned by SQL query
+        apex_json.open_array('sections');
+        apex_json.open_object;
+        apex_json.open_array('items');
+        for i in 1 .. l_column_value_list(1).count loop
+            apex_json.open_object;
+            apex_json.write( 'text',  l_column_value_list(1)(i) );
+            apex_json.write( 'shortDesc', apex_escape.html_attribute( l_column_value_list(2)(i) ) );
+            apex_json.close_object;
+        end loop;
+        
+        apex_json.close_array;
+        apex_json.close_object;
+        apex_json.close_array;
+        apex_json.close_object;
+        
+        return null;
+      end ajax;
+
+  callbacks: 
+    api-interface: Procedure with Legacy Attributes [deprecated]
+    render-procedure/function-name: render
+    ajax-procedure/function-name: ajax
+
+  standard-attributes: 
+    attributes: 
+    - Region Source is SQL Statement [Deprecated]
+
+  custom-attributes: 
+    substitute-attribute-values: true
+
+  javascript: 
+    file-urls: 
+    - '[require jet]#PLUGIN_FILES#jetLegend.js'
+    - null
+
+  information: 
+    version: 5.1.2
+
+  standard-attributes: 
+  - # ====== Standard Attribute: SOURCE_SQL ======================
+    id: 3664832034788935991
+    identification: 
+      name: SOURCE_SQL
+
+    value: 
+      required: true
+
+  custom-attributes: 
+  - # ====== Custom Attribute: Orientation =======================
+    id: 3664825423533935979
+    identification: 
+      static-id: attribute_01
+      attribute: 1
+      name: Orientation
+      scope: Component
+
+    layout: 
+      sequence: 10
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: Horizontal
+
+    entries: 
+    - # ====== Entry: Horizontal ===================================
+      id: 3664825818348935980
+      entry: 
+        sequence: 10
+        display: Horizontal
+        return: horizintal
+
+      advanced: 
+        quick-pick: true
+
+    - # ====== Entry: Vertical =====================================
+      id: 3664826290684935981
+      entry: 
+        sequence: 20
+        display: Vertical
+        return: vertical
+
+      advanced: 
+        quick-pick: true
+
+  - # ====== Custom Attribute: Horizontal Alignment ==============
+    id: 3664826792372935981
+    identification: 
+      static-id: attribute_02
+      attribute: 2
+      name: Horizontal Alignment
+      scope: Component
+
+    layout: 
+      sequence: 20
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: Center
+
+    entries: 
+    - # ====== Entry: Center =======================================
+      id: 3664827170276935981
+      entry: 
+        sequence: 10
+        display: Center
+        return: center
+
+      advanced: 
+        quick-pick: true
+
+    - # ====== Entry: End ==========================================
+      id: 3664827665936935982
+      entry: 
+        sequence: 20
+        display: End
+        return: end
+
+      advanced: 
+        quick-pick: true
+
+    - # ====== Entry: Start ========================================
+      id: 3664828205535935982
+      entry: 
+        sequence: 30
+        display: Start
+        return: start
+
+      advanced: 
+        quick-pick: true
+
+  - # ====== Custom Attribute: Vertical Alignment ================
+    id: 3664828714276935982
+    identification: 
+      static-id: attribute_03
+      attribute: 3
+      name: Vertical Alignment
+      scope: Component
+
+    layout: 
+      sequence: 30
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: middle
+
+    entries: 
+    - # ====== Entry: Top ==========================================
+      id: 3664829067484935983
+      entry: 
+        sequence: 10
+        display: Top
+        return: top
+
+      advanced: 
+        quick-pick: true
+
+    - # ====== Entry: Middle =======================================
+      id: 3664829628350935983
+      entry: 
+        sequence: 20
+        display: Middle
+        return: middle
+
+      advanced: 
+        quick-pick: true
+
+    - # ====== Entry: Bottom =======================================
+      id: 3664830082722935983
+      entry: 
+        sequence: 30
+        display: Bottom
+        return: bottom
+
+      advanced: 
+        quick-pick: true
+
+  - # ====== Custom Attribute: Hide and Show Behavior ============
+    id: 3664830581551935984
+    identification: 
+      static-id: attribute_04
+      attribute: 4
+      name: Hide and Show Behavior
+      scope: Component
+
+    layout: 
+      sequence: 40
+
+    settings: 
+      type: Select List
+      lov-type: Static
+      common: true
+      show-in-wizard: true
+      required: true
+      translatable: false
+
+    default: 
+      value: on
+
+    entries: 
+    - # ====== Entry: On ===========================================
+      id: 3664831011485935984
+      entry: 
+        sequence: 10
+        display: On
+        return: on
+
+      advanced: 
+        quick-pick: true
+
+    - # ====== Entry: Off ==========================================
+      id: 3664831499546935984
+      entry: 
+        sequence: 20
+        display: Off
+        return: off
+
+      advanced: 
+        quick-pick: true
+
+  files: 
+  - # ====== File: jetLegend.js ==================================
+    id: 3664832373439935994
+    identification: 
+      file-name: jetLegend.js
+
+    attributes: 
+      mime-type: text/javascript
+      file-character-set: Unicode UTF-8
+

@@ -1,0 +1,64 @@
+---
+- # ====== List of Values: SALARY AMOUNTS ======================
+  id: 2194670485853116139
+  identification: 
+    name: SALARY AMOUNTS
+
+  subscription: 
+    version-number: 1089078564
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: $1,000 or less ===============================
+    id: 2194670771322116141
+    entry: 
+      sequence: 1
+      display: $1,000 or less
+      return: 1000
+
+  - # ====== Entry: $2,000 or less ===============================
+    id: 2194671225682116145
+    entry: 
+      sequence: 2
+      display: $2,000 or less
+      return: 2000
+
+  - # ====== Entry: $3,000 or less ===============================
+    id: 2194671613199116145
+    entry: 
+      sequence: 3
+      display: $3,000 or less
+      return: 3000
+
+  - # ====== Entry: $4,000 or less ===============================
+    id: 2194671975775116145
+    entry: 
+      sequence: 4
+      display: $4,000 or less
+      return: 4000
+
+  - # ====== Entry: $5,000 or less ===============================
+    id: 2194672439566116145
+    entry: 
+      sequence: 5
+      display: $5,000 or less
+      return: 5000
+
+- # ====== List of Values: PROJECTS ============================
+  id: 2580118488848815849
+  identification: 
+    name: PROJECTS
+
+  subscription: 
+    version-number: 1089078564
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select project d, id r
+      from   eba_demo_chart_projects
+      order by 1
+

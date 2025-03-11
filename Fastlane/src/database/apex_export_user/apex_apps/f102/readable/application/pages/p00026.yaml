@@ -1,0 +1,992 @@
+---
+# ====== Page: Oracle JET ojLegend Plug-in ===================
+id: 26
+identification: 
+  name: Oracle JET ojLegend Plug-in
+  alias: ORACLE-JET-OJLEGEND-PLUG-IN
+  title: JET Plug-in
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: About this page =============================
+  id: 101641869567434644
+  identification: 
+    name: About this page
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>
+      While we may not declaratively support all available <a href="http://www.oracle.com/webfolder/technetwork/jet-720/jetCookbook.html?component=home&demo=rootVisualizations" target="_blank">Oracle JET Data Visualizations</a>, you can easily create a plug-in to integrate other Oracle JET components in to your application.  This page demonstrates the integration of an Oracle JET <a href="https://www.oracle.com/webfolder/technetwork/jet-720/jetCookbook.html?component=legend&demo=default" target="_blank">Legend</a> component. Take a look at the <a href="https://www.oracle.com/webfolder/technetwork/jet-720/jetCookbook.html?component=dataVisualizations&demo=filtering" target="_blank">Associated Views: Filtering</a> use case in the Oracle JET Cookbook, to see where the idea for this plug-in came from. Explore the <a href="http://www.oracle.com/webfolder/technetwork/jet-720/jetCookbook.html?component=home&demo=rootVisualizations" target="_blank">Oracle JET Data Visualizations Cookbook</a> to see other visualizations you can integrate as plug-ins in your application.
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--customIcons
+    - t-Alert--info
+    icon: fa-plug
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Information =================================
+  id: 4091760992628595172
+  identification: 
+    name: Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates the use of an APEX plug-in based on the Oracle JET Legend, using the <a href="https://docs.oracle.com/en/middleware/developer-tools/jet/7.2/reference-api/oj.ojLegend.html" target="_blank">ojLegend API</a>.<p/><p/>
+      
+      <strong>Note that in order for this example to work, the charts must be rendering series with the same names, and those series names are then used to populate the Legend.</strong><p/><p/>
+      <strong>1.</strong> Create 3 separate chart regions, which all render series with the same name e.g Acme Store, Deli, Shop C and Store A.<p/>
+      <strong>2.</strong> Set the Legend 'Show' attribute to 'No' for each of the charts.<p/>
+      <strong>3.</strong> Create a new JET Legend plug-in region on the page, based on the jetLegend Plug-in. Navigate to Shared Components > Plug-ins > jetLegend, to inspect the plug-in.<p/>
+      <p>
+      For more information on the Legend visualization settings, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=legend&demo=default" target="_blank">Legend: Basic</a> example and <a href="https://www.oracle.com/webfolder/technetwork/jet-800/jsdocs/oj.ojLegend.html" target="_blank" >ojLegend</a> API.  For more information on working with Plug-ins, refer to Chapter 19.2 <a href="https://docs.oracle.com/en/database/oracle/apex/22.2/htmdb/implementing-plug-ins.html" target="_blank">Implementing Plug-ins</a> in the &PRODUCT_NAME. 20.1 User's Guide.
+      
+      
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 4960806856552906011
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Legend ======================================
+  id: 7474765978668637904
+  identification: 
+    name: Legend
+    type: JET Legend
+
+  source: 
+    sql-query: |
+      select distinct customer, 
+             'Filter: '|| customer "description"
+      from eba_demo_chart_orders 
+      order by customer asc
+
+  layout: 
+    sequence: 10
+    parent-region: Oracle JET Legend Component as a Plug-in # 7635486483838870575
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--noUI
+    - t-Region--scrollBody
+    - t-Form--noPadding
+    - margin-top-none
+    - margin-bottom-sm
+    - margin-left-none
+    - margin-right-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;'
+    - 'height:100px;"'
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      orientation: Horizontal
+      horizontal-alignment: Center
+      vertical-alignment: Middle
+      hide-and-show-behavior: On
+
+- # ====== Region: Orders By Date ==============================
+  id: 7635485582510870566
+  identification: 
+    name: Orders By Date
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: Oracle JET Legend Component as a Plug-in # 7635486483838870575
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 3664841085234016728
+    chart: 
+      type: Line with Area
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    layout: 
+      height: 200
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      time-axis-type: Mixed Frequency
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Acme Store ==================================
+      id: 3664842686923016738
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select oi.sales_date,
+                 SUM(oi.quantity * p.list_price) sales
+          from eba_demo_chart_orders oi
+          ,    eba_demo_chart_products p
+          where oi.product_id = p.product_id
+          and oi.customer = 'Acme Store'
+          group by oi.sales_date
+          order by 1 asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: SALES
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    - # ====== Series: Deli ========================================
+      id: 3664843094439016739
+      identification: 
+        name: Deli
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select oi.sales_date,
+                 SUM(oi.quantity * p.list_price) sales
+          from eba_demo_chart_orders oi
+          ,    eba_demo_chart_products p
+          where oi.product_id = p.product_id
+          and oi.customer = 'Deli'
+          group by oi.sales_date
+          order by 1 asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: SALES
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    - # ====== Series: Shop C ======================================
+      id: 3664843490732016740
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select oi.sales_date,
+                 SUM(oi.quantity * p.list_price) sales
+          from eba_demo_chart_orders oi
+          ,    eba_demo_chart_products p
+          where oi.product_id = p.product_id
+          and oi.customer = 'Shop C'
+          group by oi.sales_date
+          order by 1 asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: SALES
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    - # ====== Series: Store A =====================================
+      id: 3664843859810016740
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 40
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select oi.sales_date,
+                 SUM(oi.quantity * p.list_price) sales
+          from eba_demo_chart_orders oi
+          ,    eba_demo_chart_products p
+          where oi.product_id = p.product_id
+          and oi.customer = 'Store A'
+          group by oi.sales_date
+          order by 1 asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: SALES
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: y2 ============================================
+      id: 3664841474781016735
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+    - # ====== Axis: x =============================================
+      id: 3664841908071016737
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 3664842341947016737
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format: Currency
+        decimal-places: 0
+        currency: EUR
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Oracle JET Legend Component as a Plug-in ====
+  id: 7635486483838870575
+  identification: 
+    name: Oracle JET Legend Component as a Plug-in
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--scrollBody
+    render-components: Below Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Order Total per Customer ====================
+  id: 7635487986210870590
+  identification: 
+    name: Order Total per Customer
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 40
+    parent-region: Oracle JET Legend Component as a Plug-in # 7635486483838870575
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 3664844581715016741
+    chart: 
+      type: Pie
+
+    layout: 
+      height: 200
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Currency
+      decimal-places: 0
+      currency: EUR
+      format-scaling: Automatic
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Sales =======================================
+      id: 3664845048925016742
+      identification: 
+        name: Sales
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select oi.customer,
+                 SUM(oi.quantity * p.list_price) sales
+          from eba_demo_chart_orders oi
+          ,    eba_demo_chart_products p
+          where oi.product_id = p.product_id
+          group by oi.customer
+          order by oi.customer asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: CUSTOMER
+        value: SALES
+
+      label: 
+        show: false
+
+- # ====== Region: Orders by Product ===========================
+  id: 8358797363442466247
+  identification: 
+    name: Orders by Product
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 20
+    parent-region: Oracle JET Legend Component as a Plug-in # 7635486483838870575
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 3664845735176016743
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    layout: 
+      height: 200
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Acme Store ==================================
+      id: 3664847335862016744
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: false
+
+    - # ====== Series: Deli ========================================
+      id: 3664847692047016745
+      identification: 
+        name: Deli
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Deli'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: false
+
+    - # ====== Series: Shop C ======================================
+      id: 3664848146049016745
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: false
+
+    - # ====== Series: Store A =====================================
+      id: 3664848556363016746
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 40
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: y =============================================
+      id: 3664846088608016743
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+    - # ====== Axis: y2 ============================================
+      id: 3664846532225016744
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+    - # ====== Axis: x =============================================
+      id: 3664846910888016744
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+

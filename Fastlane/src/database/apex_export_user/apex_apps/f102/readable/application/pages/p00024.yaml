@@ -1,0 +1,681 @@
+---
+# ====== Page: Dashboard - Pies ==============================
+id: 24
+identification: 
+  name: Dashboard - Pies
+  alias: DASHBOARD-PIES
+  title: Dashboard - Pies
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: First item on page
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Information =================================
+  id: 671808939223921064
+  identification: 
+    name: Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      These examples demonstrate the various ways to style the chart title.<p/><p/>
+      
+      <strong>Default</strong> - This chart demonstrates the default styling of the chart tile - positioned above the chart, and centered.<p/>
+      
+      <strong>Title at Start</strong> - Using the following JavaScript code snippet, update the chart-level attribute <strong>JavaScript Initialization Code</strong> to style the chart title:<br/>
+      <pre>
+      function( options ){ 
+          
+          // Set chart title styling 
+          options.title = $.extend( options.title, {
+              halign: 'start', 
+              style: 'font-style:italic;color:red;'
+          });
+          return options; 
+      }</pre>
+      <p/>
+      
+      <strong>Title at End</strong> - Using the following JavaScript code snippet, update the chart-level attribute <strong>JavaScript Initialization Code</strong> to style the chart title:<br/>
+      <pre>
+      function( options ){ 
+          
+          // Set chart title styling 
+          options.title = $.extend( options.title, {
+              halign: 'end', 
+              style: 'font-style:oblique;color:blue;'
+          });
+          return options; 
+      }</pre>
+      <p/>
+      
+      <strong>Increased Font Size</strong> - Using the following JavaScript code snippet, update the chart-level attribute <strong>JavaScript Initialization Code</strong> to style the chart title:<br/>
+      <pre>
+      function( options ){ 
+          
+          // Set chart title styling 
+          options.title = $.extend( options.title, {
+              style: 'font-size:20px;color:green;'
+          });
+          return options; 
+      }</pre>
+      <p/>
+      
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: breadcrumb ==================================
+  id: 806336367766561545
+  identification: 
+    name: breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Tasks =======================================
+  id: 1314127548570298836
+  identification: 
+    name: Tasks
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pie1
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 897304960106593257
+    chart: 
+      type: Pie
+
+    title: 
+      title: Default
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    settings: 
+      pie-selection-effect: Highlight And Explode
+
+    value: 
+      pie-chart-other-threshold: 0
+      format-scaling: None
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Tasks =======================================
+      id: 897305453859593260
+      identification: 
+        name: Tasks
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select b.id,
+                 b.project label,
+                 sum(a.cost) value
+            from eba_demo_chart_tasks a,
+                 eba_demo_chart_projects b
+           where a.project = b.id
+           group by b.id, b.project
+          order by 3 desc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Percentage
+
+- # ====== Region: Employee Commissions ========================
+  id: 1314128092917298841
+  identification: 
+    name: Employee Commissions
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 897307238539593264
+    chart: 
+      type: Donut
+
+    title: 
+      title: Increased Font Size
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format-scaling: Automatic
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ){ 
+            
+            // Set chart title styling 
+            options.title = $.extend( options.title, {
+                halign: 'center', 
+                style: 'font-size:20px;color:green;'
+            });
+            return options; 
+        }
+
+    series: 
+    - # ====== Series: Tasks =======================================
+      id: 897307576239593264
+      identification: 
+        name: Tasks
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: select * from eba_demo_chart_emp
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: ENAME
+        value: COMM
+
+      label: 
+        show: true
+        position: Center
+        display-as: Percentage
+
+- # ====== Region: Tasks (Sorted) ==============================
+  id: 1314128608745298846
+  identification: 
+    name: Tasks (Sorted)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: donut1
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 897308333207593265
+    chart: 
+      type: Donut
+
+    title: 
+      title: Title at Start
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0.05
+      format: Decimal
+      decimal-places: 0
+      format-scaling: Automatic
+
+    animation: 
+      on-display: Alpha Fade
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ){ 
+            
+            // Set chart title styling 
+            options.title = $.extend( options.title, {
+                halign: 'start', 
+                style: 'font-style:italic;color:red;'
+            });
+            return options; 
+        }
+
+    series: 
+    - # ====== Series: Tasks =======================================
+      id: 897308658552593266
+      identification: 
+        name: Tasks
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select b.id,
+                 b.project label,
+                 sum(a.cost) value
+            from eba_demo_chart_tasks a,
+                 eba_demo_chart_projects b
+           where a.project = b.id
+           group by b.id, b.project
+          order by 3 desc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      label: 
+        show: true
+        position: Outside Slice
+        display-as: Label
+
+- # ====== Region: Employee Salaries ===========================
+  id: 1610401107240908672
+  identification: 
+    name: Employee Salaries
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 897314866398593281
+    chart: 
+      type: Donut
+
+    title: 
+      title: Title at End
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Decimal
+      decimal-places: 0
+      format-scaling: Automatic
+
+    animation: 
+      on-display: Alpha Fade
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ){ 
+            
+            // Set chart title styling 
+            options.title = $.extend( options.title, {
+                halign: 'end', 
+                style: 'font-style:oblique;color:blue;'
+            });
+            return options; 
+        }
+
+    series: 
+    - # ====== Series: Tasks =======================================
+      id: 897315290744593281
+      identification: 
+        name: Tasks
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: select * from eba_demo_chart_emp
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: ENAME
+        value: SAL
+
+      label: 
+        show: false
+
+- # ====== Region: About this page =============================
+  id: 2192364476886411356
+  identification: 
+    name: About this page
+    type: Static Content
+
+  source: 
+    html-code: <p>&PRODUCT_NAME. native Pie and Donut charts, using Oracle JET Data Visualizations, are showcased on this page as part of a dashboard. The charts are rendered the same size, regardless of the number of data points, and are fully responsive, rendering appropriately on the device being used to run the application. Explore the wide range of chart attributes declaratively available with our native charts, to format and customise the style of your charts.</p><p/>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--customIcons
+    - t-Alert--info
+    icon: fa-columns
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+computations: 
+- # ====== Computation: LAST_VIEW ==============================
+  id: 897316429566593283
+  identification: 
+    item-name: LAST_VIEW
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: '&APP_PAGE_ID.'
+

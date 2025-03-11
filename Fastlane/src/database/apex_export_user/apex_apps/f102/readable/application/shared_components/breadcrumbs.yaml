@@ -1,0 +1,698 @@
+---
+- # ====== Breadcrumb:  Breadcrumb =============================
+  id: 8206258843483240412
+  identification: 
+    name: ' Breadcrumb'
+
+  entries: 
+  - # ====== Entry: Sorting ======================================
+    id: 21013915875715464
+    identification: 
+      name: Sorting
+      page-number: 42
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.:::'
+        page: 42 # Sorting
+
+  - # ====== Entry: Stack Grouping ===============================
+    id: 189777616178097028
+    identification: 
+      name: Stack Grouping
+      page-number: 44
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:44:&SESSION.'
+        page: 44 # Stack Grouping
+
+  - # ====== Entry: Declarative Font Formatting ==================
+    id: 189814378554359671
+    identification: 
+      name: Declarative Font Formatting
+      page-number: 45
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:45:&SESSION.'
+        page: 45 # Declarative Font Formatting
+
+  - # ====== Entry: Box Plot =====================================
+    id: 294705841669009854
+    identification: 
+      name: Box Plot
+      page-number: 41
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:41:&SESSION.'
+        page: 41 # Box Plot
+
+  - # ====== Entry: Pyramid ======================================
+    id: 295052935460849616
+    identification: 
+      name: Pyramid
+      page-number: 43
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:43:&SESSION.'
+        page: 43 # Pyramid
+
+  - # ====== Entry: Data Densification ===========================
+    id: 366485678246499858
+    identification: 
+      name: Data Densification
+      page-number: 14
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&SESSION.::&DEBUG.:::'
+        page: 14 # Data Densification
+
+  - # ====== Entry: Chart Links ==================================
+    id: 402026840960600961
+    identification: 
+      name: Chart Links
+      page-number: 49
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:49:&APP_SESSION.::&DEBUG.:::'
+        page: 49 # Chart Links
+
+  - # ====== Entry: Manage Sample Data ===========================
+    id: 728722563728632358
+    identification: 
+      name: Manage Sample Data
+      page-number: 27
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Administration # 2370042703764112622
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:27:&SESSION.'
+        page: 27 # Manage Sample Data
+
+  - # ====== Entry: Area =========================================
+    id: 942353716804557935
+    identification: 
+      name: Area
+      page-number: 2
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:::'
+        page: 2 # Area
+
+  - # ====== Entry: Combination ==================================
+    id: 942354181225566446
+    identification: 
+      name: Combination
+      page-number: 25
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:25:&SESSION.::&DEBUG.:::'
+        page: 25 # Combination
+
+  - # ====== Entry: Dashboard - Pies =============================
+    id: 942354476499570514
+    identification: 
+      name: Dashboard - Pies
+      page-number: 24
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:24:&SESSION.::&DEBUG.:::'
+        page: 24 # Dashboard - Pies
+
+  - # ====== Entry: Funnel =======================================
+    id: 942355066256573565
+    identification: 
+      name: Funnel
+      page-number: 22
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.:::'
+        page: 22 # Funnel
+
+  - # ====== Entry: Line with Area ===============================
+    id: 942361132276619648
+    identification: 
+      name: Line with Area
+      page-number: 18
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:18:&SESSION.::&DEBUG.:::'
+        page: 18 # Line with Area
+
+  - # ====== Entry: Polar ========================================
+    id: 942361327509621106
+    identification: 
+      name: Polar
+      page-number: 19
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:19:&SESSION.::&DEBUG.:::'
+        page: 19 # Polar
+
+  - # ====== Entry: Radar ========================================
+    id: 942361512528626514
+    identification: 
+      name: Radar
+      page-number: 21
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:21:&SESSION.::&DEBUG.:::'
+        page: 21 # Radar
+
+  - # ====== Entry: Range ========================================
+    id: 942361678874629909
+    identification: 
+      name: Range
+      page-number: 23
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:23:&SESSION.::&DEBUG.:::'
+        page: 23 # Range
+
+  - # ====== Entry: Stock ========================================
+    id: 942364156347642176
+    identification: 
+      name: Stock
+      page-number: 7
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:7:&SESSION.::&DEBUG.:::'
+        page: 7 # Stock
+
+  - # ====== Entry: Customizing Tooltip Labels ===================
+    id: 1005320227899016251
+    identification: 
+      name: Customizing Tooltip Labels
+      page-number: 48
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:48:&SESSION.'
+        page: 48 # Customizing Tooltip Labels
+
+  - # ====== Entry: Tasks per Project ============================
+    id: 1042610994067315281
+    identification: 
+      name: Tasks per Project
+      page-number: 47
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Pie # 2586238806996571063
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:47:&APP_SESSION.::&DEBUG.:::'
+        page: 47 # Tasks per Project
+
+  - # ====== Entry: Interactive Report ===========================
+    id: 1310230597123520075
+    identification: 
+      name: Interactive Report
+      page-number: 13
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Pie # 2586238806996571063
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:13:&SESSION.'
+        page: 13 # Interactive Report
+
+  - # ====== Entry: Line =========================================
+    id: 1311222501722955497
+    identification: 
+      name: Line
+      page-number: 15
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:15:&SESSION.::&DEBUG.:::'
+        page: 15 # Line
+
+  - # ====== Entry: Bubble =======================================
+    id: 1633556471189538152
+    identification: 
+      name: Bubble
+      page-number: 11
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.:::'
+        page: 11 # Bubble
+
+  - # ====== Entry: Status Meter Gauge ===========================
+    id: 2137623158723222364
+    identification: 
+      name: Status Meter Gauge
+      page-number: 5
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:::'
+        page: 5 # Status Meter Gauge
+
+  - # ====== Entry: Application Theme Style ======================
+    id: 2139740452117592926
+    identification: 
+      name: Application Theme Style
+      page-number: 10
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.'
+        page: 10 # Application Theme Style
+
+  - # ====== Entry: Employees Report =============================
+    id: 2300643752441178107
+    identification: 
+      name: Employees Report
+      page-number: 29
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Bar # 2598813696685422540
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:29:&SESSION.::&DEBUG.:::'
+        page: 29 # Employees  Report
+
+  - # ====== Entry: Administration ===============================
+    id: 2370042703764112622
+    identification: 
+      name: Administration
+      page-number: 17
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:17:&SESSION.::&DEBUG.:::'
+        page: 17 # Administration
+
+  - # ====== Entry: Pie ==========================================
+    id: 2586238806996571063
+    identification: 
+      name: Pie
+      page-number: 4
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:::'
+        page: 4 # Pie
+
+  - # ====== Entry: Gantt ========================================
+    id: 2586486808696600713
+    identification: 
+      name: Gantt
+      page-number: 3
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:::'
+        page: 3 # Gantt
+
+  - # ====== Entry: Dashboard ====================================
+    id: 2588082513384959176
+    identification: 
+      name: Dashboard
+      page-number: 6
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.:::'
+        page: 6 # Dashboard
+
+  - # ====== Entry: Scatter ======================================
+    id: 2589637393997154431
+    identification: 
+      name: Scatter
+      page-number: 8
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.:::'
+        page: 8 # Scatter
+
+  - # ====== Entry: Bar ==========================================
+    id: 2598813696685422540
+    identification: 
+      name: Bar
+      page-number: 9
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:9:&SESSION.::&DEBUG.:::'
+        page: 9 # Bar
+
+  - # ====== Entry: Help =========================================
+    id: 3253080082305345429
+    identification: 
+      name: Help
+      page-number: 12
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Home # 8206259255331240415
+
+    link: 
+      target: 
+        url: 'f?p=&FLOW_ID.:12:&SESSION.'
+        app: '&FLOW_ID.'
+        page: 12
+
+  - # ====== Entry: JET Plug-in ==================================
+    id: 3664856012070234362
+    identification: 
+      name: JET Plug-in
+      page-number: 26
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:26:&SESSION.::&DEBUG.:::'
+        page: 26 # Oracle JET ojLegend Plug-in
+
+  - # ====== Entry: Reference ====================================
+    id: 3664953015195534549
+    identification: 
+      name: Reference
+      page-number: 28
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.:::'
+        page: 28 # Reference
+
+  - # ====== Entry: JavaScript Code Customizations ===============
+    id: 3664953225332536544
+    identification: 
+      name: JavaScript Code Customizations
+      page-number: 30
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.:::'
+        page: 30 # JavaScript Code Customizations
+
+  - # ====== Entry: Dynamic Actions ==============================
+    id: 3665273857083134890
+    identification: 
+      name: Dynamic Actions
+      page-number: 31
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.:::'
+        page: 31 # Dynamic Actions
+
+  - # ====== Entry: Series Color =================================
+    id: 3665282479889176947
+    identification: 
+      name: Series Color
+      page-number: 32
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:32:&SESSION.'
+        page: 32 # Series Color
+
+  - # ====== Entry: Y2 Axis ======================================
+    id: 3665292218370223459
+    identification: 
+      name: Y2 Axis
+      page-number: 33
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:33:&SESSION.'
+        page: 33 # Y2 Axis
+
+  - # ====== Entry: JET Plug-in Component ========================
+    id: 3665295962016282289
+    identification: 
+      name: JET Plug-in Component
+      page-number: 34
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:34:&SESSION.'
+        page: 34 # JET Plug-in Component
+
+  - # ====== Entry: Time Axis ====================================
+    id: 3665303918162338171
+    identification: 
+      name: Time Axis
+      page-number: 35
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:35:&SESSION.'
+        page: 35 # Time Axis
+
+  - # ====== Entry: Zoom & Scroll ================================
+    id: 3665308730467366112
+    identification: 
+      name: Zoom & Scroll
+      page-number: 36
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:36:&SESSION.'
+        page: 36 # Zoom & Scroll
+
+  - # ====== Entry: Customizing Data Labels ======================
+    id: 3667657114069985640
+    identification: 
+      name: Customizing Data Labels
+      page-number: 37
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:37:&SESSION.::&DEBUG.:::'
+        page: 37 # Customizing Data Labels
+
+  - # ====== Entry: Formatting Values ============================
+    id: 3667694366179108201
+    identification: 
+      name: Formatting Values
+      page-number: 38
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:38:&SESSION.'
+        page: 38 # Formatting Values
+
+  - # ====== Entry: 3D Effect ====================================
+    id: 3956174778972430450
+    identification: 
+      name: 3D Effect
+      page-number: 39
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Reference # 3664953015195534549
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:39:&SESSION.'
+        page: 39 # 3D Effect
+
+  - # ====== Entry: Home =========================================
+    id: 8206259255331240415
+    identification: 
+      name: Home
+      page-number: 1
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:::'
+        page: 1 # Sample Charts
+
