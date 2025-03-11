@@ -5,7 +5,7 @@
     name: Navigation Menu
 
   subscription: 
-    version-number: 7711734
+    version-number: 9026242
 
   source: 
     type: Static Values
@@ -56,6 +56,33 @@
       target: 
         url: 'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
         page: 4 # Tester
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Philipp Test =================================
+    id: 8959607802770638
+    label: 
+      label: Philipp Test
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 2
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+        page: 2 # Philipp Test
 
     click-counting: 
       count-clicks: false

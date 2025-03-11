@@ -33,3 +33,17 @@
         url: 'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
         page: 4 # Tester
 
+  - # ====== Entry: Philipp Test =================================
+    id: 8960599276770645
+    identification: 
+      name: Philipp Test
+      page-number: 2
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+        page: 2 # Philipp Test
+
