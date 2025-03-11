@@ -1,0 +1,46 @@
+---
+- # ====== Text Message: HELP ==================================
+  id: 2580769214662936891
+  identification: 
+    name: HELP
+
+  message: 
+    text: Help
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093873590
+
+- # ====== Text Message: LOGOUT ================================
+  id: 2580807888820938857
+  identification: 
+    name: LOGOUT
+
+  message: 
+    text: Logout
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093873590
+
+- # ====== Text Message: USER ==================================
+  id: 2673132589678171405
+  identification: 
+    name: USER
+
+  message: 
+    text: User
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093873590
+

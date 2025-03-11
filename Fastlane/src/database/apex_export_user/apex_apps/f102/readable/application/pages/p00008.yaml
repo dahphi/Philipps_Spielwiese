@@ -1,0 +1,828 @@
+---
+# ====== Page: Scatter =======================================
+id: 8
+identification: 
+  name: Scatter
+  alias: SCATTER
+  title: Scatter
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: First item on page
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Scatter (Dynamic Y-Axis Min/Max via JavaScrip
+  id: 429566168376755040
+  identification: 
+    name: Scatter (Dynamic Y-Axis Min/Max via JavaScript Code)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: scatterChart
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: Use the select lists below to change the Y-Axis minimum and maximum values of the chart.  Click <b>Set</b> to see the values reflected on the chart.<p/>
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 429566291043755041
+    chart: 
+      type: Scatter
+
+    title: 
+      title: Dummy Corp Stock Value
+
+    layout: 
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: None
+
+    advanced: 
+      initialization-javascript-function: |
+        function (options) {
+            options.yAxis = { 
+                min: $v('P8_Y_MIN'),
+                max: $v('P8_Y_MAX')
+            };    
+            
+            return options;
+        }
+
+    series: 
+    - # ====== Series: Value =======================================
+      id: 429566361403755042
+      identification: 
+        name: Value
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT pricing_date LABEL, 
+                 OPENING_VAL X_VALUE, 
+                 CLOSING_VAL Y_VALUE
+          FROM EBA_DEMO_CHART_STOCKS
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: LABEL
+        x: X_VALUE
+        y: Y_VALUE
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Star
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: y =============================================
+      id: 429566495311755043
+      identification: 
+        name: y
+        show-axis: true
+        title: Closing Value
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+    - # ====== Axis: x =============================================
+      id: 429566583667755044
+      identification: 
+        name: x
+        show-axis: true
+        title: Opening Value
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+- # ====== Region: New =========================================
+  id: 429567042568755048
+  identification: 
+    name: New
+    type: Region Display Selector
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: No
+
+- # ====== Region: Scatter (Dynamic Y-Axis Min/Max) Information 
+  id: 429567343041755051
+  identification: 
+    name: Scatter (Dynamic Y-Axis Min/Max) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates how to dynamically change the y-axis minimum and maximum values, based upon values selected by the end user.<p/>
+      
+      <strong>JavaScript Code</strong> - Use the chart-level advanced attribute to initialize the chart using JavaScript code that uses the values of page items to set the y-axis minimum and maximum values.
+      <pre>
+      function (options) {
+          options.yAxis = { 
+              min: $v('P1_Y_MIN'),
+              max: $v('P1_Y_MAX')
+          };
+          return options;
+      }
+      </pre>
+      ... where P1_Y_MAX and P1_Y_MIN would be the two page items used for setting the values.
+      <p/>
+      <strong>Dynamic Action</strong> - Use a dynamic action, triggerd by the click of a button, to update the chart with y-axis minimum and maximum values selected by the end user.<p/>
+      
+      <p>
+      For more information on the Oracle JET ojChart yAxis object, refer to the Oracle JET ojChart API <a href="&OJCHART_API_URL.#yAxis.min" target="_blank">ojChart: yAxis object</a>.
+
+  layout: 
+    sequence: 10
+    parent-region: Scatter (Dynamic Y-Axis Min/Max via JavaScript Code) # 429566168376755040
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Below Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Scatter (Percent Format) ====================
+  id: 577826603767819390
+  identification: 
+    name: Scatter (Percent Format)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 577826858142819394
+    chart: 
+      type: Scatter
+
+    title: 
+      title: OECD Members Pension Contribution Revenues, 2011
+
+    layout: 
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: 2011 ========================================
+      id: 577828062179819404
+      identification: 
+        name: 2011
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select country country,
+                 name,
+                 (employee/100) employee,
+                 (employer/100) employer,
+                 country||' - Total Contribution:'||total||'%' tooltip
+           from eba_demo_chart_stats
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: COUNTRY
+        x: EMPLOYEE
+        y: EMPLOYER
+        custom-tooltip: TOOLTIP
+        label-tooltip: NAME
+
+      line: 
+        style: Dashed
+        type: None
+
+      marker: 
+        show: Automatic
+        shape: Star
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 577827287373819400
+      identification: 
+        name: x
+        show-axis: true
+        title: Employee Contribution (% of GDP)
+
+      value: 
+        format: Percent
+        decimal-places: 1
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 577827660226819402
+      identification: 
+        name: y
+        show-axis: true
+        title: Employer Contribution (% of GDP)
+
+      value: 
+        format: Percent
+        decimal-places: 1
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Scatter (Percent Format) Information ========
+  id: 577828518986819406
+  identification: 
+    name: Scatter (Percent Format) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates various attributes of a Scatter chart.<p/>
+      
+      <strong>Marker</strong> - Use the series-level attribute to define the marker representing the data information for the chart.<p/>
+      <strong>Format</strong> - Use the axis-level attribute to define date/time and numeric formatting, such as currency, decimal places and date formatting. The <strong>Percent</strong> Format allows a user to format the numeric values on the axes and tooltips as percent values. When a number is formatted as a percent, the values on the chart are multiplied by 100.<p/>
+      <strong>Custom Tooltip</strong> - Use this series-level attribute to include custom data in the tooltips displayed as the mouse moves over the data points of the chart.<p/>
+      
+      <p>
+      For more information on the Oracle JET Scatter chart, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=scatterChart&demo=attrGroups" target="_blank">Scatter Chart: Attribute Groups</a> example. The chart data is based on information contained in the <a href="http://www.oecd.org/pensions/public-pensions/OECDPensionsAtAGlance2013.pdf" target="_blank">OECD Pensions at a Glance 2013</a> report.
+
+  layout: 
+    sequence: 10
+    parent-region: Scatter (Percent Format) # 577826603767819390
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Below Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: About this page =============================
+  id: 1317575397215155568
+  identification: 
+    name: About this page
+    type: Static Content
+
+  source: 
+    html-code: <p>&PRODUCT_NAME. native Scatter charts, using Oracle JET Data Visualizations,is showcased on this page. Explore the wide range of chart attributes declaratively available with our native charts, to format and customise the style of your charts. Scatter charts define data items using x and y values, making them useful for viewing relationships between 2 dimensions. Scatter charts are commonly used for displaying and comparing numeric values, such as scientific, statistical, and engineering data. These charts are useful to show the relationships among the numeric values in several data series, and they can plot two groups of numbers as one series of xy coordinates.</p>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--customIcons
+    - t-Alert--info
+    icon: fa-scatter-chart
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 2589637090601154428
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P8_Y_MIN =================================
+  id: 429566700774755045
+  identification: 
+    name: P8_Y_MIN
+    type: Select List
+
+  label: 
+    label: Minimum Value
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Scatter (Dynamic Y-Axis Min/Max via JavaScript Code) # 429566168376755040
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:0;0,50;50,90;90'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P8_Y_MAX =================================
+  id: 429566824776755046
+  identification: 
+    name: P8_Y_MAX
+    type: Select List
+
+  label: 
+    label: Maximum Value
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: Scatter (Dynamic Y-Axis Min/Max via JavaScript Code) # 429566168376755040
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:130;130,170;170,200;200,250;250,300;300'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 300
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: Set =========================================
+  id: 429566912880755047
+  identification: 
+    button-name: Set
+    label: Set
+
+  layout: 
+    sequence: 40
+    region: Scatter (Dynamic Y-Axis Min/Max via JavaScript Code) # 429566168376755040
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--small
+    - t-Button--primary
+    - t-Button--padRight
+    - t-Button--padTop
+    - t-Button--padBottom
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Set Y Axis Settings =================
+  id: 429567060705755049
+  identification: 
+    name: Set Y Axis Settings
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Set # 429566912880755047
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 429567167367755050
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        $("#scatterChart_jet").ojChart({ 
+          yAxis: { 
+            min: $v('P8_Y_MIN'),
+            max: $v('P8_Y_MAX')
+          }
+        });
+
+    execution: 
+      sequence: 10
+      event: Set Y Axis Settings # 429567060705755049
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
