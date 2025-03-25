@@ -5,6 +5,7 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 <!--BEGIN-->
 <include file="1_0/release.changelog.xml" relativeToChangelogFile="true"/>
+<include file="1_1/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="next/release.changelog.xml" relativeToChangelogFile="true"/>
 <!--END-->
 <include file="apex/apex.changelog.xml" relativeToChangelogFile="true"/>
