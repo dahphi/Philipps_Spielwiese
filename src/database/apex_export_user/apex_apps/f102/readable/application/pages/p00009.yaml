@@ -1,0 +1,2573 @@
+---
+# ====== Page: Bar ===========================================
+id: 9
+identification: 
+  name: Bar
+  alias: BAR
+  title: Bar
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+html-header: 
+  html-header: |
+    <style>
+    ul.barGraph{margin:12px !important;list-style:none;white-space:nowrap}
+    ul.barGraph li{display:inline-block;width:48px}
+    ul.barGraph li:hover big small{background-color:#4A6D98}
+    ul.barGraph li.barHeaders{width:128px}
+    ul.barGraph li.barHeaders > span{text-align:left}
+    ul.barGraph li > label{display:block;font:normal 11px/12px Arial,sans-serif;color:#444;text-align:center}
+    ul.barGraph li > label span{display:block;font:normal 11px/12px Arial,sans-serif;color:#767676}
+    ul.barGraph li > big{height:120px;margin:8px;position:relative;display:block}
+    ul.barGraph li > big > small{display:block;position:absolute;bottom:0;width:30px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;background-color:#6A9CDA;-moz-box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;-webkit-box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;border:1px solid #4A6D98}
+    ul.barGraph li > span{display:block;text-align:center;font:normal 11px/16px Arial,sans-serif;color:#444;border-top:1px solid #F0F0F0;padding:8px}
+    ul.barGraph li > span.noBorder{border-top:none;padding-top:0}
+    ul.barGraph li > span a{color:##405580}
+    </style>
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Bar Chart (Dual Y Axis with formatted Labels)
+  id: 104622721108567682
+  identification: 
+    name: Bar Chart (Dual Y Axis with formatted Labels)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: dualChart
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 104623204037567687
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: false
+
+    layout: 
+      maximum-width: 700
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Top
+      hide-and-show-behavior: Rescale
+
+    series: 
+    - # ====== Series: Store A =====================================
+      id: 104623310690567688
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Inside Bar Edge
+        font-size: 14
+        font-color: WHITE
+
+    - # ====== Series: Acme Store ==================================
+      id: 104623466312567689
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+        font-size: 14
+        font-color: BLUE
+
+    - # ====== Series: Shop C ======================================
+      id: 104623560541567690
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: true
+
+      label: 
+        show: true
+        position: Outside Bar Edge
+        font-size: 14
+        font-color: '#309fdb'
+
+      advanced: 
+        static-id: c_series
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 104623643652567691
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 104623688244567692
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+    - # ====== Axis: y2 ============================================
+      id: 104623876097567693
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+- # ====== Region: Default Color Palette =======================
+  id: 420342182429410952
+  identification: 
+    name: Default Color Palette
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 10
+    parent-region: Bar Chart (Series Colors) # 860661560376073165
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: bar_1
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: '* Values Sorted Ascending'
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 420342276093410953
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Horizontal
+      stack: false
+
+    layout: 
+      height: 340
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: false
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: false
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Fruit Sales =================================
+      id: 420342420582410954
+      identification: 
+        name: Fruit Sales
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+          order by b.quantity asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 420342463795410955
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 420342589826410956
+      identification: 
+        name: y
+        show-axis: true
+        title: Quantity
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Minimum
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Bar Chart (Series Colors) Information =======
+  id: 429566141153755039
+  identification: 
+    name: Bar Chart (Series Colors) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      These examples demonstrate the various ways to control the colors used for the chart series.<p/><p/>
+      
+      <strong>Default Color Palette</strong> - The JET chart color palette is integrated with Universal Theme.  So you can easily change the default color palette using Theme Roller, allowing you to globally define the colour scheme for your application - for your charts and all other components. Simply launch Theme Roller on your chart page, click the <b>Show All</b> button, to expose all available groups, then scroll down to the Palette group and start making your color selections.  Once you've defined your selection, click 'Save As' to save the changes to a new Theme Style. Then click 'Set as Current', to apply your changes to the application.  Note that the changed color palette will be applied to all components of your application, not just to charts.<p/>
+      <strong>Series-Level Color Attribute</strong> - We declaratively support the definition of a series color via the series-level <b>Color</b> attribute.  You can type the color, or use the Quick Pick or Color Picker, to make your selection.<p/>
+      
+      <strong>SQL Series-Defined Colors</strong> - If you wish to apply colors based on a column in your table, or dynamically via your SQL query, then all you need to do is include the column/alias in your query and reference it in the series-level <b>Color</b> attribute.  For example:<br/>
+      <pre>
+      select a.product_name, 
+             b.quantity, 
+             b.customer,
+             case when b.quantity > 50 then 'gold'
+                  when b.quantity <= 30 then 'red' 
+               when b.quantity > 30 then 'green'
+               else 'blue'
+             end colors
+      from eba_demo_chart_products a, eba_demo_chart_orders b
+      where a.product_id = b.product_id
+      and customer = 'Store A'
+      </pre>
+      ...where a column alias COLORS has been defined.  The column alias can then be referenced in the series color via the series-level Color attribute, using <b>&amp;COLORS.</b> syntax.<p/><p/>
+      
+      <strong>Custom Colors via JavaScript</strong> - Use the chart-level advanced attribute <b>JavaScript Code</b> to customize the chart colors at chart initialization. For example,:<p/>
+      <pre>
+      function( options ){ 
+              
+          // Setup a callback function which gets called when data is retrieved, it allows to manipulate the series 
+          options.dataFilter = function( data ) { 
+              data.series[ 0 ].items[0].color = "red"; 
+              data.series[ 0 ].items[1].color = "blue"; 
+              data.series[ 0 ].items[2].color = "yellow"; 
+              data.series[ 0 ].items[3].color = "green"; 
+              data.series[ 0 ].items[4].color = "purple"; 
+              return data; 
+          };
+              
+          // Set chart initialization options 
+          return options; 
+      }
+      </pre>
+      
+      <p>
+      <strong>Sort Order</strong> - These examples demonstrate the use of an ORDER BY in the chart SQL Query to control the sort ordering of a single-series chart.
+      <p>
+      
+
+  layout: 
+    sequence: 50
+    parent-region: Bar Chart (Series Colors) # 860661560376073165
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Bar Chart (Stacked) =========================
+  id: 432097714261983745
+  identification: 
+    name: Bar Chart (Stacked)
+    type: Chart
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select id,
+             project as label,
+             NVL((select sum(t.budget) from eba_demo_chart_tasks t where t.project =  p.id and t.budget > t.cost),0) as value,
+             'under budget' as series ,
+             'green' as color
+        from eba_demo_chart_projects p
+      union all
+      select id,
+             project as label,
+             NVL((select sum(t.budget) from eba_demo_chart_tasks t where t.project =  p.id and t.budget <= t.cost),0) as value,
+             'over budget' as series ,
+             'red' as color
+        from eba_demo_chart_projects p
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 432097758323983746
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: false
+
+    layout: 
+      height: 450
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: None
+
+    series: 
+    - # ====== Series: New =========================================
+      id: 432097934561983747
+      identification: 
+        name: New
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Region Source
+
+      column-mapping: 
+        series-name: SERIES
+        label: LABEL
+        value-aggregation: No Aggregation
+        value: VALUE
+        label-tooltip: LABEL
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 432098009092983748
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 432098125842983749
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Bar Chart (Stack Label & Stack Category) ====
+  id: 432098225419983750
+  identification: 
+    name: Bar Chart (Stack Label & Stack Category)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: stackCategoryChart
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 432098275294983751
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: true
+
+    layout: 
+      maximum-width: 700
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Top
+      hide-and-show-behavior: Rescale
+
+    series: 
+    - # ====== Series: Store A =====================================
+      id: 432098434048983752
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+        stack-category: stack1
+
+      label: 
+        show: true
+        position: Inside Bar Edge
+        css-styling: 
+        - 'font-size:14px;color:white;'
+
+    - # ====== Series: Acme Store ==================================
+      id: 432098744639983755
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+        stack-category: stack1
+
+      label: 
+        show: true
+        position: Automatic
+        css-styling: 
+        - 'font-size:14px;color:blue;'
+
+    - # ====== Series: Shop C ======================================
+      id: 432098842887983756
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+        stack-category: stack2
+
+      label: 
+        show: true
+        position: Outside Bar Edge
+        css-styling: 
+        - 'font-size:14px;color:blue;'
+
+      advanced: 
+        static-id: c_series
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 432098483951983753
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 432098630902983754
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+    - # ====== Axis: y2 ============================================
+      id: 432479006332739121
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+- # ====== Region: Bar Chart (Stack Label & Stack Category) Info
+  id: 432475195553249193
+  identification: 
+    name: Bar Chart (Stack Label & Stack Category) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates 2 attributes of a Bar chart.<p/><p/>
+      
+      <strong>Stack Label</strong> - Use this chart-level attribute to display the total values of stacked data items on a chart.<p/>
+      <strong>Stack Category</strong> - Set the series-level attribute to assign a series to a specific category on the chart.  This attribute allows you to render multiple stacks on a stacked chart, without the need to use JavaScript code.<p/>
+      
+      <p>
+      For more information on the Stack Label and Stack Category attributes, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet-800/jetCookbook.html?component=barChart&demo=dataLabels" target="_blank">Bar Chart: Data Labels</a> and <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=chart&demo=stackCategory" target="_blank">Stack Categories</a> examples, and the <a href="&OJCHART_API_URL.#stackLabel" target="_blank">stackLabel</a> attribute in the ojChart API guide.
+      
+      
+
+  layout: 
+    sequence: 10
+    parent-region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Bar Chart (Stacked Percent) =================
+  id: 665076226374867525
+  identification: 
+    name: Bar Chart (Stacked Percent)
+    type: Chart
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select id,
+             project as label,
+             NVL((select sum(t.budget) from eba_demo_chart_tasks t where t.project =  p.id and t.budget > t.cost),0) as value,
+             'under budget' as series ,
+             'green' as color
+        from eba_demo_chart_projects p
+      union all
+      select id,
+             project as label,
+             NVL((select sum(t.budget) from eba_demo_chart_tasks t where t.project =  p.id and t.budget <= t.cost),0) as value,
+             'over budget' as series ,
+             'red' as color
+        from eba_demo_chart_projects p
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 665076269225867526
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: false
+
+    layout: 
+      height: 450
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: None
+
+    series: 
+    - # ====== Series: New =========================================
+      id: 665076372938867527
+      identification: 
+        name: New
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Region Source
+
+      column-mapping: 
+        series-name: SERIES
+        label: LABEL
+        value-aggregation: No Aggregation
+        value: VALUE
+        label-tooltip: LABEL
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 665076539521867528
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 665076567434867529
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        minimum: 0
+        maximum: 1
+        format: Percent
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Bar Chart (Stacked Percent) Information =====
+  id: 665076679751867530
+  identification: 
+    name: Bar Chart (Stacked Percent) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates various attributes of a Stacked Bar chart, with values represented in percent.<p/>
+      
+      <strong>Format</strong> - To represent your data as percent value on a Stacked Bar Chart, you must set this y-axis level attribute to <strong>Percent</strong>.  The associated attributes <strong>Minimum</strong> and <strong>Maximum</strong> must be set to <strong>0</strong>, and <strong>1</strong> respectively.  This will ensure the y-axis renders from 0% to 100%.  When a format of 'Percent' is used, Oracle JET interprets a value of 1 = 100%.  On a Stacked Percent Bar chart, &PRODUCT_NAME. will automatically calculates the fractional values for the chart series, based on the sum of the values within each group.  This allows Oracle JET to accurately represent the data in percent format on the stacked chart.<p/>
+      
+      <strong>Hide and Show Behavior</strong> - This chart-level attribute can be used to support hide and show behavior using the chart legend. The option <strong>With Rescale</strong> Hide and Show behavior, allows a user to hide and unhide a series by clicking the chart legend markers. This allows the user to focus on specific series that are interesting to them. <strong>NOTE</strong>: The chart axes will not rescale on a stacked chart displaying percent values. The y-axis will remain representing 0% - 100%.<p/>
+      
+      <p>
+      
+      
+
+  layout: 
+    sequence: 20
+    parent-region: Bar Chart (Stacked Percent) # 665076226374867525
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Bar Chart (Series Name Column Mapping) ======
+  id: 728366300749593532
+  identification: 
+    name: Bar Chart (Series Name Column Mapping)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 90
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 728366362896593533
+    chart: 
+      type: Bar
+
+    title: 
+      title: Jobs By Department
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: true
+
+    layout: 
+      height: 450
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: None
+
+    series: 
+    - # ====== Series: Jobs By Department ==========================
+      id: 728366526686593534
+      identification: 
+        name: Jobs By Department
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select job, deptno, avg(sal) avg_sal 
+            from eba_demo_chart_emp 
+           group by job, deptno 
+           order by deptno
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        series-name: JOB
+        label: DEPTNO
+        value: AVG_SAL
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:29:&SESSION.:IG[emp]_emp_details:&DEBUG.:CR,:IG_DEPTNO:&DEPTNO.'
+          page: 29 # Employees  Report
+          request: IG[emp]_emp_details
+          clear-cache: CR
+          values: 
+            ig_deptno: '&DEPTNO.'
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 728366606352593535
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 728366698336593536
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Bar Chart (Series Colors) ===================
+  id: 860661560376073165
+  identification: 
+    name: Bar Chart (Series Colors)
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Series-Level Color Attribute ================
+  id: 860661710403073166
+  identification: 
+    name: Series-Level Color Attribute
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 20
+    parent-region: Bar Chart (Series Colors) # 860661560376073165
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: '* Values Sorted Descending'
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 860661822919073167
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Horizontal
+      stack: false
+
+    layout: 
+      height: 340
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: false
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: false
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Fruit Sales =================================
+      id: 860661889234073168
+      identification: 
+        name: Fruit Sales
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+          order by b.quantity desc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        color: '#FC3254'
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 860661970901073169
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 860662104516073170
+      identification: 
+        name: y
+        show-axis: true
+        title: Quantity
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Minimum
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Custom Colors via JavaScript ================
+  id: 898557688346956221
+  identification: 
+    name: Custom Colors via JavaScript
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 40
+    parent-region: Bar Chart (Series Colors) # 860661560376073165
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: '* Labels Sorted Descending'
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 898557846156956222
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Horizontal
+      stack: false
+
+    layout: 
+      height: 340
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: false
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: false
+      show-value: true
+
+    legend: 
+      show: false
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ){ 
+                
+            // Setup a callback function which gets called when data is retrieved, it allows to manipulate the series 
+            options.dataFilter = function( data ) { 
+                data.series[ 0 ].items[0].color = "red"; 
+                data.series[ 0 ].items[1].color = "blue"; 
+                data.series[ 0 ].items[2].color = "yellow"; 
+                data.series[ 0 ].items[3].color = "green"; 
+                data.series[ 0 ].items[4].color = "purple"; 
+                return data; 
+            };
+                
+            // Set chart initialization options 
+            return options; 
+        }
+
+    series: 
+    - # ====== Series: Fruit Sales =================================
+      id: 898557938548956223
+      identification: 
+        name: Fruit Sales
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+          order by a.product_name desc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 898558022867956224
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 898558086347956225
+      identification: 
+        name: y
+        show-axis: true
+        title: Quantity
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Minimum
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: SQL Series-Defined Colors ===================
+  id: 898558234232956226
+  identification: 
+    name: SQL Series-Defined Colors
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: Bar Chart (Series Colors) # 860661560376073165
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: '* Labels Sorted Ascending'
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 898558264998956227
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Horizontal
+      stack: false
+
+    layout: 
+      height: 340
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: false
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: false
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Fruit Sales =================================
+      id: 898558385279956228
+      identification: 
+        name: Fruit Sales
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, 
+                 b.quantity, 
+                 b.customer,
+                 case when b.quantity > 50 then 'gold'
+                      when b.quantity <= 30 then 'red' 
+                   when b.quantity > 30 then 'green'
+                   else 'blue'
+                 end colors
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+          order by a.product_name asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        color: '&COLORS.'
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 898558491404956229
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 898558586594956230
+      identification: 
+        name: y
+        show-axis: true
+        title: Quantity
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Minimum
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: About this page =============================
+  id: 1312072597465285991
+  identification: 
+    name: About this page
+    type: Static Content
+
+  source: 
+    html-code: <p>&PRODUCT_NAME. native Bar charts, using Oracle JET Data Visualizations, and our plug-in based bar charts are showcased on this page. Explore the wide range of chart attributes declaratively available with our native charts, to format and customise the style of your charts. With plug-in based bar charts, you can display labels in a legend or with rollover labels on the bars. Drill down links are controlled via plug-in attributes. Oracle APEX region plug-ins allow APEX developers to extend the APEX application builder with custom solutions not currently available in Oracle APEX.</p>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--customIcons
+    - t-Alert--info
+    icon: fa-bar-chart
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: HTML 5 Bar Chart SQL Source =================
+  id: 1317807784985103227
+  identification: 
+    name: HTML 5 Bar Chart SQL Source
+    type: Source Display
+
+  layout: 
+    sequence: 40
+    parent-region: HTML 5 Bar Chart (Plug-in) # 2599190086964455257
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      region-static-id: WITHCOLOR
+
+- # ====== Region: Region Display Selector =====================
+  id: 2125423576701326698
+  identification: 
+    name: Region Display Selector
+    type: Region Display Selector
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: No
+
+- # ====== Region: Bar Chart (Series Name Column Mapping) Inform
+  id: 2156682972979512642
+  identification: 
+    name: Bar Chart (Series Name Column Mapping) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates various attributes of a multi-series Bar chart, with links defined on each chart element. Oracle JET requires that each series of a multi-series chart contains a data point for each label that is displayed on the x-axis.  With APEX 5.1.3, we introduced automatically filling in of any gaps in a given series, to densify the data and ensure the resulting data can be rendered correctly by Oracle JET. In APEX 18.1, we have introduced two new declarative options, to allow you to control whether the densification should be applied to your multi-series chart, and the sort order of the chart data. The options are:<br/>
+      
+      <ul>
+      <li><strong>Fill Gaps in Chart Data</strong>: by default, this is set to <strong>Yes</strong>, to indicate that the data densification logic will be applied to your multi-series chart. Try switching this option to No, to inspect the rendered chart.  Without the densification logic applied, data points are not rendered in the correct position on the chart.</li>
+      <li><strong>Sort Order</strong>: by default, this is set to <strong>Label - Ascending</strong>.  The option is only available for a multi-series chart, where the <strong>Fill Gaps in Chart Data</strong> attribute has been set to Yes.</li>
+      </ul>
+      
+      <strong>Link</strong> - This series-level attribute can be set to define a link on the chart element.  For this example, the new Interactive Grid URL Filtering support is demonstrated here.  When you click on a chart element, the URL will redirect you to page 29 in the application, which contains an Interactive Grid saved report on the EBA_DEMO_CHART_EMP table.  The report will filter information based upon the department number (DEPTNO) associated with the selected chart element.  The URL Filtering is achieved by defining a link on the chart series, with the following settings:
+      <ul>
+      <li> <strong>Link Type</strong> = Redirect to Page</li>
+      <li> <strong>Target</strong> = Page 29</li> 
+      <li> <strong>Link Builder Target settings:</strong></i> 
+      <ul>
+      <li> <strong>Set Item Name</strong> = IG_DEPTNO     - using the <i>IG_</i> syntax to reference a column of the Interactive Grid</i> 
+      <li> <strong>Set Item Value</strong> = &amp;DEPTNO.</i> 
+      <li> <strong>Clear/Reset Action</strong> = 'Clear Regions'</li> 
+      <li> <strong>Advanced Request</strong> = IG[<i>emp</i>]_<i>emp_details</i>  -  where <i>emp</i> is the region static ID, and <i>emp_details</i> is the saved report name.</li> 
+      </ul>
+      </ul>
+      <p/><p/>
+      <strong>Series Name</strong> - This series-level attribute can be used to handle the rendering of a multi-series chart, based upon your multi-series dynamic query defined either at series level or region level.
+      <p>
+      
+      
+
+  layout: 
+    sequence: 10
+    parent-region: Bar Chart (Series Name Column Mapping) # 728366300749593532
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: breadcrumb ==================================
+  id: 2598813284886422540
+  identification: 
+    name: breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: HTML 5 Bar Chart (Plug-in) ==================
+  id: 2599190086964455257
+  identification: 
+    name: HTML 5 Bar Chart (Plug-in)
+    type: HTML 5 Bar Chart
+
+  source: 
+    sql-query: |
+      select task_name,
+             budget
+        from eba_demo_chart_tasks
+      order by task_name
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - t-Region--noPadding
+    - '#DEFAULT#'
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: WITHCOLOR
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      label-column: TASK_NAME
+      value-column: BUDGET
+      format-mask: $9999
+      value-display: Value
+      bar-width-calculation: Absolute
+      display-type: Text Chart
+      text-position: Inline
+      color-scheme: Theme Colors
+      maximum-rows: 5
+      message-when-no-data-found: No data found.
+
+buttons: 
+- # ====== Button: Stack =======================================
+  id: 432099127399983759
+  identification: 
+    button-name: Stack
+    label: Stack
+
+  layout: 
+    sequence: 10
+    region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillStart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Unstack =====================================
+  id: 432099244845983760
+  identification: 
+    button-name: Unstack
+    label: Unstack
+
+  layout: 
+    sequence: 20
+    region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillEnd
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Horizontal ==================================
+  id: 432099698078983765
+  identification: 
+    button-name: Horizontal
+    label: Horizontal
+
+  layout: 
+    sequence: 30
+    region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-bars
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Vertical ====================================
+  id: 432099822914983766
+  identification: 
+    button-name: Vertical
+    label: Vertical
+
+  layout: 
+    sequence: 40
+    region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillEnd
+    icon: fa-bar-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Stack Chart =========================
+  id: 432099276476983761
+  identification: 
+    name: Stack Chart
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Stack # 432099127399983759
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 432099406650983762
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"stackCategoryChart\").widget().ojChart({stack: 'on'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+
+    execution: 
+      sequence: 10
+      event: Stack Chart # 432099276476983761
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Unstack Chart =======================
+  id: 432099550205983763
+  identification: 
+    name: Unstack Chart
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Unstack # 432099244845983760
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 432099655544983764
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"stackCategoryChart\").widget().ojChart({stack: 'off'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+
+    execution: 
+      sequence: 10
+      event: Unstack Chart # 432099550205983763
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Horizontal Orientation ==============
+  id: 432099950097983767
+  identification: 
+    name: Horizontal Orientation
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Horizontal # 432099698078983765
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 432099980491983768
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"stackCategoryChart\").widget().ojChart({orientation: 'horizontal'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+
+    execution: 
+      sequence: 10
+      event: Horizontal Orientation # 432099950097983767
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Vertical Orientation ================
+  id: 432100069471983769
+  identification: 
+    name: Vertical Orientation
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Vertical # 432099822914983766
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 432100171669983770
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"stackCategoryChart\").widget().ojChart({orientation: 'vertical'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Bar Chart (Stack Label & Stack Category) # 432098225419983750
+
+    execution: 
+      sequence: 10
+      event: Vertical Orientation # 432100069471983769
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: LAST_VIEW ==============================
+  id: 2336322294120053366
+  identification: 
+    item-name: LAST_VIEW
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: '&APP_PAGE_ID.'
+

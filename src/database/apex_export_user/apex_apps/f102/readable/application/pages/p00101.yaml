@@ -1,0 +1,379 @@
+---
+# ====== Page: Login =========================================
+id: 101
+identification: 
+  name: Login
+  alias: LOGIN
+  title: Sign In | &APP_NAME.
+
+appearance: 
+  page-mode: Normal
+  page-template: Login
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    .appIcon.sample_charts {
+    background-position: -192px -192px;
+    }
+    
+    .appIcon {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    background-image: url(#IMAGE_PREFIX#eba/img/eba_launchpad.png);
+    background-repeat: no-repeat;
+    border: none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.75) inset;
+    -moz-box-shadow: 0 0 1px rgba(0,0,0,0.75) inset;
+    box-shadow: 0 0 1px rgba(0,0,0,0.75) inset;
+    margin-right: 8px;
+    vertical-align: middle;
+    }
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: No Arguments Supported
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Sample Charts ===============================
+  id: 8206258039439240406
+  identification: 
+    name: Sample Charts
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Login
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  image: 
+    file-url: '#APP_FILES#icons/app-icon-512.png'
+
+  advanced: 
+    static-id: sample_charts
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P101_USERNAME ============================
+  id: 8206258152042240410
+  identification: 
+    name: P101_USERNAME
+    type: Text Field
+
+  label: 
+    label: Username
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: Sample Charts # 8206258039439240406
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-user
+    width: 64
+    value-placeholder: username
+
+  validation: 
+    value-required: true
+    maximum-length: 100
+
+  advanced: 
+    post-text-: <span class="t-Login-iconValidation a-Icon icon-check"></span>
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: Blocklist HTML command characters (<>")
+
+- # ====== Page Item: P101_PASSWORD ============================
+  id: 8206258251768240410
+  identification: 
+    name: P101_PASSWORD
+    type: Password
+
+  label: 
+    label: Password
+    alignment: Left
+
+  settings: 
+    submit-when-enter-pressed: true
+
+  layout: 
+    sequence: 20
+    region: Sample Charts # 8206258039439240406
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-key
+    width: 64
+    value-placeholder: password
+
+  validation: 
+    value-required: true
+    maximum-length: 100
+
+  advanced: 
+    post-text-: <span class="t-Login-iconValidation a-Icon icon-check"></span>
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: LOGIN =======================================
+  id: 3140110497879807658
+  identification: 
+    button-name: LOGIN
+    label: Sign In
+
+  layout: 
+    sequence: 10
+    region: Sample Charts # 8206258039439240406
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Set Focus ===========================
+  id: 3256661912114783796
+  identification: 
+    name: Set Focus
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: ( $v( "P101_USERNAME" ) === "" )
+
+  actions: 
+  - # ====== Action: Set Focus ===================================
+    id: 3256662188562783797
+    identification: 
+      action: Set Focus
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P101_USERNAME
+
+    execution: 
+      sequence: 10
+      event: Set Focus # 3256661912114783796
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Focus ===================================
+    id: 3256662401869783797
+    identification: 
+      action: Set Focus
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P101_PASSWORD
+
+    execution: 
+      sequence: 20
+      event: Set Focus # 3256661912114783796
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Login ======================================
+  id: 8206258433858240411
+  identification: 
+    name: Login
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      apex_authentication.login(
+          p_username => :P101_USERNAME,
+          p_password => :P101_PASSWORD );
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Set Username Cookie ========================
+  id: 8206258526954240412
+  identification: 
+    name: Set Username Cookie
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      apex_authentication.send_login_username_cookie (
+          p_username => lower(:P101_USERNAME) );
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Get Username Cookie ========================
+  id: 8206258624460240412
+  identification: 
+    name: Get Username Cookie
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: ':P101_USERNAME := apex_authentication.get_login_username_cookie;'
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Clear Page(s) Cache ========================
+  id: 8206258728778240412
+  identification: 
+    name: Clear Page(s) Cache
+    type: Clear Session State
+    execution-chain: None
+
+  settings: 
+    type: Clear all Items on the Current Page
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+

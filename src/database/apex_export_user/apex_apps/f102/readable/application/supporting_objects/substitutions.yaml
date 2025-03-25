@@ -1,0 +1,57 @@
+---
+- # ====== Substitution: APP_NAME ==============================
+  id: 1
+  identification: 
+    name: APP_NAME
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: GETTING_STARTED_URL ===================
+  id: 2
+  identification: 
+    name: GETTING_STARTED_URL
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: JET_COOKBOOK_URL ======================
+  id: 3
+  identification: 
+    name: JET_COOKBOOK_URL
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: OJCHART_API_URL =======================
+  id: 4
+  identification: 
+    name: OJCHART_API_URL
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: JET_GET_STARTED_URL ===================
+  id: 5
+  identification: 
+    name: JET_GET_STARTED_URL
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: OJCHART_ITEM_API_URL ==================
+  id: 6
+  identification: 
+    name: OJCHART_ITEM_API_URL
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: PRODUCT_NAME ==========================
+  id: 7
+  identification: 
+    name: PRODUCT_NAME
+
+  installation: 
+    prompt-substitution: false
+

@@ -1,0 +1,342 @@
+---
+# ====== Application: Sample Charts ==========================
+id: 102
+identification: 
+  name: Sample Charts
+  alias: SAMPLE-CHARTS
+  version: 24.2.0
+  application-group: Sample Apps # 10410665895559622
+
+row-search: 
+  tokenize: false
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+
+report-printing: 
+  type: Use Instance Settings
+
+advanced: 
+  friendly-urls: true
+  allow-feedback: false
+  logging: true
+  debugging: false
+  compatibility-mode: 24.2
+  accessible-read-only-items: true
+  pass-ecid: N
+  copyright-banner: |
+    Name: #APP_NAME#
+    Copyright (c) 2012, #YEAR# Oracle and/or its affiliates.
+    Licensed under the Universal Permissive License v 1.0 as shown
+    at https://oss.oracle.com/licenses/upl/
+    
+    This script makes use of the Oracle JavaScript Extension Toolkit(JET). 
+    Refer to THIRD_PARTY_LICENSES.txt in the top directory of this project
+    or at https://github.com/oracle/apex-samples for license information.
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: APEX Auth # 8206257542632240402
+
+authorization: 
+  source-for-role-or-group-schemes: Access Control User Role Assignments
+
+session-management: 
+  rejoin-sessions: Enabled for Public Sessions
+
+session-state-protection: 
+  enabled: true
+
+security: 
+  deep-linking: Enabled
+  browser-cache: Disabled
+  embed-in-frames: Allow from same origin
+  referrer-policy: strict-origin
+  html-escaping-mode: Extended
+  runtime-api-usage: 
+  - Modify This Application
+
+database-session: 
+  parsing-schema: APEX_EXPORT_USER
+
+globalization: 
+  primary-language: English (en)
+  document-direction: Left-To-Right
+  language-derived-from: Application Primary Language
+  automatic-time-zone: false
+  automatic-csv-encoding: true
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Text
+  text: Sample Charts
+
+progressive-web-app: 
+  enable: false
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:1:&SESSION.'
+    page: 1 # Sample Charts
+
+navigation-menu: 
+  list-template: Side Navigation Menu
+  template-options: 
+  - '#DEFAULT#'
+  - js-defaultCollapsed
+  - js-navCollapsed--hidden
+  - t-TreeNav--styleA
+  list-position: Side
+  list: Navigation Menu # 1533907739509872741
+
+navigation-bar: 
+  implementation: List
+  list: Navigation Bar (Top) # 1725786580809131157
+  list-template: Navigation Bar
+
+javascript: 
+  include-jquery-migrate: false
+
+css: 
+  file-urls: 
+  - '#IMAGE_PREFIX#pkgapp_ui/css/5.0#MIN#.css'
+
+attributes: 
+  theme: Universal Theme # 42
+  enable-end-users-to-choose-theme-style: false
+  add-"built-with-apex"-to-footer: true
+  auto-dismiss-success-messages: false
+
+subscription: 
+  version-number: 8998211
+
+substitutions: 
+- # ====== Substitution: APP_NAME ==============================
+  id: 1
+  identification: 
+    name: APP_NAME
+
+  value: 
+    static-value: Sample Charts
+
+- # ====== Substitution: GETTING_STARTED_URL ===================
+  id: 2
+  identification: 
+    name: GETTING_STARTED_URL
+
+  value: 
+    static-value: 'https://www.oracle.com/technetwork/developer-tools/apex/index.html'
+
+- # ====== Substitution: JET_COOKBOOK_URL ======================
+  id: 3
+  identification: 
+    name: JET_COOKBOOK_URL
+
+  value: 
+    static-value: 'https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html'
+
+- # ====== Substitution: OJCHART_API_URL =======================
+  id: 4
+  identification: 
+    name: OJCHART_API_URL
+
+  value: 
+    static-value: 'https://www.oracle.com/webfolder/technetwork/jet/jsdocs/oj.ojChart.html'
+
+- # ====== Substitution: JET_GET_STARTED_URL ===================
+  id: 5
+  identification: 
+    name: JET_GET_STARTED_URL
+
+  value: 
+    static-value: 'https://www.oracle.com/webfolder/technetwork/jet/index.html?_ojCoreRouter=getstarted'
+
+- # ====== Substitution: OJCHART_ITEM_API_URL ==================
+  id: 6
+  identification: 
+    name: OJCHART_ITEM_API_URL
+
+  value: 
+    static-value: 'https://www.oracle.com/webfolder/technetwork/jet/jsdocs/oj.ojChartItem.html'
+
+- # ====== Substitution: PRODUCT_NAME ==========================
+  id: 7
+  identification: 
+    name: PRODUCT_NAME
+
+  value: 
+    static-value: Oracle APEX
+
+component-settings: 
+- # ====== Component Setting: NATIVE_BOSS ======================
+  id: 12760655264598895
+  identification: 
+    name: NATIVE_BOSS
+    type: REST Data Source
+
+  subscription: 
+    version-number: 184653983
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 14286279542118989
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 14316524430080758
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 37167665069801
+
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 14316970374080758
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  subscription: 
+    version-number: 37167665069801
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 14339577685925981
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 155466386
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 112606229417487684
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 134163526895024110
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 135975421051077246
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 188891027826105600
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 619549975073322855
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 37166093873573
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 1134002906929105749
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 1780354026229990188
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 1847054057120272289
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 1932935034586218166
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.FLOTLINECHART2 =
+  id: 2343711299055218256
+  identification: 
+    name: PLUGIN_COM.ORACLE.FLOTLINECHART2
+    type: Region
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.BARCHART
+  id: 2363409575095479238
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.BARCHART51253
+    type: Region
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.BUBBLE.T
+  id: 2388394029699437232
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.BUBBLE.TEST
+    type: Region
+
+  subscription: 
+    version-number: 37166093873575
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.TREEMAP4
+  id: 2388653806986534862
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.TREEMAP48914
+    type: Region
+
+  subscription: 
+    version-number: 37166093873575
+

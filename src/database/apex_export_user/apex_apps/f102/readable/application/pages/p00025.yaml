@@ -1,0 +1,1774 @@
+---
+# ====== Page: Combination ===================================
+id: 25
+identification: 
+  name: Combination
+  alias: COMBINATION
+  title: Combination
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+html-header: 
+  html-header: |
+    <style>
+    ul.barGraph{margin:12px !important;list-style:none;white-space:nowrap}
+    ul.barGraph li{display:inline-block;width:48px}
+    ul.barGraph li:hover big small{background-color:#4A6D98}
+    ul.barGraph li.barHeaders{width:128px}
+    ul.barGraph li.barHeaders > span{text-align:left}
+    ul.barGraph li > label{display:block;font:normal 11px/12px Arial,sans-serif;color:#444;text-align:center}
+    ul.barGraph li > label span{display:block;font:normal 11px/12px Arial,sans-serif;color:#767676}
+    ul.barGraph li > big{height:120px;margin:8px;position:relative;display:block}
+    ul.barGraph li > big > small{display:block;position:absolute;bottom:0;width:30px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;background-color:#6A9CDA;-moz-box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;-webkit-box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;border:1px solid #4A6D98}
+    ul.barGraph li > span{display:block;text-align:center;font:normal 11px/16px Arial,sans-serif;color:#444;border-top:1px solid #F0F0F0;padding:8px}
+    ul.barGraph li > span.noBorder{border-top:none;padding-top:0}
+    ul.barGraph li > span a{color:##405580}
+    </style>
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: About this page =============================
+  id: 446355626932448321
+  identification: 
+    name: About this page
+    type: Static Content
+
+  source: 
+    html-code: <p>&PRODUCT_NAME. native Combination charts, using Oracle JET Data Visualizations, are showcased on this page. Combination charts allow bar, line, and area series to be displayed on the same chart. Explore the wide range of chart attributes declaratively available with our native charts, to format and customise the style of your combination charts.</p>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--customIcons
+    - t-Alert--info
+    icon: fa-combo-chart
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Region Display Selector =====================
+  id: 446356060348448321
+  identification: 
+    name: Region Display Selector
+    type: Region Display Selector
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: No
+
+- # ====== Region: Combination Chart (Data Label Positions) ====
+  id: 446356573286448322
+  identification: 
+    name: Combination Chart (Data Label Positions)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: combo1
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 446356993743448322
+    chart: 
+      type: Combination
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    layout: 
+      maximum-width: 600
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: End
+      hide-and-show-behavior: No Rescaling
+
+    series: 
+    - # ====== Series: Acme Store ==================================
+      id: 446359043552448326
+      identification: 
+        name: Acme Store
+        type: Area
+
+      execution: 
+        sequence: 40
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, a.product_description
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+        legend-tooltip: CUSTOMER
+        label-tooltip: PRODUCT_DESCRIPTION
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    - # ====== Series: Shop C ======================================
+      id: 446359428979448327
+      identification: 
+        name: Shop C
+        type: Bar
+
+      execution: 
+        sequence: 60
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, a.product_description
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+        legend-tooltip: CUSTOMER
+        label-tooltip: PRODUCT_DESCRIPTION
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+
+      label: 
+        show: true
+        position: Center
+
+      advanced: 
+        static-id: c_series
+
+    - # ====== Series: Deli ========================================
+      id: 446359795077448327
+      identification: 
+        name: Deli
+        type: Bar
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, a.product_description
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Deli'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+        legend-tooltip: CUSTOMER
+        label-tooltip: PRODUCT_DESCRIPTION
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+
+      label: 
+        show: true
+        position: Automatic
+
+    - # ====== Series: Store A =====================================
+      id: 576791048800966380
+      identification: 
+        name: Store A
+        type: Line
+
+      execution: 
+        sequence: 50
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, a.product_description
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+        legend-tooltip: CUSTOMER
+        label-tooltip: PRODUCT_DESCRIPTION
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 446357433232448322
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 446357762147448323
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+    - # ====== Axis: y2 ============================================
+      id: 446358252096448323
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+- # ====== Region: Combination Chart  Information (Data Label Po
+  id: 446362267680448335
+  identification: 
+    name: Combination Chart  Information (Data Label Positions)
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates various attributes of a Combination chart.<p/>
+      
+      <strong>Type</strong> - Use this series-level attribute to define a different series type for each series represented on the chart. For example, the series 'Deli' is of type Bar, 'Store A' is of type Line, and 'Acme Store' is of type Area.<p/>
+      <strong>Hide and Show Behavior</strong> - Use this chart-level attribute to support hide and show behavior using the chart legend. The legend uses the <strong>Without Rescale</strong> Hide and Show behavior, allowing a user to hide and unhide a series by clicking the chart legend markers. The chart axes will not rescale, which is useful to remain in context. <p/>
+      <strong>Dynamic Actions</strong> - Through the use of Dynamic actions, use the buttons to the top right of the chart to change the line type of the 'Store A' chart series. Line type specifies the shape of the data point connectors on the chart.<p/>
+      <p>
+      For more information on the Combination chart settings, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=combinationChart&demo=default" target="_blank">Combination Chart: Basic</a> and <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=combinationChart&demo=dataLabels" target="_blank">Combination Chart: Data Labels</a>  examples.
+      
+
+  layout: 
+    sequence: 10
+    parent-region: Combination Chart (Data Label Positions) # 446356573286448322
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Combination Chart (Y-Axis Value Formatting) =
+  id: 446362793857448336
+  identification: 
+    name: Combination Chart (Y-Axis Value Formatting)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 446363184881448337
+    chart: 
+      type: Combination
+
+    appearance: 
+      orientation: Horizontal
+      stack: false
+
+    layout: 
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: false
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: None
+
+    series: 
+    - # ====== Series: Average Budget ==============================
+      id: 446364451780448338
+      identification: 
+        name: Average Budget
+        type: Line
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select task_name, round(avg_budget,2) from (  
+              select task_name,
+                 avg(budget) over () avg_budget
+            from eba_demo_chart_tasks
+           where budget > 2000
+          order by 2,1)
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: TASK_NAME
+        value: ROUND(AVG_BUDGET,2)
+
+      appearance: 
+        color: '#4FB000'
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dashed
+        width: 4
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    - # ====== Series: Tasks By Budget/Cost ========================
+      id: 446364802231448341
+      identification: 
+        name: Tasks By Budget/Cost
+        type: Area
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select task_name,
+                 budget
+            from eba_demo_chart_tasks
+           where budget > 2000
+          order by 2,1
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: TASK_NAME
+        value: BUDGET
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 446363624664448337
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 446363978938448337
+      identification: 
+        name: y
+        show-axis: true
+        title: Y-Axis Title
+
+      title: 
+        font-family: Times New Roman
+        font-style: Italic
+        font-size: 18
+        font-color: RED
+
+      value: 
+        format-scaling: None
+        baseline-scaling: Minimum
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Combination Chart  Information (Y-Axis Value 
+  id: 577798674737301658
+  identification: 
+    name: Combination Chart  Information (Y-Axis Value Formatting)
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates various attributes of a Combination chart.<p/>
+      
+      <strong>Format Scaling</strong> - Use the axis-level attribute to define the scaling behavior of the Y-axis value. When set to <strong>None</strong>, the values will not be automatically scaled, and display thousands values with the locale default thousand separator, for example 1,000.  The automatic behaviour would display such a value as 1K.<p/>
+      <strong>Reference Series</strong> - Similar to the Oracle JET Reference Object functionality, a series can be defined on a chart, representing a constant value, to be used as a reference point on the chart.  In the example, the reference series 'Average Budget', serves to highlight task budget amounts in relation to the averaage budget amount across all tasks.  The series-level Label <strong>Show</strong> attribute is set to No for this series.<p/>
+      <strong>Y-Axis Title</strong> - The axis-level Title attributes Font Family, Font Style, Font Size and Font Color have been set to style the y-axis title to use the font Times New Roman, the font style Italic, the font size 18px, and the font color red.<br/> 
+      
+      <p>
+      For more information on the Combination chart settings, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=combinationChart&demo=default" target="_blank">Combination Chart: Basic</a> and <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=combinationChart&demo=refObject" target="_blank">Combination Chart: Reference Object</a>  examples.
+      
+
+  layout: 
+    sequence: 10
+    parent-region: Combination Chart (Y-Axis Value Formatting) # 446362793857448336
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Combination Chart  Information (Regular v Mix
+  id: 604386226770090360
+  identification: 
+    name: Combination Chart  Information (Regular v Mixed Frequency Time Axis)
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates various time axis options supported by Oracle JET charts.<p/>
+      
+      <strong>Time Axis Type</strong> - Use the chart-level attribute to define the type of time axis to be supported on the chart. When the series Label is mapped to a Date or Timestamp column, the <strong>Time Axis Type</strong> should be set to type that is appropriate for the data being rendered. Oracle JET charts support three kinds of time axis: <strong>Enabled</strong>, <strong>Skip Gaps</strong>, and <strong>Mixed Frequency</strong>. 
+      <ul>
+      <li>The 'Enabled' and Skip Gaps' time axis types require that the data items within each group share the same time value. The time intervals between groups do not have to be uniform; however, if the time axis type is Skip Gaps', the times always will be drawn uniformly ignoring the gaps. Stacking is possible in these two modes.</li>
+      <li>The 'Mixed Frequency' time axis type allows each data item to have a different time value. Since the time value of the data items within each group can vary, stacking is not possible.</li>
+      </ul>
+      <p/>
+      For more information on the Time Axis settings, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=chart&demo=timeAxis" target="_blank">Chart: Time Axis</a> example.
+      
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Combination Chart (Regular v Mixed Frequency 
+  id: 625134791658230882
+  identification: 
+    name: Combination Chart (Regular v Mixed Frequency Time Axis)
+    type: Static Content
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Regular Time Axis ===========================
+  id: 625135234389230888
+  identification: 
+    name: Regular Time Axis
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 20
+    parent-region: Combination Chart (Regular v Mixed Frequency Time Axis) # 625134791658230882
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - i-h480
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: regTime
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 625135457111230889
+    chart: 
+      type: Combination
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      time-axis-type: Enabled
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Store A =====================================
+      id: 625136712859230892
+      identification: 
+        name: Store A
+        type: Line
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, sales_date
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    - # ====== Series: Shop C ======================================
+      id: 625137087400230893
+      identification: 
+        name: Shop C
+        type: Bar
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, sales_date
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 625135899233230890
+      identification: 
+        name: x
+        show-axis: true
+        title: Date
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 625136314129230891
+      identification: 
+        name: y
+        show-axis: true
+        title: Quantity
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Mixed Frequency Time Axis ===================
+  id: 625137607266230893
+  identification: 
+    name: Mixed Frequency Time Axis
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: Combination Chart (Regular v Mixed Frequency Time Axis) # 625134791658230882
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - i-h480
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 625138044777230893
+    chart: 
+      type: Combination
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      time-axis-type: Mixed Frequency
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Acme Store ==================================
+      id: 625139162964230894
+      identification: 
+        name: Acme Store
+        type: Bar
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, sales_date
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+
+      label: 
+        show: false
+
+    - # ====== Series: Deli ========================================
+      id: 625139647664230895
+      identification: 
+        name: Deli
+        type: Line
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer, sales_date
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Deli'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: SALES_DATE
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: Automatic
+        shape: Automatic
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 625138405078230894
+      identification: 
+        name: x
+        show-axis: true
+        title: Date
+
+      value: 
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 625138774091230894
+      identification: 
+        name: y
+        show-axis: true
+        title: Quantity
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: breadcrumb ==================================
+  id: 806336327696561544
+  identification: 
+    name: breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P25_SKIP_GAP =============================
+  id: 604386859258090367
+  identification: 
+    name: P25_SKIP_GAP
+    type: Switch
+
+  label: 
+    label: Skip Gaps
+    alignment: Left
+
+  settings: 
+    use-defaults: true
+
+  layout: 
+    sequence: 10
+    region: Combination Chart (Regular v Mixed Frequency Time Axis) # 625134791658230882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: N
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: |
+      The 'Regular Time Axis' chart renders data items that share the same date value i.e. the date values associated with the points of series 'Shop C' are exactly the same as the dates values associated with the points of series 'Store A'. The date intervals between items do not have to be uniform.  The <strong>Time Axis Type</strong> attribute can be used to define how the data that is not uniform.  Select how you wish the data items to be rendered:<p/>
+      
+      <li><strong>Yes</strong> - this sets the Time Axis Type to <strong>Skip Gaps</strong>, where the dates will always be drawn uniformly, ignoring any gaps in dates.</li>
+      <li><strong>No</strong> - this sets the Time Axis type to <strong>Enabled</strong>, where the dates will not be drawn uniformly, respecting any gaps in dates.</li>
+
+buttons: 
+- # ====== Button: Segmented ===================================
+  id: 446360218509448328
+  identification: 
+    button-name: Segmented
+    label: Centered Segmented
+
+  layout: 
+    sequence: 40
+    region: Combination Chart (Data Label Positions) # 446356573286448322
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pill
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Straight ====================================
+  id: 446360587397448330
+  identification: 
+    button-name: Straight
+    label: Straight
+
+  layout: 
+    sequence: 10
+    region: Combination Chart (Data Label Positions) # 446356573286448322
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillStart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Curved ======================================
+  id: 446360989189448334
+  identification: 
+    button-name: Curved
+    label: Curved
+
+  layout: 
+    sequence: 20
+    region: Combination Chart (Data Label Positions) # 446356573286448322
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pill
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Stepped =====================================
+  id: 446361404266448334
+  identification: 
+    button-name: Stepped
+    label: Stepped
+
+  layout: 
+    sequence: 30
+    region: Combination Chart (Data Label Positions) # 446356573286448322
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pill
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: None ========================================
+  id: 446361826878448334
+  identification: 
+    button-name: None
+    label: None
+
+  layout: 
+    sequence: 50
+    region: Combination Chart (Data Label Positions) # 446356573286448322
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillEnd
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Straight ============================
+  id: 446374882768448376
+  identification: 
+    name: Straight
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Straight # 446360587397448330
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 446375422472448376
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"combo1\").widget().ojChart({styleDefaults:{lineType:'straight'}});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Combination Chart (Data Label Positions) # 446356573286448322
+
+    execution: 
+      sequence: 10
+      event: Straight # 446374882768448376
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Curved ==============================
+  id: 446375759898448377
+  identification: 
+    name: Curved
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Curved # 446360989189448334
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 446376294315448377
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"combo1\").widget().ojChart({styleDefaults:{lineType:'curved'}});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Combination Chart (Data Label Positions) # 446356573286448322
+
+    execution: 
+      sequence: 10
+      event: Curved # 446375759898448377
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Stepped =============================
+  id: 446376708530448377
+  identification: 
+    name: Stepped
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Stepped # 446361404266448334
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 446377164479448378
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"combo1\").widget().ojChart({styleDefaults:{lineType:'stepped'}});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Combination Chart (Data Label Positions) # 446356573286448322
+
+    execution: 
+      sequence: 10
+      event: Stepped # 446376708530448377
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: None ================================
+  id: 446377575530448379
+  identification: 
+    name: None
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: None # 446361826878448334
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 446378127477448379
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"combo1\").widget().ojChart({styleDefaults:{lineType:'none'}});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Combination Chart (Data Label Positions) # 446356573286448322
+
+    execution: 
+      sequence: 10
+      event: None # 446377575530448379
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Segmented ===========================
+  id: 446378526529448380
+  identification: 
+    name: Segmented
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Segmented # 446360218509448328
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 446379023700448380
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"combo1\").widget().ojChart({styleDefaults:{lineType:'centeredSegmented'}});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Combination Chart (Data Label Positions) # 446356573286448322
+
+    execution: 
+      sequence: 10
+      event: Segmented # 446378526529448380
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Skip Gap On =========================
+  id: 604386404311090362
+  identification: 
+    name: Skip Gap On
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P25_SKIP_GAP
+
+  client-side-condition: 
+    type: Item = Value
+    item: P25_SKIP_GAP
+    value: Y
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 604386512005090363
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "$(\"#regTime_jet\").ojChart({timeAxisType:'skipGaps'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Combination Chart (Data Label Positions) # 446356573286448322
+
+    execution: 
+      sequence: 10
+      event: Skip Gap On # 604386404311090362
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Skip Gap Off ========================
+  id: 604386710533090365
+  identification: 
+    name: Skip Gap Off
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P25_SKIP_GAP
+
+  client-side-condition: 
+    type: Item = Value
+    item: P25_SKIP_GAP
+    value: N
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 604386843014090366
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "$(\"#regTime_jet\").ojChart({timeAxisType:'enabled'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Combination Chart (Data Label Positions) # 446356573286448322
+
+    execution: 
+      sequence: 10
+      event: Skip Gap Off # 604386710533090365
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: LAST_VIEW ==============================
+  id: 446371086804448361
+  identification: 
+    item-name: LAST_VIEW
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: '&APP_PAGE_ID.'
+
