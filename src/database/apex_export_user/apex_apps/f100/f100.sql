@@ -33,15 +33,15 @@ prompt APPLICATION 100 - Code Templates
 -- Application Export:
 --   Application:     100
 --   Name:            Code Templates
---   Date and Time:   15:28 Wednesday March 26, 2025
+--   Date and Time:   15:35 Wednesday March 26, 2025
 --   Exported By:     APEX_EXPORT_USER
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                      6
+--     Pages:                      7
 --       Items:                    9
 --       Validations:              2
 --       Processes:                7
---       Regions:                  7
+--       Regions:                  8
 --       Buttons:                  6
 --       Dynamic Actions:          1
 --     Shared Components:
@@ -50,7 +50,7 @@ prompt APPLICATION 100 - Code Templates
 --       Navigation:
 --         Lists:                  2
 --         Breadcrumbs:            1
---           Entries:              3
+--           Entries:              4
 --       Security:
 --         Authentication:         1
 --         Authorization:          1
@@ -109,7 +109,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Code Templates'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>6
-,p_version_scn=>9035061
+,p_version_scn=>10558645
 ,p_print_server_type=>'NATIVE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -145,7 +145,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(7566188757852210)
 ,p_name=>'Navigation Menu'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>9035061
+,p_version_scn=>10558640
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(7577886107852230)
@@ -173,6 +173,15 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_icon=>'fa-file-o'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'2'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(11959825401104093)
+,p_list_item_display_sequence=>40
+,p_list_item_link_text=>'Philipp Showcase'
+,p_list_item_link_target=>'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-file-o'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'3'
 );
 end;
 /
@@ -840,6 +849,12 @@ wwv_flow_imp_shared.create_menu_option(
 ,p_link=>'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
 ,p_page_id=>2
 );
+wwv_flow_imp_shared.create_menu_option(
+ p_id=>wwv_flow_imp.id(11960741961104098)
+,p_short_name=>'Philipp Showcase'
+,p_link=>'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>3
+);
 end;
 /
 prompt --application/shared_components/navigation/breadcrumbentry
@@ -1019,9 +1034,35 @@ wwv_flow_imp_page.create_page(
 ,p_autocomplete_on_off=>'OFF'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(9160930968868163)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>2531463326621247859
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(7565605647852209)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>4072363345357175094
+);
+end;
+/
+prompt --application/pages/page_00003
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>3
+,p_name=>'Philipp Showcase'
+,p_alias=>'PHILIPP-SHOWCASE'
+,p_step_title=>'Philipp Showcase'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11960273502104096)
 ,p_plug_name=>'Breadcrumb'
 ,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
 ,p_component_template_options=>'#DEFAULT#'
@@ -1765,4 +1806,4 @@ prompt  ...done
 
 
 
--- sqlcl_snapshot {"hash":"d5c7a463505c54878701f88483609f9c62e063bc","type":"APEX_APPLICATION","name":"f100","schemaName":"APEX_EXPORT_USER"}
+-- sqlcl_snapshot {"hash":"5926a1cfc836cbfc960fe3f9e1ea91839b2ac18e","type":"APEX_APPLICATION","name":"f100","schemaName":"APEX_EXPORT_USER"}

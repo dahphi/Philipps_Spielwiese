@@ -5,7 +5,7 @@
     name: Navigation Menu
 
   subscription: 
-    version-number: 9035061
+    version-number: 10558640
 
   source: 
     type: Static Values
@@ -84,6 +84,33 @@
       target: 
         url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
         page: 2 # Philipp Test
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Philipp Showcase =============================
+    id: 11959825401104093
+    label: 
+      label: Philipp Showcase
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 3
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+        page: 3 # Philipp Showcase
 
     click-counting: 
       count-clicks: false

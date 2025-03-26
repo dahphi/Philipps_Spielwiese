@@ -47,3 +47,17 @@
         url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
         page: 2 # Philipp Test
 
+  - # ====== Entry: Philipp Showcase =============================
+    id: 11960741961104098
+    identification: 
+      name: Philipp Showcase
+      page-number: 3
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+        page: 3 # Philipp Showcase
+

@@ -5,7 +5,7 @@
     "version" : "24.3.2.0"
   },
   "schemas" : [ "APEX_EXPORT_USER" ],
-  "lastReleaseVersion" : "1_0",
+  "lastReleaseVersion" : "1_1",
   "export" : {
     "format" : {
       "enable" : true
