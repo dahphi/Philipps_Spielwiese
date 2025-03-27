@@ -1,0 +1,21 @@
+---
+- # ====== List of Values: TEMPLATES.NAME ======================
+  id: 7591864582857784
+  identification: 
+    name: TEMPLATES.NAME
+
+  subscription: 
+    version-number: 8786360
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: TEMPLATES
+
+  column-mapping: 
+    return: ID
+    display: NAME
+    default-sort: NAME
+    sort-direction: Ascending (Nulls Last)
+
