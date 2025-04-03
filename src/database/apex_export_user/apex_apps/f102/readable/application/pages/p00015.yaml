@@ -1,0 +1,2490 @@
+---
+# ====== Page: Line ==========================================
+id: 15
+identification: 
+  name: Line
+  alias: LINE
+  title: Line
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: First item on page
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Line Chart ( Declarative Font Formatting ) ==
+  id: 130833437138984329
+  identification: 
+    name: Line Chart ( Declarative Font Formatting )
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: lineChartAxes
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 189791632130212887
+    chart: 
+      type: Line
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Top
+      hide-and-show-behavior: Rescale
+      font-family: Trebuchet MS
+      font-style: Italic
+      font-size: 12
+
+    series: 
+    - # ====== Series: Store A =====================================
+      id: 189791753026212888
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dotted
+        type: Centered Stepped
+
+      marker: 
+        show: Yes
+        shape: Star
+
+      label: 
+        show: true
+        position: Above Marker
+        font-family: Comic Sans MS
+        font-color: '#FA1238'
+
+    - # ====== Series: Acme Store ==================================
+      id: 189791873609212889
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Curved
+
+      marker: 
+        show: Yes
+        shape: Plus
+
+      label: 
+        show: true
+        position: Center
+        font-family: Comic Sans MS
+        font-color: '#3966ED'
+
+    - # ====== Series: Shop C ======================================
+      id: 189791974791212890
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dashed
+        type: Stepped
+
+      marker: 
+        show: Yes
+        shape: Diamond
+
+      label: 
+        show: true
+        position: Below Marker
+        font-family: Comic Sans MS
+        font-color: '#8A3232'
+
+      advanced: 
+        static-id: c_series
+
+    axes: 
+    - # ====== Axis: y =============================================
+      id: 189792030055212891
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      title: 
+        font-family: Times
+        font-style: Italic
+        font-size: 14
+        font-color: GREEN
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        font-family: Helvetica
+        font-style: Oblique
+        font-size: 14
+        font-color: '#F59D5A'
+
+    - # ====== Axis: x =============================================
+      id: 189792132065212892
+      identification: 
+        name: x
+        show-axis: true
+        title: X-Axis Title
+
+      title: 
+        font-family: Comic Sans MS
+        font-style: Normal
+        font-size: 16
+        font-color: '#F544F5'
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+        font-family: Courier
+        font-style: Normal
+        font-color: '#2323EB'
+
+    - # ====== Axis: y2 ============================================
+      id: 189792271170212893
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+- # ====== Region: Line Chart ( Declarative Font Formatting ) In
+  id: 189792324443212894
+  identification: 
+    name: Line Chart ( Declarative Font Formatting ) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates a Line chart with font formatting applied to the axes, values, and legend text, declaratively.<p/><p/>
+      <strong>X-Axis Title</strong> - The axis-level Title attributes Font Family, Font Style, Font Size and Font Color have been set to style the x-axis title to use the font Comic Sans MS, the font style Normal, the font size 16px, and the font color #F544F5.<br/> 
+      <strong>X-Axis Tick Labels</strong> - The axis-level Tick Label attributes Font Family, Font Style, and Font Color have been set to style the x-axis labels to use the font Courier, the font style Normal, and the font color #2323EB.<p/> 
+      <strong>Y-Axis Title</strong> - The axis-level Title attributes Font Family, Font Style, Font Size and Font Color have been set to style the y-axis title to use the font Times, the font style Italic, the font size 14px, and the font color green.<br/> 
+      <strong>Y-Axis Tick Labels</strong> - The axis-level Tick Label attributes Font Family, Font Style, and Font Color have been set to style the y-axis labels to use the font Helvetica, the font style Oblique, the font size 14px, and the font color #F59D5A.<p/>
+      <strong>Legend Text</strong> - The chart-level Legend attributes Font Family, Font Style, and Font Color have been set to style the Legend text to use the font Trebuchet MS, the font style Italic, and the font size 12px.<p/>
+      <strong>Store A Series</strong> - The series-level Label attributes Font Family and Font Color have been set to style the values of the series using the font Comic Sans MS, and the font color to #FA1238.<br/>
+      <strong>Acme Series</strong> - The series-level Label attributes Font Family and Font Color have been set to style the values of the series using the font Comic Sans MS, and the font color to #3966ED.<br/>
+      <strong>Shop C Series</strong> - The series-level Label attributes Font Family and Font Color have been set to style the values of the series using the font Comic Sans MS, and the font color to #8A3232.<p/>
+
+  layout: 
+    sequence: 10
+    parent-region: Line Chart ( Declarative Font Formatting ) # 130833437138984329
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Line Chart (Time Axis) Information ==========
+  id: 432483466261739166
+  identification: 
+    name: Line Chart (Time Axis) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates a Line chart with a time axis, and numeric and date formatting.<p/>
+      <strong>Maximum Width & Height</strong> - Chart-level attributes Maximum Width and Height have been set to 500px and 450px respectively, to size the chart within its region.  If you wish to default to using 100% width and height of the given region, simply remove these values, and utilitise the Template Options of the region to control the height as you wish.<p/> 
+      <strong>Orientation</strong> - Through the use of Dynamic actions, use the Horizontal/Vertical button to the top left of the chart to change the orientiation of the data items on the charts.<p/>
+      <strong>Initial Zooming</strong> - Use the chart-level attribute to set the initial zooming behavior of the chart, to focus initial attention on a specific section of the chart.  The setting for this example is <strong>First</strong>, to initially zoom to the first data points on the chart.<p/>
+      <strong>Line Style & Type</strong> - Use the series-level attributes to define various line styles, such as dotted, and types, such as curved, to the chart.<p/>
+      <strong>Format</strong> - Use the axis-level attribute to define currency formatting on the y-axis, and date formatting on the x-axis. New in APEX 18.1 is the ability to leave the <strong>Currency</strong> property empty, to allow for the currency symbol to be automatically derived from the application language. <p/>
+      For more information on the Time Axis settings, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=chart&demo=timeAxis" target="_blank">Chart: Time Axis</a> example. For additional examples of time axis settings, refer to the <a href="f?p=&APP_ID.:25:&APP_SESSION.">Combination</a> examples.
+
+  layout: 
+    sequence: 10
+    parent-region: Line Chart (Time Axis) # 2062002400178167064
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Line Chart (Data Labels & Line Styles) ======
+  id: 432811368954095925
+  identification: 
+    name: Line Chart (Data Labels & Line Styles)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: lineChart
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 432811718301095947
+    chart: 
+      type: Line
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Top
+      hide-and-show-behavior: Rescale
+
+    series: 
+    - # ====== Series: Store A =====================================
+      id: 432813221541095952
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dotted
+        type: Centered Stepped
+
+      marker: 
+        show: Yes
+        shape: Star
+
+      label: 
+        show: true
+        position: Above Marker
+
+    - # ====== Series: Acme Store ==================================
+      id: 432813634544095955
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Curved
+
+      marker: 
+        show: Yes
+        shape: Plus
+
+      label: 
+        show: true
+        position: Center
+
+    - # ====== Series: Shop C ======================================
+      id: 432813971935095955
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dashed
+        type: Stepped
+
+      marker: 
+        show: Yes
+        shape: Diamond
+
+      label: 
+        show: true
+        position: Below Marker
+
+      advanced: 
+        static-id: c_series
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 432812025402095949
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 432812452707095950
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+    - # ====== Axis: y2 ============================================
+      id: 432812855883095950
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+- # ====== Region: Line Chart (Data Labels & Line Styles) Inform
+  id: 432816147549095959
+  identification: 
+    name: Line Chart (Data Labels & Line Styles) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates a Line chart with varying line types and styles.<p/>
+      <strong>Maximum Width & Height</strong> - Chart-level attributes Maximum Width and Height have been set to 500px and 450px respectively, to size the chart within its region.  If you wish to default to using 100% width and height of the given region, simply remove these values, and utilitise the Template Options of the region to control the height as you wish.<p/> 
+      <strong>Orientation</strong> - Through the use of Dynamic actions, use the Horizontal/Vertical button to the top left of the chart to change the orientiation of the data items on the charts.<p/>
+      <strong>Chart Type</strong> - Through the use of Dynamic actions, use the Bar/Area/Line/Line with Area/Combo buttons to the top right of the chart to change the type of the chart.<p/>
+      <strong>Line Style & Type</strong> - Use the series-level attributes to define various line styles, such as dotted, and types, such as curved, to the chart.<p/>
+      <strong>Marker</strong> - Use the series-level attribute to define various markers to the data items rendered on the chart.<p/>
+      <strong>Label Position</strong> - Use this series-level attribute to control the positioning of the labels on data items of the chart.<p/>
+      For more information on the Line chart settings, refer to the Oracle JET Cookbook <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=lineChart&demo=dataLabels" target="_blank">Line Chart: Data Labels</a> and <a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=lineChart&demo=lineTypes" target="_blank">Line Chart: Line Types</a> examples.
+
+  layout: 
+    sequence: 10
+    parent-region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Line Chart ( Show/Hide Labels via Dynamic Act
+  id: 562443131255606503
+  identification: 
+    name: Line Chart ( Show/Hide Labels via Dynamic Action )
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: lineChartLabels
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 562443212321606504
+    chart: 
+      type: Line
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Top
+      hide-and-show-behavior: Rescale
+      font-family: Trebuchet MS
+      font-style: Italic
+      font-size: 12
+
+    series: 
+    - # ====== Series: Store A =====================================
+      id: 562443291495606505
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dotted
+        type: Centered Stepped
+
+      marker: 
+        show: Yes
+        shape: Star
+
+      label: 
+        show: true
+        position: Above Marker
+        font-family: Comic Sans MS
+        font-color: '#FA1238'
+
+    - # ====== Series: Acme Store ==================================
+      id: 562443481290606506
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Curved
+
+      marker: 
+        show: Yes
+        shape: Plus
+
+      label: 
+        show: true
+        position: Center
+        font-family: Comic Sans MS
+        font-color: '#3966ED'
+
+    - # ====== Series: Shop C ======================================
+      id: 562443494859606507
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dashed
+        type: Stepped
+
+      marker: 
+        show: Yes
+        shape: Diamond
+
+      label: 
+        show: true
+        position: Below Marker
+        font-family: Comic Sans MS
+        font-color: '#8A3232'
+
+      advanced: 
+        static-id: c_series
+
+    axes: 
+    - # ====== Axis: y =============================================
+      id: 562443657273606508
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        font-family: Helvetica
+        font-style: Oblique
+        font-size: 14
+        font-color: '#F59D5A'
+
+    - # ====== Axis: x =============================================
+      id: 562443752151606509
+      identification: 
+        name: x
+        show-axis: true
+        title: X-Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+        font-family: Courier
+        font-style: Normal
+        font-color: '#2323EB'
+
+    - # ====== Axis: y2 ============================================
+      id: 562443826170606510
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+- # ====== Region: Line Chart ( Show/Hide Labels via Dynamic Act
+  id: 562444496386606517
+  identification: 
+    name: Line Chart ( Show/Hide Labels via Dynamic Action ) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates a Line chart with two buttons on the region, allowing the user to show or hide the data labels on the chart, via Dynamic Actions.<p/><p/>
+      <strong>Hide Labels button</strong> - Use the following JavaScript code in a dynamic action triggered by the Click action of this button:<br/>
+      
+      <pre>
+      // Retrieve the series array from the chart - using the 'option' API
+      var series = apex.region("lineChartLabels").call( "option", "series" );
+      
+      // Set the labelPosition property for the series items
+      for ( i = 0; i < series.length; i++ ) {
+          for ( j = 0; j < series[ i ].items.length; j++ ) {
+              series[ i ].items[ j ].labelPosition = "none";    
+          }
+      }
+      
+      // Invoke the refresh method to update the DOM
+      apex.region("lineChartLabels").widget().ojChart('refresh');
+      </pre><p/>
+      <strong>Show Labels button</strong> - Use the following JavaScript code in a dynamic action triggered by the Click action of this button:<br/>
+      
+      <pre>
+      // Retrieve the series array from the chart - using the 'option' API
+      var series = apex.region("lineChartLabels").call( "option", "series" );
+      
+      // Set the labelPosition property for the series items
+      for ( i = 0; i < series.length; i++ ) {
+          for ( j = 0; j < series[ i ].items.length; j++ ) {
+              series[ i ].items[ j ].labelPosition = "aboveMarker";
+              // Set item[].label attribute to the value to be rendered as the label
+              series[ i ].items[ j ].label = series[ i ].items[ j ].value;
+          }
+      }
+      
+      // Invoke the refresh method to update the DOM
+      apex.region("lineChartLabels").widget().ojChart('refresh');
+      </pre><p/>
+      <p>
+      For more information on the JET chart options, refer to the Oracle JET <a href="&OJCHART_API_URL." target="_blank">ojChart API</a>.
+      </p>
+      <p>
+      For more information on labelPosition settings, refer to the Oracle JET <a href="&OJCHART_ITEM_API_URL.#labelPosition" target="_blank">ojChartItem API</a> example.
+
+  layout: 
+    sequence: 20
+    parent-region: Line Chart ( Show/Hide Labels via Dynamic Action ) # 562443131255606503
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Line Chart (Reference Object via JavaScript C
+  id: 708258746293742224
+  identification: 
+    name: Line Chart (Reference Object via JavaScript Customizations)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 708258994272742227
+    chart: 
+      type: Line
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    layout: 
+      maximum-width: 500
+      height: 450
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Top
+      hide-and-show-behavior: Rescale
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ) {
+        
+            // Define Reference Object line on Y Axis of chart
+            var constantLineY = [ {text:"Reference Object", type: "line", value: 50, color: "#A0CEEC", displayInLegend: "on", lineWidth: 3, location: "back", lineStyle: "dashed", shortDesc: "Sample Reference Line"}];
+            options.yAxis.referenceObjects = constantLineY;
+            return options;
+        }
+
+    series: 
+    - # ====== Series: Store A =====================================
+      id: 708259079516742228
+      identification: 
+        name: Store A
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Store A'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dotted
+        type: Centered Stepped
+
+      marker: 
+        show: Yes
+        shape: Star
+
+      label: 
+        show: true
+        position: Above Marker
+
+    - # ====== Series: Acme Store ==================================
+      id: 708259188238742229
+      identification: 
+        name: Acme Store
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Acme Store'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Curved
+
+      marker: 
+        show: Yes
+        shape: Plus
+
+      label: 
+        show: true
+        position: Center
+
+    - # ====== Series: Shop C ======================================
+      id: 708259315042742230
+      identification: 
+        name: Shop C
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select a.product_name, b.quantity, b.customer
+          from eba_demo_chart_products a, eba_demo_chart_orders b
+          where a.product_id = b.product_id
+          and customer = 'Shop C'
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRODUCT_NAME
+        value: QUANTITY
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Dashed
+        type: Stepped
+
+      marker: 
+        show: Yes
+        shape: Diamond
+
+      label: 
+        show: true
+        position: Below Marker
+
+      advanced: 
+        static-id: c_series
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 708259391375742231
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 708259552629742232
+      identification: 
+        name: y
+        show-axis: true
+        title: Y1 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+        step: 1
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+        minimum-step: 1
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+    - # ====== Axis: y2 ============================================
+      id: 708259614038742233
+      identification: 
+        name: y2
+        show-axis: true
+        title: Y2 Axis Title
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+      dual-y-axes: 
+        show: Yes
+        splitter-position: 0.7
+
+- # ====== Region: Line Chart (Reference Object via JavaScript) 
+  id: 708259693774742234
+  identification: 
+    name: Line Chart (Reference Object via JavaScript) Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      This example demonstrates how to customize a Line chart to apply a Reference Object, via JavaScript code customizations.<p/>
+      
+      <strong>JavaScript Code</strong> - Use this chart-level attribute to customize your chart attributes and data.  Any chart initialization changes, to attributes such as the chart y-axis, type, or orientation, can also be made.  The JavaScript Code should follow a template similar to the following:<br/>
+      
+      <pre>
+      function( options ) {
+      
+          // Define Reference Object line on Y Axis of chart
+          var constantLineY = [ {text:"Reference Object", type: "line", value: 50, color: "#A0CEEC", displayInLegend: "on", lineWidth: 3, location: "back", lineStyle: "dashed", shortDesc: "Sample Reference Line"}];
+          
+          // Set the referenceObjects option as part of the chart initialization
+          options.yAxis.referenceObjects = constantLineY;
+          
+          return options;
+      }
+      </pre><p/>
+      
+      <p>
+      For more information on the JET chart options, refer to the Oracle JET <a href="&OJCHART_API_URL." target="_blank">ojChart API</a>.
+      </p>
+      <p>
+      For more information on Reference Object settings, refer to the Oracle JET Cookbook <a href="&JET_COOKBOOK_URL.?component=lineChart&demo=refObject" target="_blank">Line Chart: Reference Objects</a> example.
+
+  layout: 
+    sequence: 10
+    parent-region: Line Chart (Reference Object via JavaScript Customizations) # 708258746293742224
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 1311222283389955496
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: About this page =============================
+  id: 1312062981966262614
+  identification: 
+    name: About this page
+    type: Static Content
+
+  source: 
+    html-code: <p>&PRODUCT_NAME. native Line charts, using Oracle JET Data Visualizations, are showcased on this page. Line charts are useful for visualizing trends in a set of values over time and comparing these values across series.  This chart type is recommended for visualizing mixed frequency time data.</p>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--customIcons
+    - t-Alert--info
+    icon: fa-line-chart
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Line Chart (Time Axis) ======================
+  id: 2062002400178167064
+  identification: 
+    name: Line Chart (Time Axis)
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: line_chart
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 284304403948608767
+    chart: 
+      type: Line
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    layout: 
+      height: 420
+
+    data-cursor: 
+      cursor: Yes
+      behavior: Smooth
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      time-axis-type: Enabled
+      zoom-and-scroll: Delayed
+      initial-zooming: First
+
+    overview: 
+      show: false
+
+    animation: 
+      on-display: None
+      on-data-change: None
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: None
+
+    series: 
+    - # ====== Series: Stock Value =================================
+      id: 284304529690608768
+      identification: 
+        name: Stock Value
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT
+              pricing_date,
+              closing_val,
+              stock_code
+          FROM
+              EBA_DEMO_CHART_STOCKS
+          ORDER BY
+              pricing_date asc
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: PRICING_DATE
+        value: CLOSING_VAL
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      line: 
+        style: Solid
+        type: Automatic
+
+      marker: 
+        show: No
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 284304618977608769
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format: DateTime - Full
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 284304688582608770
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format: Currency
+        decimal-places: 2
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+        step: 50
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Region Display Selector =====================
+  id: 2062002728988167067
+  identification: 
+    name: Region Display Selector
+    type: Region Display Selector
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: No
+
+buttons: 
+- # ====== Button: Horizontal ==================================
+  id: 432815162941095958
+  identification: 
+    button-name: Horizontal
+    label: Horizontal
+
+  layout: 
+    sequence: 60
+    region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-bar-chart-horizontal
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Vertical ====================================
+  id: 432815558399095958
+  identification: 
+    button-name: Vertical
+    label: Vertical
+
+  layout: 
+    sequence: 70
+    region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillEnd
+    icon: fa-line-area-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: HideLabels ==================================
+  id: 562443972756606511
+  identification: 
+    button-name: HideLabels
+    label: Hide Labels
+
+  layout: 
+    sequence: 10
+    region: Line Chart ( Show/Hide Labels via Dynamic Action ) # 562443131255606503
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillStart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: ShowLabels ==================================
+  id: 562444001210606512
+  identification: 
+    button-name: ShowLabels
+    label: Show Labels
+
+  layout: 
+    sequence: 20
+    region: Line Chart ( Show/Hide Labels via Dynamic Action ) # 562443131255606503
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillEnd
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Reset =======================================
+  id: 668141027389505581
+  identification: 
+    button-name: Reset
+    label: Reset Zoom
+
+  layout: 
+    sequence: 10
+    region: Line Chart (Time Axis) # 2062002400178167064
+    slot: TOP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    horizontal-alignment: Right
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Bar =========================================
+  id: 2755513817106688246
+  identification: 
+    button-name: Bar
+    label: Bar
+
+  layout: 
+    sequence: 10
+    region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillStart
+    icon: fa-bar-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Area ========================================
+  id: 2755514948996688257
+  identification: 
+    button-name: Area
+    label: Area
+
+  layout: 
+    sequence: 20
+    region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pill
+    icon: fa-area-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Line ========================================
+  id: 2755514967408688258
+  identification: 
+    button-name: Line
+    label: Line
+
+  layout: 
+    sequence: 30
+    region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pill
+    icon: fa-line-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: LineWithArea ================================
+  id: 2755515125524688259
+  identification: 
+    button-name: LineWithArea
+    label: Line with Area
+
+  layout: 
+    sequence: 40
+    region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pill
+    icon: fa-line-area-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: Combo =======================================
+  id: 2755515232857688260
+  identification: 
+    button-name: Combo
+    label: Combo
+
+  layout: 
+    sequence: 50
+    region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--pillEnd
+    icon: fa-combo-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Horizontal Orientation ==============
+  id: 432818959263116447
+  identification: 
+    name: Horizontal Orientation
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Horizontal # 432815162941095958
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 432819385439116448
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"lineChart\").widget().ojChart({orientation: 'horizontal'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+
+    execution: 
+      sequence: 10
+      event: Horizontal Orientation # 432818959263116447
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Vertical Orientation ================
+  id: 432819854824118153
+  identification: 
+    name: Vertical Orientation
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Vertical # 432815558399095958
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 432820188408118153
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"lineChart\").widget().ojChart({orientation: 'vertical'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+
+    execution: 
+      sequence: 10
+      event: Vertical Orientation # 432819854824118153
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Hide Data Labels ====================
+  id: 562444129260606513
+  identification: 
+    name: Hide Data Labels
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: HideLabels # 562443972756606511
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 562444280340606514
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        // Retrieve the series array from the chart - using the 'option' API
+        var series = apex.region("lineChartLabels").call( "option", "series" );
+        
+        // Set the labelPosition property for the series items
+        for ( i = 0; i < series.length; i++ ) {
+            for ( j = 0; j < series[ i ].items.length; j++ ) {
+                series[ i ].items[ j ].labelPosition = "none";    
+            }
+        }
+        
+        // Invoke the refresh method to update the DOM
+        apex.region("lineChartLabels").widget().ojChart('refresh');
+
+    execution: 
+      sequence: 10
+      event: Hide Data Labels # 562444129260606513
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Show Data Labels ====================
+  id: 562444373369606515
+  identification: 
+    name: Show Data Labels
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: ShowLabels # 562444001210606512
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 562444446145606516
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        // Retrieve the series array from the chart - using the 'option' API
+        var series = apex.region("lineChartLabels").call( "option", "series" );
+        
+        // Set the labelPosition property for the series items
+        for ( i = 0; i < series.length; i++ ) {
+            for ( j = 0; j < series[ i ].items.length; j++ ) {
+                series[ i ].items[ j ].labelPosition = "aboveMarker";
+                // Set item[].label attribute to the value to be rendered as the label
+                series[ i ].items[ j ].label = series[ i ].items[ j ].value;
+            }
+        }
+        
+        // Invoke the refresh method to update the DOM
+        apex.region("lineChartLabels").widget().ojChart('refresh');
+
+    execution: 
+      sequence: 10
+      event: Show Data Labels # 562444373369606515
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Reset Zoom ==========================
+  id: 668141144474505582
+  identification: 
+    name: Reset Zoom
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Reset # 668141027389505581
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 668141198691505583
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        // Retrieve current xAxis settings
+        var l_xAxis = apex.region( "line_chart" ).widget().ojChart( 'option', 'xAxis' );
+        
+        // Reset viewport
+        apex.region( "line_chart" ).widget().ojChart({
+            
+            // Clear viewportMin and viewportMax settings on xAxis
+            xAxis: $.extend( l_xAxis, { viewportMin: null, viewportMax: null } )
+        
+        });
+        
+        
+        
+
+    execution: 
+      sequence: 10
+      event: Reset Zoom # 668141144474505582
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 668141330717505584
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Time Axis) # 2062002400178167064
+
+    execution: 
+      sequence: 20
+      event: Reset Zoom # 668141144474505582
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Bar =================================
+  id: 2755513928998688247
+  identification: 
+    name: Bar
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Bar # 2755513817106688246
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2755514026013688248
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"lineChart\").widget().ojChart({type: 'bar'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+
+    execution: 
+      sequence: 10
+      event: Bar # 2755513928998688247
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Area ================================
+  id: 2755514081034688249
+  identification: 
+    name: Area
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Area # 2755514948996688257
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2755514182624688250
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"lineChart\").widget().ojChart({type: 'area'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+
+    execution: 
+      sequence: 10
+      event: Area # 2755514081034688249
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Line ================================
+  id: 2755514338817688251
+  identification: 
+    name: Line
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Line # 2755514967408688258
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2755514402600688252
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"lineChart\").widget().ojChart({type: 'line'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+
+    execution: 
+      sequence: 10
+      event: Line # 2755514338817688251
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Line with Area ======================
+  id: 2755514486484688253
+  identification: 
+    name: Line with Area
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: LineWithArea # 2755515125524688259
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2755514620685688254
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"lineChart\").widget().ojChart({type: 'lineWithArea'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+
+    execution: 
+      sequence: 10
+      event: Line with Area # 2755514486484688253
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Combo ===============================
+  id: 2755514660858688255
+  identification: 
+    name: Combo
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: Combo # 2755515232857688260
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2755514784654688256
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: "apex.region(\"lineChart\").widget().ojChart({type: 'combo'});"
+
+    affected-elements: 
+      selection-type: Region
+      region: Line Chart (Data Labels & Line Styles) # 432811368954095925
+
+    execution: 
+      sequence: 10
+      event: Combo # 2755514660858688255
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: LAST_VIEW ==============================
+  id: 2336322565081053369
+  identification: 
+    item-name: LAST_VIEW
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: '&APP_PAGE_ID.'
+

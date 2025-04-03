@@ -1,0 +1,458 @@
+---
+# ====== Page: Help ==========================================
+id: 12
+identification: 
+  name: Help
+  alias: HELP
+  title: Help
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+html-header: 
+  html-header: |
+    <style>
+    div.helpContainer{width:960px;margin:16px auto;zoom:1}
+    div.helpContainer:before,div.helpContainer:after{content:"\0020";display:block;height:0;overflow:hidden}
+    div.helpContainer:after{clear:both}
+    div.helpContainer div.helpSide{float:left;width:300px}
+    div.helpContainer div.helpSide h1.appNameHeader{position:relative;font:bold 22px/36px Arial,sans-serif;color:#404040;padding:0;margin:0}
+    div.helpContainer div.helpSide h1.appNameHeader img{display:block;position:absolute;left:0;top:0}
+    div.helpContainer div.helpMain{float:right;border-left:1px solid #EEE;width:632px;padding-left:16px}
+    div.helpContainer div.helpMain h2{font:bold 20px/32px Arial,sans-serif;color:#404040;margin:0 0 8px 0}
+    div.helpContainer div.helpMain h3{font:bold 16px/24px Arial,sans-serif;color:#404040;margin:0 0 8px 0}
+    div.helpContainer div.helpMain h4{font:bold 12px/16px Arial,sans-serif;color:#404040;margin:0 0 8px 0}
+    div.helpContainer div.helpMain p{font:normal 12px/16px Arial,sans-serif;color:#404040;margin:0 0 8px 0}
+    div.helpContainer div.helpMain ul{list-style:outside disc;margin:0 0 0 24px}
+    div.helpContainer div.helpMain ul li{font:normal 12px/20px Arial,sans-serif;color:#404040}
+    div.helpContainer div.helpMain .aboutApp,div.helpContainer div.helpMain .textRegion{border-bottom:1px solid #EEE;padding-bottom:16px;margin-bottom:16px}
+    </style>
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: &APP_NAME. ==================================
+  id: 2061592245291727454
+  identification: 
+    name: '&APP_NAME.'
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select aa.version app_version,
+             to_char(aa.pages,'999G999G990') pages,
+             'Oracle' vendor
+      from apex_applications aa
+      where aa.application_id = :APP_ID
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - t-HeroRegion--featured
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  image: 
+    file-url: '#APP_FILES#icons/app-icon-512.png'
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--rightAligned
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: APP_VERSION =================================
+    id: 2061592324123727455
+    identification: 
+      column-name: APP_VERSION
+      type: Plain Text
+
+    heading: 
+      heading: App version
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PAGES =======================================
+    id: 2061592436264727456
+    identification: 
+      column-name: PAGES
+      type: Plain Text
+
+    heading: 
+      heading: Pages
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VENDOR ======================================
+    id: 2061592511132727457
+    identification: 
+      column-name: VENDOR
+      type: Plain Text
+
+    heading: 
+      heading: Vendor
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Help Container ==============================
+  id: 3253078301341345426
+  identification: 
+    name: Help Container
+    type: Static Content
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Quick Start =================================
+  id: 3253078700379345427
+  identification: 
+    name: Quick Start
+    type: Static Content
+
+  source: 
+    html-code: |
+      <H2>Getting Started</h2>
+      <p>Run the application as a developer; at the bottom of the page will be buttons for viewing the page in the Oracle APEX Application Builder. Click on the "Edit Page" button to see how the pages are defined. Use the Reference menu to quickly inspect chart examples for specific functionality and support.</p>
+      <p>If you have questions, ask them on the <a href="https://forums.oracle.com/forums/forum.jspa?forumID=137" target="_blank">OTN Forum</a>.</p>
+
+  layout: 
+    sequence: 20
+    parent-region: Help Container # 3253078301341345426
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Features ====================================
+  id: 3253078910806345427
+  identification: 
+    name: Features
+    type: Static Content
+
+  source: 
+    html-code: |
+      <h2>Features</h2>
+      <p>
+      <ul>
+          <li>SQL Driven Charting</li>
+          <li>JavaScript Charting</li>
+          <li>Area, Bar, Box Plot, Bubble, Combination, Donut, Dial, Event Drops, Funnel, Line, Line with Area, Pareto, Pie, Polar, Pyramid, Range, Radar, Scatter, Status Meter Gauge, Stock, and Dashboard.</li>
+          <li>Gantts</li>
+          <li>APEX plug-in based on Oracle JET Component:</li>
+          <ul>
+              <li>Oracle JET Legend</li>
+          </ul>
+          <li>CSS charting using region plug-ins:</li>
+          <ul>
+              <li>HTML 5 Bar Chart</li>     
+              <li>Badge List v2</li>
+              <li>Slide Tooltip</li>
+          </ul>
+      </ul>
+      </p>
+
+  layout: 
+    sequence: 30
+    parent-region: Help Container # 3253078301341345426
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: About this Application ======================
+  id: 3253079104210345427
+  identification: 
+    name: About this Application
+    type: Static Content
+
+  source: 
+    html-code: |
+      <h2>About this Application</h2>
+      <p>This application highlights the charting capabilities of &PRODUCT_NAME.. It demonstrates how you can enhance your applications to visually represent your data, using declarative and plug-in based charting solutions. Supported chart types include Area, Bar, Bubble, Combination, Donut, Dial, Funnel, Gantt, Line, Line with Area, Pie, Polar, Radar, Range, Stock, and Scatter. It features a number of our new native charts, based on Oracle JavaScript Extension Toolkit (JET) Data Visualizations, and also an APEX plug-in to demonstrate the integration of other Oracle JET Data Visualization components.  The charts can be easily created and modified using native Oracle APEX wizards. Chart attributes such as color, formatting, axes and legend settings can be easily modified to suit your requirements. This application also contains a number of plug-in based alternative charting solutions.</p><p>
+      Use this application to familiarize yourself with the various charting options available.</p>
+
+  layout: 
+    sequence: 10
+    parent-region: Help Container # 3253078301341345426
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Help ========================================
+  id: 3253079693401345429
+  identification: 
+    name: Help
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 8206258843483240412
+
+  layout: 
+    sequence: 1
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Never
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
