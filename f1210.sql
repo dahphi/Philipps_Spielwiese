@@ -33,7 +33,7 @@ prompt APPLICATION 1210 - Vermarktungscluster
 -- Application Export:
 --   Application:     1210
 --   Name:            Vermarktungscluster
---   Date and Time:   09:03 Thursday April 3, 2025
+--   Date and Time:   09:41 Thursday April 3, 2025
 --   Exported By:     DAHPHI
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -152,6 +152,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Vermarktungscluster'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>36
+,p_version_scn=>4108006519446
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'N'
@@ -30903,9 +30904,10 @@ wwv_flow_imp_page.create_page_plug(
 '       g.id,',
 '       p.plz_oname ort, ',
 '       p.plz_plz plz, ',
-'       s.str_name46 str, ',
-'       h.haus_hnr hnr, ',
-'       h.haus_hnr_zus hnr_zus,',
+'       s.str_name46 str,',
+'       -- 03-04-2025 -  @ticket FTTH-5143 - nAnpassung Adresstruktur komplett',
+'       va.hnr_kompl  hnr_kompl,',
+'       va.gebaeudeteil_name gebaeudeteil_name,',
 '       h.haus_lfd_nr haus_lfd_nr,',
 '       h.haus_we_ges we_ges,',
 '       tdt.dnsttp_bez dnsttp_bez, ',
@@ -30921,6 +30923,7 @@ wwv_flow_imp_page.create_page_plug(
 '  JOIN      strav.haus               h    ON h.haus_lfd_nr = vco.haus_lfd_nr',
 '  JOIN      strav.stra_db            s    ON s.str_lfd_nr = h.str_lfd_nr',
 '  JOIN      strav.plz_da             p    ON p.plz_plz = s.str_plz AND p.plz_alort = s.str_alort',
+'  JOIN      v_adressen               va   ON va.haus_lfd_nr = h.haus_lfd_nr',
 '  LEFT JOIN strav.haus_gebiet        hg   ON hg.haus_lfd_nr = h.haus_lfd_nr ',
 '  LEFT JOIN strav.gebiet             g    ON g.id = hg.gebiet_id',
 '  LEFT JOIN strav.haus_daten         hd   ON hd.haus_lfd_nr = h.haus_lfd_nr',
@@ -30974,12 +30977,71 @@ wwv_flow_imp_page.create_region_column_group(
 ,p_heading=>'GEE'
 );
 wwv_flow_imp_page.create_region_column(
+ p_id=>wwv_flow_imp.id(19638665670567801)
+,p_name=>'HNR_KOMPL'
+,p_source_type=>'DB_COLUMN'
+,p_source_expression=>'HNR_KOMPL'
+,p_data_type=>'VARCHAR2'
+,p_is_query_only=>false
+,p_item_type=>'NATIVE_TEXT_FIELD'
+,p_heading=>'Hnr. kompl'
+,p_heading_alignment=>'LEFT'
+,p_display_sequence=>90
+,p_value_alignment=>'LEFT'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'trim_spaces', 'BOTH')).to_clob
+,p_is_required=>false
+,p_max_length=>83
+,p_enable_filter=>true
+,p_filter_operators=>'C:S:CASE_INSENSITIVE:REGEXP'
+,p_filter_is_required=>false
+,p_filter_text_case=>'MIXED'
+,p_filter_exact_match=>true
+,p_filter_lov_type=>'DISTINCT'
+,p_use_as_row_header=>false
+,p_enable_sort_group=>true
+,p_enable_control_break=>true
+,p_enable_hide=>true
+,p_is_primary_key=>false
+,p_duplicate_value=>true
+,p_include_in_export=>true
+);
+wwv_flow_imp_page.create_region_column(
+ p_id=>wwv_flow_imp.id(19638764075567802)
+,p_name=>'GEBAEUDETEIL_NAME'
+,p_source_type=>'DB_COLUMN'
+,p_source_expression=>'GEBAEUDETEIL_NAME'
+,p_data_type=>'VARCHAR2'
+,p_is_query_only=>false
+,p_item_type=>'NATIVE_TEXT_FIELD'
+,p_heading=>'Gebaeudeteil Name'
+,p_heading_alignment=>'LEFT'
+,p_display_sequence=>100
+,p_value_alignment=>'LEFT'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'trim_spaces', 'BOTH')).to_clob
+,p_is_required=>false
+,p_max_length=>25
+,p_enable_filter=>true
+,p_filter_operators=>'C:S:CASE_INSENSITIVE:REGEXP'
+,p_filter_is_required=>false
+,p_filter_text_case=>'MIXED'
+,p_filter_exact_match=>true
+,p_filter_lov_type=>'DISTINCT'
+,p_use_as_row_header=>false
+,p_enable_sort_group=>true
+,p_enable_control_break=>true
+,p_enable_hide=>true
+,p_is_primary_key=>false
+,p_duplicate_value=>true
+,p_include_in_export=>true
+);
+wwv_flow_imp_page.create_region_column(
  p_id=>wwv_flow_imp.id(143536196533750868)
 ,p_name=>'EIGENTUEMERDATEN_NOTWENDIG'
 ,p_source_type=>'DB_COLUMN'
 ,p_source_expression=>'EIGENTUEMERDATEN_NOTWENDIG'
 ,p_data_type=>'VARCHAR2'
-,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
 ,p_heading=>unistr('Eigent\00FCmerdaten<br/>notwendig')
@@ -31013,7 +31075,6 @@ wwv_flow_imp_page.create_region_column(
 ,p_source_type=>'DB_COLUMN'
 ,p_source_expression=>'PV'
 ,p_data_type=>'VARCHAR2'
-,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_TEXT_FIELD'
 ,p_heading=>'PV'
@@ -31044,7 +31105,6 @@ wwv_flow_imp_page.create_region_column(
 ,p_source_type=>'DB_COLUMN'
 ,p_source_expression=>'VCO_LFD_NR'
 ,p_data_type=>'NUMBER'
-,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
 ,p_heading=>'VCO_LFD_NR'
@@ -31249,71 +31309,11 @@ wwv_flow_imp_page.create_region_column(
 ,p_include_in_export=>true
 );
 wwv_flow_imp_page.create_region_column(
- p_id=>wwv_flow_imp.id(202710122975943707)
-,p_name=>'HNR'
-,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'HNR'
-,p_data_type=>'NUMBER'
-,p_session_state_data_type=>'VARCHAR2'
-,p_is_query_only=>false
-,p_item_type=>'NATIVE_NUMBER_FIELD'
-,p_heading=>'Hnr.'
-,p_heading_alignment=>'CENTER'
-,p_display_sequence=>90
-,p_value_alignment=>'CENTER'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'number_alignment', 'right',
-  'virtual_keyboard', 'text')).to_clob
-,p_is_required=>false
-,p_enable_filter=>true
-,p_filter_is_required=>false
-,p_filter_lov_type=>'NONE'
-,p_use_as_row_header=>false
-,p_enable_sort_group=>true
-,p_enable_control_break=>true
-,p_enable_hide=>true
-,p_is_primary_key=>false
-,p_duplicate_value=>true
-,p_include_in_export=>true
-);
-wwv_flow_imp_page.create_region_column(
- p_id=>wwv_flow_imp.id(202710139834943708)
-,p_name=>'HNR_ZUS'
-,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'HNR_ZUS'
-,p_data_type=>'VARCHAR2'
-,p_session_state_data_type=>'VARCHAR2'
-,p_is_query_only=>false
-,p_item_type=>'NATIVE_TEXT_FIELD'
-,p_heading=>'Hnr. Zus.'
-,p_heading_alignment=>'CENTER'
-,p_display_sequence=>100
-,p_value_alignment=>'CENTER'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'trim_spaces', 'BOTH')).to_clob
-,p_is_required=>false
-,p_max_length=>1
-,p_enable_filter=>true
-,p_filter_operators=>'C:S:CASE_INSENSITIVE:REGEXP'
-,p_filter_is_required=>false
-,p_filter_text_case=>'MIXED'
-,p_filter_exact_match=>true
-,p_filter_lov_type=>'DISTINCT'
-,p_use_as_row_header=>false
-,p_enable_sort_group=>true
-,p_enable_control_break=>true
-,p_enable_hide=>true
-,p_is_primary_key=>false
-,p_duplicate_value=>true
-,p_include_in_export=>true
-);
-wwv_flow_imp_page.create_region_column(
  p_id=>wwv_flow_imp.id(202710321085943709)
 ,p_name=>'HAUS_LFD_NR'
 ,p_source_type=>'DB_COLUMN'
 ,p_source_expression=>'HAUS_LFD_NR'
 ,p_data_type=>'NUMBER'
-,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
 ,p_heading=>'Haus Lfd Nr'
@@ -31341,7 +31341,6 @@ wwv_flow_imp_page.create_region_column(
 ,p_source_type=>'DB_COLUMN'
 ,p_source_expression=>'WE_GES'
 ,p_data_type=>'NUMBER'
-,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
 ,p_heading=>'WE Gesamt'
@@ -31369,7 +31368,6 @@ wwv_flow_imp_page.create_region_column(
 ,p_source_type=>'DB_COLUMN'
 ,p_source_expression=>'DNSTTP_BEZ'
 ,p_data_type=>'VARCHAR2'
-,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_TEXT_FIELD'
 ,p_heading=>'Technologie'
@@ -31437,7 +31435,6 @@ wwv_flow_imp_page.create_region_column(
 ,p_source_type=>'DB_COLUMN'
 ,p_source_expression=>'GEE_ERTEILT_AM'
 ,p_data_type=>'DATE'
-,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_DATE_PICKER_APEX'
 ,p_heading=>'erteilt am'
@@ -31593,6 +31590,26 @@ wwv_flow_imp_page.create_ig_report_view(
 ,p_edit_mode=>false
 );
 wwv_flow_imp_page.create_ig_report_column(
+ p_id=>wwv_flow_imp.id(19644287664571708)
+,p_view_id=>wwv_flow_imp.id(202726919319986508)
+,p_display_seq=>9
+,p_column_id=>wwv_flow_imp.id(19638665670567801)
+,p_is_visible=>true
+,p_is_frozen=>false
+,p_width=>121
+,p_sort_order=>4
+,p_sort_direction=>'ASC'
+,p_sort_nulls=>'LAST'
+);
+wwv_flow_imp_page.create_ig_report_column(
+ p_id=>wwv_flow_imp.id(19645109793571712)
+,p_view_id=>wwv_flow_imp.id(202726919319986508)
+,p_display_seq=>10
+,p_column_id=>wwv_flow_imp.id(19638764075567802)
+,p_is_visible=>true
+,p_is_frozen=>false
+);
+wwv_flow_imp_page.create_ig_report_column(
  p_id=>wwv_flow_imp.id(129336502205033842)
 ,p_view_id=>wwv_flow_imp.id(202726919319986508)
 ,p_display_seq=>19
@@ -31685,30 +31702,6 @@ wwv_flow_imp_page.create_ig_report_column(
 ,p_is_frozen=>false
 ,p_width=>142
 ,p_sort_order=>3
-,p_sort_direction=>'ASC'
-,p_sort_nulls=>'LAST'
-);
-wwv_flow_imp_page.create_ig_report_column(
- p_id=>wwv_flow_imp.id(202732736635986522)
-,p_view_id=>wwv_flow_imp.id(202726919319986508)
-,p_display_seq=>9
-,p_column_id=>wwv_flow_imp.id(202710122975943707)
-,p_is_visible=>true
-,p_is_frozen=>false
-,p_width=>81
-,p_sort_order=>4
-,p_sort_direction=>'ASC'
-,p_sort_nulls=>'LAST'
-);
-wwv_flow_imp_page.create_ig_report_column(
- p_id=>wwv_flow_imp.id(202733593368986524)
-,p_view_id=>wwv_flow_imp.id(202726919319986508)
-,p_display_seq=>10
-,p_column_id=>wwv_flow_imp.id(202710139834943708)
-,p_is_visible=>true
-,p_is_frozen=>false
-,p_width=>99
-,p_sort_order=>5
 ,p_sort_direction=>'ASC'
 ,p_sort_nulls=>'LAST'
 );
