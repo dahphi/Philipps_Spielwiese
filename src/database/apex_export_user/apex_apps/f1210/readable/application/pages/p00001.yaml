@@ -1562,7 +1562,7 @@ regions:
     link: 
       target: 
         url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:2:P2_VC_LFD_NR:&VC_LFD_NR.'
-        page: 2 # Vermarktungscluster - Historie
+        page: 2
         clear-cache: 2
         values: 
           p2_vc_lfd_nr: '&VC_LFD_NR.'

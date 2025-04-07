@@ -4388,6 +4388,35 @@ page-items:
     comments: Abhängig von P4_FILTER steht in diesem Item die Bezeichnung des Filters, damit diese im Label des Buttons BTN_KOMPLETTES_GEBIET_ZUORDNEN eingefügt werden kann.
 
 buttons: 
+- # ====== Button: Philipp_test ================================
+  id: 12167168717059401
+  identification: 
+    button-name: Philipp_test
+    label: Philipp Test
+
+  layout: 
+    sequence: 60
+    region: P4_PAGE_ITEMS # 261201934744849183
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
 - # ====== Button: BTN_KOMPLETTES_GEBIET_ZUORDNEN ==============
   id: 188310876791879828
   identification: 
