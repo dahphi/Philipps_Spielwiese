@@ -1,0 +1,61 @@
+---
+- # ====== Authorization: Administration Rights ================
+  id: 213501062200554815
+  identification: 
+    name: Administration Rights
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: 'return false; -- /// 2022-04-21 @WISAND war: true'
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Insufficient privileges, user is not an Administrator
+
+- # ====== Authorization: hat Zugriff auf App ==================
+  id: 214874001469442687
+  identification: 
+    name: hat Zugriff auf App
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "RETURN PCK_APEX_AUTH.FB_IS_MEMBER(:APP_USER, 'AccApp Vermarktungscluster');"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: |
+      Sie sind nicht berechtigt die Applikation Vermarktungscluster zu benutzen!
+      <br>Mehr Informationen:
+      <br>Siehe <a href="https://netwelt.netcologne.intern/display/APEX/Vermarktungscluster" target="_blank">Berechtigung</a>.
+      <br>
+
+  comments: 
+    comments: |
+      2022-04-21 war:
+      SELECT 1
+      FROM (
+      SELECT NAME,dn,val, SUBSTR(replace(val, 'CN=', NULL),1,INSTR(val,',')-4) grp
+        FROM table(apex_ldap.search (
+                 p_host            => 'ad.netcologne.intern',
+               p_username        => 'CN=dienst_apex,OU=Dienste,DC=netcologne,DC=intern',
+               p_pass            => 'ZMORj3Pw',
+                 p_search_base     => 'OU=Abteilungen,DC=netcologne,DC=intern',
+                 p_search_filter   => 'sAMAccountName='||apex_escape.ldap_search_filter(:APP_USER),
+                 p_attribute_names => 'memberof' ))
+      )
+      WHERE grp = 'AccApp Vermarktungscluster'
+

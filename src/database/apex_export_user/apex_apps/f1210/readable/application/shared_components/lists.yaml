@@ -1,0 +1,543 @@
+---
+- # ====== List: Wizard "Listenimport" =========================
+  id: 180866414051736074
+  identification: 
+    name: Wizard "Listenimport"
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Datei auswählen ==============================
+    id: 180866616867736075
+    label: 
+      label: Datei auswählen
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ":REQUEST IS NULL OR :REQUEST = 'STEP-1'"
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.:STEP-1:&DEBUG.::P11_STEP:1:'
+        page: 11 # Listenimport
+        request: STEP-1
+        values: 
+          p11_step: 1
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Spalte und Aktion festlegen ==================
+    id: 180867027475736075
+    label: 
+      label: Spalte und Aktion festlegen
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ":REQUEST = 'STEP-2'"
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.:STEP-2:&DEBUG.::P11_STEP:2:'
+        page: 11 # Listenimport
+        request: STEP-2
+        values: 
+          p11_step: 2
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Geplante Vorgänge prüfen =====================
+    id: 180870535224794995
+    label: 
+      label: Geplante Vorgänge prüfen
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ":REQUEST = 'STEP-3'"
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.:STEP-3:&DEBUG.:RP:P11_STEP:3:'
+        page: 11 # Listenimport
+        request: STEP-3
+        clear-cache: RP
+        values: 
+          p11_step: 3
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Aktionen ausführen ===========================
+    id: 180870916641798208
+    label: 
+      label: Aktionen ausführen
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ":REQUEST = 'STEP-4'"
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.:STEP-4:&DEBUG.::P11_STEP:4:'
+        page: 11 # Listenimport
+        request: STEP-4
+        values: 
+          p11_step: 4
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Zusammenfassung ==============================
+    id: 180871197214800048
+    label: 
+      label: Zusammenfassung
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ":REQUEST = 'STEP-5'"
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.:STEP-5:&DEBUG.::P11_STEP:5:'
+        page: 11 # Listenimport
+        request: STEP-5
+        values: 
+          p11_step: 5
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Desktop Navigation Menu =======================
+  id: 213351572517554744
+  identification: 
+    name: Desktop Navigation Menu
+
+  subscription: 
+    version-number: 4070393028055
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Vermarktungscluster Historie =================
+    id: 58700029370561744
+    label: 
+      label: Vermarktungscluster Historie
+
+    icon: 
+      image/icon-css-classes: fa-history
+
+    layout: 
+      sequence: 60
+      parent-entry: Historie # 213778241163305111
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:13:&SESSION.::&DEBUG.::::'
+        page: 13 # Vermarktungscluster-Historie
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Objekt zuordnen ==============================
+    id: 180450842094815803
+    label: 
+      label: Objekt zuordnen
+
+    icon: 
+      image/icon-css-classes: fa-map-marker-o
+
+    layout: 
+      sequence: 40
+      parent-entry: Vermarktungscluster und Objekte # 213508425086554821
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 6
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.:6:::'
+        page: 6 # Objekt zuordnen
+        clear-cache: 6
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item is NOT NULL
+      item: P6_HAUS_LFD_NR
+
+    security: 
+      authorization-scheme: hat Zugriff auf App # 214874001469442687
+
+  - # ====== Entry: Listenimport =================================
+    id: 180632959299356947
+    label: 
+      label: Listenimport
+
+    icon: 
+      image/icon-css-classes: fa-file-csv-o
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 11
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.::P11_STEP:1:'
+        page: 11 # Listenimport
+        values: 
+          p11_step: 1
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: hat Zugriff auf App # 214874001469442687
+
+  - # ====== Entry: Vermarktungscluster und Objekte ==============
+    id: 213508425086554821
+    label: 
+      label: Vermarktungscluster und Objekte
+
+    icon: 
+      image/icon-css-classes: fa-home
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.::::'
+        page: 1 # Vermarktungscluster
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Karte ========================================
+    id: 213543387492570976
+    label: 
+      label: Karte
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:10:::'
+        page: 10 # Karte
+        clear-cache: 10
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: "select 1 from dual where lower(:APP_USER) = 'boehol'"
+
+  - # ====== Entry: Historie =====================================
+    id: 213778241163305111
+    label: 
+      label: Historie
+
+    icon: 
+      image/icon-css-classes: fa-history
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.::::'
+        page: 8 # Historie
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Desktop Navigation Bar ========================
+  id: 213498010238554808
+  identification: 
+    name: Desktop Navigation Bar
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: About ========================================
+    id: 213511951199554828
+    label: 
+      label: About
+
+    icon: 
+      image/icon-css-classes: fa-question-circle-o
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    user-defined-attributes: 
+      translatable: false
+      2.: icon-only
+
+    server-side-condition: 
+      type: Never
+
+    configuration: 
+      build-option: 'Feature: About Page' # 213500431979554813
+
+  - # ====== Entry: Page Help ====================================
+    id: 213512448296554829
+    label: 
+      label: Page Help
+
+    icon: 
+      image/icon-css-classes: fa-question-circle-o
+
+    layout: 
+      sequence: 20
+      parent-entry: About # 213511951199554828
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10011:&SESSION.::&DEBUG.::P10011_PAGE_ID:&APP_PAGE_ID.:'
+        page: 10011 # Help
+        values: 
+          p10011_page_id: '&APP_PAGE_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: icon-only
+
+    configuration: 
+      build-option: 'Feature: About Page' # 213500431979554813
+
+  - # ====== Entry: --- ==========================================
+    id: 213512786531554829
+    label: 
+      label: '---'
+
+    layout: 
+      sequence: 30
+      parent-entry: About # 213511951199554828
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: separator
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: About Page ===================================
+    id: 213513242219554829
+    label: 
+      label: About Page
+
+    icon: 
+      image/icon-css-classes: fa-info-circle-o
+
+    layout: 
+      sequence: 40
+      parent-entry: About # 213511951199554828
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10010:&SESSION.::&DEBUG.:10010'
+        page: 10010 # About
+        clear-cache: 10010
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: 'Feature: About Page' # 213500431979554813
+
+  - # ====== Entry: &APP_USER. ===================================
+    id: 213513491835554829
+    label: 
+      label: '&APP_USER.'
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '#'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: has-username
+
+  - # ====== Entry: --- ==========================================
+    id: 213514013962554829
+    label: 
+      label: '---'
+
+    layout: 
+      sequence: 60
+      parent-entry: '&APP_USER.' # 213513491835554829
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: separator
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Sign Out =====================================
+    id: 213514388184554829
+    label: 
+      label: Sign Out
+
+    icon: 
+      image/icon-css-classes: fa-sign-out
+
+    layout: 
+      sequence: 70
+      parent-entry: '&APP_USER.' # 213513491835554829
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '&LOGOUT_URL.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Online Hilfe =================================
+    id: 216228099041287075
+    label: 
+      label: Online Hilfe
+
+    icon: 
+      image/icon-css-classes: fa-ambulance
+
+    layout: 
+      sequence: 15
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:window.open('https://netwelt.netcologne.intern/collaboration/display/APEX/Vermarktungscluster','Vermarktungscluster Hilfe');"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+

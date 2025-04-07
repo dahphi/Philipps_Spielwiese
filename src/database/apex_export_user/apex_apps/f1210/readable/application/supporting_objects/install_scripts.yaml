@@ -1,0 +1,62 @@
+---
+- # ====== Install Script: Table: Column:: VERMARKTUNGSCLUSTER.L
+  id: 68076073732906166
+  identification: 
+    name: 'Table: Column:: VERMARKTUNGSCLUSTER.LOESCHGRUND'
+
+  execution: 
+    sequence: 110
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+        FROM COLS
+       WHERE TABLE_NAME = 'VERMARKTUNGSCLUSTER' AND COLUMN_NAME = 'LOESCHGRUND'
+
+- # ====== Install Script: Table: Column: VC_HIST.LOESCHGRUND ==
+  id: 68076328433918696
+  identification: 
+    name: 'Table: Column: VC_HIST.LOESCHGRUND'
+
+  execution: 
+    sequence: 120
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+        FROM COLS
+       WHERE TABLE_NAME = 'VC_HIST' AND COLUMN_NAME = 'LOESCHGRUND'
+
+- # ====== Install Script: Trigger: TRG_VC_HIST ================
+  id: 68077567603044448
+  identification: 
+    name: 'Trigger: TRG_VC_HIST'
+
+  execution: 
+    sequence: 130
+
+- # ====== Install Script: DML: VC_HIST.insert =================
+  id: 68087288189261238
+  identification: 
+    name: 'DML: VC_HIST.insert'
+
+  execution: 
+    sequence: 10
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+        FROM COLS
+       WHERE TABLE_NAME = 'VC_HIST' AND COLUMN_NAME = 'LOESCHGRUND'
+
+- # ====== Install Script: DML: VERMARKTUNGSCLUSTER.update =====
+  id: 68087493914264469
+  identification: 
+    name: 'DML: VERMARKTUNGSCLUSTER.update'
+
+  execution: 
+    sequence: 140
+

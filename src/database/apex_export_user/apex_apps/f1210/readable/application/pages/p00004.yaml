@@ -1,0 +1,5987 @@
+---
+# ====== Page: Objekte hinzufügen ============================
+id: 4
+identification: 
+  name: Objekte hinzufügen
+  alias: OBJEKTE-HINZUFUEGEN
+  title: Objekte hinzufügen
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: |
+    var spinner = apex.util.showSpinner();
+    
+    function displayNumChecked(stringFromApplicationProcess) {
+      let numChecked = stringFromApplicationProcess.replace(/(\r\n|\n|\r)/gm, '').trim();
+      $('#num_checked').text('' + numChecked + (numChecked == 1 ? ' eindeutige laufende Nummer' : ' eindeutige laufende Nummern'));
+    }
+  execute-when-page-loads: spinner.remove();
+
+css: 
+  inline: |
+    input.checkbox--ir, #header_checkbox {
+        cursor:pointer;
+    }
+    
+    .a-GV-frozen--startLast {
+        border-right-width: var(--a-gv-frozen-last-border-width,2px);
+        border-width: thin;
+    }
+    .filterItem.selected {background-color:#dee1e4;font-weight:bold}
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+comments: 
+  comments: |
+    Ersetzt die bisherige Seite 7, @ticket FTTH-561.
+    Durch Einschalten der Build Option "Monitoring" werden viele zusätzliche Hilfsregionen für den Entwickler eingeblendet.
+    Durch Einschalten der Build Option "Entwicklerdokumentation" wird ein Report mit allen Seiten-Elementen sowie den zugehörigen Entwicklerkommentaren eingeblendet.
+    @optimieren: Such-Collection nur dann anlegen, wenn Ergebnisse vorliegen (betrifft: erfolglose Adressensuche)
+
+regions: 
+- # ====== Region: Adressen IR =================================
+  id: 185904441131908015
+  identification: 
+    name: Adressen IR
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: Function Body returning SQL Query
+    language: PL/SQL
+    pl/sql-function-body-returning-sql-query: |
+      :P4_QUERY_STRING :=
+      -- APEX ADVISOR SCHLÄGT HIER FEHLALARM --------------
+      PCK_VERMARKTUNGSCLUSTER.fv_query_p4_collection(
+              pin_ausbaugebiet       => :P4_SEARCH_GEBIET,
+              piv_ausbaugebiet_typ   => :P4_SEARCH_TYP,
+              piv_adresse            => :P4_SEARCH_ALL,
+              pin_vc_lfd_nr          => :P4_VC_ID,
+              pib_auswahl_bearbeiten => CASE WHEN :P4_AUSWAHL_BEARBEITEN = 1 THEN TRUE END
+      );
+      RETURN :P4_QUERY_STRING;
+      
+    page-items-to-submit: 
+    - P4_QUERY_STRING
+    - P4_SEARCH_GEBIET
+    - P4_SEARCH_TYP
+    - P4_SEARCH_ALL
+    - P4_VC_ID
+    - P4_AUSWAHL_BEARBEITEN
+
+  layout: 
+    sequence: 10
+    parent-region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    static-id: adressenIR
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: |
+      Report mit den Kandidaten für die Cluster-Zuordnung. Das SQL wird dynamisch vom PCK_VERMARKTUNGSCLUSTER generiert und an den Report zurückgegeben. P4_DO_SEARCH wird nicht mehr als Parameter benötigt, da der Report sowieso nur abgerufen wird, wenn das Page Item P4_DO_SEARCH auf 1 steht.
+      Der Report ruft seine Daten aus diversen APEX_COLLECTIONS ab: Zu jeder Kombination aus Ausbaugebiet (P4_SEARCH_GEBIET) und Ausbaugebiet-Typ (P4_SEARCH_TYP) wird eine eigene APEX-Collection angelegt, deren Name durch einen Parameter-Hash generiert wird (siehe PCK_VERMARKTUNGSCLUSTER.fv_query_p4_collection, #HASHED_COLLECTION_NAME, Beispiel: 'P4_FD9B22ABE1021DE18D0B833FC49A7369'). Dadurch werden sowohl das erneute Aufrufen des Reports, aber vor allem das Umblättern in den Ergebnissen erheblich beschleunigt. Nach dem Zuordnen der ausgewählten Zeilen werden diese Collections sofort gelöscht.
+
+  attributes: 
+    id: 185904611642908016
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y of Z
+      display-position: Top and Bottom - Left
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 40000
+
+    messages: 
+      when-no-data-found: Keine Adressen gefunden
+      when-more-data-found: Es sind mehr Ergebnisse vorhanden als sinnvollerweise zugleich angezeigt werden können.
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: false
+      aggregate: false
+      chart: false
+      group-by: false
+      pivot: false
+      flashback: false
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: false
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 188360910707107827
+      identification: 
+        name: Primary Report
+        alias: SUCHE
+
+    - # ====== Saved Report: Ausgewählte Adressen ==================
+      id: 194322117228284458
+      identification: 
+        name: Ausgewählte Adressen
+        alias: AUSWAHL
+
+    - # ====== Saved Report: ohne bereits Zugeordnete ==============
+      id: 194418871703600975
+      identification: 
+        name: ohne bereits Zugeordnete
+        alias: NICHT_ZUGEORDNET
+
+    - # ====== Saved Report: nur bereits Zugeordnete ===============
+      id: 199227100786086371
+      identification: 
+        name: nur bereits Zugeordnete
+        alias: ZUGEORDNET
+
+    column-groups: 
+    - # ====== Column Group: GEE ===================================
+      id: 191810665067804291
+      identification: 
+        name: GEE
+
+      layout: 
+        sequence: 10
+
+    - # ====== Column Group: Netzbau ===============================
+      id: 191810818372804292
+      identification: 
+        name: Netzbau
+
+      layout: 
+        sequence: 20
+
+    columns: 
+    - # ====== Column: GEBIET ======================================
+      id: 185904635381908017
+      identification: 
+        column-name: GEBIET
+        type: Plain Text
+
+      heading: 
+        heading: Gebiet
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TYP =========================================
+      id: 185904826312908018
+      identification: 
+        column-name: TYP
+        type: Plain Text
+
+      heading: 
+        heading: Typ
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ORT =========================================
+      id: 185904955668908020
+      identification: 
+        column-name: ORT
+        type: Plain Text
+
+      heading: 
+        heading: Ort
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STR =========================================
+      id: 185905196428908022
+      identification: 
+        column-name: STR
+        type: Plain Text
+
+      heading: 
+        heading: Straße
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: HNR_ZUS =====================================
+      id: 185905380754908024
+      identification: 
+        column-name: HNR_ZUS
+        type: Plain Text
+
+      heading: 
+        heading: Zus.
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: false
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DNSTTP_BEZ ==================================
+      id: 185905724739908027
+      identification: 
+        column-name: DNSTTP_BEZ
+        type: Plain Text
+
+      heading: 
+        heading: Technologie
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: GEE_STATUS ==================================
+      id: 185905748597908028
+      identification: 
+        column-name: GEE_STATUS
+        type: Plain Text
+
+      heading: 
+        heading: GEE Status
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: center
+        group: GEE # 191810665067804291
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: AUSBAUSTATUS ================================
+      id: 185906225191908032
+      identification: 
+        column-name: AUSBAUSTATUS
+        type: Plain Text
+
+      heading: 
+        heading: Ausbaustatus
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: center
+        group: Netzbau # 191810818372804292
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: VERMARKTUNGSCLUSTER =========================
+      id: 191810836843804293
+      identification: 
+        column-name: VERMARKTUNGSCLUSTER
+        type: Plain Text
+
+      heading: 
+        heading: im Vermarktungscluster
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ID ==========================================
+      id: 191811470153804299
+      identification: 
+        column-name: ID
+        type: Hidden
+
+      heading: 
+        heading: Id
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLZ =========================================
+      id: 191811546277804300
+      identification: 
+        column-name: PLZ
+        type: Plain Text
+
+      heading: 
+        heading: PLZ
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: HNR =========================================
+      id: 191811634729804301
+      identification: 
+        column-name: HNR
+        type: Plain Text
+
+      heading: 
+        heading: Hnr
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: HAUS_LFD_NR =================================
+      id: 191811815761804302
+      identification: 
+        column-name: HAUS_LFD_NR
+        type: Plain Text
+
+      heading: 
+        heading: Haus Lfd Nr
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: WE_GES ======================================
+      id: 191811916641804303
+      identification: 
+        column-name: WE_GES
+        type: Plain Text
+
+      heading: 
+        heading: WE gesamt
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BEREITS_ZUGEORDNET ==========================
+      id: 191811962810804304
+      identification: 
+        column-name: BEREITS_ZUGEORDNET
+        type: Plain Text
+
+      heading: 
+        heading: Bereits Zugeordnet
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: 'Flag: 1, wenn die Adresse dem auf der Seite angezeigten Vermarktungscluster bereits zugeordnet ist'
+
+    - # ====== Column: CHECKBOX_AUSWAHL ============================
+      id: 191814450518804329
+      identification: 
+        column-name: CHECKBOX_AUSWAHL
+        type: Plain Text
+
+      heading: 
+        heading: <input type="checkbox" value="0" id="header_checkbox" title="Setzt oder entfernt die Auswahl-Häkchen aller Zeilen, die momentan auf dieser Seite der Ergebnisliste zu sehen sind">
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: Im Header dient die Checkbox dazu, alle Zeilen-Checkboxen zu aktivieren oder deaktiviern. Die Checkbox jeder einzelnen Zeile bekommt ihre Klasse ("checkbox--ir") aus dem SQL des Reports (siehe Report-Definition => PCK_VERMARKTUNGSCLUSTER); benötigt wird diese für die Dynamic Action
+
+    - # ====== Column: GEE_ERTEILT_AM ==============================
+      id: 191814543092804330
+      identification: 
+        column-name: GEE_ERTEILT_AM
+        type: Plain Text
+
+      heading: 
+        heading: erteilt
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TERMIN ======================================
+      id: 191814634772804331
+      identification: 
+        column-name: TERMIN
+        type: Plain Text
+
+      heading: 
+        heading: Termin
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CHECKED =====================================
+      id: 192913016117262001
+      identification: 
+        column-name: CHECKED
+        type: Plain Text
+
+      heading: 
+        heading: Checked
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: 'Flag: 1, wenn die Adresse ausgewählt ist. Gibt dem Benutzer die Möglichkeit der Filterung (da die zugehörige Checkbox ein nicht filterbares HTML-Konstrukt ist)'
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: A4
+        orientation: Landscape
+        units: Millimeters
+        width: 297
+        height: 210
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Adressen IR
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: P4_CHECKBOX =================================
+  id: 188439918899283416
+  identification: 
+    name: P4_CHECKBOX
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT SEQ_ID, N001, N002, C001
+       FROM APEX_COLLECTIONS WHERE COLLECTION_NAME = 'P4_CHECKBOX'
+
+  layout: 
+    sequence: 30
+    parent-region: Monitoring # 191815094219804335
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Inhalt der APEX_COLLECTION P4_CHECKBOX
+
+  attributes: 
+    id: 191457166348714034
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y of Z
+      display-position: Top and Bottom - Left
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 191501720533807981
+      identification: 
+        name: Primary Report
+        alias: 497342
+
+    columns: 
+    - # ====== Column: SEQ_ID ======================================
+      id: 191457329012714035
+      identification: 
+        column-name: SEQ_ID
+        type: Plain Text
+
+      heading: 
+        heading: Seq Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: N001 ========================================
+      id: 191457332407714036
+      identification: 
+        column-name: N001
+        type: Plain Text
+
+      heading: 
+        heading: N001
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: N002 ========================================
+      id: 191457435208714037
+      identification: 
+        column-name: N002
+        type: Plain Text
+
+      heading: 
+        heading: N002
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C001 ========================================
+      id: 191457596796714038
+      identification: 
+        column-name: C001
+        type: Plain Text
+
+      heading: 
+        heading: C001
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: A4
+        orientation: Landscape
+        units: Millimeters
+        width: 297
+        height: 210
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: P4_CHECKBOX
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Adressen Monitoring =========================
+  id: 191812163801804306
+  identification: 
+    name: Adressen Monitoring
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT SEQ_ID, C001, C002, C003, C004, C005, C006, C007, C008, C009, C010, C011, C012, C013, C014, C015, C016, C017, C018, C019, C020
+        FROM APEX_COLLECTIONS WHERE COLLECTION_NAME LIKE 'P4%' AND COLLECTION_NAME <> 'P4_CHECKBOX'
+
+  layout: 
+    sequence: 40
+    parent-region: Monitoring # 191815094219804335
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Inhalt aller Collections, deren Name mit P4 beginnt (aber nicht die Checkboxen-Collection).
+
+  attributes: 
+    id: 191812241145804307
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y of Z
+      display-position: Top and Bottom - Left
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 191919505659573793
+      identification: 
+        name: Primary Report
+        alias: 501520
+
+    columns: 
+    - # ====== Column: SEQ_ID ======================================
+      id: 191812367973804308
+      identification: 
+        column-name: SEQ_ID
+        type: Plain Text
+
+      heading: 
+        heading: Seq Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C001 ========================================
+      id: 191812444168804309
+      identification: 
+        column-name: C001
+        type: Plain Text
+
+      heading: 
+        heading: C001
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C002 ========================================
+      id: 191812606355804310
+      identification: 
+        column-name: C002
+        type: Plain Text
+
+      heading: 
+        heading: C002
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C003 ========================================
+      id: 191812642384804311
+      identification: 
+        column-name: C003
+        type: Plain Text
+
+      heading: 
+        heading: C003
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C004 ========================================
+      id: 191812762474804312
+      identification: 
+        column-name: C004
+        type: Plain Text
+
+      heading: 
+        heading: C004
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C005 ========================================
+      id: 191812909437804313
+      identification: 
+        column-name: C005
+        type: Plain Text
+
+      heading: 
+        heading: C005
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C006 ========================================
+      id: 191812997840804314
+      identification: 
+        column-name: C006
+        type: Plain Text
+
+      heading: 
+        heading: C006
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C007 ========================================
+      id: 191813107595804315
+      identification: 
+        column-name: C007
+        type: Plain Text
+
+      heading: 
+        heading: C007
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C008 ========================================
+      id: 191813154022804316
+      identification: 
+        column-name: C008
+        type: Plain Text
+
+      heading: 
+        heading: C008
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C009 ========================================
+      id: 191813234558804317
+      identification: 
+        column-name: C009
+        type: Plain Text
+
+      heading: 
+        heading: C009
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C010 ========================================
+      id: 191813393768804318
+      identification: 
+        column-name: C010
+        type: Plain Text
+
+      heading: 
+        heading: C010
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C011 ========================================
+      id: 191813471254804319
+      identification: 
+        column-name: C011
+        type: Plain Text
+
+      heading: 
+        heading: C011
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C012 ========================================
+      id: 191813599747804320
+      identification: 
+        column-name: C012
+        type: Plain Text
+
+      heading: 
+        heading: C012
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C013 ========================================
+      id: 191813723884804321
+      identification: 
+        column-name: C013
+        type: Plain Text
+
+      heading: 
+        heading: C013
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C014 ========================================
+      id: 191813775514804322
+      identification: 
+        column-name: C014
+        type: Plain Text
+
+      heading: 
+        heading: C014
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C015 ========================================
+      id: 191813841159804323
+      identification: 
+        column-name: C015
+        type: Plain Text
+
+      heading: 
+        heading: C015
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C016 ========================================
+      id: 191813982433804324
+      identification: 
+        column-name: C016
+        type: Plain Text
+
+      heading: 
+        heading: C016
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C017 ========================================
+      id: 191814070268804325
+      identification: 
+        column-name: C017
+        type: Plain Text
+
+      heading: 
+        heading: C017
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C018 ========================================
+      id: 191814199068804326
+      identification: 
+        column-name: C018
+        type: Plain Text
+
+      heading: 
+        heading: C018
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C019 ========================================
+      id: 191814320250804327
+      identification: 
+        column-name: C019
+        type: Plain Text
+
+      heading: 
+        heading: C019
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: C020 ========================================
+      id: 191814407383804328
+      identification: 
+        column-name: C020
+        type: Plain Text
+
+      heading: 
+        heading: C020
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: A4
+        orientation: Landscape
+        units: Millimeters
+        width: 297
+        height: 210
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Adressen Monitoring
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Monitoring: QUERY_STRING ====================
+  id: 191814988086804334
+  identification: 
+    name: 'Monitoring: QUERY_STRING'
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: "htp.p('<pre>' || :P4_QUERY_STRING || '</pre>');"
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: 'Nur für das Monitoring: Zeigt das SQL an, das dem Report zugrundeliegt'
+
+- # ====== Region: Monitoring ==================================
+  id: 191815094219804335
+  identification: 
+    name: Monitoring
+    type: Static Content
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Hilfestellungen für das Debuggen der Seite. Build Option "Monitoring" einschalten.
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Collections-Auflistung ======================
+  id: 191815270937804337
+  identification: 
+    name: Collections-Auflistung
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT COLLECTION_NAME, COUNT(*)
+        FROM APEX_COLLECTIONS
+       GROUP BY COLLECTION_NAME
+       ORDER BY 2 DESC
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 50
+    parent-region: Monitoring # 191815094219804335
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Die Namen aller auf der Seite aktuell existierenden Collections
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: COLLECTION_NAME =============================
+    id: 191815410935804338
+    identification: 
+      column-name: COLLECTION_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Collection Name
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: <pre>#COLLECTION_NAME#</pre>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COUNT(*) ====================================
+    id: 191815503051804339
+    identification: 
+      column-name: COUNT(*)
+      type: Plain Text
+
+    heading: 
+      heading: Count(*)
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Bedingtes CSS ===============================
+  id: 192913100027262002
+  identification: 
+    name: Bedingtes CSS
+    type: Static Content
+
+  source: 
+    html-code: '#adressenIR #adressenIR_control_panel {display:none}'
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <style>
+    footer-text: </style>
+
+  server-side-condition: 
+    type: Item = Value
+    item: P4_AUSWAHL_BEARBEITEN
+    value: 1
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Blendet das Kontroll-Bedienfeld des Reports aus, wenn dieser sich im Modus "Ausgewählte Adressen prüfen" befindet, damit der Benutzer nicht auf die Idee kommt, hier großartig etwas zu ändern
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Entwicklerdokumentation =====================
+  id: 192913237053262004
+  identification: 
+    name: Entwicklerdokumentation
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "SELECT * FROM APEX_COCONUT WHERE WORKSPACE = 'ROMA' AND APPLICATION_ID = :APP_ID AND PAGE_ID = :APP_PAGE_ID"
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Entwicklerdokumentation # 194424832985703234
+
+  comments: 
+    comments: Zeigt die Seitenelemente und deren Kommentare an. Build Option "Entwicklerdokumentation" einschalten.
+
+  attributes: 
+    id: 192913381838262005
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 194433455881720024
+      identification: 
+        name: Primary Report
+        alias: 526660
+
+    columns: 
+    - # ====== Column: KATEGORIE_NR ================================
+      id: 192913865543262010
+      identification: 
+        column-name: KATEGORIE_NR
+        type: Plain Text
+
+      heading: 
+        heading: Kategorie Nr
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: VIEW_NAME ===================================
+      id: 192913965065262011
+      identification: 
+        column-name: VIEW_NAME
+        type: Plain Text
+
+      heading: 
+        heading: View Name
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: COMPONENT ===================================
+      id: 192914053850262012
+      identification: 
+        column-name: COMPONENT
+        type: Plain Text
+
+      heading: 
+        heading: Component
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TYPE ========================================
+      id: 192914170084262013
+      identification: 
+        column-name: TYPE
+        type: Plain Text
+
+      heading: 
+        heading: Type
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EXTRA =======================================
+      id: 192914266570262014
+      identification: 
+        column-name: EXTRA
+        type: Plain Text
+
+      heading: 
+        heading: Extra
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ID ==========================================
+      id: 192914372964262015
+      identification: 
+        column-name: ID
+        type: Plain Text
+
+      heading: 
+        heading: Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SEQ =========================================
+      id: 192914438955262016
+      identification: 
+        column-name: SEQ
+        type: Plain Text
+
+      heading: 
+        heading: Seq
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NAME ========================================
+      id: 192914620850262017
+      identification: 
+        column-name: NAME
+        type: Plain Text
+
+      heading: 
+        heading: Name
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PAYLOAD =====================================
+      id: 192914658065262018
+      identification: 
+        column-name: PAYLOAD
+        type: Plain Text
+
+      heading: 
+        heading: Label / Inhalt
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <pre>#PAYLOAD#</pre>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CONDITION ===================================
+      id: 192914757475262019
+      identification: 
+        column-name: CONDITION
+        type: Plain Text
+
+      heading: 
+        heading: Condition
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CONDITION_TYPE_CODE =========================
+      id: 192914896753262020
+      identification: 
+        column-name: CONDITION_TYPE_CODE
+        type: Plain Text
+
+      heading: 
+        heading: Condition Type Code
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CONDITION_EXPRESSION1 =======================
+      id: 192915009040262021
+      identification: 
+        column-name: CONDITION_EXPRESSION1
+        type: Plain Text
+
+      heading: 
+        heading: Condition Expression1
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CONDITION_EXPRESSION2 =======================
+      id: 192915118620262022
+      identification: 
+        column-name: CONDITION_EXPRESSION2
+        type: Plain Text
+
+      heading: 
+        heading: Condition Expression2
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BUILD_OPTION ================================
+      id: 192915186989262023
+      identification: 
+        column-name: BUILD_OPTION
+        type: Plain Text
+
+      heading: 
+        heading: Build Option
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BUILD_OPTION_STATUS =========================
+      id: 192915323671262024
+      identification: 
+        column-name: BUILD_OPTION_STATUS
+        type: Plain Text
+
+      heading: 
+        heading: Build Option Status
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: AUTHORIZATION_SCHEME ========================
+      id: 192915415214262025
+      identification: 
+        column-name: AUTHORIZATION_SCHEME
+        type: Plain Text
+
+      heading: 
+        heading: Authorization Scheme
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: COMMENTS ====================================
+      id: 192915464341262026
+      identification: 
+        column-name: COMMENTS
+        type: Plain Text
+
+      heading: 
+        heading: Comments
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LAST_UPDATED_BY =============================
+      id: 192915623109262027
+      identification: 
+        column-name: LAST_UPDATED_BY
+        type: Plain Text
+
+      heading: 
+        heading: Last Updated By
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 220
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LAST_UPDATED_ON =============================
+      id: 192915715715262028
+      identification: 
+        column-name: LAST_UPDATED_ON
+        type: Plain Text
+
+      heading: 
+        heading: Last Updated On
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 230
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: A4
+        orientation: Landscape
+        units: Millimeters
+        width: 297
+        height: 210
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Entwicklerdokumentation
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Adressen (ausgewählt: <span id="num_checked">
+  id: 261201643148849180
+  identification: 
+    name: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)'
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    icon: fa-home
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item is NOT zero
+    item: P4_DO_SEARCH
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Überschrift des Adressen-Reports. Zeigt die Anzahl der ausgewählten Adressen an (diese Zahl wird durch Dynamic Actions bei jedem Klick auf eine checkbox aktualisiert)
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: P4_PAGE_ITEMS ===============================
+  id: 261201934744849183
+  identification: 
+    name: P4_PAGE_ITEMS
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Nicht angezeigte Region mit Hidden Page-Items
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Hilfe =======================================
+  id: 261205967240849224
+  identification: 
+    name: Hilfe
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: htp.p(pck_strav_query.fcl_adress_where_query_help)
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Popup
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size720x480
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Benutzerhilfe zur Adresssuche
+
+- # ====== Region: Ausbaugebiet ================================
+  id: 269099343970655426
+  identification: 
+    name: Ausbaugebiet
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P4_AUSWAHL_BEARBEITEN
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Adressensuche ===============================
+  id: 272577509074803095
+  identification: 
+    name: Adressensuche
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P4_AUSWAHL_BEARBEITEN
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Vermarktungscluster <b>&P4_VC_NAME.</b> - Obj
+  id: 283544024246560620
+  identification: 
+    name: Vermarktungscluster <b>&P4_VC_NAME.</b> - Objekte hinzufügen
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 213351147696554743
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    icon: app-icon
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P4_SEARCH_GEBIET =========================
+  id: 188311316860879828
+  identification: 
+    name: P4_SEARCH_GEBIET
+    type: Select List
+
+  label: 
+    label: Ausbaugebiet
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Ausbaugebiet # 269099343970655426
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      select d,r
+      from (
+      SELECT gebiet || ' (' || typ || ')' d, id r
+        FROM strav.gebiet
+      
+      union
+      SELECT name || ' (' || ausbgbttp_bez || ')' d, id r
+       FROM SW_AUSBAUGEBIET@GESWP.NETCOLOGNE.INTERN@SW$ADMIN a
+      INNER JOIN tab_ausbaugebiet_typ@GESWP.NETCOLOGNE.INTERN@SW$ADMIN b ON b.ausbgbttp_id = a.ausbgbttp_id AND b.ausbgbttp_bez = 'Administration'
+      
+      ) 
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: '-'
+
+  advanced: 
+    css-classes: 
+    - filterItem
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      Benutzerauswahl für das Ausbaugebiet.
+      @ticket FTTH-3247
+
+- # ====== Page Item: P4_SEARCH_TYP ============================
+  id: 188311652220879831
+  identification: 
+    name: P4_SEARCH_TYP
+    type: Select List
+
+  label: 
+    label: Ausbaugebiet-Typ
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Ausbaugebiet # 269099343970655426
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT distinct typ d, typ r
+        FROM strav.gebiet
+        where typ not like 'Übergeordneter Name'
+      union
+      SELECT distinct b.ausbgbttp_bez d, b.ausbgbttp_bez r
+       FROM tab_ausbaugebiet_typ@GESWP.NETCOLOGNE.INTERN@SW$ADMIN b 
+       where b.ausbgbttp_bez = 'Administration'
+        --ORDER BY typ
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: '-'
+
+  advanced: 
+    css-classes: 
+    - filterItem
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Benutzerauswahl für den Ausbaugebiet-Typ
+
+- # ====== Page Item: P4_DO_SEARCH =============================
+  id: 188313193881879832
+  identification: 
+    name: P4_DO_SEARCH
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: P4_PAGE_ITEMS # 261201934744849183
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: N
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      Flag, wird im Pre-Rendering gesetzt. 
+      1= Adressen-Report soll dargestellt werden. Wird im Gegensatz zur früheren Seite P7 nicht mehr an die Report-Engine gesendet, da diese selbst entscheidet, ob eine Suche stattfindet.
+
+- # ====== Page Item: P4_SEARCH_ALL ============================
+  id: 188313572230879832
+  identification: 
+    name: P4_SEARCH_ALL
+    type: Text Field
+
+  label: 
+    label: Suchen nach
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: Adressensuche # 272577509074803095
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+    value-placeholder: Adresse oder Adressbestandteil eingeben ...
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - filterItem
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Eingabefeld für die Adressensuche
+
+- # ====== Page Item: P4_VC_NAME ===============================
+  id: 188314960661879833
+  identification: 
+    name: P4_VC_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: P4_PAGE_ITEMS # 261201934744849183
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'Überschrift: Namen des Vermakrtungsclusters anzeigen. Wird im Pre-Rendering gesetzt.'
+
+- # ====== Page Item: P4_VC_ID =================================
+  id: 188315375300879834
+  identification: 
+    name: P4_VC_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: P4_PAGE_ITEMS # 261201934744849183
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: ID des Vermarktungsclusters, auf den sich alle Aktionen auf dieser Seite beziehen (hätte besser P4_VC_LFD_NR heißen sollen)
+
+- # ====== Page Item: P4_NUM_CHECKED ===========================
+  id: 188439754414283415
+  identification: 
+    name: P4_NUM_CHECKED
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Speichert, wie viele Checkboxen im aktuell angezeigten Report angehakt sind. Diese Zahl erscheint in der Überschrift der Adressen-Region.
+
+- # ====== Page Item: P4_AUSWAHL_BEARBEITEN ====================
+  id: 191811082322804295
+  identification: 
+    name: P4_AUSWAHL_BEARBEITEN
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      Flag. Wenn 1, schaltet der Report um und zeigt nur die bereits ausgewählten Adressen an, außerdem werden die Filter-Regionen oberhalb des Report ausgeblendet. 
+      Der alternative Wert des Flags ist NULL. Nicht verwendet werden sollte FALSE, da dies den Vergleich unnötig verkompliziert.
+
+- # ====== Page Item: P4_QUERY_STRING ==========================
+  id: 191814791152804332
+  identification: 
+    name: P4_QUERY_STRING
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Speichert den vom Adressen-Report verwendeten SQL Query String. Dies ist hilfreich, wenn Build Option "Monitoring" eingeschaltet ist. Das Item darf nicht gelöscht werden, da die Report-Abfrage dies benötigt.
+
+- # ====== Page Item: P4_ANZAHL_OBJEKTE ========================
+  id: 192912755322261999
+  identification: 
+    name: P4_ANZAHL_OBJEKTE
+    type: Display Only
+
+  label: 
+    label: P4_ANZAHL_OBJEKTE
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 30
+    region: Ausbaugebiet # 269099343970655426
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Speichert beim Klicken des Buttons "Komplettes Gebiet zuordnen" die Anzahl der zuordenbaren Objekte
+
+- # ====== Page Item: P4_FILTER ================================
+  id: 192916490651262036
+  identification: 
+    name: P4_FILTER
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: P4_PAGE_ITEMS # 261201934744849183
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      Gibt an, mit welchem Filterkriterium gesucht wird.
+      Zur Zeit gilt "entweder oder": Nur eines dieser Kriterien wird berücksichtigt:
+      0 = keine Sucheingabe getätigt
+      1 = Suche über Ausbaugebiet
+      2 = Suche über Ausbaugebiet Typ
+      4 = Suche über Adresse, "Adresssuche"
+      Die Werte sind Zweiterpotenzen, damit zukünftig auch eine kombinierte Suche möglich wäre
+      (z.B. 3 = Ausbaugebiet OR Typ, -3 = Ausbaugebiet AND Typ, 7 = alle Treffer kombinieren) ohne dafür bestehenden Code umschreiben zu müssen.
+
+- # ====== Page Item: P4_FILTER_NAME ===========================
+  id: 197023583199771092
+  identification: 
+    name: P4_FILTER_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: P4_PAGE_ITEMS # 261201934744849183
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Abhängig von P4_FILTER steht in diesem Item die Bezeichnung des Filters, damit diese im Label des Buttons BTN_KOMPLETTES_GEBIET_ZUORDNEN eingefügt werden kann.
+
+buttons: 
+- # ====== Button: BTN_KOMPLETTES_GEBIET_ZUORDNEN ==============
+  id: 188310876791879828
+  identification: 
+    button-name: BTN_KOMPLETTES_GEBIET_ZUORDNEN
+    label: '&P4_FILTER_NAME. komplett zuordnen'
+
+  layout: 
+    sequence: 10
+    region: Ausbaugebiet # 269099343970655426
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-badge-check
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Expression
+    language: SQL
+    sql-expression: |
+      :P4_SEARCH_GEBIET IS NOT NULL OR
+      :P4_SEARCH_TYP IS NOT NULL
+
+  comments: 
+    comments: Ordnet dem aktuellen Vermarktungscluster alle Objekte (HAUS_LFD_NRn) zu, die sich in der aktuell ausgewählten Kombi von "Ausbaugebiet" und "Ausbaugebiet Typ" befinden (unabhängig von ihrer Adresse, ob deren Auswahl-Häkchen gesetzt ist oder auf welcher Seite der Pagination sie stehen).
+
+- # ====== Button: BTN_SEARCH ==================================
+  id: 188312405165879832
+  identification: 
+    button-name: BTN_SEARCH
+    label: Suchen
+
+  layout: 
+    sequence: 30
+    region: Adressensuche # 272577509074803095
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    alignment: Right
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--gapTop
+    icon: fa-search
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  comments: 
+    comments: Startet die Adresssuche
+
+- # ====== Button: BTN_SEARCH_INFO =============================
+  id: 188312790496879832
+  identification: 
+    button-name: BTN_SEARCH_INFO
+    label: Hilfe zur Adressensuche
+
+  layout: 
+    sequence: 40
+    region: Adressensuche # 272577509074803095
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    alignment: Right
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--gapTop
+    icon: fa-question-circle-o
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  comments: 
+    comments: Öffnet den Dialog mit der Benutzerhilfe zur Adresssuche
+
+- # ====== Button: BTN_ZUORDNUNGEN_SPEICHERN ===================
+  id: 188314256203879833
+  identification: 
+    button-name: BTN_ZUORDNUNGEN_SPEICHERN
+    label: Ausgewählte Adressen zuordnen
+
+  layout: 
+    sequence: 10
+    region: Vermarktungscluster <b>&P4_VC_NAME.</b> - Objekte hinzufügen # 283544024246560620
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--iconLeft
+    icon: fa-save
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  comments: 
+    comments: Ordnet alle in der Collection P4_CHECKBOX mit N001 = 1 gespeicherten HAUS_LFD_NRn dem aktuellen Vermarktungscluster zu.
+
+- # ====== Button: BTN_AUSWAHL_BEARBEITEN ======================
+  id: 191811025345804294
+  identification: 
+    button-name: BTN_AUSWAHL_BEARBEITEN
+    label: Auswahl überprüfen ...
+
+  layout: 
+    sequence: 30
+    region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-table-search
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: BTN_AUSWAHL_BEARBEITEN
+    custom-attributes: 
+    - title="Zeigt
+    - ausschließlich
+    - diejenigen
+    - Adressen
+    - an,
+    - die
+    - von
+    - Ihnen
+    - ausgewählt
+    - wurden"
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P4_AUSWAHL_BEARBEITEN
+
+  comments: 
+    comments: Durch Anklicken wird P4_AUSWAHL_BEARBEITEN auf 1 gesetzt (dadurch schaltet der Report um und zeigt nur die bereits ausgewählten Adressen an, außerdem werden die Filter-Regionen oberhalb des Report ausgeblendet)
+
+- # ====== Button: BTN_AUSWAHL_BEARBEITEN_BEENDEN ==============
+  id: 191811229481804296
+  identification: 
+    button-name: BTN_AUSWAHL_BEARBEITEN_BEENDEN
+    label: Zurück zur Suche
+
+  layout: 
+    sequence: 50
+    region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-map-markers-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P4_AUSWAHL_BEARBEITEN
+
+  comments: 
+    comments: Durch Anklicken wird P4_AUSWAHL_BEARBEITEN wieder auf NULL gesetzt (dadurch schaltet die Seite auf Normaldarstellung um)
+
+- # ====== Button: MON_RESET_AUSWAHL ===========================
+  id: 191815192674804336
+  identification: 
+    button-name: MON_RESET_AUSWAHL
+    label: RESET AUSWAHL
+
+  layout: 
+    sequence: 10
+    region: 'Monitoring: QUERY_STRING' # 191814988086804334
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.:RESET:&DEBUG.:::'
+      page: 4 # Objekte hinzufügen
+      request: RESET
+
+    warn-on-unsaved-changes: Do Not Check
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Leert die Checkboxen-Collection
+
+- # ====== Button: MON_RESET_ALLE_COLLECTIONS ==================
+  id: 191815617964804340
+  identification: 
+    button-name: MON_RESET_ALLE_COLLECTIONS
+    label: RESET ALLE COLLECTIONS
+
+  layout: 
+    sequence: 10
+    region: 'Monitoring: QUERY_STRING' # 191814988086804334
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.:RESET_ALLE_COLLECTIONS:&DEBUG.:::'
+      page: 4 # Objekte hinzufügen
+      request: RESET_ALLE_COLLECTIONS
+
+    warn-on-unsaved-changes: Do Not Check
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Leert alle Collections, die mit P4_... beginnen
+
+- # ====== Button: MON_LOESCHE_BESTEHENDE_ZUORDNUNGEN ==========
+  id: 192915788047262029
+  identification: 
+    button-name: MON_LOESCHE_BESTEHENDE_ZUORDNUNGEN
+    label: Lösche alle bestehenden Zuordnungen
+
+  layout: 
+    sequence: 10
+    region: 'Monitoring: QUERY_STRING' # 191814988086804334
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: 'Zerstört alle bestehenden Zuordnungen zum Vermarktungscluster! Dieser Button ist nur für die Entwicklung erlaubt und sollte auch dann nur mit äußerster Sorgfalt eingesetzt werden: Der Vermarktungscluster muss mit dem String "Test" beginnen.'
+
+- # ====== Button: BTN_AUSWAHL_LOESCHEN ========================
+  id: 192916085783262032
+  identification: 
+    button-name: BTN_AUSWAHL_LOESCHEN
+    label: Gesamte Auswahl zurücksetzen
+
+  layout: 
+    sequence: 20
+    region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-table-x
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  advanced: 
+    custom-attributes: 
+    - title="Entfernt
+    - alle
+    - von
+    - Ihnen
+    - gesetzten
+    - Auswahl-Häkchen,
+    - inklusive
+    - derjenigen,
+    - die
+    - auf
+    - der
+    - aktuellen
+    - Seite
+    - der
+    - Ergebnisliste
+    - nicht
+    - zu
+    - sehen
+    - sind
+    - '&ndash;'
+    - so
+    - dass
+    - die
+    - Auswahl
+    - wieder
+    - auf
+    - '&quot;0'
+    - Adressen&quot;
+    - steht"
+
+  comments: 
+    comments: Der Benutzer kann eine bereits getätigte (z.B. sehr umfangreiche) Auswahl durch Klick auf diesen Button wieder komplett löschen
+
+- # ====== Button: BTN_ALLE_ERGEBNISSE_AUSWAEHLEN ==============
+  id: 192916310808262034
+  identification: 
+    button-name: BTN_ALLE_ERGEBNISSE_AUSWAEHLEN
+    label: Sämtliche Ergebnisse auswählen
+
+  layout: 
+    sequence: 10
+    region: 'Adressen (ausgewählt: <span id="num_checked">&P4_NUM_CHECKED.</span>)' # 261201643148849180
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-table-check
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    custom-attributes: 
+    - title="Fügt
+    - alle
+    - Adressen,
+    - die
+    - durch
+    - '&quot;Ausbaugebiet&quot;,'
+    - '&quot;Ausbaugebiet'
+    - Typ&quot;
+    - und
+    - '&quot;Adresssuche&quot;'
+    - definiert
+    - sind,
+    - zur
+    - bestehenden
+    - Auswahl
+    - hinzu
+    - '&ndash;'
+    - auch
+    - wenn
+    - sie
+    - in
+    - der
+    - aktuellen
+    - Seitenaufteilung
+    - des
+    - Reports
+    - nicht
+    - sichtbar
+    - sind"
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P4_AUSWAHL_BEARBEITEN
+
+  configuration: 
+    build-option: DISABLED # 214649311448422564
+
+  comments: 
+    comments: |
+      Dieser Button ist #disabled: Es kann nur dann funktionieren, wenn sichergestellt wäre, dass der Benutzer entweder keinen zusätzlichen Filter auf den Report gelegt hat, oder man diesen Filter auslesen könnte (was nicht der Fall ist, dafür existiert derzeit keine API) /// prüfen, ob das mit APEX 22.2 immer noch gilt
+      
+      Ähnlich der Funktion "Komplettes Gebiet zuordnen". Jedoch wird hier der gesamte Report, welcher durch die Selectlisten "Ausbaugebiet", "Ausbaugebiet Typ" bzw. "Adresse" definiert ist, zur Auswahl hinzugefügt. Im Unterschied zur Header-Checkbox umfasst das auch diejenigen Zeilen, die in der aktuellen Pagination gar nicht zu sehen sind.
+
+dynamic-actions: 
+- # ====== Dynamic Action: Search Hilfe anzeigen ===============
+  id: 188323166495879853
+  identification: 
+    name: Search Hilfe anzeigen
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_SEARCH_INFO # 188312790496879832
+
+  comments: 
+    comments: Öffnet den Dialog mit der Benutzerhilfe zum Thema "Adresssuche"
+
+  actions: 
+  - # ====== Action: Open Region =================================
+    id: 188323713606879853
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: Hilfe # 261205967240849224
+
+    execution: 
+      sequence: 10
+      event: Search Hilfe anzeigen # 188323166495879853
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: Öffnet den Dialog mit der Benutzerhilfe zum Thema "Adresssuche"
+
+- # ====== Dynamic Action: Checkbox Header =====================
+  id: 188437504359283392
+  identification: 
+    name: Checkbox Header
+
+  execution: 
+    sequence: 130
+    event-scope: Dynamic
+    static-container-(jquery-selector): '#adressenIR'
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: jQuery Selector
+    jquery-selector: '#header_checkbox'
+
+  comments: 
+    comments: 'Reagiert auf den Klick des Benutzers auf die Checkbox in der Report-Headerzeile: Setzt oder entfernt alle sichtbaren Häkchen. Wenn durch Pagination beispielsweise nur 1000 Zeilen im Report angezeigt werden, dann werden auch nur Häkchen für maximal 1000 neue Zuordnungskandidaten generiert.'
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 188437586622283393
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        spinner = apex.util.showSpinner();
+        
+        let checkboxHeader = this.triggeringElement;
+        let headerIsCheckedByUser = checkboxHeader.checked;
+        checkboxHeader.checked = !headerIsCheckedByUser;
+        
+        let $affectedCheckboxes = $('#adressenIR input.checkbox--ir:' + (headerIsCheckedByUser ? 'not(checked)' : 'checked') );
+        
+        
+        let maxParameterLength = 32767; // Grenze in PL/SQL
+        var currentParameterLength = 0;
+        var checklist = [undefined,[],[],[],[],[],[],[],[],[],[]]; // Möglichst viele (10) große Listen an PL/SQL übergeben können (checklist[0] wird nicht verwendet)
+        var numberOfCheckboxes = 0;
+        var tooManyCheckboxes = false;
+        var currentArray = 1;
+        
+        $affectedCheckboxes.each(function(){
+          currentParameterLength = (checklist[currentArray].toString() + this.value).length;
+          if(currentParameterLength > maxParameterLength - 1) {
+            if(currentArray < checklist.length - 1) {
+              currentArray++;
+            } else {
+              tooManyCheckboxes = true;
+            }
+          }
+          if(!tooManyCheckboxes) checklist[currentArray].push(this.value);
+          numberOfCheckboxes++;
+        });
+        
+        if(!tooManyCheckboxes) {
+          apex.server.process(
+            (headerIsCheckedByUser ? 'asp_header_checked' : 'asp_header_not_checked'),
+             {x01: checklist[1].toString(),
+              x02: checklist[2].toString(),
+              x03: checklist[3].toString(),
+              x04: checklist[4].toString(),
+              x05: checklist[5].toString(),
+              x06: checklist[6].toString(),
+              x07: checklist[7].toString(),
+              x08: checklist[8].toString(),
+              x09: checklist[9].toString(),
+              x10: checklist[10].toString()
+              },
+              {
+                success: function (pData) {
+                  checkboxHeader.checked = !!headerIsCheckedByUser;
+                  $affectedCheckboxes.prop('checked', headerIsCheckedByUser);
+                  displayNumChecked(pData);
+                  spinner.remove();
+              },
+                dataType: "text"
+              }
+          );
+        } else { // tooManyEntries
+          spinner.remove();
+          alert('Die Anzahl der Checkboxen (' + numberOfCheckboxes + ') ist zu groß für die gemeinsame Ausführung: \nBitte verringern Sie die Anzahl der Zeilen pro Reportseite \n("Aktionen > Format > Zeilen pro Seite") \noder ordnen Sie das gesamte Ausbaugebiet per Schaltfläche zu.');
+        }
+        
+
+    execution: 
+      sequence: 10
+      event: Checkbox Header # 188437504359283392
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: |
+        1. Alle dargestellten(!) Checkboxen, die entsprechend der Header-Checkbox umgestellt werden müssen, in die nächste freie "checklist"-Liste eintragen (aber nicht anhaken!). Die Arrays werden beginnend mit index 1 aufgefüllt (bis max. index = 10).
+        2. "checklist"-Listen an den Server schicken. 
+        3. Server trägt die Checkboxen in die Collection ein.
+        4. Beim success-Callback: Alle Checkboxen aus den checklist-Listen im Report setzen (ohne den Click-Event zu triggern, sonst Feedback-Schleife)
+           Prinzipiell könnte man direkt danach die Seite sogar neu laden, da die Checkboxen zu diesem Zeitpunkt ja bereits persistiert sind
+
+  - # ====== Action: Refresh =====================================
+    id: 191457814667714040
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: P4_CHECKBOX # 188439918899283416
+
+    execution: 
+      sequence: 10
+      event: Checkbox Header # 188437504359283392
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    configuration: 
+      build-option: Monitoring # 182846889201020994
+
+    comments: 
+      comments: Das Monitoring der Checkboxen aktualisieren
+
+- # ====== Dynamic Action: Checkbox Adresszeile ================
+  id: 188437644100283394
+  identification: 
+    name: Checkbox Adresszeile
+
+  execution: 
+    sequence: 140
+    event-scope: Dynamic
+    static-container-(jquery-selector): '#adressenIR'
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: jQuery Selector
+    jquery-selector: input.checkbox--ir
+
+  comments: 
+    comments: Setzt oder entfernt das Auswahl-Häkchen in jeder Adressen-Reportzeile, wenn der Benutzer deren Checkbox anklickt.
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 188437768984283395
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        let checkbox = this.triggeringElement;
+        let hausLfdNr = checkbox.value;
+        let checkboxIsCheckedByUser = !!checkbox.checked;
+        checkbox.checked = !checkboxIsCheckedByUser;
+        
+        apex.server.process(
+           'asp_set_checkbox',
+            {x01: checkboxIsCheckedByUser ? 1:0,
+             x02: hausLfdNr
+            },
+            {
+              success: function (pData) {
+                $('#adressenIR input.checkbox--ir[value=' + hausLfdNr + ']').prop('checked', !!checkboxIsCheckedByUser);
+                displayNumChecked(pData);
+            },
+            dataType: "text"
+            }
+        );
+        
+
+    execution: 
+      sequence: 20
+      event: Checkbox Adresszeile # 188437644100283394
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: |
+        Die Änderung der Checkbox-Auswahl wird zunächst verhindert: Der tatsächliche Wert wird erst vom AJAX-Callbvakc bestätigt und visualisiert. In der success-function wird zudem der WErt jeder checkbox aktualisiert, deren Zeile dieselbe HAUS_LFD_NR besitzt (denn die HAUS_LFD_NR im Report ist nicht eindeutig. Daher muss jede weitere Zeile, die dasselbe Haus repräsentiert, ebenfalls umgestellt werden.
+        
+
+  - # ====== Action: Refresh =====================================
+    id: 191457644275714039
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: P4_CHECKBOX # 188439918899283416
+
+    execution: 
+      sequence: 30
+      event: Checkbox Adresszeile # 188437644100283394
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    configuration: 
+      build-option: Monitoring # 182846889201020994
+
+    comments: 
+      comments: Den Monitoring-Report der Checkboxen aktualisieren
+
+- # ====== Dynamic Action: Filter-Item hervorheben =============
+  id: 192916866100262040
+  identification: 
+    name: Filter-Item hervorheben
+
+  execution: 
+    sequence: 150
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  comments: 
+    comments: Hebt das jeweils aktive Suchfeld optisch hervor
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 197023468909771091
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        let filter = apex.item('P4_FILTER').getValue();
+        var filterItem;
+        switch(filter) {
+          case '1': filterItem = '#P4_SEARCH_GEBIET'; break;
+          case '2': filterItem = '#P4_SEARCH_TYP'   ; break;
+          case '4': filterItem = '#P4_SEARCH_ALL'   ; break;
+        }
+        $(filterItem).addClass('selected');
+
+    execution: 
+      sequence: 10
+      event: Filter-Item hervorheben # 192916866100262040
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: Dem aktiven Suchfeld die CSS-Klasse "selected" zuweisen
+
+- # ====== Dynamic Action: P4_SEARCH_ALL [Enter] ===============
+  id: 197023889691771095
+  identification: 
+    name: P4_SEARCH_ALL [Enter]
+
+  execution: 
+    sequence: 160
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P4_SEARCH_ALL
+
+  comments: 
+    comments: Sorgt dafür, dass Benutzer durch Drücken der Enter- (Return)-Taste im Feld "Adresse" die Suche auslösen. Dieses Verhalten darf nicht deklarativ eingestellt werden, da wir den REQUEST-Wert auswerten müssen (dieser ist bei der deklarativen Variante aber leer)
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 197023942475771096
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: P4_SEARCH_ALL
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: P4_SEARCH_ALL [Enter] # 197023889691771095
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: Wichtig ist hier die Übergabe des REQUESTs, der dem Namen des Buttons mit der gleichen Funktion entspricht (Absenden des Suchstrings)
+
+- # ====== Dynamic Action: BTN_KOMPLETTES_GEBIET_ZUORDNEN ======
+  id: 197024199732771098
+  identification: 
+    name: BTN_KOMPLETTES_GEBIET_ZUORDNEN
+
+  execution: 
+    sequence: 170
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_KOMPLETTES_GEBIET_ZUORDNEN # 188310876791879828
+
+  comments: 
+    comments: Fragt den Benutzer, ob er tatsächlich das komplette Gebiet/Typ zuordnen möchte, und submittet anschließend den Request
+
+  actions: 
+  - # ====== Action: Confirm =====================================
+    id: 197024274435771099
+    identification: 
+      action: Confirm
+
+    settings: 
+      message: '&P4_FILTER_NAME. vollständig dem Vermarktungscluster "&P4_VC_NAME." zuordnen?'
+      style: Default
+
+    execution: 
+      sequence: 10
+      event: BTN_KOMPLETTES_GEBIET_ZUORDNEN # 197024199732771098
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Submit Page =================================
+    id: 197024389260771100
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: BTN_KOMPLETTES_GEBIET_ZUORDNEN
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: BTN_KOMPLETTES_GEBIET_ZUORDNEN # 197024199732771098
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: BTN_AUSWAHL_LOESCHEN ================
+  id: 197024486085771101
+  identification: 
+    name: BTN_AUSWAHL_LOESCHEN
+
+  execution: 
+    sequence: 180
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_AUSWAHL_LOESCHEN # 192916085783262032
+
+  comments: 
+    comments: Fragt den Benutzer, ob er tatsächlich die Adressenauswahl zurücksetzen möchte, und submittet anschließend den Request
+
+  actions: 
+  - # ====== Action: Confirm =====================================
+    id: 197024584931771102
+    identification: 
+      action: Confirm
+
+    settings: 
+      message: Adressenauswahl komplett verwerfen?
+      style: Default
+
+    execution: 
+      sequence: 10
+      event: BTN_AUSWAHL_LOESCHEN # 197024486085771101
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Submit Page =================================
+    id: 197024698153771103
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: BTN_AUSWAHL_LOESCHEN
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: BTN_AUSWAHL_LOESCHEN # 197024486085771101
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Spinner ausblenden (nach IR Refresh) 
+  id: 197025314113771109
+  identification: 
+    name: Spinner ausblenden (nach IR Refresh)
+
+  execution: 
+    sequence: 190
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: Adressen IR # 185904441131908015
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 197025368451771110
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: spinner.remove();
+
+    execution: 
+      sequence: 10
+      event: Spinner ausblenden (nach IR Refresh) # 197025314113771109
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Spinner einblenden (vor IR Refresh) =
+  id: 197025500698771111
+  identification: 
+    name: Spinner einblenden (vor IR Refresh)
+
+  execution: 
+    sequence: 200
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Before Refresh
+    selection-type: Region
+    region: Adressen IR # 185904441131908015
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 197025535818771112
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: spinner = apex.util.showSpinner();
+
+    execution: 
+      sequence: 10
+      event: Spinner einblenden (vor IR Refresh) # 197025500698771111
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: P4_SEARCH_GEBIET Change =============
+  id: 197026037442771117
+  identification: 
+    name: P4_SEARCH_GEBIET Change
+
+  execution: 
+    sequence: 210
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P4_SEARCH_GEBIET
+
+  comments: 
+    comments: Reagiert auf eine Änderung des Wertes in der Selectliste
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 197026167212771118
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: P4_SEARCH_GEBIET
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: P4_SEARCH_GEBIET Change # 197026037442771117
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: 'Statt eines direkten SUBMIT: Zweck dieser DA ist es, den Page Spinner anzugezeigen ("Show Processing")'
+
+- # ====== Dynamic Action: P4_SEARCH_TYP Change ================
+  id: 197026313337771119
+  identification: 
+    name: P4_SEARCH_TYP Change
+
+  execution: 
+    sequence: 220
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P4_SEARCH_TYP
+
+  comments: 
+    comments: Reagiert auf eine Änderung des Wertes in der Selectliste
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 197026418668771120
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: P4_SEARCH_TYP
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: P4_SEARCH_TYP Change # 197026313337771119
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: 'Statt eines direkten SUBMIT: Zweck dieser DA ist es, den Page Spinner anzugezeigen ("Show Processing")'
+
+computations: 
+- # ====== Computation: P4_VC_NAME =============================
+  id: 188316197715879846
+  identification: 
+    item-name: P4_VC_NAME
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select bezeichnung 
+        from VERMARKTUNGSCLUSTER
+        where vc_lfd_nr =  :P4_VC_ID
+
+  comments: 
+    comments: Name des Vermarktungsclusters für die Überschrift der Seite
+
+processes: 
+- # ====== Process: RESET ======================================
+  id: 185906723432908037
+  identification: 
+    name: RESET
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION(PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX);
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  server-side-condition: 
+    type: Request = Value
+    value: RESET
+
+  comments: 
+    comments: Wenn vom Report auf Seite 1 zu dieser Seite gesprungen wurde, wobei der REQUEST = RESET zu setzen ist, dann wird die Collection geleert, die die Auswahl der Häkchen speichert
+
+- # ====== Process: asp_set_checkbox ===========================
+  id: 188437929713283396
+  identification: 
+    name: asp_set_checkbox
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      PCK_VERMARKTUNGSCLUSTER.asp_set_checkbox(
+        piv_collection_name => PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX
+       ,pin_checked         => apex_application.g_x01
+       ,pin_key             => apex_application.g_x02
+      );
+      htp.p(PCK_VERMARKTUNGSCLUSTER.fn_count_checked_members(PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX));
+
+  execution: 
+    sequence: 50
+    point: Ajax Callback
+    run-process: Once Per Page Visit (default)
+
+  comments: 
+    comments: Ruft die Datenbankprozedur auf, die das Häkchen der Checkbox ein- oder ausschaltet, und liefert die Anzahl der aktuell angehakten Checkboxen zurück (da sowieso irgendetwas zurückgeliefert werden muss, wird diese Zahl anstatt eines Leerstrings dazu verwendet, die Größe der Auswahl in der Titelzeile der Region zu aktualisieren)
+
+- # ====== Process: DO_SEARCH, NUM_CHECKED =====================
+  id: 188439721943283414
+  identification: 
+    name: DO_SEARCH, NUM_CHECKED
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P4_DO_SEARCH := CASE WHEN :P4_SEARCH_GEBIET IS NOT NULL OR :P4_SEARCH_TYP IS NOT NULL OR :P4_SEARCH_ALL IS NOT NULL THEN 1 ELSE 0 END;
+      :P4_NUM_CHECKED := PCK_VERMARKTUNGSCLUSTER.fn_count_checked_members(PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX);
+      
+
+  execution: 
+    sequence: 30
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  comments: 
+    comments: 'Setzt das Item P4_DO_SEARCH (welches bestimmt, ob der Adressen-Report aktiviert wird) und ermittelt für dessen Überschrift, wieviele Checkboxen im aktuell angezeigten Report angehakt sind (suche: displayNumChecked).'
+
+- # ====== Process: BTN_AUSWAHL_BEARBEITEN =====================
+  id: 191811278804804297
+  identification: 
+    name: BTN_AUSWAHL_BEARBEITEN
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: ':P4_AUSWAHL_BEARBEITEN := 1;'
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_AUSWAHL_BEARBEITEN # 191811025345804294
+
+  comments: 
+    comments: Stellt den Report auf die Darstellung der ausgewählten Adressen um. Die drei Suchfelder sind währenddessen ausgeblendet.
+
+- # ====== Process: BTN_AUSWAHL_BEARBEITEN_BEENDEN =============
+  id: 191811423846804298
+  identification: 
+    name: BTN_AUSWAHL_BEARBEITEN_BEENDEN
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: ':P4_AUSWAHL_BEARBEITEN := NULL;'
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_AUSWAHL_BEARBEITEN_BEENDEN # 191811229481804296
+
+  comments: 
+    comments: Stellt den Report wieder auf die normale Suchfunktion zurück.
+
+- # ====== Process: RESET_ALLE_COLLECTIONS =====================
+  id: 192912047825261992
+  identification: 
+    name: RESET_ALLE_COLLECTIONS
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: PCK_VERMARKTUNGSCLUSTER.p_reset_alle_collections(piv_collection_name_like => 'P4%');
+
+  execution: 
+    sequence: 20
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  server-side-condition: 
+    type: Request = Value
+    value: RESET_ALLE_COLLECTIONS
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Löscht sämtliche Collections P4_... und legt danach die Checkbox-Collection leer an, wenn der REQUEST = RESET_ALLE_COLLECTIONS lautet (dies erfolgt nach dem erfolgreichen Zuordnen von Objekten durch Klick auf einen den "Zuordnen"-Buttons)
+
+- # ====== Process: BTN_ZUORDNUNGEN_SPEICHERN ==================
+  id: 192912415140261995
+  identification: 
+    name: BTN_ZUORDNUNGEN_SPEICHERN
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      -- @deprecated: PCK_VERMARKTUNGSCLUSTER.auswahl_zuordnen(pin_vc_lfd_nr => :P4_VC_ID); -- neu wegen @ticket FTTH-1787:
+      PCK_VERMARKTUNGSCLUSTER.p_objektauswahl_vc_zuordnen(pin_vc_lfd_nr => :P4_VC_ID, piv_username => :APP_USER);
+      PCK_VERMARKTUNGSCLUSTER.p_reset_alle_collections(piv_collection_name_like => 'P4%');
+
+  execution: 
+    sequence: 60
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Die ausgewählten Adressen wurden dem Vermarktungscluster zugeordnet.
+
+  error: 
+    error-message: '#SQLERRM_TEXT#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_ZUORDNUNGEN_SPEICHERN # 188314256203879833
+
+  comments: 
+    comments: Führt die Zuordnung der getätigten Auswahl zum Vermarktungscluster durch und setzt danach alle Collections zurück. Im Anschluss werden üblicherweise alle (jetzt zugeordneten) Adressen hellgrün hinterlegt dargestellt.
+
+- # ====== Process: BTN_KOMPLETTES_GEBIET_ZUORDNEN (Gebiet) ====
+  id: 192912485402261996
+  identification: 
+    name: BTN_KOMPLETTES_GEBIET_ZUORDNEN (Gebiet)
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P4_ANZAHL_OBJEKTE := PCK_VERMARKTUNGSCLUSTER.komplettes_gebiet_zuordnen(
+        pin_vc_lfd_nr => :P4_VC_ID
+       ,piv_gebiet    => :P4_SEARCH_GEBIET
+       ,piv_typ       => :P4_SEARCH_TYP
+      );
+      PCK_VERMARKTUNGSCLUSTER.p_reset_alle_collections(piv_collection_name_like => 'P4%');
+      
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Das komplette Ausbaugebiet wurde dem Vermarktungscluster zugeordnet.
+
+  error: 
+    error-message: 'Das Gebiet konnte nicht zugeordnet werden: #SQLERRM_TEXT#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_KOMPLETTES_GEBIET_ZUORDNEN # 188310876791879828
+    type: Item is NOT NULL
+    item: P4_SEARCH_GEBIET
+
+  comments: 
+    comments: Wenn die Konstante MODUS auf 'ZAEHLEN' gestellt wird, dann passiert keine Zuordnung, sondern die voraussichtliche Anzahl der zuordenbaren Adressen wird P4_ANZAHL_OBJEKTE abgelegt.
+
+- # ====== Process: MON_LOESCHE_BESTEHENDE_ZUORDNUNGEN =========
+  id: 192915917796262030
+  identification: 
+    name: MON_LOESCHE_BESTEHENDE_ZUORDNUNGEN
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DELETE VERMARKTUNGSCLUSTER_OBJEKT
+       WHERE VC_LFD_NR = (
+           SELECT VC_LFD_NR
+             FROM VERMARKTUNGSCLUSTER
+            WHERE VC_LFD_NR = :P4_VC_ID 
+              AND UPPER(BEZEICHNUNG) LIKE 'TEST%'
+            );
+
+  execution: 
+    sequence: 100
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Zuordnungen gelöscht
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: MON_LOESCHE_BESTEHENDE_ZUORDNUNGEN # 192915788047262029
+
+  configuration: 
+    build-option: Monitoring # 182846889201020994
+
+  comments: 
+    comments: Zerstört alle bestehenden Zuordnungen zum Vermarktungscluster! Dieser Prozess ist nur für die Entwicklung erlaubt. Der Vermarktungscluster muss zudem mit dem String "Test" beginnen.
+
+- # ====== Process: BTN_AUSWAHL_LOESCHEN =======================
+  id: 192916193717262033
+  identification: 
+    name: BTN_AUSWAHL_LOESCHEN
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: APEX_COLLECTION.TRUNCATE_COLLECTION(PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX);
+
+  execution: 
+    sequence: 80
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_AUSWAHL_LOESCHEN # 192916085783262032
+
+  comments: 
+    comments: Setzt die Checkbox-Collection zurück, so dass die gesamte Auswahl verworfen wird
+
+- # ====== Process: Filter setzen ==============================
+  id: 192916574111262037
+  identification: 
+    name: Filter setzen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P4_FILTER := CASE :REQUEST 
+                         WHEN 'P4_SEARCH_GEBIET' THEN 1
+                         WHEN 'P4_SEARCH_TYP'    THEN 2
+                         WHEN 'P4_SEARCH_ALL'    THEN 4                   
+                         WHEN 'BTN_SEARCH'       THEN 4
+                         ELSE :P4_FILTER
+                    END;
+      CASE :P4_FILTER
+          WHEN 0 THEN
+              :P4_SEARCH_GEBIET := NULL;
+              :P4_SEARCH_TYP    := NULL;
+              :P4_SEARCH_ALL    := NULL;
+          WHEN 1 THEN
+              :P4_SEARCH_TYP    := NULL;
+              :P4_SEARCH_ALL    := NULL;
+          WHEN 2 THEN
+              :P4_SEARCH_GEBIET := NULL;
+              :P4_SEARCH_ALL    := NULL;
+          WHEN 4 THEN
+              :P4_SEARCH_GEBIET := NULL;
+              :P4_SEARCH_TYP    := NULL;
+          ELSE
+              NULL;
+      END CASE;
+      
+      :P4_FILTER_NAME := CASE :P4_FILTER
+                           WHEN 0 THEN ''
+                           WHEN 1 THEN 'Dieses Ausbaugebiet'
+                           WHEN 2 THEN 'Diesen Ausbaugebiet-Typ'
+                           WHEN 4 THEN 'Diesen Adressbereich' -- nett, kommt aber derzeit nicht zum Einsatz
+                           ELSE NULL
+                         END;
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  comments: 
+    comments: Setzt die Werte für die Items P4_FILTER und P4_FILTER_NAME und löscht diejenigen Eingabefelder, die nichts mit der aktuellen Suche zu tun haben, damit nicht (wie früher) völlig irrelevante Werte oberhalb des Reports zu sehen sind
+
+- # ====== Process: asp_header_checked =========================
+  id: 197023632999771093
+  identification: 
+    name: asp_header_checked
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      PCK_VERMARKTUNGSCLUSTER.asp_header_checked (
+        piv_collection_name => PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX
+       ,pin_keys_1          => apex_application.g_x01
+       ,pin_keys_2          => apex_application.g_x02
+       ,pin_keys_3          => apex_application.g_x03
+       ,pin_keys_4          => apex_application.g_x04
+       ,pin_keys_5          => apex_application.g_x05
+       ,pin_keys_6          => apex_application.g_x06
+       ,pin_keys_7          => apex_application.g_x07
+       ,pin_keys_8          => apex_application.g_x08
+       ,pin_keys_9          => apex_application.g_x09
+       ,pin_keys_10         => apex_application.g_x10
+      );
+      htp.p(PCK_VERMARKTUNGSCLUSTER.fn_count_checked_members(PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX));
+      
+
+  execution: 
+    sequence: 30
+    point: Ajax Callback
+    run-process: Once Per Page Visit (default)
+
+  comments: 
+    comments: 'Ruft die Datenbankprozedur auf, die das Häkchen aller aufgelisteten Checkboxen setzt, und liefert die Anzahl der anschließend angehakten Checkboxen zurück (da sowieso irgendetwas zurückgeliefert werden muss, wird diese Zahl anstatt eines Leerstrings dazu verwendet, die Größe der Auswahl in der Titelzeile der Region zu aktualisieren). Der wichtigeste Unterschied zu asp_set_checkbox ist, dass sämtliche Arrays apex_application.g_x01..g_x10 an die Datenbankprozedur übergeben werden, damit eine möglichst große Anzahl an Häkchen gleichzeitig gesetzt werden kann (APEX: maximal 32767 Zeichen pro Parameter, mal 10, verteilt auf die ausgewählten HAUS_LFD_NRn + jeweils ein Komma ergibt ca. 40.000 Einträge)'
+
+- # ====== Process: asp_header_not_checked =====================
+  id: 197023757451771094
+  identification: 
+    name: asp_header_not_checked
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      PCK_VERMARKTUNGSCLUSTER.asp_header_not_checked ( 
+        piv_collection_name => PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX
+       ,pin_keys_1          => apex_application.g_x01
+       ,pin_keys_2          => apex_application.g_x02
+       ,pin_keys_3          => apex_application.g_x03
+       ,pin_keys_4          => apex_application.g_x04
+       ,pin_keys_5          => apex_application.g_x05
+       ,pin_keys_6          => apex_application.g_x06
+       ,pin_keys_7          => apex_application.g_x07
+       ,pin_keys_8          => apex_application.g_x08
+       ,pin_keys_9          => apex_application.g_x09
+       ,pin_keys_10         => apex_application.g_x10
+      );
+      htp.p(PCK_VERMARKTUNGSCLUSTER.fn_count_checked_members(PCK_VERMARKTUNGSCLUSTER.COLLECTION_P4_CHECKBOX));
+      
+
+  execution: 
+    sequence: 40
+    point: Ajax Callback
+    run-process: Once Per Page Visit (default)
+
+  comments: 
+    comments: 'Ruft die Datenbankprozedur auf, die das Häkchen aller aufgelisteten Checkboxen entfernt, und liefert die Anzahl der anschließend noch angehakten Checkboxen zurück (da sowieso irgendetwas zurückgeliefert werden muss, wird diese Zahl anstatt eines Leerstrings dazu verwendet, die Größe der Auswahl in der Titelzeile der Region zu aktualisieren). Der wichtigeste Unterschied zu asp_set_checkbox ist, dass sämtliche Arrays apex_application.g_x01..g_x10 an die Datenbankprozedur übergeben werden, damit eine möglichst große Anzahl an Häkchen gleichzeitig gesetzt werden kann  (APEX: maximal 32767 Zeichen pro Parameter)'
+
+- # ====== Process: BTN_KOMPLETTES_GEBIET_ZUORDNEN (Typ) =======
+  id: 197024067751771097
+  identification: 
+    name: BTN_KOMPLETTES_GEBIET_ZUORDNEN (Typ)
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P4_ANZAHL_OBJEKTE := PCK_VERMARKTUNGSCLUSTER.komplettes_gebiet_zuordnen(
+        pin_vc_lfd_nr => :P4_VC_ID
+       ,piv_gebiet    => :P4_SEARCH_GEBIET
+       ,piv_typ       => :P4_SEARCH_TYP
+      );
+      PCK_VERMARKTUNGSCLUSTER.p_reset_alle_collections(piv_collection_name_like => 'P4%');
+      
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Der komplette Ausbaugebiets-Typ wurde dem Vermarktungscluster zugeordnet.
+
+  error: 
+    error-message: 'Der Gebietstyp konnte nicht zugeordnet werden: #SQLERRM_TEXT#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_KOMPLETTES_GEBIET_ZUORDNEN # 188310876791879828
+    type: Item is NOT NULL
+    item: P4_SEARCH_TYP
+
+  comments: 
+    comments: Wenn die Konstante MODUS auf 'ZAEHLEN' gestellt wird, dann passiert keine Zuordnung, sondern die voraussichtliche Anzahl der zuordenbaren Adressen wird P4_ANZAHL_OBJEKTE abgelegt.
+
+branches: 
+- # ====== Branch: BTN_AUSWAHL_BEARBEITEN ======================
+  id: 192912191959261993
+  identification: 
+    name: BTN_AUSWAHL_BEARBEITEN
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.:IR[adressenIR]_AUSWAHL:&DEBUG.:RP,::&success_msg=#SUCCESS_MSG#'
+      page: 4 # Objekte hinzufügen
+      request: IR[adressenIR]_AUSWAHL
+      clear-cache: RP
+
+  server-side-condition: 
+    when-button-pressed: BTN_AUSWAHL_BEARBEITEN # 191811025345804294
+
+  comments: 
+    comments: Das Bearbeiten der ausgewählten Adressen setzt voraus, dass der Interactive Report auf "AUSWAHL" umgeschaltet wird. Pagination wird auf 1 zurückgesetzt
+
+- # ====== Branch: BTN_AUSWAHL_BEARBEITEN_BEENDEN ==============
+  id: 192912288645261994
+  identification: 
+    name: BTN_AUSWAHL_BEARBEITEN_BEENDEN
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.:IR[adressenIR]_SUCHE:&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: 4 # Objekte hinzufügen
+      request: IR[adressenIR]_SUCHE
+
+  server-side-condition: 
+    when-button-pressed: BTN_AUSWAHL_BEARBEITEN_BEENDEN # 191811229481804296
+
+  comments: 
+    comments: Das Zurückschalten auf die Standard-Adressensuche setzt voraus, dass der Interactive Report wieder auf den Primären Report "SUCHE" zurückgesetzt wird. Kein Zurücksetzen der Pagination, da alle zuvor dargestellten Adressen ja weiterhin vorliegen.
+
+- # ====== Branch: Reset Pagination (Adressen-Report) ==========
+  id: 192912715285261998
+  identification: 
+    name: Reset Pagination (Adressen-Report)
+
+  execution: 
+    sequence: 40
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:RP,::&success_msg=#SUCCESS_MSG#'
+      page: 4 # Objekte hinzufügen
+      clear-cache: RP
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: P4_SEARCH_GEBIET, P4_SEARCH_TYP, BTN_SEARCH
+
+  comments: 
+    comments: Nach dem Umschalten einer der beiden Selectlisten oder Klick auf den Adresssuche-Button (Lupen-Symbol) muss der Interaktive Report auf Seite 1 zurückgestellt werden, da der Benutzer ansonsten eine Fehlermeldung erhält, wenn in der neuen Ergebnismenge weniger Zeilen enthalten sind als zuvor
+
+- # ====== Branch: BTN_ZUORDNUNGEN_SPEICHERN ===================
+  id: 192913158792262003
+  identification: 
+    name: BTN_ZUORDNUNGEN_SPEICHERN
+
+  execution: 
+    sequence: 30
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.:IR[adressenIR]_SUCHE:&DEBUG.:RP,::&success_msg=#SUCCESS_MSG#'
+      page: 4 # Objekte hinzufügen
+      request: IR[adressenIR]_SUCHE
+      clear-cache: RP
+
+  server-side-condition: 
+    when-button-pressed: BTN_ZUORDNUNGEN_SPEICHERN # 188314256203879833
+
+  comments: 
+    comments: Nach der Zuordnung den Interactive Report wieder auf den Primären Report "SUCHE" zurücksetzen und die Pagination auf 1 stellen
+

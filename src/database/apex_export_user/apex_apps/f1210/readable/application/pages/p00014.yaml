@@ -1,0 +1,629 @@
+---
+# ====== Page: Cluster  löschen ==============================
+id: 14
+identification: 
+  name: Cluster  löschen
+  alias: CLUSTER-LÖSCHEN
+  title: Cluster  löschen
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+  - t-PageBody--noContentPadding
+
+dialog: 
+  width: 300
+  height: 335
+  maximum-width: 300
+  chained: true
+  resizable: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    .t-Form-fieldContainer .apex-item-radio label {
+        display: block; /* Jedes Label auf eine neue Zeile */
+        width: 100%; /* Stellt sicher, dass die Labels sich an die Breite anpassen */
+    }
+     
+    .t-Form-fieldContainer .apex-item-radio {
+        display: flex; /* Flexbox für bessere Kontrolle */
+        flex-direction: column; /* Vertikale Anordnung der Radio-Buttons */
+    }
+     
+    .apex-item-radio label {
+        white-space: nowrap; /* Verhindert Zeilenumbrüche */
+    }
+    
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+comments: 
+  comments: '@krakar @FTTH-2323 Erstellen einer Seite zum Löschen eines Vermarktungsclusters'
+
+regions: 
+- # ====== Region: Löschgrund auswählen ========================
+  id: 49692746699809178
+  identification: 
+    name: Löschgrund auswählen
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: VERMARKTUNGSCLUSTER
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 50858140722570873
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Hinweis Vermarktungscluster =================
+  id: 50858857556570880
+  identification: 
+    name: Hinweis Vermarktungscluster
+    type: Static Content
+
+  source: 
+    html-code: |
+      <div style="font-size: 16px; background-color:#FF6; padding: 1em;">
+      <p><strong>Hinweis:</strong> <br>
+      Das Vermarktungscluster <br>
+      <strong>&P14_BEZEICHNUNG.</strong> <br>
+      wird gelöscht. <br></p>
+      </div>
+
+  layout: 
+    sequence: 10
+    parent-region: Löschgrund auswählen # 49692746699809178
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: 2
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    - margin-top-lg
+    - margin-bottom-none
+    - margin-right-lg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Radio Group =================================
+  id: 50859014487570881
+  identification: 
+    name: Radio Group
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: Löschgrund auswählen # 49692746699809178
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P14_LOESCHGRUND ==========================
+  id: 49700774906809188
+  identification: 
+    name: P14_LOESCHGRUND
+    type: Radio Group
+
+  label: 
+    label: '<strong>Bitte wählen Sie einen Grund aus:</strong>'
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 10
+    region: Radio Group # 50859014487570881
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOESCHGRUENDE # 50819184852217251
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Löschgrund auswählen # 49692746699809178
+    column: LOESCHGRUND
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '@krakar @FTTH-2323 Radiogroup zur Auswahl von zur Verfügung stehenden Löschgründen'
+
+- # ====== Page Item: P14_VC_LFD_NR ============================
+  id: 49952287089534183
+  identification: 
+    name: P14_VC_LFD_NR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: Löschgrund auswählen # 49692746699809178
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Löschgrund auswählen # 49692746699809178
+    column: VC_LFD_NR
+    data-type: NUMBER
+    query-only: true
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P14_BEZEICHNUNG ==========================
+  id: 49952365778534184
+  identification: 
+    name: P14_BEZEICHNUNG
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: Löschgrund auswählen # 49692746699809178
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Löschgrund auswählen # 49692746699809178
+    column: BEZEICHNUNG
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P14_ANZAHL_OBJEKTE =======================
+  id: 50855312743570844
+  identification: 
+    name: P14_ANZAHL_OBJEKTE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: Löschgrund auswählen # 49692746699809178
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BTN_CONFIRM =================================
+  id: 49707629229809192
+  identification: 
+    button-name: BTN_CONFIRM
+    label: Bestätigen und Cluster löschen
+
+  layout: 
+    sequence: 10
+    region: Buttons # 50858140722570873
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-trash-o
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: BTN_CONFIRM =========================
+  id: 49707661112809192
+  identification: 
+    name: BTN_CONFIRM
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_CONFIRM # 49707629229809192
+
+  actions: 
+  - # ====== Action: Hinweis Verknüpfungen =======================
+    id: 49952491893534185
+    identification: 
+      name: Hinweis Verknüpfungen
+      action: Confirm
+
+    settings: 
+      title: ' &P14_BEZEICHNUNG.'
+      message: |
+        <p>Dem Cluster sind Objekte zugeordnet (&P14_ANZAHL_OBJEKTE.).</p>
+        <p>Bitte fahren Sie nur dann mit dem Löschen des Clusters fort, wenn auch diese Zuordnungen gelöscht werden dürfen.</p>
+      style: Default
+
+    execution: 
+      sequence: 10
+      event: BTN_CONFIRM # 49707661112809192
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    client-side-condition: 
+      type: Item > Value
+      item: P14_ANZAHL_OBJEKTE
+      value: 0
+
+    comments: 
+      comments: Dieser Hinweis erfolgt nur, falls dem Cluster Objekte zugeordnet sind.
+
+  - # ====== Action: Sicherheitsabfrage ==========================
+    id: 50855415527570845
+    identification: 
+      name: Sicherheitsabfrage
+      action: Confirm
+
+    settings: 
+      title: ' &P14_BEZEICHNUNG.'
+      message: <p>Sind Sie sicher, dass dieser Vermarktungscluster tatsächlich gelöscht werden soll?</p>
+      style: Default
+
+    execution: 
+      sequence: 20
+      event: BTN_CONFIRM # 49707661112809192
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: Abschließende Sicherheitsabfrage, ob der Cluster jetzt gelöscht werden soll.
+
+  - # ====== Action: Submit Page =================================
+    id: 50855529831570846
+    identification: 
+      name: Submit Page
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: BTN_CONFIRM
+      show-processing: true
+
+    execution: 
+      sequence: 30
+      event: BTN_CONFIRM # 49707661112809192
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: Zum Löschen absenden
+
+processes: 
+- # ====== Process: Initialize form Löschgrund auswählen =======
+  id: 49710178568809194
+  identification: 
+    name: Initialize form Löschgrund auswählen
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Löschgrund auswählen # 49692746699809178
+
+  execution: 
+    sequence: 20
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: UPDATE_VC ==================================
+  id: 50855570694570847
+  identification: 
+    name: UPDATE_VC
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE VERMARKTUNGSCLUSTER
+          SET loeschgrund = :P14_LOESCHGRUND
+          WHERE vc_lfd_nr = :P14_VC_LFD_NR;
+      
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Vermarktungscluster "&P14_BEZEICHNUNG." wurde gelöscht
+
+  error: 
+    error-message: 'Vermarktungscluster "&P14_BEZEICHNUNG." konnte nicht gelöscht werden: #SQLERRM#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_CONFIRM # 49707629229809192
+
+- # ====== Process: DELETE_CLUSTER =============================
+  id: 50858285515570874
+  identification: 
+    name: DELETE_CLUSTER
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      PCK_VERMARKTUNGSCLUSTER_DML.p_delete(pin_vc_lfd_nr => :P14_VC_LFD_NR);
+      
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Vermarktungscluster "&P14_BEZEICHNUNG." wurde gelöscht
+
+  error: 
+    error-message: 'Vermarktungscluster "&P14_BEZEICHNUNG." konnte nicht gelöscht werden: #SQLERRM#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_CONFIRM # 49707629229809192
+
+- # ====== Process: Anzahl Objekte ermitteln ===================
+  id: 50867434758005013
+  identification: 
+    name: Anzahl Objekte ermitteln
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      SELECT COUNT(*) 
+        INTO :P14_ANZAHL_OBJEKTE
+        FROM VERMARKTUNGSCLUSTER_OBJEKT
+       WHERE vc_lfd_nr = :P14_VC_LFD_NR;
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P14_VC_LFD_NR
+
+branches: 
+- # ====== Branch: Go To Page 1 ================================
+  id: 50857248443570864
+  identification: 
+    name: Go To Page 1
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:::'
+      page: 1 # Vermarktungscluster
+
+  server-side-condition: 
+    when-button-pressed: BTN_CONFIRM # 49707629229809192
+

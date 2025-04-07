@@ -1,0 +1,260 @@
+---
+# ====== Application: Vermarktungscluster ====================
+id: 1210
+identification: 
+  name: Vermarktungscluster
+  alias: VERMARKTUNGSCLUSTER
+  version: 2024-11-07 1945
+
+row-search: 
+  tokenize: false
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+
+report-printing: 
+  type: Use Instance Settings
+
+advanced: 
+  friendly-urls: false
+  allow-feedback: true
+  logging: true
+  debugging: true
+  compatibility-mode: 19.2 / 20.1 / 20.2 / 21.1
+  accessible-read-only-items: false
+  pass-ecid: N
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: keycloak # 67803693348082171
+
+authorization: 
+  authorization-scheme: hat Zugriff auf App # 214874001469442687
+  run-on-public-pages: false
+  run-on-background-job: true
+  source-for-role-or-group-schemes: Access Control User Role Assignments
+
+session-management: 
+  rejoin-sessions: Disabled
+
+session-state-protection: 
+  enabled: true
+
+security: 
+  deep-linking: Enabled
+  browser-cache: Disabled
+  embed-in-frames: Deny
+  referrer-policy: strict-origin
+  html-escaping-mode: Extended
+
+database-session: 
+  parsing-schema: APEX_EXPORT_USER
+
+globalization: 
+  primary-language: German (Germany) (de)
+  document-direction: Left-To-Right
+  language-derived-from: Browser (use browser language preference)
+  automatic-time-zone: false
+  automatic-csv-encoding: true
+
+application-format-masks: 
+  date: dd.mm.yyyy
+  date-time: 'dd.mm.yyyy hh24:mi:ss'
+  timestamp: DS
+  timestamp-time-zone: DS
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Text
+  text: Vermarktungscluster
+
+progressive-web-app: 
+  enable: false
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:1:&SESSION.'
+    page: 1 # Vermarktungscluster
+
+  login-url: 
+    url: 'f?p=&APP_ID.:LOGIN:&APP_SESSION.::&DEBUG.:::'
+    page: LOGIN
+
+navigation-menu: 
+  list-template: Top Navigation Menu
+  template-options: 
+  - '#DEFAULT#'
+  - js-tabLike
+  list-position: Top
+  list: Desktop Navigation Menu # 213351572517554744
+
+navigation-bar: 
+  implementation: List
+  list: Desktop Navigation Bar # 213498010238554808
+  list-template: Navigation Bar
+  template-options: 
+  - '#DEFAULT#'
+
+javascript: 
+  include-jquery-migrate: false
+
+css: 
+  file-urls: 
+  - '#APP_IMAGES#app-icon.css?version=#APP_VERSION#'
+
+attributes: 
+  theme: Universal Theme # 42
+  global-page: 0
+  enable-end-users-to-choose-theme-style: false
+  add-"built-with-apex"-to-footer: false
+  auto-dismiss-success-messages: false
+
+subscription: 
+  version-number: 4108007233177
+
+substitutions: 
+- # ====== Substitution: APP_NAME ==============================
+  id: 1
+  identification: 
+    name: APP_NAME
+
+  value: 
+    static-value: Vermarktungscluster
+
+component-settings: 
+- # ====== Component Setting: NATIVE_BOSS ======================
+  id: 13629441235397593
+  identification: 
+    name: NATIVE_BOSS
+    type: REST Data Source
+
+  subscription: 
+    version-number: 4106710626053
+
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 40965559193963156
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  subscription: 
+    version-number: 4063017195835
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 40978196757963157
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 4063017195837
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 40990727349963158
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 4063017195841
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 142489803374545928
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 143163053600742877
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 3995516629607
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 143743721833257992
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 213348066009554741
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 213348373793554741
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 213348711182554741
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 213348964345554741
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 213349950450554742
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 213350246210554742
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 213350557490554743
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  subscription: 
+    version-number: 1
+

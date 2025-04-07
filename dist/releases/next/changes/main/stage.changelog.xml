@@ -6,5 +6,6 @@
 <!--BEGIN-->
 <!--END-->
 <!--BEGIN CUSTOM-->
+<include file="code/_custom/dml.sql" relativeToChangelogFile="true"/>
 <!--END CUSTOM-->
 </databaseChangeLog>

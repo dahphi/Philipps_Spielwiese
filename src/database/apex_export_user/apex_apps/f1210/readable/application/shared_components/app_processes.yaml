@@ -1,0 +1,56 @@
+---
+- # ====== Application Process: Collection P4 löschen ==========
+  id: 191509221128356093
+  identification: 
+    name: Collection P4 löschen
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      IF APEX_COLLECTION.COLLECTION_EXISTS('P4_CHECKBOX') THEN
+        APEX_COLLECTION.DELETE_COLLECTION ('P4_CHECKBOX');
+      END IF;
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  server-side-condition: 
+    type: Current Page != Page
+    page: 4
+
+  comments: 
+    comments: Wenn irgendeine andere Seite als P4 aufgerufen wird, muss die Collection mit den gespeicherten Checkboxen gelöscht werden. So erspart man sich das Löschen durch Überwachung sämtlicher Zugangswege (Buttons, Link-URLs etc.)
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Process: COLLECTIONS_ERZEUGEN ===========
+  id: 214905411274049187
+  identification: 
+    name: COLLECTIONS_ERZEUGEN
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      begin 
+        apex_debug.enable(p_level => apex_debug.c_log_level_info); 
+                          -- for more details, use: c_log_level_app_trace
+        apex_debug.message(p_message => 'Debug enabled.');
+      APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION('ADRESSEN_NEU'); -- #deprecated, aber noch drinlassen bis Seite 7 durch Seite 4 (Collection 'P4_CHECKBOX') abgelöst ist
+      end;
+
+  execution: 
+    sequence: 1
+    point: New Session
+
+  server-side-condition: 
+    type: Never
+
+  subscription: 
+    version-number: 1
+

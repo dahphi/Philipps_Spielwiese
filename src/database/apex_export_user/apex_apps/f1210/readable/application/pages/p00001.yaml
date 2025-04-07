@@ -1,0 +1,2979 @@
+---
+# ====== Page: Vermarktungscluster ===========================
+id: 1
+identification: 
+  name: Vermarktungscluster
+  alias: VERMARKTUNGSCLUSTER
+  title: Vermarktungscluster
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: '"JS_IS_VALID_URL"'
+
+css: 
+  inline: |
+    .scrollbar-on-top .a-GV-w-hdr{overflow-x:auto!important}
+    #vermarktungsclusterIG span.prozent:after {content:'%'}
+    
+    button#vermarktungsclusterIG_ig_toolbar_m1 {display:none}
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+comments: 
+  comments: |
+    @date 2023-07-19 @WISAND @ticket FTTH-2190: Landingpage GK, @ticket FTTH-2509: Statistikspalten auf Basis MV
+    @date 2023-03-14 @WISAND @ticket FTTH-703 @prozent: Drei neue Spalten hinzugefügt
+    @date 2022-05-11 @WISAND @ticket FTTH-47: Fünf neue Spalten hinzugefügt
+    @date 2022-05-17 @WISAND Validierungen aus IG-Save-Prozess extrahiert, da Codebase zu groß
+
+regions: 
+- # ====== Region: Vermarktungscluster =========================
+  id: 211199650079506563
+  identification: 
+    name: Vermarktungscluster
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Vermarktungscluster Suche ===================
+  id: 211199746495506564
+  identification: 
+    name: Vermarktungscluster Suche
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: Vermarktungscluster # 211199650079506563
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: DISABLED # 214649311448422564
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Vermarktungscluster =========================
+  id: 211200297963506570
+  identification: 
+    name: Vermarktungscluster
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT details 
+           , del
+           , hist
+           , vc_lfd_nr 
+           , bezeichnung 
+           , dnsttp_lfD_nr
+           , url
+           , url_gk
+           , ausbau_plan_termin
+           , aktiv
+           , status
+           , folgestatus
+           , anz_objekte
+           , gee_offen
+           , gee_erteilt
+           , gee_verweigert
+           , quote
+           , mindestbandbreite
+           , zielbandbreite_geplant
+           , kosten_hausanschluss
+           , kundenauftrag_erforderlich
+           , netwissen_seite
+           , pob_gesamt
+           , pob_storno
+           , pob_aktiv  
+           , pob_stornoquote
+           , pob_gesamtquote
+           , CASE WHEN pob_gesamt  > 0 THEN 'prozent' END AS class_pob_stornoquote
+           , CASE WHEN anz_objekte > 0 THEN 'prozent' END AS class_pob_gesamtquote
+           , INSERTED
+           , INSERTED_BY
+           , UPDATED
+           , UPDATED_BY
+           , WHOLEBUY 
+           , MANDANT
+        FROM V_VERMARKTUNGSCLUSTER
+
+  layout: 
+    sequence: 20
+    parent-region: Vermarktungscluster Übersicht # 211200931854506576
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - scrollbar-on-top
+    render-components: Above Content
+
+  advanced: 
+    static-id: vermarktungsclusterIG
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: |
+      @date 2023-03-09 @WISAND @ticket FTTH-703: Spalten POB_... und neue Column Group hinzugefügt
+      @date 2022-05 @WISAND @ticket FTTH-47
+      @date 2024-06-04 Neue Spalte MANDANT, @ticket FTTH-3169
+
+  attributes: 
+    id: 211200413427506571
+    edit: 
+      enabled: false
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: false
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Search Field
+      - Actions Menu
+      - Reset Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: false
+      define-chart-view: false
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 214646922202405130
+      identification: 
+        name: Primary Report
+        alias: 113467
+
+  column-groups: 
+  - # ====== Column Group: GEE ===================================
+    id: 213067476843145164
+    heading: 
+      heading: GEE
+
+  - # ====== Column Group: Auftragseingang (PreOrder-Buffer) =====
+    id: 242351915123338120
+    heading: 
+      heading: Auftragseingang (PreOrder-Buffer)
+
+  columns: 
+  - # ====== Column: URL_GK ======================================
+    id: 169032103937465418
+    identification: 
+      column-name: URL_GK
+      type: Textarea
+
+    heading: 
+      heading: Landingpage GK
+      alignment: start
+
+    settings: 
+      resizable: true
+      auto-height: false
+      character-counter: false
+      trim-spaces: Leading and Trailing
+
+    layout: 
+      sequence: 160
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+      maximum-length: 255
+
+    source: 
+      type: Database Column
+      database-column: URL_GK
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+    comments: 
+      comments: '@ticket FTTH-2190'
+
+  - # ====== Column: INSERTED ====================================
+    id: 170650834407231796
+    identification: 
+      column-name: INSERTED
+      type: Date Picker
+
+    heading: 
+      heading: Inserted
+      alignment: start
+
+    settings: 
+      show-time: false
+      display-as: Popup
+      minimum-date: None
+      maximum-date: None
+      multiple-months: No
+      use-defaults: true
+
+    layout: 
+      sequence: 330
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: INSERTED
+      data-type: DATE
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: Distinct Column
+      date-ranges: All
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: INSERTED_BY =================================
+    id: 170650943695231797
+    identification: 
+      column-name: INSERTED_BY
+      type: Textarea
+
+    heading: 
+      heading: Inserted By
+      alignment: start
+
+    settings: 
+      resizable: true
+      auto-height: false
+      character-counter: false
+      trim-spaces: Leading and Trailing
+
+    layout: 
+      sequence: 340
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: INSERTED_BY
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: UPDATED =====================================
+    id: 170651128282231798
+    identification: 
+      column-name: UPDATED
+      type: Date Picker
+
+    heading: 
+      heading: Updated
+      alignment: start
+
+    settings: 
+      show-time: false
+      display-as: Popup
+      minimum-date: None
+      maximum-date: None
+      multiple-months: No
+      use-defaults: true
+
+    layout: 
+      sequence: 350
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: UPDATED
+      data-type: DATE
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: Distinct Column
+      date-ranges: All
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: UPDATED_BY ==================================
+    id: 170651169810231799
+    identification: 
+      column-name: UPDATED_BY
+      type: Textarea
+
+    heading: 
+      heading: Updated By
+      alignment: start
+
+    settings: 
+      resizable: true
+      auto-height: false
+      character-counter: false
+      trim-spaces: Leading and Trailing
+
+    layout: 
+      sequence: 360
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: UPDATED_BY
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: WHOLEBUY ====================================
+    id: 170652310673231810
+    identification: 
+      column-name: WHOLEBUY
+      type: Select List
+
+    heading: 
+      heading: Wholebuy-Partner
+      alignment: center
+
+    layout: 
+      sequence: 370
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: WHOLEBUY-PARTNER # 201392144995074336
+      display-extra-values: true
+      display-null-value: true
+      null-display-value: '-'
+
+    source: 
+      type: Database Column
+      database-column: WHOLEBUY
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: MINDESTBANDBREITE ===========================
+    id: 172691810075703995
+    identification: 
+      column-name: MINDESTBANDBREITE
+      type: Select List
+
+    heading: 
+      heading: Mindest-<br/>Bandbreite
+      alignment: center
+
+    layout: 
+      sequence: 210
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BANDBREITE (MINDESTBANDBREITE) # 176498480866082925
+      display-extra-values: true
+      display-null-value: true
+      null-display-value: '- bitte auswählen -'
+
+    source: 
+      type: Database Column
+      database-column: MINDESTBANDBREITE
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+    help: 
+      help-text: Bitte die Bandbreite, die in dem jeweiligen Vermarktungscluster mindestens bestellt werden muss (in Mbit/s) aus der Dropdown-Liste auswählen.
+
+    comments: 
+      comments: '@DATE 2022-04-28 @TICKET FTTH-47'
+
+  - # ====== Column: ZIELBANDBREITE_GEPLANT ======================
+    id: 172691864012703996
+    identification: 
+      column-name: ZIELBANDBREITE_GEPLANT
+      type: Select List
+
+    heading: 
+      heading: geplante<br/>Zielbandbreite
+      alignment: center
+
+    layout: 
+      sequence: 220
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BANDBREITE (ZIELBANDBREITE_GEPLANT) # 176498995050091334
+      display-extra-values: true
+      display-null-value: true
+      null-display-value: '- bitte auswählen -'
+
+    source: 
+      type: Database Column
+      database-column: ZIELBANDBREITE_GEPLANT
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+    help: 
+      help-text: Bitte die geplante Zielbandbreite im Vermarktungscluster (in Mbit/s) aus der Dropdown-Liste auswählen.
+
+    comments: 
+      comments: '@DATE 2022-04-28 @TICKET FTTH-47'
+
+  - # ====== Column: KOSTEN_HAUSANSCHLUSS ========================
+    id: 172691977439703997
+    identification: 
+      column-name: KOSTEN_HAUSANSCHLUSS
+      type: Number Field
+
+    heading: 
+      heading: Kosten<br/>Hausanschluss
+      alignment: center
+
+    settings: 
+      number-alignment: End
+      virtual-keyboard: Text
+
+    layout: 
+      sequence: 230
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: KOSTEN_HAUSANSCHLUSS
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: Static
+      static-value: 0
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+    help: 
+      help-text: 'Kosten des Hausanschlusses für Eigentümer: Betrag in Euro. Nachkommastellen sind erlaubt, Eingabe von 0 ist erlaubt.'
+
+    comments: 
+      comments: '@DATE 2022-04-28 @TICKET FTTH-47'
+
+  - # ====== Column: KUNDENAUFTRAG_ERFORDERLICH ==================
+    id: 172692040457703998
+    identification: 
+      column-name: KUNDENAUFTRAG_ERFORDERLICH
+      type: Select List
+
+    heading: 
+      heading: Kundenauftrag<br/>erforderlich
+      alignment: center
+
+    layout: 
+      sequence: 240
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: JA | NEIN # 176507770810330577
+      display-extra-values: false
+      display-null-value: true
+      null-display-value: '- bitte auswählen -'
+
+    source: 
+      type: Database Column
+      database-column: KUNDENAUFTRAG_ERFORDERLICH
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+    help: 
+      help-text: Ist für einen Hausanschluss zusätzlich mindestens ein Kundenauftrag erforderlich? (Ja | Nein)
+
+    comments: 
+      comments: '@DATE 2022-04-28 @TICKET FTTH-47'
+
+  - # ====== Column: NETWISSEN_SEITE =============================
+    id: 172692229976703999
+    identification: 
+      column-name: NETWISSEN_SEITE
+      type: Textarea
+
+    heading: 
+      heading: Netwissen Seite
+      alignment: start
+
+    settings: 
+      resizable: true
+      auto-height: false
+      character-counter: false
+      trim-spaces: Leading and Trailing
+
+    layout: 
+      sequence: 250
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: NETWISSEN_SEITE
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+    help: 
+      help-text: Bitte die URL der Netwissen-Seite zu diesem Vermarktungscluster eingeben, alternativ deren numerische ID. Wenn keine Eingabe erfolgt, wird hier automatisch ein Link zur Hauptseite "Ausbaugebiete - nach Städten" eingefügt.
+
+    comments: 
+      comments: '@DATE 2022-04-28 @TICKET FTTH-47'
+
+  - # ====== Column: EDIT_LINK ===================================
+    id: 174240928720388526
+    identification: 
+      column-name: EDIT_LINK
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:3:P3_VC_LFD_NR:&VC_LFD_NR.'
+        page: 3 # Vermarktungscluster
+        clear-cache: 3
+        values: 
+          p3_vc_lfd_nr: '&VC_LFD_NR.'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+      link-attributes: title="Vermarktungscluster bearbeiten..."
+
+    source: 
+      type: None
+
+    enable-users-to: 
+      hide: false
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: MANDANT =====================================
+    id: 192669653270628562
+    identification: 
+      column-name: MANDANT
+      type: Text Field
+
+    heading: 
+      heading: Mandant
+      alignment: center
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 380
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 2
+
+    source: 
+      type: Database Column
+      database-column: MANDANT
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    comments: 
+      comments: '@date 2024-06-04 Spalte hinzugefügt, @ticket FTTH-3169'
+
+  - # ====== Column: DETAILS =====================================
+    id: 211201200028506579
+    identification: 
+      column-name: DETAILS
+      type: Display Only
+
+    heading: 
+      heading: Objekte
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 30
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:5:P5_VC_ID:&VC_LFD_NR.'
+        page: 5 # Vermarktungscluster Objekt
+        clear-cache: 5
+        values: 
+          p5_vc_id: '&VC_LFD_NR.'
+
+      link-text: <span class="fa fa-home" aria-hidden="true"></span>
+      link-attributes: title='Objekte zuordnen / Statusänderung'
+
+    source: 
+      type: Database Column
+      database-column: DETAILS
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    comments: 
+      comments: Ruft Seite 4 für die Zuordnung weiterer Objekte zum Vermarktunscluster auf. Der REQUEST 'RESET' sorgt dafür, dass die Collection auf Seite 4 zurückgesetzt wird.
+
+  - # ====== Column: URL =========================================
+    id: 213064379177145133
+    identification: 
+      column-name: URL
+      type: Textarea
+
+    heading: 
+      heading: Landingpage PK
+      alignment: start
+
+    settings: 
+      resizable: true
+      auto-height: false
+      character-counter: false
+      trim-spaces: Leading and Trailing
+
+    layout: 
+      sequence: 150
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: URL
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: AUSBAU_PLAN_TERMIN ==========================
+    id: 213064512937145134
+    identification: 
+      column-name: AUSBAU_PLAN_TERMIN
+      type: Date Picker
+
+    heading: 
+      heading: vsl.<br/>Plantermin<br/>Projektende
+      alignment: center
+
+    settings: 
+      show-time: false
+      display-as: Popup
+      minimum-date: None
+      maximum-date: None
+      multiple-months: No
+      use-defaults: true
+
+    layout: 
+      sequence: 170
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: AUSBAU_PLAN_TERMIN
+      data-type: DATE
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: Distinct Column
+      date-ranges: All
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+  - # ====== Column: AKTIV =======================================
+    id: 213064616808145135
+    identification: 
+      column-name: AKTIV
+      type: Select List
+
+    heading: 
+      heading: aktiv
+      alignment: center
+
+    layout: 
+      sequence: 180
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: JA | NEIN # 176507770810330577
+      display-extra-values: false
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: AKTIV
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+  - # ====== Column: STATUS ======================================
+    id: 213064687207145136
+    identification: 
+      column-name: STATUS
+      type: Select List
+
+    heading: 
+      heading: Status
+      alignment: start
+
+    layout: 
+      sequence: 190
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: AUSBAUSTATUS # 165441192443556696
+      display-extra-values: true
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: STATUS
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+    comments: 
+      comments: |
+        @date 2024-01-31: Endültige Umstellung der Spalte STATUS auf Read Only = Always, daher nur noch Anzeige des aktuellen Status per List of Values und nicht mehr die komplizierte Mimik zuvor. Grund: Man konnte auf der Spalte STATUS im IG nicht filtern. Inzwischen kann man im IG ja sowieso keine Änderungen mehr vornehmen, sondern nur noch über das Dialogfenster Page 3.
+        
+        -- alter Kommentar vor dieser Umstellung:
+        @ticket FTTH-1787: Die LOV zeigt prinzipiell nur noch den aktuellen Status plus diejenigen Status an, die sich aus der Spalte :FOLGESTATUS ergeben. Nachteil dieser Dynamik: Es wird ein Ajax-Request durchgeführt, wobei sich der Mauszeiger für ca. eine Sekunde in einen Spinner verwandelt, wenn man die LOV aufklappt. Für den seltenen Fall einer neu hinzugefügten Zeile muss per COALESCE die komplette Statusfolge für NULL erneut abgerufen werden (dafür nicht NVL verwenden oder den Folgestatus hart kodieren!), weil :FOLGESTATUS nicht vorbelegt ist. Das Cascading-LOV-Attribut "Parent required" muss auf No stehen. @date 2023-04-05: Akzeptanzkriterien besagen, dass hier der Status nicht mehr änderbar sein soll, daher wird diese Spalte ab Implementierung von @FTTH-1787 disabled (=auf "Read Only" umgestellt). Sollte dies zukünftig nicht mehr erwünscht sein, kann durch Wegnahme dieses Attributs der alte LOV-Zustand sofort wiederhergestellt werden (da das SQL dies weiterhin ermöglicht).
+        
+        LOV-Definition in diesem Fall:
+        SELECT disp_val, ret_val FROM core.v_lov_ausbaustatus WHERE ret_val IN (
+          SELECT COLUMN_VALUE FROM TABLE(APEX_STRING.SPLIT(COALESCE(:FOLGESTATUS, PCK_VERMARKTUNGSCLUSTER.fv_vc_folgestatus(NULL)), ',')))
+
+  - # ====== Column: BEZEICHNUNG =================================
+    id: 213064860480145137
+    identification: 
+      column-name: BEZEICHNUNG
+      type: Text Field
+
+    heading: 
+      heading: Bezeichnung
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: BEZEICHNUNG
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: VC_LFD_NR ===================================
+    id: 213065094153145140
+    identification: 
+      column-name: VC_LFD_NR
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 60
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: VC_LFD_NR
+      data-type: NUMBER
+      query-only: true
+      primary-key: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+
+  - # ====== Column: DNSTTP_LFD_NR ===============================
+    id: 213067321418145162
+    identification: 
+      column-name: DNSTTP_LFD_NR
+      type: Select List
+
+    heading: 
+      heading: Technologie
+      alignment: center
+
+    layout: 
+      sequence: 90
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select dnsttp_bez d , dnsttp_lfd_nr r from tab_dienst_typ
+      display-extra-values: false
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: DNSTTP_LFD_NR
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+    comments: 
+      comments: '@date 2024-07-09: Überflüssige Beschränkung "... where dnsttp_lfd_nr in (70,51,71,80)" in LOV-SQL entfernt, @ticket FTTH-3747'
+
+  - # ====== Column: QUOTE =======================================
+    id: 213067377182145163
+    identification: 
+      column-name: QUOTE
+      type: Display Only
+
+    heading: 
+      heading: Quote
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 140
+      column-alignment: end
+      group: GEE # 213067476843145164
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: QUOTE
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: HIST ========================================
+    id: 213563708794016742
+    identification: 
+      column-name: HIST
+      type: Link
+
+    heading: 
+      heading: Historie
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:2:P2_VC_LFD_NR:&VC_LFD_NR.'
+        page: 2 # Vermarktungscluster - Historie
+        clear-cache: 2
+        values: 
+          p2_vc_lfd_nr: '&VC_LFD_NR.'
+
+      link-text: <span class="fa fa-history" aria-hidden="true"></span>
+
+    source: 
+      type: Database Column
+      database-column: HIST
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    security: 
+      escape-special-characters: true
+
+    configuration: 
+      build-option: DISABLED # 214649311448422564
+
+  - # ====== Column: ANZ_OBJEKTE =================================
+    id: 214874429461954368
+    identification: 
+      column-name: ANZ_OBJEKTE
+      type: Display Only
+
+    heading: 
+      heading: Anzahl<br/>Objekte
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 100
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ANZ_OBJEKTE
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: GEE_OFFEN ===================================
+    id: 214874474719954369
+    identification: 
+      column-name: GEE_OFFEN
+      type: Display Only
+
+    heading: 
+      heading: offen
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 110
+      column-alignment: end
+      group: GEE # 213067476843145164
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: GEE_OFFEN
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: GEE_ERTEILT =================================
+    id: 214874648667954370
+    identification: 
+      column-name: GEE_ERTEILT
+      type: Display Only
+
+    heading: 
+      heading: erteilt
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 120
+      column-alignment: end
+      group: GEE # 213067476843145164
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: GEE_ERTEILT
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: GEE_VERWEIGERT ==============================
+    id: 214874701347954371
+    identification: 
+      column-name: GEE_VERWEIGERT
+      type: Display Only
+
+    heading: 
+      heading: verweigert
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 130
+      column-alignment: end
+      group: GEE # 213067476843145164
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: GEE_VERWEIGERT
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: DEL =========================================
+    id: 214875128448954375
+    identification: 
+      column-name: DEL
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 50
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: "javascript:$s('P1_VC_ID_LOESCHEN','&N001.');"
+      link-text: <span class="fa fa-trash-o" aria-hidden="true"></span>
+
+    source: 
+      type: Database Column
+      database-column: DEL
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    security: 
+      escape-special-characters: true
+
+    configuration: 
+      build-option: DISABLED # 214649311448422564
+
+  - # ====== Column: POB_STORNO ==================================
+    id: 242351620948338117
+    identification: 
+      column-name: POB_STORNO
+      type: Number Field
+
+    heading: 
+      heading: Storno
+      alignment: center
+
+    settings: 
+      number-alignment: End
+      virtual-keyboard: Text
+
+    layout: 
+      sequence: 280
+      column-alignment: end
+      group: Auftragseingang (PreOrder-Buffer) # 242351915123338120
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: POB_STORNO
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: false
+      hide: true
+
+    comments: 
+      comments: |
+        @ticket FTTH-703
+        Anzahl der stornierten Aufträge im Preorderbuffer, deren HAUS_LFD_NRn zu diesem Vermarktungscluster gehören
+
+  - # ====== Column: POB_GESAMT ==================================
+    id: 242352013083338121
+    identification: 
+      column-name: POB_GESAMT
+      type: Display Only
+
+    heading: 
+      heading: Brutto
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 260
+      column-alignment: end
+      group: Auftragseingang (PreOrder-Buffer) # 242351915123338120
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: POB_GESAMT
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: false
+      hide: true
+
+    comments: 
+      comments: |
+        @ticket FTTH-703
+        Anzahl der Aufträge im Preorderbuffer, deren HAUS_LFD_NRn zu diesem Vermarktungscluster gehören
+
+  - # ====== Column: POB_AKTIV ===================================
+    id: 242352090184338122
+    identification: 
+      column-name: POB_AKTIV
+      type: Display Only
+
+    heading: 
+      heading: Netto
+      alignment: center
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 270
+      column-alignment: end
+      group: Auftragseingang (PreOrder-Buffer) # 242351915123338120
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: POB_AKTIV
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: false
+      hide: true
+
+    comments: 
+      comments: |
+        @ticket FTTH-703
+        Anzahl der nicht stornierten Aufträge im Preorderbuffer, deren HAUS_LFD_NRn zu diesem Vermarktungscluster gehören
+
+  - # ====== Column: POB_STORNOQUOTE =============================
+    id: 242352227349338123
+    identification: 
+      column-name: POB_STORNOQUOTE
+      type: HTML Expression
+
+    heading: 
+      heading: Storno-<br/>Quote
+      alignment: center
+
+    settings: 
+      html-expression: <span class="&CLASS_POB_STORNOQUOTE.">&POB_STORNOQUOTE.</span>
+
+    layout: 
+      sequence: 290
+      column-alignment: end
+      group: Auftragseingang (PreOrder-Buffer) # 242351915123338120
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 990D00
+
+    source: 
+      type: Database Column
+      database-column: POB_STORNOQUOTE
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: false
+      hide: true
+
+    comments: 
+      comments: |
+        @ticket FTTH-703
+        Auf 2 Nachkommastellen gerundeter Anteil stornierter Aufträge für HAUS_LFD_NRn, die zu diesem Vermarktungscluster gehören
+
+  - # ====== Column: POB_GESAMTQUOTE =============================
+    id: 242352317320338124
+    identification: 
+      column-name: POB_GESAMTQUOTE
+      type: HTML Expression
+
+    heading: 
+      heading: Gesamt-</br>Quote
+      alignment: center
+
+    settings: 
+      html-expression: <span class="&CLASS_POB_GESAMTQUOTE.">&POB_GESAMTQUOTE.</span>
+
+    layout: 
+      sequence: 310
+      column-alignment: end
+      group: Auftragseingang (PreOrder-Buffer) # 242351915123338120
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 990D00
+
+    source: 
+      type: Database Column
+      database-column: POB_GESAMTQUOTE
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: false
+      hide: true
+
+    comments: 
+      comments: |
+        @ticket FTTH-703
+        Aufträge im Preorderbuffer im Verhältnis zur Anzahl Objekte insegesamt, auf 2 Nachkommastellen gerundet
+
+  - # ====== Column: CLASS_POB_STORNOQUOTE =======================
+    id: 242352331662338125
+    identification: 
+      column-name: CLASS_POB_STORNOQUOTE
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 300
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: CLASS_POB_STORNOQUOTE
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+
+    comments: 
+      comments: |
+        @ticket FTTH-703
+        (siehe ".prozent:after" im Page CSS)
+        Ergibt den String "prozent", wenn die Prozentberechnung der Stornoquote gültig ist (also keine Division durch 0 durchführt).
+        Nur mit einer HTML Expression und dieser CSS-Ergänzung bekommt man das Prozentzeichen hinter die Zahl, ohne dass gleichzeitig die gesamte Spalte zum String wird und sich dann nicht mehr nummerisch sortieren ließe.
+
+  - # ====== Column: CLASS_POB_GESAMTQUOTE =======================
+    id: 242352444774338126
+    identification: 
+      column-name: CLASS_POB_GESAMTQUOTE
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 320
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: CLASS_POB_GESAMTQUOTE
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+
+    comments: 
+      comments: |
+        @ticket FTTH-703
+        (siehe ".prozent:after" im Page CSS)
+        Ergibt den String "prozent", wenn die Prozentberechnung der Gesamtquote gültig ist (also keine Division durch 0 durchführt).
+        Nur mit einer HTML Expression und dieser CSS-Ergänzung bekommt man das Prozentzeichen hinter die Zahl, ohne dass gleichzeitig die gesamte Spalte zum String wird und sich dann nicht mehr nummerisch sortieren ließe.
+
+  - # ====== Column: FOLGESTATUS =================================
+    id: 259196173290630900
+    identification: 
+      column-name: FOLGESTATUS
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 200
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: FOLGESTATUS
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+
+    comments: 
+      comments: '@ticket FTTH-1787: Dient als Liste für die Parent Cascading LOV in der Spalte STATUS: Die List of Values zeigt dann nur den aktuellen Status plus diejenigen Status an, die auf den aktuellen Status folgen können'
+
+  printing: 
+    page: 
+      size: A4
+      orientation: Landscape
+      units: Millimeters
+      width: 297
+      height: 210
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+      page-header-text: Vermarktungscluster
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: Vermarktungscluster Übersicht ===============
+  id: 211200931854506576
+  identification: 
+    name: Vermarktungscluster Übersicht
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: Vermarktungscluster # 211199650079506563
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Below Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Vermarktungscluster =========================
+  id: 213509320890554822
+  identification: 
+    name: Vermarktungscluster
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 213351147696554743
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    icon: app-icon
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: P1_PAGE_ITEMS ===============================
+  id: 214875242244954376
+  identification: 
+    name: P1_PAGE_ITEMS
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P1_STATISTIK_DATUM =======================
+  id: 169033151565465429
+  identification: 
+    name: P1_STATISTIK_DATUM
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Vermarktungscluster Übersicht # 211200931854506576
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Speichert, wannn die MV_VERMARKTUNGSCLUSTER_STATISTIK zuletzt aktualisiert wurde
+
+- # ====== Page Item: P1_POB_UPDATE ============================
+  id: 169033353740465431
+  identification: 
+    name: P1_POB_UPDATE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: P1_PAGE_ITEMS # 214875242244954376
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      @ticket FTTH-2040:
+      Speichert eine kommaseparierte Liste mit VC_LFD_NRn, sofern im Grid-DML festgestellt wurde, dass für mindestens einen Vermarktungscluster anschließend ein POB-Update durchgeführt werden muss
+
+- # ====== Page Item: P1_VC_LFD_NR_DISPLAY =====================
+  id: 170652792480231815
+  identification: 
+    name: P1_VC_LFD_NR_DISPLAY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: P1_PAGE_ITEMS # 214875242244954376
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '2023-11-09 @ticket FTTH-2901: Nach dem Anlegen eines Vermarktungsclusters füllt die Eingabemaske (Dialog Seite 3) dieses Item mit der neuen VC_LFD_NR. Dadurch kann beispielsweise der Fokus auf den neuen Vermarktungscluster gesetzt werden.'
+
+- # ====== Page Item: P1_STRAV_GEBIETE =========================
+  id: 211199770306506565
+  identification: 
+    name: P1_STRAV_GEBIETE
+    type: Select List
+
+  label: 
+    label: Gebiete
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Vermarktungscluster Suche # 211199746495506564
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT gebiet || ' (' || typ || ')' d, id r
+        FROM strav.gebiet
+        ORDER BY gebiet
+    display-extra-values: false
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P1_STRAV_TYP =============================
+  id: 211200007492506567
+  identification: 
+    name: P1_STRAV_TYP
+    type: Select List
+
+  label: 
+    label: Gebiete
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Vermarktungscluster Suche # 211199746495506564
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT distinct gebiet d, gebiet r
+        FROM strav.gebiet
+        ORDER BY gebiet
+    display-extra-values: false
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P1_VC_ID_LOESCHEN ========================
+  id: 214875318642954377
+  identification: 
+    name: P1_VC_ID_LOESCHEN
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: P1_PAGE_ITEMS # 214875242244954376
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BTN_STATISTIK_AKTUALISIEREN =================
+  id: 169032747513465425
+  identification: 
+    button-name: BTN_STATISTIK_AKTUALISIEREN
+    label: 'Stand: &P1_STATISTIK_DATUM.'
+
+  layout: 
+    sequence: 10
+    region: Vermarktungscluster # 213509320890554822
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    - t-Button--gapRight
+    icon: fa-line-chart
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  advanced: 
+    custom-attributes: 
+    - title="Statistik
+    - aktualisieren
+    - ..."
+
+  comments: 
+    comments: '@ticket FTTH-2509'
+
+- # ====== Button: BTN_VERMARKTUNGSCLUSTER_NEU =================
+  id: 174238165984388499
+  identification: 
+    button-name: BTN_VERMARKTUNGSCLUSTER_NEU
+    label: Neuer Vermarktungscluster
+
+  layout: 
+    sequence: 20
+    region: Vermarktungscluster # 213509320890554822
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:::'
+      page: 3 # Vermarktungscluster
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: P1_VERMARKTUNGSCLUSTER_NEU ==================
+  id: 211200253499506569
+  identification: 
+    button-name: P1_VERMARKTUNGSCLUSTER_NEU
+    label: Vertriebscluster
+
+  layout: 
+    sequence: 10
+    region: Vermarktungscluster # 211199650079506563
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-plus
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  configuration: 
+    build-option: DISABLED # 214649311448422564
+
+dynamic-actions: 
+- # ====== Dynamic Action: IG: Kopieren in Zwischenablage ermögl
+  id: 148883272527180195
+  identification: 
+    name: 'IG: Kopieren in Zwischenablage ermöglichen'
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  configuration: 
+    build-option: 'DA: IG Copy Hack' # 148917586850645905
+
+  comments: 
+    comments: |
+      Ermöglicht es, den gesamten Inhalt einer markierte Zelle im Interactive Grid in die Zwischenablage zu kopieren.
+      @copy
+
+  actions: 
+  - # ====== Action: copy-Event abfangen =========================
+    id: 148883396309180196
+    identification: 
+      name: copy-Event abfangen
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        document.addEventListener('copy', (event) => {
+            event.clipboardData.setData('text/plain', $(document.activeElement)[0].innerText || window.getSelection());
+            event.preventDefault();
+        });
+
+    execution: 
+      sequence: 10
+      event: 'IG: Kopieren in Zwischenablage ermöglichen' # 148883272527180195
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: '@url https://www.oneoracledeveloper.com/2022/03/copy-cell-value-from-ig-global-edition.html'
+
+- # ====== Dynamic Action: STATISTIK_AKTUALISIEREN =============
+  id: 169032900841465426
+  identification: 
+    name: STATISTIK_AKTUALISIEREN
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_STATISTIK_AKTUALISIEREN # 169032747513465425
+
+  actions: 
+  - # ====== Action: Bestätigen ==================================
+    id: 169032976175465427
+    identification: 
+      name: Bestätigen
+      action: Confirm
+
+    settings: 
+      message: |
+        <p>Die Vermarktungscluster-Statistiken (alle Informationen in den Bereichen <strong>GEE</strong> und <strong>Auftragseingang (PreOrder-Buffer)</strong> werden automatisch frühmorgens aktualisiert.</p>
+        <p>Sie können hier eine ad-hoc-Aktualisierung durchführen &ndash; diese findet im Hintergrund statt und dauert wenige Minuten.</p>
+        <p>Statistik jetzt aktualisieren?</p>
+      style: Default
+
+    execution: 
+      sequence: 10
+      event: STATISTIK_AKTUALISIEREN # 169032900841465426
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 169033079501465428
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: PCK_VERMARKTUNGSCLUSTER.p_statistik_aktualisieren;
+
+    execution: 
+      sequence: 20
+      event: STATISTIK_AKTUALISIEREN # 169032900841465426
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: false
+
+- # ====== Dynamic Action: Vertriebscluster löschen ============
+  id: 214875381347954378
+  identification: 
+    name: Vertriebscluster löschen
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P1_VC_ID_LOESCHEN
+
+  actions: 
+  - # ====== Action: Confirm =====================================
+    id: 214875557581954379
+    identification: 
+      action: Confirm
+
+    settings: 
+      message: Wollen Sie das Vertriebscluster wirklich l&#xF6;schen?
+      style: Default
+
+    execution: 
+      sequence: 20
+      event: Vertriebscluster löschen # 214875381347954378
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 215046151620800831
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P1_VC_NAME_LOESCHEN
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 215046178011800832
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: NULL;
+      items-to-return: 
+      - P1_VC_NAME_LOESCHEN
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: New # 215046151620800831
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+computations: 
+- # ====== Computation: P1_STATISTIK_DATUM =====================
+  id: 169033264981465430
+  identification: 
+    item-name: P1_STATISTIK_DATUM
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: "SELECT TO_CHAR(max(zeit), 'DY DD.MM. YYYY HH24:MI') || ' Uhr' FROM MV_VERMARKTUNGSCLUSTER_STATISTIK"
+
+processes: 
+- # ====== Process: Prototyp - Collections erzeugen ============
+  id: 214674964648644978
+  identification: 
+    name: Prototyp - Collections erzeugen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      -- +-------------+
+      -- | Collections |
+      -- +-------------+
+      
+      -- ----------------
+      -- Vertriebslcuster
+      -- 
+      -- N001 : ID
+      -- C001 : Name
+      -- C002 : Technologie
+      -- C003 : Ausbaustatus
+      -- D001 : Plantermin
+      -- D002 : VVM_von
+      -- D003 : VVM_bis 
+      -- ----------------
+      APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION(
+          p_collection_name => 'VERTRIEBSCLUSTER');
+      
+      -- Testdaten
+      APEX_COLLECTION.ADD_MEMBER(
+              p_collection_name => 'VERTRIEBSCLUSTER',
+              p_c001            => 'VC 1',
+              p_c002            => 'FTTH',
+              p_c003            => 'NotPlanned',
+              p_n001            => 1,
+              p_d001            => NULL, 
+              p_d002            => NULL, 
+              p_d003            => NULL 
+              );
+      APEX_COLLECTION.ADD_MEMBER(
+              p_collection_name => 'VERTRIEBSCLUSTER',
+              p_c001            => 'VC 2',
+              p_c002            => 'FTTH',
+              p_c003            => 'AreaPlanned',
+              p_n001            => 2,
+              p_d001            => NULL, 
+              p_d002            => NULL, 
+              p_d003            => NULL 
+              );
+      APEX_COLLECTION.ADD_MEMBER(
+              p_collection_name => 'VERTRIEBSCLUSTER',
+              p_c001            => 'VC 3',
+              p_c002            => 'FTTH',
+              p_c003            => 'PreMarketing',
+              p_n001            => 3,
+              p_d001            => sysdate, 
+              p_d002            => sysdate + 30, 
+              p_d003            => sysdate + 60 
+              );
+      APEX_COLLECTION.ADD_MEMBER(
+              p_collection_name => 'VERTRIEBSCLUSTER',
+              p_c001            => 'VC 4',
+              p_c002            => 'FTTH',
+              p_c003            => 'underConstruction',
+              p_n001            => 4,
+              p_d001            => NULL, 
+              p_d002            => NULL, 
+              p_d003            => NULL 
+              );
+      -- ------------------------
+      -- Vertriebslcuster Details
+      --
+      -- N001 : VC_ID
+      -- N002 : HAUS_LFD_NR
+      -- ------------------------
+      APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION(
+          p_collection_name => 'VERTRIEBSCLUSTER_DETAILS');
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  configuration: 
+    build-option: DISABLED # 214649311448422564
+
