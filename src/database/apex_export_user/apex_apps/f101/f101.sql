@@ -33,14 +33,14 @@ prompt APPLICATION 101 - test
 -- Application Export:
 --   Application:     101
 --   Name:            test
---   Date and Time:   13:28 Monday April 7, 2025
+--   Date and Time:   12:44 Tuesday April 8, 2025
 --   Exported By:     APEX_EXPORT_USER
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                      6
+--     Pages:                      7
 --       Items:                    3
 --       Processes:                4
---       Regions:                  5
+--       Regions:                  6
 --       Buttons:                  1
 --     Shared Components:
 --       Logic:
@@ -48,7 +48,7 @@ prompt APPLICATION 101 - test
 --       Navigation:
 --         Lists:                  2
 --         Breadcrumbs:            1
---           Entries:              4
+--           Entries:              5
 --       Security:
 --         Authentication:         1
 --         Authorization:          1
@@ -108,7 +108,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'test'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>6
-,p_version_scn=>9034878
+,p_version_scn=>10754935
 ,p_print_server_type=>'NATIVE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -144,7 +144,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(4965040012521485)
 ,p_name=>'Navigation Menu'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>9034878
+,p_version_scn=>10748317
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(4976844459521530)
@@ -180,6 +180,15 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_icon=>'fa-file-o'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'3'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(12367327731141205)
+,p_list_item_display_sequence=>50
+,p_list_item_link_text=>'Test'
+,p_list_item_link_target=>'f?p=&APP_ID.:5:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-file-o'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'5'
 );
 end;
 /
@@ -838,6 +847,12 @@ wwv_flow_imp_shared.create_menu_option(
 ,p_link=>'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
 ,p_page_id=>3
 );
+wwv_flow_imp_shared.create_menu_option(
+ p_id=>wwv_flow_imp.id(12368271159141214)
+,p_short_name=>'Test'
+,p_link=>'f?p=&APP_ID.:5:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>5
+);
 end;
 /
 prompt --application/shared_components/navigation/breadcrumbentry
@@ -1085,6 +1100,32 @@ wwv_flow_imp_page.create_page_plug(
 );
 end;
 /
+prompt --application/pages/page_00005
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>5
+,p_name=>'Test_nikolai'
+,p_alias=>'TEST'
+,p_step_title=>'Test'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'11'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(12367721064141209)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>2531463326621247859
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(4964593565521483)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>4072363345357175094
+);
+end;
+/
 prompt --application/pages/page_09999
 begin
 wwv_flow_imp_page.create_page(
@@ -1308,4 +1349,4 @@ prompt  ...done
 
 
 
--- sqlcl_snapshot {"hash":"d6cc6a3c050451d5cacf67ff2df7e9705a1f4304","type":"APEX_APPLICATION","name":"f101","schemaName":"APEX_EXPORT_USER"}
+-- sqlcl_snapshot {"hash":"b44456b0550c262c67b12c8b3d6e0eb490fffa53","type":"APEX_APPLICATION","name":"f101","schemaName":"APEX_EXPORT_USER"}

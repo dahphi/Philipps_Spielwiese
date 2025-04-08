@@ -3,9 +3,9 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
-<!--BEGIN CHANGES-->
-<include file="changes/main/stage.changelog.xml" relativeToChangelogFile="true"/>
-<!--END CHANGES-->
-<!--BEGIN CODE-->
-<!--END CODE-->
+<!--BEGIN-->
+<!--END-->
+<!--BEGIN CUSTOM-->
+<include file="code/_custom/dml_2.sql" relativeToChangelogFile="true"/>
+<!--END CUSTOM-->
 </databaseChangeLog>
