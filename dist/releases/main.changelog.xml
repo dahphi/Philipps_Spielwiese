@@ -12,5 +12,6 @@
 <include file="2022_2_0003/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="2022_2_0004/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="2022_2_0005/release.changelog.xml" relativeToChangelogFile="true"/>
+<include file="2022_2_0006/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="next/release.changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
