@@ -1,0 +1,6922 @@
+---
+# ====== Page: Bestellübersicht ==============================
+id: 110
+identification: 
+  name: Bestellübersicht
+  alias: BESTELLUEBERSICHT
+  title: Bestellübersicht
+  page-group: Bestellerfassung # 77801068779551336
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    input.apex-item-text {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none!important;
+    cursor: not-allowed;
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Auftrag erfolgreich erfasst =================
+  id: 56535414464052120
+  identification: 
+    name: Auftrag erfolgreich erfasst
+    type: Static Content
+
+  source: 
+    html-code: '<h4 style="text-align:center">Der Auftrag wurde erfasst.</h4>'
+
+  layout: 
+    sequence: 10
+    parent-region: 'Einverständniserklärungen: ABG und Widerrufsrecht' # 232178871155026855
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_SENT
+    value: 1
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Zusammenfassung der Vorbestellung ===========
+  id: 227587510353059076
+  identification: 
+    name: Zusammenfassung der Vorbestellung
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Voradresse ==================================
+  id: 231745233299952160
+  identification: 
+    name: Voradresse
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: 5/7 (Voradresse, Anbieterwechsel) # 233146715960505881
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--accent15
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Erklärungen =================================
+  id: 232178824517026854
+  identification: 
+    name: Erklärungen
+    type: Static Content
+
+  layout: 
+    sequence: 111
+    parent-region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Einverständniserklärungen: ABG und Widerrufsr
+  id: 232178871155026855
+  identification: 
+    name: 'Einverständniserklärungen: ABG und Widerrufsrecht'
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: Erklärungen # 232178824517026854
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent15
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: '<p>Bitte &P110_KUNDENREFERENZ_VON. bestätigen lassen:</p>'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Buttons =====================================
+  id: 232179916757026865
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 121
+    parent-region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noBorder
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: GEE_KONTAKTDATEN ============================
+  id: 232180331169026870
+  identification: 
+    name: GEE_KONTAKTDATEN
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: GEE TENANT|PART_OWNER # 232180714044026873
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_GEE_KONTAKTDATEN_BEKANNT
+    value: 1
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Die Felder zu den Kontaktdaten des Vermieters werden auf dieser Seite nur angezeigt, wenn sie bekannt sind
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: GEE OWNER ===================================
+  id: 232180612219026872
+  identification: 
+    name: GEE OWNER
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: GEE (Grundstückseigentümer-Erklärung) # 233146972260505884
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_GEE_ROLLE
+    value: OWNER
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Die Felder zu den Kontaktdaten des Vermieters werden auf dieser Seite nur angezeigt, wenn sie bekannt sind
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: GEE TENANT|PART_OWNER =======================
+  id: 232180714044026873
+  identification: 
+    name: GEE TENANT|PART_OWNER
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: GEE (Grundstückseigentümer-Erklärung) # 233146972260505884
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: "NVL(:P110_GEE_ROLLE, '?') <> 'OWNER'"
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Die Felder zu den Kontaktdaten des Vermieters werden auf dieser Seite nur angezeigt, wenn sie bekannt sind
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Installationsadresse ========================
+  id: 232181646719026883
+  identification: 
+    name: Installationsadresse
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: 1/7 # 233146305357505877
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--accent15
+    - t-Region--scrollBody
+    - margin-top-md
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 233114504023984203
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Glascontainer # 234884631880092836
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Breadcrumbs # 238157555060796911
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: 1/7 =========================================
+  id: 233146305357505877
+  identification: 
+    name: 1/7
+    type: Static Content
+
+  layout: 
+    sequence: 71
+    parent-region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Produkt-/Tarifauswahl =======================
+  id: 233146357945505878
+  identification: 
+    name: Produkt-/Tarifauswahl
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: 1/7 # 233146305357505877
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--accent15
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: 2/7 und 3/7: Persönliche Daten ==============
+  id: 233146517390505879
+  identification: 
+    name: '2/7 und 3/7: Persönliche Daten'
+    type: Static Content
+
+  layout: 
+    sequence: 81
+    parent-region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Kundendaten =================================
+  id: 233146572131505880
+  identification: 
+    name: Kundendaten
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: '2/7 und 3/7: Persönliche Daten' # 233146517390505879
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--accent15
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: 5/7 (Voradresse, Anbieterwechsel) ===========
+  id: 233146715960505881
+  identification: 
+    name: 5/7 (Voradresse, Anbieterwechsel)
+    type: Static Content
+
+  layout: 
+    sequence: 91
+    parent-region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_KUNDENSTATUS
+    value: N
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Anbieterwechsel =============================
+  id: 233146812734505882
+  identification: 
+    name: Anbieterwechsel
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: 5/7 (Voradresse, Anbieterwechsel) # 233146715960505881
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--accent15
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: 6/7 =========================================
+  id: 233146898365505883
+  identification: 
+    name: 6/7
+    type: Static Content
+
+  layout: 
+    sequence: 101
+    parent-region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Der gesamte GEE-Bereich wird nicht angezeigt (außer für Authorization Scheme = "Entwickler", aber nur zu Testzwecken bzw. für Plausi-Checks), siehe @ticket FTTH-2829
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: GEE (Grundstückseigentümer-Erklärung) =======
+  id: 233146972260505884
+  identification: 
+    name: GEE (Grundstückseigentümer-Erklärung)
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: 6/7 # 233146898365505883
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--accent15
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Hinweis Einverständniserklärungen ===========
+  id: 238345378338922891
+  identification: 
+    name: Hinweis Einverständniserklärungen
+    type: Static Content
+
+  source: 
+    html-code: '<p>Nach der Überprüfung der Daten: bitte beide Einverständniserklärungen am Ende dieser Seite bestätigen lassen.</p>'
+
+  layout: 
+    sequence: 61
+    parent-region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_SENT
+    value: 0
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P110_INSTALLATIONSADRESSE_KOMPLETT =======
+  id: 65164980570086102
+  identification: 
+    name: P110_INSTALLATIONSADRESSE_KOMPLETT
+    type: Text Field
+
+  label: 
+    label: Adresse
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_SCOPE ===============================
+  id: 68200681729631814
+  identification: 
+    name: P110_SCOPE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 11
+    region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: 7
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 7
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'Wird nur zum Tracking benutzt: Startet bei 7 (quasi als Fortsetzung des Items P100_STEP) und wird beim Absenden des Auftrags auf 98 hochgesetzt, bei erfolgreicher Rückmeldung auf 99.'
+
+- # ====== Page Item: P110_UUID ================================
+  id: 69571122166798797
+  identification: 
+    name: P110_UUID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 51
+    region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '@ticket FTTH-4464: Speichert die vom Bestell-Service zurückgegebene Auftrags-ID, um damit einen Branch zunm Auftrag auszuführen'
+
+- # ====== Page Item: P110_MANDANT_DISPLAY =====================
+  id: 69572847774798814
+  identification: 
+    name: P110_MANDANT_DISPLAY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      JSON:client
+      "N"=Neukunde, "B"=Bestandskunde. Wird benötigt, um später zu entscheiden, ob die Kundendaten in das JSON-Objekt "customer" (N) oder "customerUpdate" (B) geschrieben werden - diesbezüglich leider keine gute Schnittstellenspezifikation
+
+- # ====== Page Item: P110_TECHNOLOGIE =========================
+  id: 205373710854516696
+  identification: 
+    name: P110_TECHNOLOGIE
+    type: Text Field
+
+  label: 
+    label: Technologie
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: Commented Out # 234883986660092834
+
+- # ====== Page Item: P110_WHOLEBUY ============================
+  id: 205373921021516698
+  identification: 
+    name: P110_WHOLEBUY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 160
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDENSTATUS ========================
+  id: 227588198523059083
+  identification: 
+    name: P110_KUNDENSTATUS
+    type: Select List
+
+  label: 
+    label: Kundenstatus
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: KUNDENSTATUS # 227317722483099978
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '"N"=Neukunde, "B"=Bestandskunde. Wird benötigt, um später zu entscheiden, ob die Kundendaten in das JSON-Objekt "customer" (N) oder "customerUpdate" (B) geschrieben werden - diesbezüglich leider keine gute Schnittstellenspezifikation'
+
+- # ====== Page Item: P110_ABW =================================
+  id: 231701122422047145
+  identification: 
+    name: P110_ABW
+    type: Select List
+
+  label: 
+    label: Anbieterwechsel
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: JA | NEIN (1|0) # 224055591124963777
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDE_ANREDE ========================
+  id: 231701133684047146
+  identification: 
+    name: P110_KUNDE_ANREDE
+    type: Select List
+
+  label: 
+    label: Anrede
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 70
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ANREDE # 223744860630739051
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:customer.salutation'
+
+- # ====== Page Item: P110_ABW_ANREDE ==========================
+  id: 231701312681047147
+  identification: 
+    name: P110_ABW_ANREDE
+    type: Select List
+
+  label: 
+    label: Anrede
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 80
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ANREDE # 223744860630739051
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ABW_ANSCHLUSSINHABER ================
+  id: 231701339123047148
+  identification: 
+    name: P110_ABW_ANSCHLUSSINHABER
+    type: Select List
+
+  label: 
+    label: Anschluss auf &P110_KUNDENREFERENZ_AKK. angemeldet?
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 70
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC2:ja;0,nein;1'
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'Die Antwort auf die Frage "Handelt es sich um einen abweichenden Anschlussinhaber?" erfordert  leider genau die umgekehrte Logik bei der Zuweisung von JA und NEIN, wenn man die Frage andersherum stellt, wie im Fachkonzept: "Ist der Anschluss auf den Namen des Kunden angemeldet?". Daher wird dem Item P100_ABW_ANSCHLUSSINHBAER eine 0 für JA und 1 für NEIN zugeordnet, wenn diese Frage so herum gestellt wird'
+
+- # ====== Page Item: P110_ABW_VORNAME =========================
+  id: 231701469575047149
+  identification: 
+    name: P110_ABW_VORNAME
+    type: Text Field
+
+  label: 
+    label: Vorname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ABW_NACHNAME ========================
+  id: 231701606120047150
+  identification: 
+    name: P110_ABW_NACHNAME
+    type: Text Field
+
+  label: 
+    label: Nachname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ABW_RUFNUMMER =======================
+  id: 231701652184047151
+  identification: 
+    name: P110_ABW_RUFNUMMER
+    type: Text Field
+
+  label: 
+    label: Rufnummer
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_AKTION ==============================
+  id: 231701808572047152
+  identification: 
+    name: P110_AKTION
+    type: Select List
+
+  label: 
+    label: Aktion
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 40
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: AKTION # 218717649817079093
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:-'
+
+- # ====== Page Item: P110_GEE_ANZAHL_WE =======================
+  id: 231701906091047153
+  identification: 
+    name: P110_GEE_ANZAHL_WE
+    type: Select List
+
+  label: 
+    label: Wohneinheiten
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 130
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ANZAHL_WE # 228552306473143172
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:propertyOwnerDeclaration.residentialUnit'
+
+- # ====== Page Item: P110_ABW_BISHERIGER_ANBIETER =============
+  id: 231701987809047154
+  identification: 
+    name: P110_ABW_BISHERIGER_ANBIETER
+    type: Text Field
+
+  label: 
+    label: bisheriger Anbieter
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_EINRICHTUNGSSERVICE =================
+  id: 231702068532047155
+  identification: 
+    name: P110_EINRICHTUNGSSERVICE
+    type: Select List
+
+  label: 
+    label: Einrichtungs-Service
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 120
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: EINRICHTUNGSSERVICE # 250772871376132756
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:productRequest.installationService'
+
+- # ====== Page Item: P110_GEE_ANREDE ==========================
+  id: 231702272059047157
+  identification: 
+    name: P110_GEE_ANREDE
+    type: Select List
+
+  label: 
+    label: Anrede
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ANREDE # 223744860630739051
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_EIGENTUEMER_EINVERSTANDEN =======
+  id: 231702358514047158
+  identification: 
+    name: P110_GEE_EIGENTUEMER_EINVERSTANDEN
+    type: Select List
+
+  label: 
+    label: Einverständnis Eigentümer
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: GEE OWNER # 232180612219026872
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC2:ist nicht erteilt;0,ist erteilt;1'
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: //// hier evtl anstatt des Textes ein Häkchen anzeigen ("&check;")
+
+- # ====== Page Item: P110_GEE_EMAIL ===========================
+  id: 231702471408047159
+  identification: 
+    name: P110_GEE_EMAIL
+    type: Text Field
+
+  label: 
+    label: E-Mail-Adresse
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 140
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_FIRMA ===========================
+  id: 231702593964047160
+  identification: 
+    name: P110_GEE_FIRMA
+    type: Text Field
+
+  label: 
+    label: Firmenbezeichnung
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_HAUSNR ==========================
+  id: 231702721762047161
+  identification: 
+    name: P110_GEE_HAUSNR
+    type: Text Field
+
+  label: 
+    label: Hausnr.
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 110
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_HAUSNR_ZUSATZ ===================
+  id: 231702755366047162
+  identification: 
+    name: P110_GEE_HAUSNR_ZUSATZ
+    type: Text Field
+
+  label: 
+    label: Zusatz
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 120
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_INFORMATIONSPFLICHT =============
+  id: 231702900213047163
+  identification: 
+    name: P110_GEE_INFORMATIONSPFLICHT
+    type: Select List
+
+  label: 
+    label: Einverständnis ist erteilt
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 170
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: JA | NEIN (1|0) # 224055591124963777
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_KONTAKTDATEN_BEKANNT ============
+  id: 231702989274047164
+  identification: 
+    name: P110_GEE_KONTAKTDATEN_BEKANNT
+    type: Select List
+
+  label: 
+    label: Kontaktdaten des Vermieters
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: GEE TENANT|PART_OWNER # 232180714044026873
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:sind nicht bekannt;0,sind bekannt;1'
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_LAND ============================
+  id: 231703046731047165
+  identification: 
+    name: P110_GEE_LAND
+    type: Text Field
+
+  label: 
+    label: Land
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-top-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Der gesamte Ländername wird abgespeichert, kein Schlüssel. Viel Erfolg mit den Umlauten...
+
+- # ====== Page Item: P110_GEE_NACHNAME ========================
+  id: 231703154107047166
+  identification: 
+    name: P110_GEE_NACHNAME
+    type: Text Field
+
+  label: 
+    label: Nachname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_ORT =============================
+  id: 231703294892047167
+  identification: 
+    name: P110_GEE_ORT
+    type: Text Field
+
+  label: 
+    label: Ort
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_RECHTSFORM ======================
+  id: 231703341322047168
+  identification: 
+    name: P110_GEE_RECHTSFORM
+    type: Select List
+
+  label: 
+    label: Rechtsform
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: RECHTSFORM # 227956299445087691
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: PRIVATE_CITIZEN|BUSINESS|COMMUNITY_OF_OWNERS|COMMUNITY_OF_HEIRS
+
+- # ====== Page Item: P110_GEE_RUFNUMMER =======================
+  id: 231703428581047169
+  identification: 
+    name: P110_GEE_RUFNUMMER
+    type: Text Field
+
+  label: 
+    label: Rufnummer
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 160
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_STRASSE =========================
+  id: 231703559378047170
+  identification: 
+    name: P110_GEE_STRASSE
+    type: Text Field
+
+  label: 
+    label: Straße
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_TITEL ===========================
+  id: 231703696811047171
+  identification: 
+    name: P110_GEE_TITEL
+    type: Text Field
+
+  label: 
+    label: Titel
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_VORNAME =========================
+  id: 231703801255047172
+  identification: 
+    name: P110_GEE_VORNAME
+    type: Text Field
+
+  label: 
+    label: Vorname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_VORWAHL =========================
+  id: 231703831242047173
+  identification: 
+    name: P110_GEE_VORWAHL
+    type: Text Field
+
+  label: 
+    label: Vorwahl
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 150
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_PLZ =============================
+  id: 231704015565047174
+  identification: 
+    name: P110_GEE_PLZ
+    type: Text Field
+
+  label: 
+    label: PLZ
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 80
+    region: GEE_KONTAKTDATEN # 232180331169026870
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_HAUS_LFD_NR =========================
+  id: 231704155099047176
+  identification: 
+    name: P110_HAUS_LFD_NR
+    type: Text Field
+
+  label: 
+    label: HAUS_LFD_NR
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      JSON:houseSerialNumber
+      "N"=Neukunde, "B"=Bestandskunde. Wird benötigt, um später zu entscheiden, ob die Kundendaten in das JSON-Objekt "customer" (N) oder "customerUpdate" (B) geschrieben werden - diesbezüglich leider keine gute Schnittstellenspezifikation
+
+- # ====== Page Item: P110_KOSTEN_HAUSANSCHLUSS ================
+  id: 231704301011047177
+  identification: 
+    name: P110_KOSTEN_HAUSANSCHLUSS
+    type: Text Field
+
+  label: 
+    label: Kosten Hausanschluss
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 150
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - not-used
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_GEE_ROLLE
+    value: OWNER
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      JSON:-
+      Feld nur anzeigen, wenn der Auftraggeber Eigentümer ist (analog zur Darstellung in der Maske P100/1)
+
+- # ====== Page Item: P110_MANDANT =============================
+  id: 231704328655047178
+  identification: 
+    name: P110_MANDANT
+    type: Select List
+
+  label: 
+    label: Mandant
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: MANDANT # 222119487343653087
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      JSON:client
+      "N"=Neukunde, "B"=Bestandskunde. Wird benötigt, um später zu entscheiden, ob die Kundendaten in das JSON-Objekt "customer" (N) oder "customerUpdate" (B) geschrieben werden - diesbezüglich leider keine gute Schnittstellenspezifikation
+
+- # ====== Page Item: P110_KUNDE_EMAIL =========================
+  id: 231704601518047180
+  identification: 
+    name: P110_KUNDE_EMAIL
+    type: Text Field
+
+  label: 
+    label: E-Mail-Adresse
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 130
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:customer.email'
+
+- # ====== Page Item: P110_KUNDE_FIRMENNAME ====================
+  id: 231704711480047181
+  identification: 
+    name: P110_KUNDE_FIRMENNAME
+    type: Text Field
+
+  label: 
+    label: Firmenname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 120
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:customer.businessName'
+
+- # ====== Page Item: P110_KUNDE_GEBURTSDATUM ==================
+  id: 231704753544047182
+  identification: 
+    name: P110_KUNDE_GEBURTSDATUM
+    type: Text Field
+
+  label: 
+    label: Geburtsdatum
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 110
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:customer.birthDate'
+
+- # ====== Page Item: P110_KUNDE_IBAN ==========================
+  id: 231704845235047183
+  identification: 
+    name: P110_KUNDE_IBAN
+    type: Text Field
+
+  label: 
+    label: IBAN
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 170
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P110_KUNDENSTATUS
+    value: B
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      JSON:accountDetails.iban
+      (Bankdaten werden bei Bestandskunden nicht angezeigt, siehe Ticket @FTTH-2829)
+
+- # ====== Page Item: P110_KUNDE_KONTOINHABER ==================
+  id: 231704931921047184
+  identification: 
+    name: P110_KUNDE_KONTOINHABER
+    type: Text Field
+
+  label: 
+    label: abweichender Kontoinhaber
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 180
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P110_KUNDENSTATUS
+    value: B
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: (Bankdaten werden bei Bestandskunden nicht angezeigt, siehe Ticket @FTTH-2829)
+
+- # ====== Page Item: P110_KUNDE_NACHNAME ======================
+  id: 231705101469047185
+  identification: 
+    name: P110_KUNDE_NACHNAME
+    type: Text Field
+
+  label: 
+    label: Nachname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDE_RUFNUMMER =====================
+  id: 231705211613047186
+  identification: 
+    name: P110_KUNDE_RUFNUMMER
+    type: Text Field
+
+  label: 
+    label: Rufnummer
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 160
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDE_SEPAMANDAT ====================
+  id: 231705303390047187
+  identification: 
+    name: P110_KUNDE_SEPAMANDAT
+    type: Select List
+
+  label: 
+    label: SEPA-Mandat ist erteilt
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 190
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: JA | NEIN (1|0) # 224055591124963777
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P110_KUNDENSTATUS
+    value: B
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: (Bankdaten werden bei Bestandskunden nicht angezeigt, siehe Ticket @FTTH-2829)
+
+- # ====== Page Item: P110_KUNDE_SOHO ==========================
+  id: 231705330671047188
+  identification: 
+    name: P110_KUNDE_SOHO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 200
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDE_TITEL =========================
+  id: 231705517693047189
+  identification: 
+    name: P110_KUNDE_TITEL
+    type: Text Field
+
+  label: 
+    label: Titel
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 80
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDE_VORNAME =======================
+  id: 231705560353047190
+  identification: 
+    name: P110_KUNDE_VORNAME
+    type: Text Field
+
+  label: 
+    label: Vorname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDE_VORWAHL =======================
+  id: 231705689929047191
+  identification: 
+    name: P110_KUNDE_VORWAHL
+    type: Text Field
+
+  label: 
+    label: Vorwahl
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 150
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDENNUMMER ========================
+  id: 231705778947047192
+  identification: 
+    name: P110_KUNDENNUMMER
+    type: Text Field
+
+  label: 
+    label: Kundennummer
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:customerNumber'
+
+- # ====== Page Item: P110_INSTALLATIONSADRESSE_STRASSE ========
+  id: 231705912512047193
+  identification: 
+    name: P110_INSTALLATIONSADRESSE_STRASSE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_INSTALLATIONSADRESSE_HAUSNR =========
+  id: 231705948143047194
+  identification: 
+    name: P110_INSTALLATIONSADRESSE_HAUSNR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_INSTALLATIONSADRESSE_ORT ============
+  id: 231743852855952146
+  identification: 
+    name: P110_INSTALLATIONSADRESSE_ORT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_INSTALLATIONSADRESSE_PLZ ============
+  id: 231743999588952147
+  identification: 
+    name: P110_INSTALLATIONSADRESSE_PLZ
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_VC_AUSBAU_PLAN_TERMIN ===============
+  id: 231744035787952148
+  identification: 
+    name: P110_VC_AUSBAU_PLAN_TERMIN
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 80
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      JSON:availabilityDate
+      Das Datum wird selbst nicht angezeigt, sondern als Halbjahres-Information "Verfügbarkeit" umgerechnet.
+
+- # ====== Page Item: P110_VC_BEZEICHNUNG ======================
+  id: 231744212632952149
+  identification: 
+    name: P110_VC_BEZEICHNUNG
+    type: Text Field
+
+  label: 
+    label: Vermarktungscluster
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: Commented Out # 234883986660092834
+
+  comments: 
+    comments: 'JSON:-'
+
+- # ====== Page Item: P110_VC_KUNDENAUFTRAG_ERFORDERLICH =======
+  id: 231744278875952150
+  identification: 
+    name: P110_VC_KUNDENAUFTRAG_ERFORDERLICH
+    type: Text Field
+
+  label: 
+    label: Kundenauftrag erforderlich
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - not-used
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: Commented Out # 234883986660092834
+
+  comments: 
+    comments: 'JSON:-'
+
+- # ====== Page Item: P110_VKZ =================================
+  id: 231744590450952153
+  identification: 
+    name: P110_VKZ
+    type: Text Field
+
+  label: 
+    label: VKZ
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:vkz'
+
+- # ====== Page Item: P110_VORADRESSE_HAUSNR ===================
+  id: 231744667915952154
+  identification: 
+    name: P110_VORADRESSE_HAUSNR
+    type: Text Field
+
+  label: 
+    label: Hausnr.
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: Voradresse # 231745233299952160
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_VORADRESSE_ORT ======================
+  id: 231744740394952155
+  identification: 
+    name: P110_VORADRESSE_ORT
+    type: Text Field
+
+  label: 
+    label: Ort
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: Voradresse # 231745233299952160
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_VORADRESSE_PLZ ======================
+  id: 231744907560952156
+  identification: 
+    name: P110_VORADRESSE_PLZ
+    type: Text Field
+
+  label: 
+    label: PLZ
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: Voradresse # 231745233299952160
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_VORADRESSE_STRASSE ==================
+  id: 231744943259952157
+  identification: 
+    name: P110_VORADRESSE_STRASSE
+    type: Text Field
+
+  label: 
+    label: Straße
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: Voradresse # 231745233299952160
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_WOHNDAUER ===========================
+  id: 231745127568952158
+  identification: 
+    name: P110_WOHNDAUER
+    type: Select List
+
+  label: 
+    label: Zeitraum
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Voradresse # 231745233299952160
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: WOHNDAUER # 224170188040277772
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_WOHNT_DORT ==========================
+  id: 231745137347952159
+  identification: 
+    name: P110_WOHNT_DORT
+    type: Select List
+
+  label: 
+    label: wohnt &P110_KUNDENREFERENZ_NOM. dort
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Voradresse # 231745233299952160
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: JA | NEIN (1|0) # 224055591124963777
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ABW_VORWAHL =========================
+  id: 231745755644952165
+  identification: 
+    name: P110_ABW_VORWAHL
+    type: Text Field
+
+  label: 
+    label: Vorwahl
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ABW_RUFNUMMERNMITNAHME ==============
+  id: 231745876460952166
+  identification: 
+    name: P110_ABW_RUFNUMMERNMITNAHME
+    type: Select List
+
+  label: 
+    label: Rufnummer behalten?
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: Anbieterwechsel # 233146812734505882
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: JA | NEIN (1|0) # 224055591124963777
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ONT_PROVIDER ========================
+  id: 231745980484952167
+  identification: 
+    name: P110_ONT_PROVIDER
+    type: Select List
+
+  label: 
+    label: Glasfaser-Modem
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 110
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ONT_PROVIDER # 232069849353781513
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ":P110_TECHNOLOGIE = 'FTTH'"
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      JSON:productRequestontProvider
+      NONE|NETCOLOGNE|BYOD
+
+- # ====== Page Item: P110_PRODUKT =============================
+  id: 231746038462952168
+  identification: 
+    name: P110_PRODUKT
+    type: Select List
+
+  label: 
+    label: Produkt
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 80
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: PRODUKT # 234362109273527770
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_GEE_ROLLE ===========================
+  id: 231746161867952169
+  identification: 
+    name: P110_GEE_ROLLE
+    type: Select List
+
+  label: 
+    label: Wohnverhältnis
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 140
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-lg
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: GEE_ROLLE # 226276840356020082
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ROUTER_AUSWAHL ======================
+  id: 231746326497952170
+  identification: 
+    name: P110_ROUTER_AUSWAHL
+    type: Select List
+
+  label: 
+    label: Router-Auswahl
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT d, r FROM TABLE(
+          PCK_GLASCONTAINER.LOV(
+              piv_Name       => 'deviceCategory'
+             ,piv_parameter1 => CASE WHEN :P110_TECHNOLOGIE = 'FTTH BSA L2'
+                                     THEN 'TCOM' 
+                                     WHEN :P110_TECHNOLOGIE = 'FTTH BSA L2 DG' 
+                                     THEN 'DG' 
+                                     ELSE NULL
+                                END
+          )
+      )
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ":P110_TECHNOLOGIE != 'FTTH BSA L2' AND :P110_TECHNOLOGIE != 'FTTH BSA L2 DG'"
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ROUTER_EIGENTUM =====================
+  id: 231746421824952171
+  identification: 
+    name: P110_ROUTER_EIGENTUM
+    type: Select List
+
+  label: 
+    label: Router-Eigentum
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 100
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ROUTER_EIGENTUM # 226169709237313649
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ":P100_ROUTER_AUSWAHL NOT IN ('BYOD') "
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: BUY|RENT
+
+- # ====== Page Item: P110_CHECK_AGB ===========================
+  id: 232178963896026856
+  identification: 
+    name: P110_CHECK_AGB
+    type: Checkbox
+
+  label: 
+    label: Ich erteile diesen Auftrag ausschließlich gemäß den <br/><strong>Allgemeinen Geschäftsbedingungen</strong> der &P110_MANDANT_DISPLAY. <br/> GmbH und deren bei Auftragserteilung jeweils gültigen besonderen <br/> Geschäftsbedinungen / Leistungsbeschreibungen, <br/> Preislisten und Datenschutzhinweisen. Ich nehme zur <br/> Kenntnis, dass der gebuchte Tarif nur für Privatkunden <br/> gilt.
+    alignment: Left
+
+  settings: 
+    use-defaults: false
+    checked-value: 1
+    unchecked-value: 0
+
+  layout: 
+    sequence: 10
+    region: 'Einverständniserklärungen: ABG und Widerrufsrecht' # 232178871155026855
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 3
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  read-only: 
+    type: Item = Value
+    item: P110_SENT
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: "Werte: nicht angehakt = 'N', angehakt = 'Y' -- ///// ggf. ändern zu 0|1"
+
+- # ====== Page Item: P110_CHECK_WIDERRUF ======================
+  id: 232179079062026857
+  identification: 
+    name: P110_CHECK_WIDERRUF
+    type: Checkbox
+
+  label: 
+    label: Ich verlange ausdrücklich und stimme gleichzeitig zu, dass <br/> &P110_MANDANT_DISPLAY. mit der Realisierung des Hausanschlusses <br/> vor Ablauf der <strong>Widerrufsfrist</strong> beginnt. Ich weiß, dass <br/> mein Widerrufsrecht bei vollständiger Erfüllung des <br/> Vertrages erlischt.
+    alignment: Left
+
+  settings: 
+    use-defaults: false
+    checked-value: 1
+    unchecked-value: 0
+
+  layout: 
+    sequence: 20
+    region: 'Einverständniserklärungen: ABG und Widerrufsrecht' # 232178871155026855
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 3
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  read-only: 
+    type: Item = Value
+    item: P110_SENT
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: "Werte: nicht angehakt = 'N', angehakt = 'Y' -- ///// ggf. ändern zu 0|1"
+
+- # ====== Page Item: P110_READONLY ============================
+  id: 232179174084026858
+  identification: 
+    name: P110_READONLY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 21
+    region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Wenn 1 (Default), dann sind alle Items auf dieser Seite nur lesend.
+
+- # ====== Page Item: P110_VC_STATUS ===========================
+  id: 232179332965026860
+  identification: 
+    name: P110_VC_STATUS
+    type: Text Field
+
+  label: 
+    label: Ausbaustatus
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'JSON:expansionStatus'
+
+- # ====== Page Item: P110_IS_DUPLICATE ========================
+  id: 232179492917026861
+  identification: 
+    name: P110_IS_DUPLICATE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 210
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_KUNDENREFERENZ_VON ==================
+  id: 232180005962026866
+  identification: 
+    name: P110_KUNDENREFERENZ_VON
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'Dient nur zur visuellen Vervollständigung einiger Text an der Benutzeroberfläche: "... von der Kundin ...", "... vom Kunden ..."'
+
+- # ====== Page Item: P110_SHOW_HIDDEN_ITEMS ===================
+  id: 232181524253026881
+  identification: 
+    name: P110_SHOW_HIDDEN_ITEMS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 31
+    region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Wenn 1 (Default), dann sind alle Items auf dieser Seite nur lesend.
+
+- # ====== Page Item: P110_STEP ================================
+  id: 232181818137026884
+  identification: 
+    name: P110_STEP
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 1
+    region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Jeder Button "Zurück zur Auftragsübersicht" in einem der Steps 1-6 muss dieses Item mit dem entsprechenden Zahlenwert setzen. Dadurch weiß der Prozess "Daten aus Wizard übernehmen", dass er laufen muss und kann ggf. auf die konkrete Step-Nummer reagieren.
+
+- # ====== Page Item: P110_SENT ================================
+  id: 232182033033026887
+  identification: 
+    name: P110_SENT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 41
+    region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Wenn nicht NULL, dann wurde das Formular bereits abgeschickt. Steuert, ob der "Kostenpflichtig bestellen"-Button angezeigt wird.
+
+- # ====== Page Item: P110_KUNDENREFERENZ_AKK ==================
+  id: 238344339313922881
+  identification: 
+    name: P110_KUNDENREFERENZ_AKK
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'Dient nur zur visuellen Vervollständigung einiger Text an der Benutzeroberfläche: "... die Kundin ...", "... den Kunden ..."'
+
+- # ====== Page Item: P110_KUNDENREFERENZ_NOM ==================
+  id: 238344474460922882
+  identification: 
+    name: P110_KUNDENREFERENZ_NOM
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Kundendaten # 233146572131505880
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: 'Dient nur zur visuellen Vervollständigung einiger Text an der Benutzeroberfläche: "... die Kundin ...", "... der Kunde ..."'
+
+- # ====== Page Item: P110_VC_VERFUEGBARKEIT ===================
+  id: 243948455846875061
+  identification: 
+    name: P110_VC_VERFUEGBARKEIT
+    type: Text Field
+
+  label: 
+    label: Verfügbarkeit
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Installationsadresse # 232181646719026883
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'PCK_GLASCONTAINER_ORDER.fv_verfuegbarkeit_halbjahr(:P110_VC_AUSBAU_PLAN_TERMIN)'
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P110_READONLY
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Der Ausbau-Plan-Termin des Vermarktungsclusters wird in diesem Item als Halbjahres-Information angezeigt (anstatt des konkreten Datums, siehe @ticket FTTH-2829 Akzeptanzkriterien)
+
+buttons: 
+- # ====== Button: BTN_VORBESTELLUNG_ERFASSEN ==================
+  id: 227587573628059077
+  identification: 
+    button-name: BTN_VORBESTELLUNG_ERFASSEN
+    label: Kostenpflichtig bestellen
+
+  layout: 
+    sequence: 10
+    region: Buttons # 232179916757026865
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--success
+    - t-Button--iconLeft
+    - t-Button--gapTop
+    - t-Button--gapBottom
+    icon: fa-handshake-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: btnKostenPflichtigBestellen
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_SENT
+    value: 0
+
+- # ====== Button: BTN_WIZARD_STEP_1 ===========================
+  id: 227587693115059078
+  identification: 
+    button-name: BTN_WIZARD_STEP_1
+    label: Daten bearbeiten ...
+
+  layout: 
+    sequence: 10
+    region: Produkt-/Tarifauswahl # 233146357945505878
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-pencil-square-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::P100_STEP,P100_READY,P100_NEXT_STEP:1,1,'
+      page: 100 # Vorbestellung erfassen
+      values: 
+        p100_step: 1
+        p100_ready: 1
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: btnWizard1
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_SENT
+    value: 0
+
+  comments: 
+    comments: P100_NEXT_STEP muss auf NULL gesetzt werden, ansonsten würde Seite 100 beim Rendering gleich wieder zur Seite 110 zurückspringen.
+
+- # ====== Button: BTN_WIZARD_STEP_2 ===========================
+  id: 227587803108059079
+  identification: 
+    button-name: BTN_WIZARD_STEP_2
+    label: Daten bearbeiten ...
+
+  layout: 
+    sequence: 20
+    region: Kundendaten # 233146572131505880
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-pencil-square-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::P100_STEP,P100_READY,P100_NEXT_STEP:2,1,'
+      page: 100 # Vorbestellung erfassen
+      values: 
+        p100_step: 2
+        p100_ready: 1
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: btnWizard2
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      :P110_SENT = '0' AND
+      :P110_KUNDENSTATUS = 'N'
+
+  comments: 
+    comments: P100_NEXT_STEP muss auf NULL gesetzt werden, ansonsten würde Seite 100 beim Rendering gleich wieder zur Seite 110 zurückspringen.
+
+- # ====== Button: BTN_WIZARD_STEP_5_ABW =======================
+  id: 227587851525059080
+  identification: 
+    button-name: BTN_WIZARD_STEP_5_ABW
+    label: Daten bearbeiten ...
+
+  layout: 
+    sequence: 10
+    region: Anbieterwechsel # 233146812734505882
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-pencil-square-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::P100_STEP,P100_READY,P100_NEXT_STEP:5,ABW,'
+      page: 100 # Vorbestellung erfassen
+      values: 
+        p100_step: 5
+        p100_ready: ABW
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: btnWizard5ABW
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_SENT
+    value: 0
+
+  comments: 
+    comments: P100_NEXT_STEP muss auf NULL gesetzt werden, ansonsten würde Seite 100 beim Rendering gleich wieder zur Seite 110 zurückspringen.
+
+- # ====== Button: BTN_WIZARD_STEP_6 ===========================
+  id: 227587940123059081
+  identification: 
+    button-name: BTN_WIZARD_STEP_6
+    label: Daten bearbeiten ...
+
+  layout: 
+    sequence: 10
+    region: GEE (Grundstückseigentümer-Erklärung) # 233146972260505884
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-pencil-square-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::P100_STEP,P100_READY,P100_NEXT_STEP:6,1,'
+      page: 100 # Vorbestellung erfassen
+      values: 
+        p100_step: 6
+        p100_ready: 1
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: btnWizard6
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_SENT
+    value: 0
+
+  comments: 
+    comments: P100_NEXT_STEP muss auf NULL gesetzt werden, ansonsten würde Seite 100 beim Rendering gleich wieder zur Seite 110 zurückspringen.
+
+- # ====== Button: BTN_WIZARD_STEP_3 ===========================
+  id: 227588051428059082
+  identification: 
+    button-name: BTN_WIZARD_STEP_3
+    label: Daten bearbeiten ...
+
+  layout: 
+    sequence: 30
+    region: Kundendaten # 233146572131505880
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-pencil-square-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::P100_STEP,P100_READY,P100_NEXT_STEP:3,1,'
+      page: 100 # Vorbestellung erfassen
+      values: 
+        p100_step: 3
+        p100_ready: 1
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: btnWizard3
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      :P110_SENT = '0' AND
+      :P110_KUNDENSTATUS = 'B'
+
+  comments: 
+    comments: P100_NEXT_STEP muss auf NULL gesetzt werden, ansonsten würde Seite 100 beim Rendering gleich wieder zur Seite 110 zurückspringen.
+
+- # ====== Button: BTN_WIZARD_STEP_5_V =========================
+  id: 232178675128026853
+  identification: 
+    button-name: BTN_WIZARD_STEP_5_V
+    label: Daten bearbeiten ...
+
+  layout: 
+    sequence: 10
+    region: Voradresse # 231745233299952160
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-pencil-square-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::P100_STEP,P100_READY,P100_NEXT_STEP:5,VORADRESSE,'
+      page: 100 # Vorbestellung erfassen
+      values: 
+        p100_step: 5
+        p100_ready: VORADRESSE
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    static-id: btnWizard5V
+
+  server-side-condition: 
+    type: Item = Value
+    item: P110_SENT
+    value: 0
+
+  comments: 
+    comments: |
+      Postfix _V steht für "Voradresse".
+      P100_NEXT_STEP muss auf NULL gesetzt werden, ansonsten würde Seite 100 beim Rendering gleich wieder zur Seite 110 zurückspringen.
+
+- # ====== Button: BTN_TEST_STEP_7 =============================
+  id: 232180914206026875
+  identification: 
+    button-name: BTN_TEST_STEP_7
+    label: mit Test-Werten ausfüllen
+
+  layout: 
+    sequence: 250
+    region: Zusammenfassung der Vorbestellung # 227587510353059076
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-color-27
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  configuration: 
+    build-option: Commented Out # 234883986660092834
+
+validations: 
+- # ====== Validation: Checkbox AGB angehakt ===================
+  id: 232179556444026862
+  identification: 
+    name: Checkbox AGB angehakt
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Item = Value
+    item: P110_CHECK_AGB
+    value: 1
+    always-execute: false
+
+  error: 
+    error-message: Die AGB müssen bestätigt werden
+    display-location: Inline with Field and in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_VORBESTELLUNG_ERFASSEN # 227587573628059077
+
+- # ====== Validation: Checkbox Widerruf angehakt ==============
+  id: 232179687417026863
+  identification: 
+    name: Checkbox Widerruf angehakt
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Item = Value
+    item: P110_CHECK_WIDERRUF
+    value: 1
+    always-execute: false
+
+  error: 
+    error-message: Der Verzicht auf das Widerrufsrecht muss bestätigt werden
+    display-location: Inline with Field and in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_VORBESTELLUNG_ERFASSEN # 227587573628059077
+
+computations: 
+- # ====== Computation: P110_STEP ==============================
+  id: 232181987008026886
+  identification: 
+    item-name: P110_STEP
+
+  execution: 
+    sequence: 10
+    point: After Header
+
+  computation: 
+    type: Static Value
+
+  comments: 
+    comments: Setzt die Info zurück, die aus der Wizard-Seite 100 gesetzt wurde, damit der Prozess "Daten aus Wizard übernehmen" nicht erneut läuft
+
+processes: 
+- # ====== Process: Track Page (vor Bestellung) ================
+  id: 56535611187052122
+  identification: 
+    name: Track Page (vor Bestellung)
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P110_SCOPE := 99; -- "vorletzter Schritt: Bestellung absenden"
+      
+      PCK_GLASCONTAINER.track_page(
+          piv_app_id      => :APP_ID
+        , piv_app_page_id => :APP_PAGE_ID
+        , pin_app_session => :APP_SESSION
+        , piv_task        => :P100_TASK
+        , piv_scope       => :P110_SCOPE
+        , piv_extra       => 'KUNDENSTATUS='    || :P110_KUNDENSTATUS
+                          || ',DUBLETTEN_SIE='  || :P100_ANZAHL_DUBLETTEN_SIE
+                          || ',DUBLETTEN_POB='  || :P100_ANZAHL_DUBLETTEN_POB
+                          || ',KUNDENDATEN='    || COALESCE(:P100_DUPLICATE_SRC, 'INP')
+      );
+      
+      
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_VORBESTELLUNG_ERFASSEN # 227587573628059077
+
+  configuration: 
+    build-option: Tracking # 59477255672398458
+
+  comments: 
+    comments: '@ticket FTTH-4003: Neben dem üblichen "Track Page"-Aufruf werden hier weitere Informationen zum Bestellvorgang geloggt (Tabelle POB_TRACKING_EXTRA). Die Items werden zum Teil aus P100 ausgelesen, denn es lohnt sich nicht - für reine Logging-Zwecke - sie auf diesee Seite zu kopieren.'
+
+- # ====== Process: Vorbestellung erfassen =====================
+  id: 61954866697854117
+  identification: 
+    name: Vorbestellung erfassen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P110_UUID := 
+      PCK_GLASCONTAINER_ORDER.fn_vorbestellung_erfassen(
+           piv_app_user                       => :APP_USER
+          ,piv_vkz                            => :P110_VKZ
+          ,piv_kundenstatus                   => :P110_KUNDENSTATUS  -- 'N' | 'B'
+          ,piv_abw                            => :P110_ABW
+          ,piv_abw_anrede                     => :P110_ABW_ANREDE
+          ,piv_abw_anschlussinhaber           => :P110_ABW_ANSCHLUSSINHABER
+          ,piv_abw_nachname                   => :P110_ABW_NACHNAME
+          ,piv_abw_rufnummer                  => :P110_ABW_RUFNUMMER
+          ,piv_abw_vorname                    => :P110_ABW_VORNAME
+          ,piv_abw_vorwahl                    => :P110_ABW_VORWAHL
+          ,piv_aktion                         => :P110_AKTION
+          ,piv_bisheriger_anbieter            => :P110_ABW_BISHERIGER_ANBIETER
+          ,piv_gee_eigentuemer_einverstanden  => :P110_GEE_EIGENTUEMER_EINVERSTANDEN
+          ,piv_gee_firma                      => :P110_GEE_FIRMA
+          ,piv_gee_kontaktdaten_bekannt       => :P110_GEE_KONTAKTDATEN_BEKANNT
+          ,piv_gee_titel                      => :P110_GEE_TITEL
+          ,piv_haus_lfd_nr                    => :P110_HAUS_LFD_NR
+          ,piv_kosten_hausanschluss           => :P110_KOSTEN_HAUSANSCHLUSS
+          ,piv_kunde_anrede                   => :P110_KUNDE_ANREDE
+          ,piv_kunde_email                    => :P110_KUNDE_EMAIL
+          ,piv_kunde_firmenname               => :P110_KUNDE_FIRMENNAME
+          ,pid_kunde_geburtsdatum             => :P110_KUNDE_GEBURTSDATUM
+          ,piv_kunde_iban                     => :P110_KUNDE_IBAN -- nur für Neukunden
+          ,piv_kunde_kontoinhaber             => :P110_KUNDE_KONTOINHABER
+          ,piv_kunde_nachname                 => :P110_KUNDE_NACHNAME
+          ,piv_kundennummer                   => :P110_KUNDENNUMMER
+          ,piv_kunde_rufnummer                => :P110_KUNDE_RUFNUMMER
+          ,piv_kunde_sepamandat               => :P110_KUNDE_SEPAMANDAT
+          ,piv_kunde_soho                     => :P110_KUNDE_SOHO
+          ,piv_kunde_titel                    => :P110_KUNDE_TITEL
+          ,piv_kunde_vorname                  => :P110_KUNDE_VORNAME
+          ,piv_kunde_vorwahl                  => :P110_KUNDE_VORWAHL
+          ,piv_mandant                        => :P110_MANDANT
+          ,piv_mandant_display                => :P110_MANDANT_DISPLAY
+          -- neu in die Parameter aufgenommen:
+          ,piv_wohndauer                      => :P110_WOHNDAUER
+          ,piv_voradresse_plz                 => :P110_VORADRESSE_PLZ
+          ,piv_voradresse_ort                 => :P110_VORADRESSE_ORT
+          ,piv_voradresse_strasse             => :P110_VORADRESSE_STRASSE
+          ,piv_voradresse_hausnr              => :P110_VORADRESSE_HAUSNR
+          ,piv_installationsadresse_plz       => :P110_INSTALLATIONSADRESSE_PLZ
+          ,piv_installationsadresse_ort       => :P110_INSTALLATIONSADRESSE_ORT
+          ,piv_installationsadresse_strasse   => :P110_INSTALLATIONSADRESSE_STRASSE
+           -- @ticket FTTH-4158: Zusatz zusammen mit der Hausnummer senden und
+           -- im Package komplett ignorieren:
+           --,piv_installationsadresse_hausnr    => :P110_INSTALLATIONSADRESSE_HAUSNR
+           --,piv_installationsadresse_hausnr_zusatz  => :P110_INSTALLATIONSADRESSE_HAUSNR_ZUSATZ
+          ,piv_installationsadresse_hausnr    => trim(:P110_INSTALLATIONSADRESSE_HAUSNR || ' ' 
+                                                   || :P110_INSTALLATIONSADRESSE_HAUSNR_ZUSATZ)
+          ,piv_installationsadresse_hausnr_zusatz  => NULL
+          ,piv_abw_bisheriger_anbieter        => :P110_ABW_BISHERIGER_ANBIETER
+          ,piv_abw_rufnummernmitnahme         => :P110_ABW_RUFNUMMERNMITNAHME 
+       -- ,piv_abw_rufnummernmitnahme_laendervorwahl => NULL -- /////@klären +49 ? wird im Wizard nicht erfasst
+          ,piv_abw_rufnummernmitnahme_vorwahl        => :P110_ABW_VORWAHL
+          ,piv_abw_rufnummernmitnahme_rufnummer      => :P110_ABW_RUFNUMMER
+          ---
+          ,piv_gee_rolle                      => :P110_GEE_ROLLE
+          ,piv_gee_anzahl_we                  => :P110_GEE_ANZAHL_WE
+          ,piv_gee_rechtsform                 => :P110_GEE_RECHTSFORM
+          ,piv_gee_plz                        => :P110_GEE_PLZ    
+          ,piv_gee_ort                        => :P110_GEE_ORT
+          ,piv_gee_strasse                    => :P110_GEE_STRASSE    
+          ,piv_gee_hausnr                     => :P110_GEE_HAUSNR    
+          ,piv_gee_hausnr_zusatz              => :P110_GEE_HAUSNR_ZUSATZ    
+          ,piv_gee_land                       => :P110_GEE_LAND 
+          ,piv_gee_email                      => :P110_GEE_EMAIL      
+          ,piv_gee_vorwahl                    => :P110_GEE_VORWAHL     
+          ,piv_gee_rufnummer                  => :P110_GEE_RUFNUMMER
+          ,piv_gee_anrede                     => :P110_GEE_ANREDE
+          ,piv_gee_vorname                    => :P110_GEE_VORNAME    
+          ,piv_gee_nachname                   => :P110_GEE_NACHNAME    
+          ,pib_gee_informationspflicht        => CASE :P110_GEE_INFORMATIONSPFLICHT WHEN '1' THEN true END
+          ---
+          ,piv_produkt                        => :P110_PRODUKT
+          ,piv_router_auswahl                 => :P110_ROUTER_AUSWAHL
+          ,piv_router_eigentum                => :P110_ROUTER_EIGENTUM
+          ,piv_einrichtungsservice            => :P110_EINRICHTUNGSSERVICE
+          ,piv_ont_provider                   => :P110_ONT_PROVIDER
+          ---
+          ,pib_check_agb                      => CASE :P110_CHECK_AGB WHEN '1' THEN true END
+          ,pib_check_widerruf                 => CASE :P110_CHECK_WIDERRUF WHEN '1' THEN true END
+          --
+          ,piv_ausbaustatus                   => :P110_VC_STATUS
+          ,pid_ausbau_plan_termin             => :P110_VC_AUSBAU_PLAN_TERMIN
+          --
+          ,pib_is_duplicate                   => CASE WHEN :P100_IS_DUPLICATE IS NOT NULL THEN true END
+      );
+      
+      :P110_SENT := 1;
+      
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Der Auftrag wurde erfolgreich erfasst.
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_VORBESTELLUNG_ERFASSEN # 227587573628059077
+    type: Item = Value
+    item: P110_SENT
+    value: 0
+
+  comments: 
+    comments: Wird ausgeführt, wenn der Agent auf "Kostenpflichtig bestellen" klickt
+
+- # ====== Process: Track Page =================================
+  id: 68200284835631810
+  identification: 
+    name: Track Page
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      PCK_GLASCONTAINER.track_page(
+          piv_app_id      => :APP_ID
+        , piv_app_page_id => :APP_PAGE_ID
+        , pin_app_session => :APP_SESSION
+        , piv_request     => :REQUEST
+        , piv_task        => :P100_TASK
+        , piv_scope       => COALESCE(:P110_SCOPE, 7) -- ist nach erfolreicher Bestellung wieder NULL
+        , piv_extra       => 'KUNDENSTATUS='    || :P110_KUNDENSTATUS
+                          || ',DUBLETTEN_SIE='  || :P100_ANZAHL_DUBLETTEN_SIE
+                          || ',DUBLETTEN_POB='  || :P100_ANZAHL_DUBLETTEN_POB
+                          || ',KUNDENDATEN='    || COALESCE(:P100_DUPLICATE_SRC, 'INP')  
+                          || ',VKZ='            || :P110_VKZ
+      );
+
+  execution: 
+    sequence: 40
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Session States im Wizard zurücksetzen ======
+  id: 68200575640631813
+  identification: 
+    name: Session States im Wizard zurücksetzen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      -- Lesender Rücksprung zu irgendeiner Wizard-Seite oder zur Suchseite muss verhindert werden:
+      APEX_UTIL.CLEAR_PAGE_CACHE(100);
+      APEX_UTIL.CLEAR_PAGE_CACHE(14);
+
+  execution: 
+    sequence: 60
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_VORBESTELLUNG_ERFASSEN # 227587573628059077
+
+  comments: 
+    comments: Nach erfolgter Vorbestellung darf kein Rücksprung zu einer Wizard-Seite möglich sein, auf der sich ggf. noch (abgelaufene) Daten befinden. Dieser Prozess darf erst nach "Track Page" laufen, denn sonst wäre P100_TASK nicht mehr verfügbar.
+
+- # ====== Process: Track Page (nach Bestellung) ===============
+  id: 68200706350631815
+  identification: 
+    name: Track Page (nach Bestellung)
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P110_SCOPE := 100; -- "letzter Schritt: Bestellung erfolgreich"
+      
+      PCK_GLASCONTAINER.track_page(
+          piv_app_id      => :APP_ID
+        , piv_app_page_id => :APP_PAGE_ID
+        , pin_app_session => :APP_SESSION
+        , piv_task        => :P100_TASK
+        , piv_scope       => :P110_SCOPE
+        , piv_extra       => 'KUNDENSTATUS='    || :P110_KUNDENSTATUS
+                          || ',DUBLETTEN_SIE='  || :P100_ANZAHL_DUBLETTEN_SIE
+                          || ',DUBLETTEN_POB='  || :P100_ANZAHL_DUBLETTEN_POB
+                          || ',KUNDENDATEN='    || COALESCE(:P100_DUPLICATE_SRC, 'INP')
+      );
+      
+      
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_VORBESTELLUNG_ERFASSEN # 227587573628059077
+
+  configuration: 
+    build-option: Tracking # 59477255672398458
+
+  comments: 
+    comments: '@ticket FTTH-4003: Neben dem üblichen "Track Page"-Aufruf werden hier weitere Informationen zum Bestellvorgang geloggt (Tabelle POB_TRACKING_EXTRA). Die Items werden zum Teil aus P100 ausgelesen, denn es lohnt sich nicht - für reine Logging-Zwecke - sie auf diesee Seite zu kopieren.'
+
+- # ====== Process: Daten transformieren =======================
+  id: 232179258726026859
+  identification: 
+    name: Daten transformieren
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |2
+        PCK_GLASCONTAINER_ORDER.P_TRANSFORMATION_VORBESTELLUNG (
+           piov_vkz                                   => :P110_VKZ
+          ,piov_kundenstatus                          => :P110_KUNDENSTATUS
+          ,piov_abw                                   => :P110_ABW 
+          ,piov_abw_anrede                            => :P110_ABW_ANREDE
+          ,piov_abw_anschlussinhaber                  => :P110_ABW_ANSCHLUSSINHABER
+          ,piov_abw_nachname                          => :P110_ABW_NACHNAME
+          ,piov_abw_rufnummer                         => :P110_ABW_RUFNUMMER
+          ,piov_abw_vorname                           => :P110_ABW_VORNAME
+          ,piov_abw_vorwahl                           => :P110_ABW_VORWAHL
+          ,piov_aktion                                => :P110_AKTION
+          ,piov_bisheriger_anbieter                   => :P110_ABW_BISHERIGER_ANBIETER
+          ,piov_gee_eigentuemer_einverstanden         => :P110_GEE_EIGENTUEMER_EINVERSTANDEN
+          ,piov_gee_firma                             => :P110_GEE_FIRMA
+          ,piov_gee_kontaktdaten_bekannt              => :P110_GEE_KONTAKTDATEN_BEKANNT
+          ,piov_gee_titel                             => :P110_GEE_TITEL
+          ,piov_haus_lfd_nr                           => :P110_HAUS_LFD_NR
+          ,piov_kosten_hausanschluss                  => :P110_KOSTEN_HAUSANSCHLUSS
+          ,piov_kunde_anrede                          => :P110_KUNDE_ANREDE
+          ,piov_kunde_email                           => :P110_KUNDE_EMAIL
+          ,piov_kunde_firmenname                      => :P110_KUNDE_FIRMENNAME
+          ,piod_kunde_geburtsdatum                    => :P110_KUNDE_GEBURTSDATUM
+          ,piov_kunde_iban                            => :P110_KUNDE_IBAN
+          ,piov_kunde_kontoinhaber                    => :P110_KUNDE_KONTOINHABER
+          ,piov_kunde_nachname                        => :P110_KUNDE_NACHNAME
+          ,piov_kundennummer                          => :P110_KUNDENNUMMER
+          ,piov_kunde_rufnummer                       => :P110_KUNDE_RUFNUMMER
+          ,piov_kunde_sepamandat                      => :P110_KUNDE_SEPAMANDAT
+          ,piov_kunde_soho                            => :P110_KUNDE_SOHO
+          ,piov_kunde_titel                           => :P110_KUNDE_TITEL
+          ,piov_kunde_vorname                         => :P110_KUNDE_VORNAME
+          ,piov_kunde_vorwahl                         => :P110_KUNDE_VORWAHL
+          ,piov_mandant                               => :P110_MANDANT
+          ,piov_mandant_display                       => :P110_MANDANT_DISPLAY
+          ,piov_wohnt_dort                            => :P110_WOHNT_DORT
+          ,piov_wohndauer                             => :P110_WOHNDAUER
+          ,piov_voradresse_plz                        => :P110_VORADRESSE_PLZ
+          ,piov_voradresse_ort                        => :P110_VORADRESSE_ORT
+          ,piov_voradresse_strasse                    => :P110_VORADRESSE_STRASSE
+          ,piov_voradresse_hausnr                     => :P110_VORADRESSE_HAUSNR
+          ,piov_installationsadresse_plz              => :P110_INSTALLATIONSADRESSE_PLZ
+          ,piov_installationsadresse_ort              => :P110_INSTALLATIONSADRESSE_ORT
+          ,piov_installationsadresse_strasse          => :P110_INSTALLATIONSADRESSE_STRASSE
+          ,piov_installationsadresse_hausnr           => :P110_INSTALLATIONSADRESSE_HAUSNR
+          ,piov_installationsadresse_komplett         => :P110_INSTALLATIONSADRESSE_KOMPLETT
+          ,piov_abw_bisheriger_anbieter               => :P110_ABW_BISHERIGER_ANBIETER
+          ,piov_abw_rufnummernmitnahme                => :P110_ABW_RUFNUMMERNMITNAHME
+        --,piov_abw_rufnummernmitnahme_laendervorwahl => :P110_ABW_VORWAHL
+          ,piov_abw_rufnummernmitnahme_vorwahl        => :P110_ABW_VORWAHL
+          ,piov_abw_rufnummernmitnahme_rufnummer      => :P110_ABW_RUFNUMMER
+          ,piov_gee_rolle                             => :P110_GEE_ROLLE
+          ,piov_gee_anzahl_we                         => :P110_GEE_ANZAHL_WE
+          ,piov_gee_rechtsform                        => :P110_GEE_RECHTSFORM
+          ,piov_gee_plz                               => :P110_GEE_PLZ  
+          ,piov_gee_ort                               => :P110_GEE_ORT
+          ,piov_gee_strasse                           => :P110_GEE_STRASSE
+          ,piov_gee_hausnr                            => :P110_GEE_HAUSNR
+          ,piov_gee_hausnr_zusatz                     => :P110_GEE_HAUSNR_ZUSATZ
+          ,piov_gee_land                              => :P110_GEE_LAND
+          ,piov_gee_email                             => :P110_GEE_EMAIL
+          ,piov_gee_vorwahl                           => :P110_GEE_VORWAHL
+          ,piov_gee_rufnummer                         => :P110_GEE_RUFNUMMER
+          ,piov_gee_anrede                            => :P110_GEE_ANREDE
+          ,piov_gee_vorname                           => :P110_GEE_VORNAME
+          ,piov_gee_nachname                          => :P110_GEE_NACHNAME
+          ,piov_gee_informationspflicht               => :P110_GEE_INFORMATIONSPFLICHT
+          ,piov_produkt                               => :P110_PRODUKT
+          ,piov_router_auswahl                        => :P110_ROUTER_AUSWAHL
+          ,piov_router_eigentum                       => :P110_ROUTER_EIGENTUM
+          ,piov_einrichtungsservice                   => :P110_EINRICHTUNGSSERVICE
+          ,piov_ont_provider                          => :P110_ONT_PROVIDER       
+          ,piov_check_agb                             => :P110_CHECK_AGB
+          ,piov_check_widerruf                        => :P110_CHECK_WIDERRUF   
+          ,piov_vc_status                             => :P110_VC_STATUS
+          ,piod_vc_ausbau_plan_termin                 => :P110_VC_AUSBAU_PLAN_TERMIN  
+          ,piov_is_duplicate                          => :P110_IS_DUPLICATE
+        );
+      
+        --- :P110_READONLY := 1; -- ///// Dadurch erhalten alle Items auf dieser Seite "Read Only"-Status, so dass man nichts eintragen kann
+        --- ///// leider beschwert sich dann APEX über eine Verletzung des Session-Zustands => ausprobieren, woran das genau liegt
+      
+        --- ////implementieren: 
+        --- ehemaliger Prozess-Stub "Daten für Bestandskunden bereinigen"^:
+        --- Durch eventuelle Test-Eingaben (oder tatsächlich durch Umschalten der Eingaben) können ggf. Fragmente der Maske 5 ("Anbieterwechsel") existieren, diese werden hier für Bestandskunden gelöscht.
+      
+        -- stattdessen in der Source des Items
+        -- :P110_VC_VERFUEGBARKEIT := PCK_GLASCONTAINER_ORDER.fv_verfuegbarkeit_halbjahr(:P110_VC_AUSBAU_PLAN_TERMIN);
+        :P110_VC_VERFUEGBARKEIT := :P100_AUSBAU_PLAN_TERMIN;--////// und die Funktion darüber?
+
+  execution: 
+    sequence: 30
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P110_STEP
+
+  comments: 
+    comments: Dieser Prozess stellt sicher, dass alle eventuell vorhandenen Artefakte aus den Erfassungsmasken fachlich bereinigt werden, so dass beim Absenden des Auftrags später keine Plausi-Prüfungen verletzt werden. Solche Artefakte können entstehen, wenn ausgeblendete Felder zuvor ausgefüllt wurden, anschließend aber (z.B. nach dem Umschalten einer Checkbox) nicht mehr relevant sind.
+
+- # ====== Process: BTN_TEST_STEP_7 ============================
+  id: 232180776369026874
+  identification: 
+    name: BTN_TEST_STEP_7
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P110_CHECK_AGB := 1;
+      :P110_CHECK_WIDERRUF := 1;
+      
+      PCK_GLASCONTAINER_ORDER.STEP_7_AUSFUELLEN (
+              piv_profilname                           => NULL
+            , piov_haus_lfd_nr                         => :P110_HAUS_LFD_NR
+            , piov_kundenstatus                        => :P110_kundenstatus
+            --, piov_installationsadresse_strasse        => :P110_installationsadresse_strasse          gelöscht wegen FTTH-4622
+            --, piov_installationsadresse_hausnr         => :P110_installationsadresse_hausnr           gelöscht wegen FTTH-4622
+            --, piov_installationsadresse_hausnr_zusatz  => :P110_installationsadresse_hausnr_zusatz    gelöscht wegen FTTH-4622
+            --, piov_installationsadresse_plz            => :P110_installationsadresse_plz              gelöscht wegen FTTH-4622
+            --, piov_installationsadresse_ort            => :P110_installationsadresse_ort              gelöscht wegen FTTH-4622
+            , piov_installationsadresse_komplett       => :P110_installationsadresse_komplett
+            , piov_vc_status                           => :P110_VC_STATUS
+            , piod_vc_ausbau_plan_termin               => :P110_VC_AUSBAU_PLAN_TERMIN
+            -- Step 1:
+            , piov_aktion                              => :P110_aktion
+            , piov_vkz                                 => :P110_vkz
+            , piov_mandant                             => :P110_mandant
+            , piov_produkt                             => :P110_produkt
+            , piov_router_auswahl                      => :P110_router_auswahl
+            , piov_router_eigentum                     => :P110_router_eigentum
+            , piov_ont_provider                        => :P110_ont_provider
+            , piov_einrichtungsservice                 => :P110_einrichtungsservice
+            , piov_gee_rolle                           => :P110_gee_rolle
+            , piov_gee_anzahl_we                       => :P110_gee_anzahl_we
+            -- Step 2:
+            , piov_kunde_anrede                        => :P110_kunde_anrede
+            , piov_kunde_titel                         => :P110_kunde_titel
+            , piov_kunde_vorname                       => :P110_kunde_vorname
+            , piov_kunde_nachname                      => :P110_kunde_nachname
+            , piod_kunde_geburtsdatum                  => :P110_kunde_geburtsdatum
+            , piov_kunde_soho                          => :P110_kunde_soho
+            , piov_kunde_firmenname                    => :P110_kunde_firmenname
+            , piov_kunde_email                         => :P110_kunde_email
+            , piov_kunde_vorwahl                       => :P110_kunde_vorwahl
+            , piov_kunde_rufnummer                     => :P110_kunde_rufnummer
+            , piov_kunde_iban                          => :P110_kunde_iban
+            , piov_kunde_kontoinhaber                  => :P110_kunde_kontoinhaber
+            , piov_kunde_sepamandat                    => :P110_kunde_sepamandat
+            -- Step 3:
+            , piov_kundennummer                        => :P110_kundennummer
+            -- Step 5:
+            , piov_wohnt_dort                          => :P110_wohnt_dort
+            , piov_wohndauer                           => :P110_wohndauer
+            , pion_abw                                 => :P110_abw
+            , piov_abw_bisheriger_anbieter             => :P110_abw_bisheriger_anbieter
+            , pion_abw_rufnummernmitnahme              => :P110_abw_rufnummernmitnahme
+            , piov_abw_vorwahl                         => :P110_abw_vorwahl
+            , piov_abw_rufnummer                       => :P110_abw_rufnummer
+            , piov_abw_anschlussinhaber                => :P110_abw_anschlussinhaber
+            , piov_abw_anrede                          => :P110_abw_anrede
+            , piov_abw_vorname                         => :P110_abw_vorname
+            , piov_abw_nachname                        => :P110_abw_nachname
+            , piov_voradresse_plz                      => :P110_voradresse_plz
+            , piov_voradresse_ort                      => :P110_voradresse_ort
+            , piov_voradresse_strasse                  => :P110_voradresse_strasse
+            , piov_voradresse_hausnr                   => :P110_voradresse_hausnr
+            -- Step 6:
+            , piov_gee_kontaktdaten_bekannt            => :P110_gee_kontaktdaten_bekannt
+            , piov_gee_rechtsform                      => :P110_gee_rechtsform
+            , piov_gee_firma                           => :P110_gee_firma
+            , piov_gee_anrede                          => :P110_gee_anrede
+            , piov_gee_titel                           => :P110_gee_titel
+            , piov_gee_vorname                         => :P110_gee_vorname
+            , piov_gee_nachname                        => :P110_gee_nachname
+            , piov_gee_land                            => :P110_gee_land
+            , piov_gee_plz                             => :P110_gee_plz
+            , piov_gee_ort                             => :P110_gee_ort
+            , piov_gee_strasse                         => :P110_gee_strasse
+            , piov_gee_hausnr                          => :P110_gee_hausnr
+            , piov_gee_hausnr_zusatz                   => :P110_gee_hausnr_zusatz
+            , piov_gee_email                           => :P110_gee_email
+            , piov_gee_vorwahl                         => :P110_gee_vorwahl
+            , piov_gee_rufnummer                       => :P110_gee_rufnummer
+            , piov_gee_informationspflicht             => :P110_gee_informationspflicht
+      );
+      
+      :P110_SENT := 0; -- zurücksetzen: vielleicht möchte man den Auftrag mit leichten Änderungen nochmal abschicken.
+
+  execution: 
+    sequence: 70
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_TEST_STEP_7 # 232180914206026875
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+- # ====== Process: Daten aus Wizard übernehmen ================
+  id: 233147066197505885
+  identification: 
+    name: Daten aus Wizard übernehmen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P110_READONLY := 1;           -- 0 erlaubt die Zuweisung von Werten, darf in PROD nur auf 1 stehen
+      :P110_SHOW_HIDDEN_ITEMS  := 0; -- nur für Entwicklung relevant, darf in PROD nur auf 1 stehen, @deprecated
+      :P110_SENT := 0;
+      :P110_MANDANT := :P100_MANDANT;
+      :P110_MANDANT_DISPLAY := :P100_MANDANT_DISPLAY;
+      
+      :P110_ABW := :P100_ABW;
+      :P110_ABW_ANREDE := :P100_ABW_ANREDE;
+      :P110_ABW_ANSCHLUSSINHABER := :P100_ABW_ANSCHLUSSINHABER;
+      :P110_ABW_NACHNAME := :P100_ABW_NACHNAME;
+      :P110_ABW_RUFNUMMER := :P100_ABW_RUFNUMMER;
+      :P110_ABW_VORNAME := :P100_ABW_VORNAME;
+      :P110_ABW_VORWAHL := :P100_ABW_VORWAHL;
+      :P110_AKTION := :P100_AKTION;
+      
+      :P110_GEE_ANZAHL_WE := :P100_ANZAHL_WE;
+      :P110_ABW_BISHERIGER_ANBIETER := :P100_BISHERIGER_ANBIETER;
+      :P110_EINRICHTUNGSSERVICE := :P100_EINRICHTUNGSSERVICE;
+      :P110_GEE_ANREDE := :P100_GEE_ANREDE;
+      :P110_GEE_EIGENTUEMER_EINVERSTANDEN := :P100_GEE_EIGENTUEMER_EINVERSTANDEN;
+      :P110_GEE_EMAIL := :P100_GEE_EMAIL;
+      :P110_GEE_FIRMA := :P100_GEE_FIRMA;
+      :P110_GEE_HAUSNR := :P100_GEE_HAUSNR;
+      :P110_GEE_HAUSNR_ZUSATZ := :P100_GEE_HAUSNR_ZUSATZ;
+      :P110_GEE_INFORMATIONSPFLICHT := :P100_GEE_INFORMATIONSPFLICHT;
+      :P110_GEE_KONTAKTDATEN_BEKANNT := :P100_GEE_KONTAKTDATEN_BEKANNT;
+      :P110_GEE_LAND := :P100_GEE_LAND;
+      :P110_GEE_NACHNAME := :P100_GEE_NACHNAME;
+      :P110_GEE_ORT := :P100_GEE_ORT;
+      :P110_GEE_PLZ := :P100_GEE_PLZ;
+      :P110_GEE_RECHTSFORM := :P100_GEE_RECHTSFORM;
+      :P110_GEE_RUFNUMMER := :P100_GEE_RUFNUMMER;
+      :P110_GEE_STRASSE := :P100_GEE_STRASSE;
+      :P110_GEE_TITEL := :P100_GEE_TITEL;
+      :P110_GEE_VORNAME := :P100_GEE_VORNAME;
+      :P110_GEE_VORWAHL := :P100_GEE_VORWAHL;
+      
+      :P110_HAUS_LFD_NR := :P100_HAUS_LFD_NR;
+      :P110_KOSTEN_HAUSANSCHLUSS := :P100_KOSTEN_HAUSANSCHLUSS;
+      
+      
+      
+      :P110_KUNDENSTATUS := :P100_KUNDENSTATUS;
+      
+      :P110_VC_STATUS := :P100_VC_STATUS;
+      :P110_VC_AUSBAU_PLAN_TERMIN := :P100_AUSBAU_PLAN_TERMIN; -- ////// konsolidieren @ticket FTTH-4221
+      :P110_VC_BEZEICHNUNG := :P100_VC_BEZEICHNUNG;
+      :P110_VC_KUNDENAUFTRAG_ERFORDERLICH := :P100_VC_KUNDENAUFTRAG_ERFORDERLICH;
+      :P110_TECHNOLOGIE := :P100_TECHNOLOGIE;
+      :P110_WHOLEBUY := :P100_WHOLEBUY;
+      
+      :P110_VKZ := :P100_VKZ;
+      :P110_VORADRESSE_HAUSNR := :P100_VORADRESSE_HAUSNR;
+      :P110_VORADRESSE_ORT := :P100_VORADRESSE_ORT;
+      :P110_VORADRESSE_PLZ := :P100_VORADRESSE_PLZ;
+      :P110_VORADRESSE_STRASSE := :P100_VORADRESSE_STRASSE;
+      :P110_WOHNDAUER := :P100_WOHNDAUER;
+      :P110_WOHNT_DORT := :P100_WOHNT_DORT;
+      
+      :P110_ONT_PROVIDER := NVL(:P100_ONT_PROVIDER, 'NONE');
+      :P110_PRODUKT := :P100_PRODUKT;
+      :P110_GEE_ROLLE := :P100_ROLLE;
+      :P110_ROUTER_AUSWAHL := :P100_ROUTER_AUSWAHL;
+      :P110_ROUTER_EIGENTUM := :P100_ROUTER_EIGENTUM;
+      :P110_ABW_RUFNUMMERNMITNAHME := :P100_RUFNUMMERNMITNAHME;
+      
+      -- @ticket FTTH-4158: Zusatz-Buchstabe nun im Hausnummern-Feld konkatenieren:
+      :P110_INSTALLATIONSADRESSE_HAUSNR := TRIM(:P100_STRAV_HAUSNR || ' ' || :P100_STRAV_HAUSNR_ZUSATZ); 
+      -- Somit ist dieses Feld nun obsolet und kann nach ausreichender Bewährungszeit
+      -- komplett entfernt werden:
+      -- :P110_INSTALLATIONSADRESSE_HAUSNR_ZUSATZ := :P100_STRAV_HAUSNR_ZUSATZ;
+      
+      :P110_INSTALLATIONSADRESSE_ORT := :P100_STRAV_ORT;
+      :P110_INSTALLATIONSADRESSE_PLZ := :P100_STRAV_PLZ;                                                   
+      :P110_INSTALLATIONSADRESSE_STRASSE := :P100_STRAV_STRASSE; 
+      :P110_INSTALLATIONSADRESSE_KOMPLETT := :P100_STRAV_ADRESSE_KOMPLETT;
+      
+      -- Neukunde oder Bestandskunde:
+      CASE :P110_KUNDENSTATUS
+          WHEN 'N' THEN -- Neukunde
+              :P110_KUNDENNUMMER := NULL;
+              :P110_KUNDE_ANREDE := :P100_NEUKUNDE_ANREDE;
+              :P110_KUNDE_EMAIL := :P100_NEUKUNDE_EMAIL;
+              :P110_KUNDE_FIRMENNAME := :P100_NEUKUNDE_FIRMENNAME;
+              :P110_KUNDE_GEBURTSDATUM := :P100_NEUKUNDE_GEBURTSDATUM;
+              :P110_KUNDE_IBAN := :P100_NEUKUNDE_IBAN;
+              :P110_KUNDE_KONTOINHABER := :P100_NEUKUNDE_KONTOINHABER;
+              :P110_KUNDE_NACHNAME := :P100_NEUKUNDE_NACHNAME;
+              :P110_KUNDE_RUFNUMMER := :P100_NEUKUNDE_RUFNUMMER;
+              :P110_KUNDE_SEPAMANDAT := :P100_NEUKUNDE_SEPAMANDAT;
+              :P110_KUNDE_SOHO := :P100_NEUKUNDE_SOHO;
+              :P110_KUNDE_TITEL := :P100_NEUKUNDE_TITEL;
+              :P110_KUNDE_VORNAME := :P100_NEUKUNDE_VORNAME;
+              :P110_KUNDE_VORWAHL := :P100_NEUKUNDE_VORWAHL;
+      
+          WHEN 'B' THEN -- Bestandskunde
+              :P110_KUNDENNUMMER := :P100_SIEBEL_KUNDENNUMMER;
+              --////@klären: wozu dient ggf. die P100_SIEBEL_GLOBAL_ID, die hier übernommen wird
+              :P110_KUNDE_ANREDE := :P100_SIEBEL_ANREDE;
+              :P110_KUNDE_EMAIL := :P100_SIEBEL_AP_EMAIL;
+              :P110_KUNDE_RUFNUMMER := :P100_SIEBEL_AP_MOBIL_RUFNUMMER;
+              :P110_KUNDE_VORWAHL := :P100_SIEBEL_AP_MOBIL_VORWAHL;
+              :P110_KUNDE_FIRMENNAME := :P100_SIEBEL_FIRMENNAME;
+              :P110_KUNDE_GEBURTSDATUM := :P100_SIEBEL_GEBURTSDATUM;
+              :P110_KUNDE_IBAN := NULL; -- ////@klären: tatsächlich keine alternative IBAN für Bestandskunden möglich/nötig?
+              :P110_KUNDE_KONTOINHABER := NULL; -- ////@klären: tatsächlich keine alternative IBAN für Bestandskunden möglich/nötig?
+              :P110_KUNDENNUMMER := :P100_SIEBEL_KUNDENNUMMER;
+              :P110_KUNDE_NACHNAME := :P100_SIEBEL_NACHNAME;
+              :P110_KUNDE_TITEL := :P100_SIEBEL_TITEL;
+              :P110_KUNDE_VORNAME := :P100_SIEBEL_VORNAME;
+          ELSE 
+              RAISE_APPLICATION_ERROR(-20999, 'Kundenstatus ' || :P100_KUNDENSTATUS || ' nicht zulässig');
+      END CASE;
+      
+      CASE :P110_KUNDE_ANREDE
+           WHEN 'MISS' THEN
+               :P110_KUNDENREFERENZ_VON := 'von der Kundin';
+               :P110_KUNDENREFERENZ_NOM := 'die Kundin';
+               :P110_KUNDENREFERENZ_AKK := 'die Kundin';
+           WHEN 'MISTER' THEN
+               :P110_KUNDENREFERENZ_VON := 'vom Kunden';
+               :P110_KUNDENREFERENZ_NOM := 'der Kunde';
+               :P110_KUNDENREFERENZ_AKK := 'den Kunden';
+           ELSE
+              NULL;
+      END CASE;
+
+  execution: 
+    sequence: 20
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P110_STEP
+
+  comments: 
+    comments: Der Prozess holt sich alle relevanten Einträge aus den Seiten 1 bis 6 des Wizards, damit hier eine entkoppelte Bestell-Übersicht angezeigt werden kann. Damit beim direkten Aufruf aus der Entwicklungsumgebung kein ORA-Fehler geworfen wird, fragt der Prozess die Befüllung des Items P100_KUNDENSTATUS der aufrufenden Wizard-Seite 100 ab. Zusätzlich werden hier bestehende Namensungleichheiten aufgelöst, die mit der Zeit zwischen den Seite 100 und 110 aufgelöst werden sollen (damit man die Zusammenhänge leichter nachvollziehen kann, Beispiel P100_RUFNUMMERMITNAHME heißt P110_ABW_RUFNUMMERNMITNAHME)
+
+branches: 
+- # ====== Branch: Gehe zum Auftrag ============================
+  id: 61954913942854118
+  identification: 
+    name: Gehe zum Auftrag
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:20:&SESSION.:VORBESTELLUNG_GLASCONTAINER:&DEBUG.::P20_UUID:&P110_UUID.&success_msg=#SUCCESS_MSG#'
+      page: 20 # Auftragsdaten
+      request: VORBESTELLUNG_GLASCONTAINER
+      values: 
+        p20_uuid: '&P110_UUID.'
+
+  server-side-condition: 
+    when-button-pressed: BTN_VORBESTELLUNG_ERFASSEN # 227587573628059077
+
+  comments: 
+    comments: '@ticket FTTH-4464: Springt zum Auftrag'
+

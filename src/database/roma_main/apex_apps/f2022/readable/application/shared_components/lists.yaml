@@ -1,0 +1,1065 @@
+---
+- # ====== List: Wizard "Vorbestellung" ========================
+  id: 219504533178318224
+  identification: 
+    name: Wizard "Vorbestellung"
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Produkt/Tarif ================================
+    id: 219504736941318227
+    label: 
+      label: Produkt/Tarif
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ':P100_STEP = 1'
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
+        page: 100 # Vorbestellung erfassen
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Kundendaten ==================================
+    id: 219505759818328315
+    label: 
+      label: Kundendaten
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: ":P100_STEP IN ('2', '3')"
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
+        page: 100 # Vorbestellung erfassen
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Dublettenprüfung =============================
+    id: 219506822865336099
+    label: 
+      label: Dublettenprüfung
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ':P100_STEP = 4'
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:100:&SESSION.:STEP-4:&DEBUG.::::'
+        page: 100 # Vorbestellung erfassen
+        request: STEP-4
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Anbieterwechsel ==============================
+    id: 219507263128338201
+    label: 
+      label: Anbieterwechsel
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ':P100_STEP = 5'
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
+        page: 100 # Vorbestellung erfassen
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item = Value
+      item: P100_KUNDENSTATUS
+      value: N
+
+  - # ====== Entry: GEE ==========================================
+    id: 219508028474340819
+    label: 
+      label: GEE
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ':P100_STEP = 6'
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
+        page: 100 # Vorbestellung erfassen
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: |
+        :P100_TECHNOLOGIE NOT IN ('FTTH BSA L2', 'FTTH BSA L2 DG')
+        OR
+        (:P100_TECHNOLOGIE IN ('FTTH BSA L2', 'FTTH BSA L2 DG') AND
+        (:P100_ROLLE != 'OWNER' AND :P100_EIGENTUEMERDATEN_NOTWENDIG = 1))
+
+  - # ====== Entry: Bestellübersicht =============================
+    id: 219508581593343546
+    label: 
+      label: Bestellübersicht
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Expression
+      language: SQL
+      sql-expression: ':P100_STEP = 7'
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
+        page: 100 # Vorbestellung erfassen
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Glascontainer Navigation Menu =================
+  id: 234885061298092840
+  identification: 
+    name: Glascontainer Navigation Menu
+
+  subscription: 
+    version-number: 4097471019169
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Tracking der Vorbestellungen =================
+    id: 61246262899145608
+    label: 
+      label: Tracking der Vorbestellungen
+
+    icon: 
+      image/icon-css-classes: fa-area-chart
+
+    layout: 
+      sequence: 951
+      parent-entry: Logs # 214699010153403950
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 10056
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10056:&SESSION.::&DEBUG.:10056:::'
+        page: 10056 # Order-Tracking
+        clear-cache: 10056
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  - # ====== Entry: Fehlende Adressen ============================
+    id: 64415053593192922
+    label: 
+      label: Fehlende Adressen
+
+    icon: 
+      image/icon-css-classes: fa-map-marker-slash-o
+
+    layout: 
+      sequence: 961
+      parent-entry: Logs # 214699010153403950
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 10057
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10057:&APP_SESSION.::&DEBUG.:::'
+        page: 10057 # Fehlende Adressen
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Logs =========================================
+    id: 214699010153403950
+    label: 
+      label: Logs
+
+    icon: 
+      image/icon-css-classes: fa-clock-o
+
+    layout: 
+      sequence: 120
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 10000
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10000:&SESSION.::&DEBUG.::::'
+        page: 10000 # Logs
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  - # ====== Entry: Einstellungen ================================
+    id: 228980115460347447
+    label: 
+      label: Einstellungen
+
+    icon: 
+      image/icon-css-classes: fa-gear
+
+    layout: 
+      sequence: 110
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 10100
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10100:&SESSION.::&DEBUG.::::'
+        page: 10100 # Einstellungen
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  - # ====== Entry: Start ========================================
+    id: 235081240337092984
+    label: 
+      label: Start
+
+    icon: 
+      image/icon-css-classes: fa-home
+
+    layout: 
+      sequence: 1
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.::::'
+        page: 1 # Start
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Never
+
+  - # ====== Entry: Auftragsliste ================================
+    id: 238129046333044270
+    label: 
+      label: Auftragsliste
+
+    icon: 
+      image/icon-css-classes: fa-address-book
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:RP,10,20:::'
+        page: 10 # PreOrder-Buffer
+        clear-cache: RP,10,20
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Superuser' # 244597399936966998
+
+  - # ====== Entry: Auftragsdaten ================================
+    id: 238438121882883885
+    label: 
+      label: Auftragsdaten
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 20
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:20:&SESSION.::&DEBUG.::::'
+        page: 20 # Auftragsdaten
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item is NOT NULL
+      item: P20_UUID
+
+    security: 
+      authorization-scheme: '* App - ReadOnly' # 235084824408102045
+
+  - # ====== Entry: Über diese Anwendung =========================
+    id: 251314552708737801
+    label: 
+      label: Über diese Anwendung
+
+    layout: 
+      sequence: 931
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10050:&SESSION.::&DEBUG.::::'
+        page: 10050 # Glascontainer - Über diese Anwendung
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Vorbestellung ================================
+    id: 259125965908429768
+    label: 
+      label: Vorbestellung
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 14
+      - 100
+      - 110
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&SESSION.:GC:&DEBUG.:14:::'
+        page: 14 # Vorbestellung
+        request: GC
+        clear-cache: 14
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - User' # 238128121341675592
+
+  - # ====== Entry: Dubletten ====================================
+    id: 270003301263485169
+    label: 
+      label: Dubletten
+
+    icon: 
+      image/icon-css-classes: fa-synonym
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 40
+      - ' 42'
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:40:&SESSION.::&DEBUG.:40:::'
+        page: 40 # Dubletten
+        clear-cache: 40
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Superuser' # 244597399936966998
+
+  - # ====== Entry: Übersicht der Bewertungen ====================
+    id: 301104396267989435
+    label: 
+      label: Übersicht der Bewertungen
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 41
+      parent-entry: Dubletten # 270003301263485169
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 41
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:41:&SESSION.::&DEBUG.::::'
+        page: 41 # Bewertungen (Übersicht)
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Superuser' # 244597399936966998
+
+  - # ====== Entry: Fuzzy-Direktabfrage ==========================
+    id: 301454686082374401
+    label: 
+      label: Fuzzy-Direktabfrage
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 42
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 42
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.::::'
+        page: 42 # Fuzzy-Direktabfrage
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Superuser' # 244597399936966998
+
+    configuration: 
+      build-option: Commented Out # 234883986660092834
+
+  - # ====== Entry: Stornierung ==================================
+    id: 304101355843897228
+    label: 
+      label: Stornierung
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 140
+      parent-entry: Auftragsliste # 238129046333044270
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 50
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:50:&SESSION.::&DEBUG.::::'
+        page: 50 # Stornierung
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: '* App - Administrator' # 238128469706691677
+
+    configuration: 
+      build-option: Commented Out # 234883986660092834
+
+  - # ====== Entry: JSON Parsing =================================
+    id: 304700436939409909
+    label: 
+      label: JSON Parsing
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 901
+      parent-entry: Entwickler-Tools # 305253261285025581
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 901
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:901:&SESSION.::&DEBUG.:901:::'
+        page: 901 # JSON Parsing
+        clear-cache: 901
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  - # ====== Entry: Entwickler-Tools =============================
+    id: 305253261285025581
+    label: 
+      label: Entwickler-Tools
+
+    layout: 
+      sequence: 900
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:900:&SESSION.::&DEBUG.:900:::'
+        page: 900 # Entwickler-Tools
+        clear-cache: 900
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item is NOT NULL and NOT zero
+      item: AI_ENTWICKLERTOOLS
+
+    security: 
+      authorization-scheme: Entwickler und Tester # 216442017267608171
+
+- # ====== List: Navigation Bar ================================
+  id: 235072404281092953
+  identification: 
+    name: Navigation Bar
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: PreOrder-Buffer (NetWelt) ====================
+    id: 217500467039511496
+    label: 
+      label: PreOrder-Buffer (NetWelt)
+
+    icon: 
+      alt-attribute: PreOrder-Buffer
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 'https://netwelt.netcologne.intern/display/OP/04.04+PreOrder-Buffer'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      4.: PreOrder-Buffer in der NetWelt in neuem Fenster öffnen" target="_blank
+
+  - # ====== Entry: Über diese Anwendung =========================
+    id: 220437610384403736
+    label: 
+      label: Über diese Anwendung
+
+    icon: 
+      image/icon-css-classes: fa-book
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10050:&SESSION.::&DEBUG.:10050:::'
+        page: 10050 # Glascontainer - Über diese Anwendung
+        clear-cache: 10050
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      4.: 'Glascontainer: Ansprechpartner, Versionshistorie und Informationen zur Architektur'
+
+    server-side-condition: 
+      type: Never
+
+  - # ====== Entry: &APP_USER. ===================================
+    id: 235082675471092993
+    label: 
+      label: '&APP_USER.'
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '#'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: has-username
+
+  - # ====== Entry: --- ==========================================
+    id: 235083188545092993
+    label: 
+      label: '---'
+
+    layout: 
+      sequence: 90
+      parent-entry: '&APP_USER.' # 235082675471092993
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: separator
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Abmelden =====================================
+    id: 235083555430092993
+    label: 
+      label: Abmelden
+
+    icon: 
+      image/icon-css-classes: fa-sign-out
+
+    layout: 
+      sequence: 999
+      parent-entry: '&APP_USER.' # 235082675471092993
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '&LOGOUT_URL.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Online-Hilfe =================================
+    id: 235134000336697778
+    label: 
+      label: Online-Hilfe
+
+    icon: 
+      image/icon-css-classes: fa-ambulance
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 'https://netwelt.netcologne.intern/x/hZrKDg'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      4.: Online-Hilfe in neuem Fenster öffnen" target="_blank
+
+  - # ====== Entry: AD-Simulation: Administrator =================
+    id: 251190416861436322
+    label: 
+      label: 'AD-Simulation: Administrator'
+
+    layout: 
+      sequence: 110
+      parent-entry: Rolle = &G_ROLLE_DISPLAY. # 251285907969027252
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.:AD_SIMULATION:&DEBUG.:10050:P1_REDIRECT,P1_ROLLE:&APP_PAGE_ALIAS.,ADMINISTRATOR:'
+        page: 1 # Start
+        request: AD_SIMULATION
+        clear-cache: 10050
+        values: 
+          p1_redirect: '&APP_PAGE_ALIAS.'
+          p1_rolle: ADMINISTRATOR
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item != Value
+      item: G_ROLLE_DISPLAY
+      value: Administrator
+
+    configuration: 
+      build-option: DEV oder TEST # 228976553402207959
+
+  - # ====== Entry: AD-Simulation: Superuser =====================
+    id: 251241917770527952
+    label: 
+      label: 'AD-Simulation: Superuser'
+
+    layout: 
+      sequence: 120
+      parent-entry: Rolle = &G_ROLLE_DISPLAY. # 251285907969027252
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.:AD_SIMULATION:&DEBUG.:10050:P1_REDIRECT,P1_ROLLE:&APP_PAGE_ALIAS.,SUPERUSER:'
+        page: 1 # Start
+        request: AD_SIMULATION
+        clear-cache: 10050
+        values: 
+          p1_redirect: '&APP_PAGE_ALIAS.'
+          p1_rolle: SUPERUSER
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item != Value
+      item: G_ROLLE_DISPLAY
+      value: Superuser
+
+    configuration: 
+      build-option: DEV oder TEST # 228976553402207959
+
+  - # ====== Entry: AD-Simulation: User ==========================
+    id: 251259676868626205
+    label: 
+      label: 'AD-Simulation: User'
+
+    layout: 
+      sequence: 130
+      parent-entry: Rolle = &G_ROLLE_DISPLAY. # 251285907969027252
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.:AD_SIMULATION:&DEBUG.:10050:P1_REDIRECT,P1_ROLLE:&APP_PAGE_ALIAS.,USER:'
+        page: 1 # Start
+        request: AD_SIMULATION
+        clear-cache: 10050
+        values: 
+          p1_redirect: '&APP_PAGE_ALIAS.'
+          p1_rolle: USER
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item != Value
+      item: G_ROLLE_DISPLAY
+      value: User
+
+    configuration: 
+      build-option: DEV oder TEST # 228976553402207959
+
+  - # ====== Entry: AD-Simulation: ReadOnly ======================
+    id: 251260364724636044
+    label: 
+      label: 'AD-Simulation: ReadOnly'
+
+    layout: 
+      sequence: 140
+      parent-entry: Rolle = &G_ROLLE_DISPLAY. # 251285907969027252
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.:AD_SIMULATION:&DEBUG.:10050:P1_REDIRECT,P1_ROLLE:&APP_PAGE_ALIAS.,READONLY:'
+        page: 1 # Start
+        request: AD_SIMULATION
+        clear-cache: 10050
+        values: 
+          p1_redirect: '&APP_PAGE_ALIAS.'
+          p1_rolle: READONLY
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item != Value
+      item: G_ROLLE_DISPLAY
+      value: ReadOnly
+
+    configuration: 
+      build-option: DEV oder TEST # 228976553402207959
+
+  - # ====== Entry: Rolle = &G_ROLLE_DISPLAY. ====================
+    id: 251285907969027252
+    label: 
+      label: Rolle = &G_ROLLE_DISPLAY.
+
+    layout: 
+      sequence: 500
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10050:&SESSION.::&DEBUG.::::'
+        page: 10050 # Glascontainer - Über diese Anwendung
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: DEV oder TEST # 228976553402207959
+
+  - # ====== Entry: Entwickler-Tools einschalten =================
+    id: 305251209402982943
+    label: 
+      label: Entwickler-Tools einschalten
+
+    layout: 
+      sequence: 81
+      parent-entry: '&APP_USER.' # 235082675471092993
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:&APP_PAGE_ID.:&SESSION.::&DEBUG.::AI_ENTWICKLERTOOLS:1:'
+        page: '&APP_PAGE_ID.'
+        values: 
+          ai_entwicklertools: 1
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item is NULL or zero
+      item: AI_ENTWICKLERTOOLS
+
+    security: 
+      authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  - # ====== Entry: Entwickler-Tools ausschalten =================
+    id: 305252287913001949
+    label: 
+      label: Entwickler-Tools ausschalten
+
+    layout: 
+      sequence: 81
+      parent-entry: '&APP_USER.' # 235082675471092993
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:&APP_PAGE_ID.:&SESSION.::&DEBUG.::AI_ENTWICKLERTOOLS::'
+        page: '&APP_PAGE_ID.'
+        values: 
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Item is NOT NULL and NOT zero
+      item: AI_ENTWICKLERTOOLS
+
+    security: 
+      authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  - # ====== Entry: Entwicklerdokumentation ======================
+    id: 334336995919896742
+    label: 
+      label: Entwicklerdokumentation
+
+    icon: 
+      image/icon-css-classes: fa-book
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10055:&SESSION.::&DEBUG.:RP:P10055_TARGET_PAGE_ID:&APP_PAGE_ID.:'
+        page: 10055 # Entwicklerdokumentation
+        clear-cache: RP
+        values: 
+          p10055_target_page_id: '&APP_PAGE_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      4.: APEX-Objektkommentare zur aktuell dargestellten Anwendungsseite
+
+    configuration: 
+      build-option: DEV oder TEST # 228976553402207959
+

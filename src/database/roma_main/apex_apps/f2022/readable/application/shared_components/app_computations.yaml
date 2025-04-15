@@ -1,0 +1,212 @@
+---
+- # ====== Application Computation: G_STORNOGRUENDE_OHNE_MAIL ==
+  id: 85974617565351375
+  identification: 
+    item-name: G_STORNOGRUENDE_OHNE_MAIL
+
+  execution: 
+    sequence: 20
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: PCK_GLASCONTAINER.fv_stornogruende_ohne_mail()
+
+  comments: 
+    comments: '@ticket FTTH-4270'
+
+  subscription: 
+    version-number: 4079112683862
+
+- # ====== Application Computation: G_LINK_VERTRAGSZUSAMMENFASSU
+  id: 216608415399084475
+  identification: 
+    item-name: G_LINK_VERTRAGSZUSAMMENFASSUNG
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      CASE WHEN CORE.pck_env.fv_db_name = 'NMC'
+        THEN 'https://www.netcologne.de/api/contract-summary' -- Produktion
+        ELSE 'https://wwwdev.netcologne.de/api/contract-summary' -- alle anderen Umgebungen
+      END
+
+  comments: 
+    comments: '@ticket FTTH-2271'
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Computation: STR_BITTE_AUSWAEHLEN =======
+  id: 218719868163217376
+  identification: 
+    item-name: STR_BITTE_AUSWAEHLEN
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Static Value
+    static-value: ' - bitte auswählen'
+
+  subscription: 
+    version-number: 4004505622433
+
+- # ====== Application Computation: STR_BITTE_EINGEBEN =========
+  id: 219603653206126429
+  identification: 
+    item-name: STR_BITTE_EINGEBEN
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Static Value
+    static-value: ' - bitte eingeben'
+
+  subscription: 
+    version-number: 4004505622533
+
+- # ====== Application Computation: STR_UNGUELTIG ==============
+  id: 235644358250041845
+  identification: 
+    item-name: STR_UNGUELTIG
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Static Value
+    static-value: ist ungültig
+
+  subscription: 
+    version-number: 4018246487068
+
+- # ====== Application Computation: P10100_IGNORE_FUZZY_SERVICE_
+  id: 243961314844764583
+  identification: 
+    item-name: P10100_IGNORE_FUZZY_SERVICE_ERRORS
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Static Value
+    static-value: 1
+
+  comments: 
+    comments: 'Der Wert 1 bewirkt, dass bei nicht erreichbarem Fuzzy-Service keine Benutzer-Fehlermeldung ausgegeben wird. Allerdings kommen dann auch "stillschweigend" keine Ergebnisse beim Dubletten-Check. Hintergrund: Der Fuzzy-Dienst ist in DEV nicht mehr verfügbar, @ticket SKV-147476'
+
+  subscription: 
+    version-number: 4038451792773
+
+- # ====== Application Computation: G_ROLLE_DISPLAY ============
+  id: 251286635781048534
+  identification: 
+    item-name: G_ROLLE_DISPLAY
+
+  execution: 
+    sequence: 140
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: Administrator
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Setzt das Application Item G_ROLLE auf "Administrator", wenn das Authorization Scheme zutrifft.'
+
+  subscription: 
+    version-number: 4059623226239
+
+- # ====== Application Computation: G_ROLLE_DISPLAY ============
+  id: 251286790460060925
+  identification: 
+    item-name: G_ROLLE_DISPLAY
+
+  execution: 
+    sequence: 130
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: Superuser
+
+  security: 
+    authorization-scheme: '* App - Superuser' # 244597399936966998
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Setzt das Application Item G_ROLLE auf "Superuser", wenn das Authorization Scheme zutrifft.'
+
+  subscription: 
+    version-number: 4059623226171
+
+- # ====== Application Computation: G_ROLLE_DISPLAY ============
+  id: 251287756101074416
+  identification: 
+    item-name: G_ROLLE_DISPLAY
+
+  execution: 
+    sequence: 120
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: User
+
+  security: 
+    authorization-scheme: '* App - User' # 238128121341675592
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Setzt das Application Item G_ROLLE auf "User", wenn das Authorization Scheme zutrifft.'
+
+  subscription: 
+    version-number: 4059623226091
+
+- # ====== Application Computation: G_ROLLE_DISPLAY ============
+  id: 251288169548080278
+  identification: 
+    item-name: G_ROLLE_DISPLAY
+
+  execution: 
+    sequence: 110
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: ReadOnly
+
+  security: 
+    authorization-scheme: '* App - ReadOnly' # 235084824408102045
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Setzt das Application Item G_ROLLE auf "ReadOnly", wenn das Authorization Scheme zutrifft.'
+
+  subscription: 
+    version-number: 4059623352017
+
