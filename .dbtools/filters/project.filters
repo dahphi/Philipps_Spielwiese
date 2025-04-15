@@ -9,12 +9,16 @@
 -- Uncomment the line below if don't want to export grants:
 -- export_type not in ('ALL_TAB_PRIVS','USER_SYS_PRIVS'),
 /** Reference list of export_types from internal.fixed.filters 
-   'ALL_OBJECTS',
-   'APEX_APPLICATION', 
-   'ALL_TAB_PRIVS',
-   'USER_SYS_PRIVS',
-   'CREATE_USER', 
-   'ORDS_SCHEMA' 
+                'ALL_OBJECTS',
+                'APEX_APPLICATION', 
+                'ALL_COL_COMMENTS',
+                'ALL_TAB_COMMENTS',
+                'ALL_TAB_PRIVS',
+                --'USER_SYS_PRIVS',
+                'ALL_DEPENDENCIES',
+                'ALL_MVIEW_LOGS',
+                'USER', 
+                'ORDS_SCHEMA'
 */    
 
 -- Liquibase Tables
@@ -27,11 +31,11 @@ not (object_type = 'TRIGGER' and object_name ='DATABASECHANGELOG_ACTIONS_TRG'),
 
 
 -- DM generated tables
-not (object_type = 'TABLE' and object_name like 'DM$%' ),
-not (object_type = 'VIEW' and object_name like 'DM$V%' ),
+--not (object_type = 'TABLE' and object_name like 'DM$%' ),
+--not (object_type = 'VIEW' and object_name like 'DM$V%' ),
+object_name not like 'DM$%',      -- covers tables, views, indexes 
 
--- ORDS export is disabled by default
-export_type not in ('ORDS_SCHEMA', 'CREATE_USER'),
+export_type not in ('USER','ORDS_SCHEMA'),
 
 -- Export APEX application only:
 -- export_type = 'APEX_APPLICATION',

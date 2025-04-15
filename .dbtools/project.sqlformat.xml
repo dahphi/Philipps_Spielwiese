@@ -3,7 +3,6 @@
     <alignTabColAliases>true</alignTabColAliases>
     <breakOnSubqueries>true</breakOnSubqueries>
     <alignEquality>false</alignEquality>
-    <formatWhenSyntaxError>true</formatWhenSyntaxError>
     <singleLineComments>oracle.dbtools.app.Format.InlineComments.CommentsUnchanged</singleLineComments>
     <breakAnsiiJoin>false</breakAnsiiJoin>
     <maxCharLineSize>128</maxCharLineSize>

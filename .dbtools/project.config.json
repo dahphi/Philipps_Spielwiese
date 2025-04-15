@@ -2,10 +2,10 @@
   "project" : "apex",
   "sqlcl" : {
     "connectionName" : "",
-    "version" : "24.3.2.0"
+    "version" : "24.4.4.0"
   },
   "schemas" : [ "NMC_MANAGER" ],
-  "lastReleaseVersion" : "",
+  "lastReleaseVersion" : "2022_1_0",
   "export" : {
     "format" : {
       "enable" : true
