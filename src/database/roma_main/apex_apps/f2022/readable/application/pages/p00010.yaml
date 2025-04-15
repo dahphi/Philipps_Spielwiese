@@ -1,0 +1,6555 @@
+---
+# ====== Page: PreOrder-Buffer ===============================
+id: 10
+identification: 
+  name: PreOrder-Buffer
+  alias: AUFTRAGSLISTE
+  title: Glascontainer - Auftragsliste
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+javascript: 
+  function-and-global-variable-declaration: |
+    "FN_GET_INTERACTIVE_GRID_MODEL"
+    "FN_IG_COPY_HACK"
+
+css: 
+  inline: |
+    .scrollbar-on-top .a-GV-w-hdr  /*IG*/,
+    .scrollbar-on-top .t-fht-thead /*IR*/
+        {overflow-x: auto !important}
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+comments: 
+  comments: |
+    @ticket FTTH-285
+    
+    ///// Wieso befindet sich im Page JavaScript der Aufruf von "FN_GET_INTERACTIVE_GRID_MODEL"?
+
+regions: 
+- # ====== Region: CSS für Seite 10 ============================
+  id: 69574465816798830
+  identification: 
+    name: CSS für Seite 10
+    type: Static Content
+
+  source: 
+    html-code: |
+      input#auftragslisteIR_search_field {
+        min-width:355px;
+      }
+      button#auftragslisteIR_search_button {
+        background-color:var(--ut-header-background-color);
+        color:#FFF;
+      }
+      div#auftragslisteIR_toolbar {
+          padding:15px;
+      }
+      /*
+      div#auftragslisteIR_control_panel {
+          display:none;
+      }
+      */
+      li.a-IRR-controls-item.a-IRR-controls-item--highlight,
+      li.a-IRR-reportSummary-item.a-IRR-reportSummary-item--highlight {
+          display:none;
+      }
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_07
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <style>
+    footer-text: </style>
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Direkteingabe UUID ==========================
+  id: 202842965236982698
+  identification: 
+    name: Direkteingabe UUID
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Glascontainer Auftragsliste =================
+  id: 224924544000269794
+  identification: 
+    name: Glascontainer Auftragsliste
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select POB.ID,
+             POB.ID AS UUID,
+             TEMPLATEID,
+             AKTION."NAME" AS AKTION,
+             PRODUKT."NAME" AS PRODUKT,
+             DEVICECATEGORY,
+             DEVICEOWNERSHIP,
+             INSTALLATIONSERVICE,
+             HOUSECONNECTIONPRICE,
+             SUMM_ORDERSUMMARYFILEID,
+             STATE,
+             STATE AS STATUS,
+             VKZ,
+             CLIENT,
+             CUSTOMERNUMBER,
+             -- @ticket FTTH-4470:
+             CASE WHEN ACCOUNT_ID IS NULL THEN CUSTOMERNUMBER  
+                  ELSE '<a href="#" data-account_id="' || ACCOUNT_ID || '" title="Siebel-Kundenmaske öffnen">' || CUSTOMERNUMBER || '</a>'
+             END AS KUNDENNUMMER,
+             CUSTOMER_BUSINESSNAME,
+             CUSTOMER_SALUTATION,
+             CUSTOMER_TITLE,
+             CUSTOMER_NAME_FIRST,
+             CUSTOMER_NAME_LAST,
+             CUSTOMER_BIRTHDATE,
+             CUSTOMER_EMAIL,
+             CUSTOMER_PHONE_COUNTRYCODE,
+             CUSTOMER_PHONE_AREACODE,
+             CUSTOMER_PHONE_NUMBER,
+             HOUSESERIALNUMBER,
+             CUSTOMER_RESIDENTSTATUS,
+             INSTALL_ADDR_COUNTRY,
+             INSTALL_ADDR_ZIPCODE,
+             INSTALL_ADDR_CITY,
+             INSTALL_ADDR_STREET,
+             INSTALL_ADDR_HOUSENUMBER,
+             INSTALL_ADDR_ADDITION,
+             -- @ticket FTTH-4625:
+             A.STR,
+             A.HNR_KOMPL,
+             A.GEBAEUDETEIL_NAME,
+             A.PLZ,
+             A.ORT_KOMPL,
+             PROVIDERCHG_CURRENT_PROVIDER,
+             PROVIDERCHG_KEEP_PHONE_NUMBER,
+             PROVIDERCHG_PHONE_COUNTRYCODE,
+             PROVIDERCHG_PHONE_AREACODE,
+             PROVIDERCHG_PHONE_NUMBER,
+             PROVIDERCHG_CONTRACT_CANCELLED,
+             PROVIDERCHG_CANCELLATION_DATE,
+             PROVIDERCHG_OWNER_SALUTATION,
+             PROVIDERCHG_OWNER_NAME_FIRST,
+             PROVIDERCHG_OWNER_NAME_LAST,
+             ACCOUNT_SEPAMANDATE,
+             ACCOUNT_HOLDER,
+             LANDLORD_NAME_LAST,
+             ACCOUNT_IBAN,
+             LANDLORD_NAME_FIRST,
+             LANDLORD_EMAIL,
+             LANDLORD_TITLE,
+             LANDLORD_ADDR_CITY,
+             LANDLORD_ADDR_STREET,
+             LANDLORD_ADDR_COUNTRY,
+             LANDLORD_ADDR_ZIPCODE,
+             LANDLORD_ADDR_HOUSENUMBER,
+             LANDLORD_ADDR_ADDITION,
+             LANDLORD_LEGALFORM,
+             LANDLORD_SALUTATION,
+             LANDLORD_PHONE_NUMBER,
+             LANDLORD_PHONE_AREACODE,
+             LANDLORD_PHONE_COUNTRYCODE,
+             LANDLORD_BUSINESSORNAME,
+             PROP_RESIDENTIAL_UNIT,
+             PROP_OWNER_ROLE,
+             LANDLORD_AGREED,
+             SUMM_PRECONTRACTINFORMATION,
+             SUMM_GENERALTERMSANDCONDITIONS,
+             SUMM_WAIVERIGHTOFREVOCATION,
+             SUMM_EMAILMARKETING,
+             SUMM_PHONEMARKETING,
+             SUMM_SMSMMSMARKETING,
+             SUMM_MAILMARKETING,
+             CUSTOMER_PREV_ADDR_STREET,
+             CUSTOMER_PREV_ADDR_HOUSENUMBER,
+             CUSTOMER_PREV_ADDR_ADDITION,
+             CUSTOMER_PREV_ADDR_ZIPCODE,
+             CUSTOMER_PREV_ADDR_CITY,
+             CUSTOMER_PREV_ADDR_COUNTRY,
+             CUSTOMER_UPD_EMAIL,
+             CUSTOMER_UPD_PHONE_COUNTRYCODE,
+             CUSTOMER_UPD_PHONE_AREACODE,
+             CUSTOMER_UPD_PHONE_NUMBER,
+             APEX$SYNC_STEP_STATIC_ID,
+             APEX$ROW_SYNC_TIMESTAMP,
+             CASE WHEN PROVIDERCHG_CURRENT_PROVIDER IS NULL THEN 0 ELSE 1 END AS ANBIETERWECHSEL,
+           --CASE WHEN PROP_OWNER_ROLE = 'OWNER' AND PROP_RESIDENTIAL_UNIT = 'ONE' THEN 1 ELSE 0 END AS GEE_ERTEILT, -- 2022-06-15 (Johannes Reinig)
+             CASE WHEN PROP_OWNER_ROLE = 'OWNER' AND PROP_RESIDENTIAL_UNIT IN ('ONE', 'MORE_THAN_ONE') THEN 1 ELSE 0 END AS GEE_ERTEILT, -- 2022-09-13 @fschoenemeyer
+           --CASE WHEN CUSTOMER_UPD_EMAIL IS NULL THEN 'N' ELSE 'B' END AS KUNDENSTATUS,
+             CASE WHEN IS_NEW_CUSTOMER = 'true' THEN 'N' ELSE 'B' END AS KUNDENSTATUS, -- Neukunde, Bestandskunde
+             IS_NEW_CUSTOMER,
+             CREATED,
+             LAST_MODIFIED,
+             VERSION,
+             CHANGED_BY, -- neu 2023-06-20
+             PROCESS_LOCK,
+             PROCESS_LOCK AS PROCESS_LOCK_DISPLAY,
+             PROCESS_LOCK_LAST_MODIFIED,
+             CANCELLED_BY,
+             CANCEL_REASON,
+             CANCEL_DATE,
+          -- TO_DATE(POB.CANCEL_DATE) - TO_DATE(POB.CREATED) AS CANCEL_TIMESPAN, -- 2024-06-11 @bug möglicherweise die Ursache für ORA-21700
+             SIEBEL_ORDER_NUMBER,
+             SIEBEL_ORDER_ROWID,
+             SIEBEL_READY,
+             POB.WHOLEBUY_PARTNER,
+             POB.MANUAL_TRANSFER,
+             service_plus_email,
+             vc.bezeichnung as vermarktungscluster,
+             vc.status as vermarktungscluster_status,
+             vc.ausbau_plan_termin,
+             vc.mindestbandbreite as bandbreite_min,
+             vc.zielbandbreite_geplant as bandbreite_max,
+             POB.TECHNOLOGY as DIENSTTYP,
+             POB.ONT_PROVIDER,
+             -- 2024-08-21 @ticket FTTH-3727 @SYNC #20:
+             POB.CONNECTIVITY_ID,
+             POB.RT_CONTACT_DATA_TICKET_ID,
+             POB.LANDLORD_INFORMATION_REQUIRED,
+             UPDATE_CUSTOMER_IN_SIEBEL,
+             HOME_ID,
+             ACCOUNT_ID,
+             POB.AVAILABILITY_DATE
+        FROM FTTH_WS_SYNC_PREORDERS POB
+        JOIN POB_ADRESSEN A ON (A.HAUS_LFD_NR = POB.HOUSESERIALNUMBER)
+        JOIN FTTH_GLASCONTAINER_PRODUKTE PRODUKT ON (PRODUKT.TEMPLATE_ID = POB.TEMPLATEID)
+        JOIN FTTH_GLASCONTAINER_AKTIONEN AKTION  ON (AKTION.CODE = PRODUKT.AKTION)
+        LEFT JOIN VERMARKTUNGSCLUSTER_OBJEKT VCO ON (VCO.HAUS_LFD_NR = POB.HOUSESERIALNUMBER)
+        LEFT JOIN VERMARKTUNGSCLUSTER VC         ON (VC.VC_LFD_NR = VCO.VC_LFD_NR)
+       WHERE :P10_SEARCHFLAG IS NOT NULL
+    page-items-to-submit: 
+    - P10_SEARCHFLAG
+    optimizer-hint: LEADING(FTTH_WS_SYNC_PREORDERS)
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - scrollbar-on-top
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: auftragslisteIR
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: |
+      @ticket FTTH-1874: Neuer gespeicherter Report "Storno-Gründe"
+      @krakar @question: Was genau ist hinter dem Auswahl von Reporten Storno-Gründe oder Hauptbericht zu verstehen? Wie genau funktioniert das?
+      @ticket FTTH-3747: Spalte DIENSTTYP basiert nun auf dem synchronisierten POB-Feld, nicht mehr auf der Tabelle TAB_DIENST_TYP
+
+  attributes: 
+    id: 224924553487269795
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y of Z
+      display-position: Top and Bottom - Left
+
+    performance: 
+      lazy-loading: true
+      maximum-rows-to-process: 100000
+
+    messages: 
+      when-no-data-found: Ändern Sie die Suchkriterien oder wählen Sie einen vorgegebenen Bericht.
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+      search-button-label: Suche ausführen
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: false
+      highlight: true
+      compute: false
+      aggregate: false
+      chart: false
+      group-by: false
+      pivot: false
+      flashback: false
+      save-report: true
+      save-public-report: true
+      save-public-report-authorization: '* App - Administrator' # 238128469706691677
+      reset: true
+      help: true
+      download: true
+      subscription: false
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - PDF
+      send-as-email: true
+      filename: Glascontainer Auftragsliste
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: 5. Wholebuy ===========================
+      id: 10123207489644831
+      identification: 
+        name: 5. Wholebuy
+        alias: 101233
+
+    - # ====== Saved Report: OK Ready > in 2025 ====================
+      id: 63682804814224688
+      identification: 
+        name: OK Ready > in 2025
+        alias: 636829
+
+    - # ====== Saved Report: SIEBEL ================================
+      id: 89799521061854601
+      identification: 
+        name: SIEBEL
+        alias: 394260
+
+    - # ====== Saved Report: Alle Spalten ==========================
+      id: 154339096176053784
+      identification: 
+        name: Alle Spalten
+        alias: 1543391
+
+    - # ====== Saved Report: FTTH_Forecast_NC_Eigenausbau ==========
+      id: 154715113999490698
+      identification: 
+        name: FTTH_Forecast_NC_Eigenausbau
+        alias: 1547152
+
+    - # ====== Saved Report: Wholebuy ==============================
+      id: 187590604423501473
+      identification: 
+        name: Wholebuy
+        alias: 504723
+
+    - # ====== Saved Report: Alle Spalten ==========================
+      id: 221617092539208596
+      identification: 
+        name: Alle Spalten
+        alias: ALLE_SPALTEN
+
+    - # ====== Saved Report: Auftragsstatus ========================
+      id: 221618744910234565
+      identification: 
+        name: Auftragsstatus
+        alias: AUFTRAGSSTATUS
+
+    - # ====== Saved Report: Storno-Gründe =========================
+      id: 221619699919240224
+      identification: 
+        name: Storno-Gründe
+        alias: STORNO
+
+    - # ====== Saved Report: Primary Report ========================
+      id: 226110150146685933
+      identification: 
+        name: Primary Report
+        alias: PRIMARY
+
+    - # ====== Saved Report: Abgeschlossene Aufträge ===============
+      id: 228994715049947562
+      identification: 
+        name: Abgeschlossene Aufträge
+        alias: ABGESCHLOSSEN
+
+    - # ====== Saved Report: Technik ===============================
+      id: 237414870982659217
+      identification: 
+        name: Technik
+        alias: TECHNIK
+
+    - # ====== Saved Report: Produkt ===============================
+      id: 244589461671770047
+      identification: 
+        name: Produkt
+        alias: PRODUKT
+
+    - # ====== Saved Report: SIEBEL ================================
+      id: 248913866332620655
+      identification: 
+        name: SIEBEL
+        alias: SIEBEL
+
+    columns: 
+    - # ====== Column: STR =========================================
+      id: 61953901617854108
+      identification: 
+        column-name: STR
+        type: Plain Text
+
+      heading: 
+        heading: Straße
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1200
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: HNR_KOMPL ===================================
+      id: 61954033717854109
+      identification: 
+        column-name: HNR_KOMPL
+        type: Plain Text
+
+      heading: 
+        heading: Hausnr.
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1210
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: GEBAEUDETEIL_NAME ===========================
+      id: 61954131501854110
+      identification: 
+        column-name: GEBAEUDETEIL_NAME
+        type: Plain Text
+
+      heading: 
+        heading: Gebäudeteil
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1220
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLZ =========================================
+      id: 61954242097854111
+      identification: 
+        column-name: PLZ
+        type: Plain Text
+
+      heading: 
+        heading: PLZ
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1230
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ORT_KOMPL ===================================
+      id: 61954272473854112
+      identification: 
+        column-name: ORT_KOMPL
+        type: Plain Text
+
+      heading: 
+        heading: Ort
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1240
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: AVAILABILITY_DATE ===========================
+      id: 61954711795854116
+      identification: 
+        column-name: AVAILABILITY_DATE
+        type: Plain Text
+
+      heading: 
+        heading: Verfügbarkeit
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1250
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-3880'
+
+    - # ====== Column: HOME_ID =====================================
+      id: 74688507290597925
+      identification: 
+        column-name: HOME_ID
+        type: Plain Text
+
+      heading: 
+        heading: Home-ID
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1180
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-4143'
+
+    - # ====== Column: ACCOUNT_ID ==================================
+      id: 81403709747397454
+      identification: 
+        column-name: ACCOUNT_ID
+        type: Plain Text
+
+      heading: 
+        heading: Account ID (Siebel)
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1190
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-4470'
+
+    - # ====== Column: KUNDENNUMMER ================================
+      id: 88194033374458507
+      identification: 
+        column-name: KUNDENNUMMER
+        type: Plain Text
+
+      heading: 
+        heading: Kundennummer (Siebel)
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      advanced: 
+        static-id: tdKnr
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: CONNECTIVITY_ID =============================
+      id: 212367337538296587
+      identification: 
+        column-name: CONNECTIVITY_ID
+        type: Plain Text
+
+      heading: 
+        heading: Ext. Auftragsnummer
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1140
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-3727'
+
+    - # ====== Column: RT_CONTACT_DATA_TICKET_ID ===================
+      id: 212367470842296588
+      identification: 
+        column-name: RT_CONTACT_DATA_TICKET_ID
+        type: Plain Text
+
+      heading: 
+        heading: Kontaktdaten-Akquise-Ticket-ID
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1150
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-3727'
+
+    - # ====== Column: LANDLORD_INFORMATION_REQUIRED ===============
+      id: 212367569300296589
+      identification: 
+        column-name: LANDLORD_INFORMATION_REQUIRED
+        type: Plain Text
+
+      heading: 
+        heading: Eigentümerdaten notwendig
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1160
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-3727'
+
+    - # ====== Column: UPDATE_CUSTOMER_IN_SIEBEL ===================
+      id: 212367939113296593
+      identification: 
+        column-name: UPDATE_CUSTOMER_IN_SIEBEL
+        type: Plain Text
+
+      heading: 
+        heading: Update Customer In Siebel
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1170
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CANCELLED_BY ================================
+      id: 221026358063343402
+      identification: 
+        column-name: CANCELLED_BY
+        type: Plain Text
+
+      heading: 
+        heading: storniert durch
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 960
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-1874'
+
+    - # ====== Column: CANCEL_REASON ===============================
+      id: 221026461064343403
+      identification: 
+        column-name: CANCEL_REASON
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: STORNOGRÜNDE # 238440131180816461
+
+      heading: 
+        heading: Storno-Grund
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 970
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      comments: 
+        comments: '@ticket FTTH-1874'
+
+    - # ====== Column: CANCEL_DATE =================================
+      id: 221026563638343404
+      identification: 
+        column-name: CANCEL_DATE
+        type: Plain Text
+
+      heading: 
+        heading: Storno-Datum
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 980
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 'DD.MM.YYYY HH24:MI'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: '@ticket FTTH-1874'
+
+    - # ====== Column: CHANGED_BY ==================================
+      id: 221027160329343410
+      identification: 
+        column-name: CHANGED_BY
+        type: Plain Text
+
+      heading: 
+        heading: zuletzt geändert durch
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 920
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ID ==========================================
+      id: 224924745237269796
+      identification: 
+        column-name: ID
+        type: Link
+
+      heading: 
+        heading: <!-- Bleistift-Symbol -->
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:20:&SESSION.:auftragsliste:&DEBUG.:CR,20:P20_UUID:#ID#'
+          page: 20 # Auftragsdaten
+          request: auftragsliste
+          clear-cache: CR,20
+          values: 
+            p20_uuid: '#ID#'
+
+        link-text: '<img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" title="Auftragsdaten zu UUID #ID#">'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: 'ID und UUID sind zwei Begriffe für dasselbe Feld: Der Primärschlüssel für den Auftrag. Dies ist eine Link-Spalte zum Aufrufen der Auftragsdaten.'
+
+    - # ====== Column: TEMPLATEID ==================================
+      id: 224924786537269797
+      identification: 
+        column-name: TEMPLATEID
+        type: Plain Text
+
+      heading: 
+        heading: templateId
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        authorization-scheme: '* App - Administrator' # 238128469706691677
+        escape-special-characters: true
+
+    - # ====== Column: DEVICECATEGORY ==============================
+      id: 224924938844269798
+      identification: 
+        column-name: DEVICECATEGORY
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ROUTER_AUSWAHL MIT BASIC # 229551692826930338
+
+      heading: 
+        heading: Router-Auswahl
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: DEVICEOWNERSHIP =============================
+      id: 224924980976269799
+      identification: 
+        column-name: DEVICEOWNERSHIP
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ROUTER_EIGENTUM # 226169709237313649
+
+      heading: 
+        heading: Router-Eigentum
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: INSTALLATIONSERVICE =========================
+      id: 224925124267269800
+      identification: 
+        column-name: INSTALLATIONSERVICE
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: EINRICHTUNGSSERVICE # 250772871376132756
+
+      heading: 
+        heading: Einrichtungs-<br/>Service
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      comments: 
+        comments: '////@todo 2022-11-03: Die LOVs INSTALLATIONSSERVICE und EINRICHTUNGSSERVICE zusammenführen, sobald der Kunde "Herr Hofheinz" sich für einen anderen Service entschieden hat. Hier im Report wird die Letztere verwendet, damit man den einzigen Kunden mit "Netstart Plus (nicht verfügbar!)" im Report noch herausfiltern kann.'
+
+    - # ====== Column: HOUSECONNECTIONPRICE ========================
+      id: 224925208443269801
+      identification: 
+        column-name: HOUSECONNECTIONPRICE
+        type: Plain Text
+
+      heading: 
+        heading: Haus-Anschlusspreis
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STATE =======================================
+      id: 224925378818269803
+      identification: 
+        column-name: STATE
+        type: Plain Text
+
+      heading: 
+        heading: state
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: Zur Darstellung des originalen, technischen Wertes "state" aus dem JSON-Dokument
+
+    - # ====== Column: VKZ =========================================
+      id: 224925459999269804
+      identification: 
+        column-name: VKZ
+        type: Plain Text
+
+      heading: 
+        heading: VKZ
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLIENT ======================================
+      id: 224925607613269805
+      identification: 
+        column-name: CLIENT
+        type: Plain Text
+
+      heading: 
+        heading: Mandant
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_NAME_FIRST =========================
+      id: 224926565757269815
+      identification: 
+        column-name: CUSTOMER_NAME_FIRST
+        type: Plain Text
+
+      heading: 
+        heading: Vorname
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 220
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: HOUSESERIALNUMBER ===========================
+      id: 224928758396269837
+      identification: 
+        column-name: HOUSESERIALNUMBER
+        type: Link
+
+      heading: 
+        heading: HAUS_LFD_NR
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=1200:1:&SESSION.::&DEBUG.:1:P0_HAUS_LFD_NR:#HOUSESERIALNUMBER#'
+          app: 1200
+          page: 1
+          clear-cache: 1
+          values: 
+            p0_haus_lfd_nr: '#HOUSESERIALNUMBER#'
+
+        link-text: '<img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" title="Objektinfo zur HAUS_LFD_NR #HOUSESERIALNUMBER#"> #HOUSESERIALNUMBER#'
+        link-attributes: target="_blank"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMERNUMBER ==============================
+      id: 226080176790682791
+      identification: 
+        column-name: CUSTOMERNUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Kundennummer
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-4470: Durch Vergabe einer Static ID kann eine Dynamic Action gebaut werden, die beim Anklicken der Kundennummer reagiert - anstatt für jede Zeile des gesamten Reports im Voraus die Link-Funktion (PCK_GLASCONTAINER.fv_href_siebel_kundenmaske) aufzurufen, die das href-Attribut berechnet, was die Performance des Reports erheblich belasten würde'
+
+    - # ====== Column: APEX$SYNC_STEP_STATIC_ID ====================
+      id: 226083556519682825
+      identification: 
+        column-name: APEX$SYNC_STEP_STATIC_ID
+        type: Hidden
+
+      heading: 
+        heading: Apex$sync Step Static Id
+
+      layout: 
+        sequence: 160
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: APEX$ROW_SYNC_TIMESTAMP =====================
+      id: 226083655167682826
+      identification: 
+        column-name: APEX$ROW_SYNC_TIMESTAMP
+        type: Plain Text
+
+      heading: 
+        heading: synchronisiert
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 'YYYY-MM-DD HH24:MI:SS'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      server-side-condition: 
+        type: Expression
+        language: SQL
+        sql-expression: "NVL(:REQUEST,'-') NOT IN ('CSV','XLS','RTF','HTMLD')"
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: 'Server Side Condition: Spalte soll beim Ausdrucken des Grids nicht angezeigt werden'
+
+    - # ====== Column: SUMM_ORDERSUMMARYFILEID =====================
+      id: 226823183779689897
+      identification: 
+        column-name: SUMM_ORDERSUMMARYFILEID
+        type: Plain Text
+
+      heading: 
+        heading: Summ Ordersummaryfileid
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_BUSINESSNAME =======================
+      id: 226823294294689898
+      identification: 
+        column-name: CUSTOMER_BUSINESSNAME
+        type: Plain Text
+
+      heading: 
+        heading: Customer Businessname
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_SALUTATION =========================
+      id: 226823396126689899
+      identification: 
+        column-name: CUSTOMER_SALUTATION
+        type: Plain Text
+
+      heading: 
+        heading: Customer Salutation
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_TITLE ==============================
+      id: 226823549242689900
+      identification: 
+        column-name: CUSTOMER_TITLE
+        type: Plain Text
+
+      heading: 
+        heading: Titel
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_NAME_LAST ==========================
+      id: 226823579724689901
+      identification: 
+        column-name: CUSTOMER_NAME_LAST
+        type: Plain Text
+
+      heading: 
+        heading: Nachname
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 230
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_BIRTHDATE ==========================
+      id: 226823672147689902
+      identification: 
+        column-name: CUSTOMER_BIRTHDATE
+        type: Plain Text
+
+      heading: 
+        heading: Geburtsdatum
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 240
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_EMAIL ==============================
+      id: 226823753739689903
+      identification: 
+        column-name: CUSTOMER_EMAIL
+        type: Plain Text
+
+      heading: 
+        heading: E-Mail
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 250
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PHONE_COUNTRYCODE ==================
+      id: 226823936483689904
+      identification: 
+        column-name: CUSTOMER_PHONE_COUNTRYCODE
+        type: Plain Text
+
+      heading: 
+        heading: Ländervorwahl
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 260
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PHONE_AREACODE =====================
+      id: 226824005850689905
+      identification: 
+        column-name: CUSTOMER_PHONE_AREACODE
+        type: Plain Text
+
+      heading: 
+        heading: Vorwahl
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 270
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PHONE_NUMBER =======================
+      id: 226824134952689906
+      identification: 
+        column-name: CUSTOMER_PHONE_NUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Telefonnummer
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 280
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_RESIDENTSTATUS =====================
+      id: 226824200783689907
+      identification: 
+        column-name: CUSTOMER_RESIDENTSTATUS
+        type: Plain Text
+
+      heading: 
+        heading: Customer Residentstatus
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 290
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: INSTALL_ADDR_COUNTRY ========================
+      id: 226824282976689908
+      identification: 
+        column-name: INSTALL_ADDR_COUNTRY
+        type: Plain Text
+
+      heading: 
+        heading: Land
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 300
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      configuration: 
+        build-option: Commented Out # 234883986660092834
+
+    - # ====== Column: INSTALL_ADDR_ZIPCODE ========================
+      id: 226824438739689909
+      identification: 
+        column-name: INSTALL_ADDR_ZIPCODE
+        type: Plain Text
+
+      heading: 
+        heading: PLZ
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 310
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      configuration: 
+        build-option: Commented Out # 234883986660092834
+
+    - # ====== Column: INSTALL_ADDR_CITY ===========================
+      id: 226824529444689910
+      identification: 
+        column-name: INSTALL_ADDR_CITY
+        type: Plain Text
+
+      heading: 
+        heading: Ort
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 320
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      configuration: 
+        build-option: Commented Out # 234883986660092834
+
+    - # ====== Column: INSTALL_ADDR_STREET =========================
+      id: 226824600858689911
+      identification: 
+        column-name: INSTALL_ADDR_STREET
+        type: Plain Text
+
+      heading: 
+        heading: Straße
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 330
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      configuration: 
+        build-option: Commented Out # 234883986660092834
+
+    - # ====== Column: INSTALL_ADDR_HOUSENUMBER ====================
+      id: 226824710560689912
+      identification: 
+        column-name: INSTALL_ADDR_HOUSENUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Hausnr.
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 340
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      configuration: 
+        build-option: Commented Out # 234883986660092834
+
+    - # ====== Column: INSTALL_ADDR_ADDITION =======================
+      id: 226824849977689913
+      identification: 
+        column-name: INSTALL_ADDR_ADDITION
+        type: Plain Text
+
+      heading: 
+        heading: Zusatz
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 350
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      configuration: 
+        build-option: Commented Out # 234883986660092834
+
+    - # ====== Column: PROVIDERCHG_CURRENT_PROVIDER ================
+      id: 226824932808689914
+      identification: 
+        column-name: PROVIDERCHG_CURRENT_PROVIDER
+        type: Plain Text
+
+      heading: 
+        heading: Aktueller Provider
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 360
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_KEEP_PHONE_NUMBER ===============
+      id: 226824975841689915
+      identification: 
+        column-name: PROVIDERCHG_KEEP_PHONE_NUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Providerchg Keep Phone Number
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 370
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_PHONE_COUNTRYCODE ===============
+      id: 226825113043689916
+      identification: 
+        column-name: PROVIDERCHG_PHONE_COUNTRYCODE
+        type: Plain Text
+
+      heading: 
+        heading: Providerchg Phone Countrycode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 380
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_PHONE_AREACODE ==================
+      id: 226825164505689917
+      identification: 
+        column-name: PROVIDERCHG_PHONE_AREACODE
+        type: Plain Text
+
+      heading: 
+        heading: Providerchg Phone Areacode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 390
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_PHONE_NUMBER ====================
+      id: 226825304291689918
+      identification: 
+        column-name: PROVIDERCHG_PHONE_NUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Providerchg Phone Number
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 400
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_CONTRACT_CANCELLED ==============
+      id: 226825449674689919
+      identification: 
+        column-name: PROVIDERCHG_CONTRACT_CANCELLED
+        type: Plain Text
+
+      heading: 
+        heading: Altvertrag gekündigt?
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 410
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_CANCELLATION_DATE ===============
+      id: 226825468061689920
+      identification: 
+        column-name: PROVIDERCHG_CANCELLATION_DATE
+        type: Plain Text
+
+      heading: 
+        heading: Altvertrags-Kündigungsdatum
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 420
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_OWNER_SALUTATION ================
+      id: 226825566667689921
+      identification: 
+        column-name: PROVIDERCHG_OWNER_SALUTATION
+        type: Plain Text
+
+      heading: 
+        heading: Providerchg Owner Salutation
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 430
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_OWNER_NAME_FIRST ================
+      id: 226825726358689922
+      identification: 
+        column-name: PROVIDERCHG_OWNER_NAME_FIRST
+        type: Plain Text
+
+      heading: 
+        heading: Providerchg Owner Name First
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 440
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVIDERCHG_OWNER_NAME_LAST =================
+      id: 226825823950689923
+      identification: 
+        column-name: PROVIDERCHG_OWNER_NAME_LAST
+        type: Plain Text
+
+      heading: 
+        heading: Providerchg Owner Name Last
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 450
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ACCOUNT_SEPAMANDATE =========================
+      id: 226825864272689924
+      identification: 
+        column-name: ACCOUNT_SEPAMANDATE
+        type: Plain Text
+
+      heading: 
+        heading: Account Sepamandate
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 460
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ACCOUNT_HOLDER ==============================
+      id: 226826046607689925
+      identification: 
+        column-name: ACCOUNT_HOLDER
+        type: Plain Text
+
+      heading: 
+        heading: Account Holder
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 470
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_NAME_LAST ==========================
+      id: 226826146400689926
+      identification: 
+        column-name: LANDLORD_NAME_LAST
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Name Last
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 480
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ACCOUNT_IBAN ================================
+      id: 226826223417689927
+      identification: 
+        column-name: ACCOUNT_IBAN
+        type: Plain Text
+
+      heading: 
+        heading: Account Iban
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 490
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_NAME_FIRST =========================
+      id: 226826286077689928
+      identification: 
+        column-name: LANDLORD_NAME_FIRST
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Name First
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 500
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_EMAIL ==============================
+      id: 226826422738689929
+      identification: 
+        column-name: LANDLORD_EMAIL
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Email
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 510
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_TITLE ==============================
+      id: 226826504267689930
+      identification: 
+        column-name: LANDLORD_TITLE
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Title
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 520
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_ADDR_CITY ==========================
+      id: 226826579031689931
+      identification: 
+        column-name: LANDLORD_ADDR_CITY
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Addr City
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 530
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_ADDR_STREET ========================
+      id: 226826701982689932
+      identification: 
+        column-name: LANDLORD_ADDR_STREET
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Addr Street
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 540
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_ADDR_COUNTRY =======================
+      id: 226826848042689933
+      identification: 
+        column-name: LANDLORD_ADDR_COUNTRY
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Addr Country
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 550
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_ADDR_ZIPCODE =======================
+      id: 226826950327689934
+      identification: 
+        column-name: LANDLORD_ADDR_ZIPCODE
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Addr Zipcode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 560
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_ADDR_HOUSENUMBER ===================
+      id: 226826972392689935
+      identification: 
+        column-name: LANDLORD_ADDR_HOUSENUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Addr Housenumber
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 570
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_ADDR_ADDITION ======================
+      id: 226827100565689936
+      identification: 
+        column-name: LANDLORD_ADDR_ADDITION
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Addr Addition
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 580
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_LEGALFORM ==========================
+      id: 226827223197689937
+      identification: 
+        column-name: LANDLORD_LEGALFORM
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Legalform
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 590
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_SALUTATION =========================
+      id: 226827310988689938
+      identification: 
+        column-name: LANDLORD_SALUTATION
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Salutation
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 600
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_PHONE_NUMBER =======================
+      id: 226827414441689939
+      identification: 
+        column-name: LANDLORD_PHONE_NUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Phone Number
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 610
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_PHONE_AREACODE =====================
+      id: 226827453794689940
+      identification: 
+        column-name: LANDLORD_PHONE_AREACODE
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Phone Areacode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 620
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_PHONE_COUNTRYCODE ==================
+      id: 227235508951015891
+      identification: 
+        column-name: LANDLORD_PHONE_COUNTRYCODE
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Phone Countrycode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 630
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LANDLORD_BUSINESSORNAME =====================
+      id: 227235564205015892
+      identification: 
+        column-name: LANDLORD_BUSINESSORNAME
+        type: Plain Text
+
+      heading: 
+        heading: Landlord Businessorname
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 640
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROP_RESIDENTIAL_UNIT =======================
+      id: 227235664413015893
+      identification: 
+        column-name: PROP_RESIDENTIAL_UNIT
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ANZAHL_WE # 228552306473143172
+
+      heading: 
+        heading: Anzahl WE
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 650
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: PROP_OWNER_ROLE =============================
+      id: 227235811548015894
+      identification: 
+        column-name: PROP_OWNER_ROLE
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: GEE_ROLLE # 226276840356020082
+
+      heading: 
+        heading: GEE Rolle
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 660
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: LANDLORD_AGREED =============================
+      id: 227235864704015895
+      identification: 
+        column-name: LANDLORD_AGREED
+        type: Plain Text
+
+      heading: 
+        heading: Vermieter Kontakterlaubnis
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 670
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SUMM_PRECONTRACTINFORMATION =================
+      id: 227235963761015896
+      identification: 
+        column-name: SUMM_PRECONTRACTINFORMATION
+        type: Plain Text
+
+      heading: 
+        heading: Summ Precontractinformation
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 680
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SUMM_GENERALTERMSANDCONDITIONS ==============
+      id: 227236053974015897
+      identification: 
+        column-name: SUMM_GENERALTERMSANDCONDITIONS
+        type: Plain Text
+
+      heading: 
+        heading: Summ Generaltermsandconditions
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 690
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SUMM_WAIVERIGHTOFREVOCATION =================
+      id: 227236179932015898
+      identification: 
+        column-name: SUMM_WAIVERIGHTOFREVOCATION
+        type: Plain Text
+
+      heading: 
+        heading: Summ Waiverightofrevocation
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 700
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SUMM_EMAILMARKETING =========================
+      id: 227236309775015899
+      identification: 
+        column-name: SUMM_EMAILMARKETING
+        type: Plain Text
+
+      heading: 
+        heading: Summ Emailmarketing
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 710
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SUMM_PHONEMARKETING =========================
+      id: 227236423068015900
+      identification: 
+        column-name: SUMM_PHONEMARKETING
+        type: Plain Text
+
+      heading: 
+        heading: Summ Phonemarketing
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 720
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SUMM_SMSMMSMARKETING ========================
+      id: 227236528925015901
+      identification: 
+        column-name: SUMM_SMSMMSMARKETING
+        type: Plain Text
+
+      heading: 
+        heading: Summ Smsmmsmarketing
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 730
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SUMM_MAILMARKETING ==========================
+      id: 227236555923015902
+      identification: 
+        column-name: SUMM_MAILMARKETING
+        type: Plain Text
+
+      heading: 
+        heading: Summ Mailmarketing
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 740
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PREV_ADDR_STREET ===================
+      id: 227236679822015903
+      identification: 
+        column-name: CUSTOMER_PREV_ADDR_STREET
+        type: Plain Text
+
+      heading: 
+        heading: Customer Prev Addr Street
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 750
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PREV_ADDR_HOUSENUMBER ==============
+      id: 227236786133015904
+      identification: 
+        column-name: CUSTOMER_PREV_ADDR_HOUSENUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Customer Prev Addr Housenumber
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 760
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PREV_ADDR_ADDITION =================
+      id: 227236871497015905
+      identification: 
+        column-name: CUSTOMER_PREV_ADDR_ADDITION
+        type: Plain Text
+
+      heading: 
+        heading: Customer Prev Addr Addition
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 770
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PREV_ADDR_ZIPCODE ==================
+      id: 227237044503015906
+      identification: 
+        column-name: CUSTOMER_PREV_ADDR_ZIPCODE
+        type: Plain Text
+
+      heading: 
+        heading: Customer Prev Addr Zipcode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 780
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PREV_ADDR_CITY =====================
+      id: 227237062909015907
+      identification: 
+        column-name: CUSTOMER_PREV_ADDR_CITY
+        type: Plain Text
+
+      heading: 
+        heading: Customer Prev Addr City
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 790
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_PREV_ADDR_COUNTRY ==================
+      id: 227237204389015908
+      identification: 
+        column-name: CUSTOMER_PREV_ADDR_COUNTRY
+        type: Plain Text
+
+      heading: 
+        heading: Customer Prev Addr Country
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 800
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_UPD_EMAIL ==========================
+      id: 227237261682015909
+      identification: 
+        column-name: CUSTOMER_UPD_EMAIL
+        type: Plain Text
+
+      heading: 
+        heading: Customer Upd Email
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 810
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_UPD_PHONE_COUNTRYCODE ==============
+      id: 227237360512015910
+      identification: 
+        column-name: CUSTOMER_UPD_PHONE_COUNTRYCODE
+        type: Plain Text
+
+      heading: 
+        heading: Customer Upd Phone Countrycode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 820
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_UPD_PHONE_AREACODE =================
+      id: 227237513658015911
+      identification: 
+        column-name: CUSTOMER_UPD_PHONE_AREACODE
+        type: Plain Text
+
+      heading: 
+        heading: Customer Upd Phone Areacode
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 830
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUSTOMER_UPD_PHONE_NUMBER ===================
+      id: 227237572463015912
+      identification: 
+        column-name: CUSTOMER_UPD_PHONE_NUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Customer Upd Phone Number
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 840
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ANBIETERWECHSEL =============================
+      id: 227237834683015914
+      identification: 
+        column-name: ANBIETERWECHSEL
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: JA | NEIN (1|0) # 224055591124963777
+
+      heading: 
+        heading: Anbieterwechsel
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 860
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: GEE_ERTEILT =================================
+      id: 227238007833015916
+      identification: 
+        column-name: GEE_ERTEILT
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: GEE (ERTEILT) # 237171698421134506
+
+      heading: 
+        heading: GEE
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 870
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: SIEBEL_ORDER_NUMBER =========================
+      id: 231426026507892201
+      identification: 
+        column-name: SIEBEL_ORDER_NUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Siebel Auftragsnr.
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 990
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SIEBEL_ORDER_ROWID ==========================
+      id: 231426073189892202
+      identification: 
+        column-name: SIEBEL_ORDER_ROWID
+        type: Plain Text
+
+      heading: 
+        heading: Siebel Auftrag Zeilennr.
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1000
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SIEBEL_READY ================================
+      id: 231428002990892221
+      identification: 
+        column-name: SIEBEL_READY
+        type: Plain Text
+
+      heading: 
+        heading: Siebel Ready
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1010
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@ticket FTTH-2521'
+
+    - # ====== Column: KUNDENSTATUS ================================
+      id: 231475169534046713
+      identification: 
+        column-name: KUNDENSTATUS
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: KUNDENSTATUS # 227317722483099978
+
+      heading: 
+        heading: Kundenstatus
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      comments: 
+        comments: |
+          Abgeleitetes Feld: Ergibt sich aus 
+          WHEN IS_NEW_CUSTOMER = 'true' THEN 'N' ELSE 'B' END
+
+    - # ====== Column: IS_NEW_CUSTOMER =============================
+      id: 231475864160046720
+      identification: 
+        column-name: IS_NEW_CUSTOMER
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: JA | NEIN (TRUE|FALSE) # 223202727191171514
+
+      heading: 
+        heading: Neukunde
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 880
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: ONT_PROVIDER ================================
+      id: 232707651965350625
+      identification: 
+        column-name: ONT_PROVIDER
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ONT_PROVIDER # 232069849353781513
+
+      heading: 
+        heading: Glasfaser-Modem
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1130
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      comments: 
+        comments: '@ticket FTTH-3097'
+
+    - # ====== Column: UUID ========================================
+      id: 233138610357500619
+      identification: 
+        column-name: UUID
+        type: Plain Text
+
+      heading: 
+        heading: UUID
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: Falls der Benutzer auch die UUID als solche sehen möchte, kann er sie hiermit optional im Report einblenden.
+
+    - # ====== Column: CREATED =====================================
+      id: 233865364367578430
+      identification: 
+        column-name: CREATED
+        type: Plain Text
+
+      heading: 
+        heading: Auftragseingang
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 890
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: '&FM_DATETIME.'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LAST_MODIFIED ===============================
+      id: 233865459432578431
+      identification: 
+        column-name: LAST_MODIFIED
+        type: Plain Text
+
+      heading: 
+        heading: geändert
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 900
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: '&FM_DATETIME.'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: VERSION =====================================
+      id: 233865613466578432
+      identification: 
+        column-name: VERSION
+        type: Plain Text
+
+      heading: 
+        heading: Version
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 910
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROCESS_LOCK ================================
+      id: 233865718261578433
+      identification: 
+        column-name: PROCESS_LOCK
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: TRUE | FALSE # 235354587007905201
+
+      heading: 
+        heading: processLock
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 930
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '#PROCESS_LOCK!RAW#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+    - # ====== Column: PROCESS_LOCK_LAST_MODIFIED ==================
+      id: 233865753286578434
+      identification: 
+        column-name: PROCESS_LOCK_LAST_MODIFIED
+        type: Plain Text
+
+      heading: 
+        heading: Sperre geändert
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 950
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: '&FM_TIMESTAMP.'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROCESS_LOCK_DISPLAY ========================
+      id: 233865874091578435
+      identification: 
+        column-name: PROCESS_LOCK_DISPLAY
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: SPERRE # 235340049631567470
+
+      heading: 
+        heading: Sperre
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 940
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '#PROCESS_LOCK_DISPLAY!RAW#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+      comments: 
+        comments: '!RAW-Formatierungsanweisung (HTML Expression) für List of Values nötig, um das Schloss-Icon anzuzeigen'
+
+    - # ====== Column: STATUS ======================================
+      id: 236885628219374208
+      identification: 
+        column-name: STATUS
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: AUFTRAGSSTATUS ("STATE") # 226176519267562629
+
+      heading: 
+        heading: Auftragsstatus
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: true
+        pivot: false
+
+      comments: 
+        comments: Zur besser lesbaren Darstellung des "state"-Feldes
+
+    - # ====== Column: SERVICE_PLUS_EMAIL ==========================
+      id: 241090977682968105
+      identification: 
+        column-name: SERVICE_PLUS_EMAIL
+        type: Plain Text
+
+      heading: 
+        heading: Service Plus Email
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1020
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: AKTION ======================================
+      id: 246325623017951406
+      identification: 
+        column-name: AKTION
+        type: Plain Text
+
+      heading: 
+        heading: Aktion
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1030
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@FTTH-2411: Durch Speicherung von Promotions und Produkten in neuen Tabellen kann diese Spalte nun per JOIN aufgelöst werden, ohne eine Shared Component LOV mit Context Switch zu bemühen'
+
+    - # ====== Column: PRODUKT =====================================
+      id: 246325679018951407
+      identification: 
+        column-name: PRODUKT
+        type: Plain Text
+
+      heading: 
+        heading: Produkt
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1040
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: '@FTTH-2411: Durch Speicherung von Promotions und Produkten in neuen Tabellen kann diese Spalte nun per JOIN aufgelöst werden, ohne eine Shared Component LOV mit Context Switch zu bemühen'
+
+    - # ====== Column: VERMARKTUNGSCLUSTER =========================
+      id: 251251733952572601
+      identification: 
+        column-name: VERMARKTUNGSCLUSTER
+        type: Plain Text
+
+      heading: 
+        heading: Vermarktungscluster
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1050
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: VERMARKTUNGSCLUSTER_STATUS ==================
+      id: 251251768629572602
+      identification: 
+        column-name: VERMARKTUNGSCLUSTER_STATUS
+        type: Plain Text
+
+      heading: 
+        heading: VC Status
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1060
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: AUSBAU_PLAN_TERMIN ==========================
+      id: 251251851927572603
+      identification: 
+        column-name: AUSBAU_PLAN_TERMIN
+        type: Plain Text
+
+      heading: 
+        heading: VC Plantermin
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1070
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BANDBREITE_MIN ==============================
+      id: 251251966369572604
+      identification: 
+        column-name: BANDBREITE_MIN
+        type: Plain Text
+
+      heading: 
+        heading: Bandbreite (Min)
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1080
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: Dieser Bandbreiten-Wert stammt aus dem Vermarktungscluster und gilt auch dann, wenn im Feld "technolgy" ein anderer Diensttyp steht (typischerweise G_FAST) als im Vermarktungscluster.
+
+    - # ====== Column: BANDBREITE_MAX ==============================
+      id: 251252118512572605
+      identification: 
+        column-name: BANDBREITE_MAX
+        type: Plain Text
+
+      heading: 
+        heading: Bandbreite (Max)
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1090
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+      comments: 
+        comments: Dieser Bandbreiten-Wert stammt aus dem Vermarktungscluster und gilt auch dann, wenn im Feld "technolgy" ein anderer Diensttyp steht (typischerweise G_FAST) als im Vermarktungscluster.
+
+    - # ====== Column: DIENSTTYP ===================================
+      id: 251252418495572608
+      identification: 
+        column-name: DIENSTTYP
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: TECHNOLOGY (REPORTING) # 200135646163901550
+
+      heading: 
+        heading: Technologie
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1100
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      comments: 
+        comments: 'Wird aus dem JSON-Attribut "technology" gelesen und durch die LOV "TECHNOLOGY (Reporting)" in die Schreibweise überführt, die wir dafür in ROMA_MAIN verwenden - ohne Unterstriche. 2024-09-10:  Umbenennung des Felds von "Diensttyp" zu "Technologie", um die Herkunft der Spalte aus dem POB zu verdeutlichen.'
+
+    - # ====== Column: MANUAL_TRANSFER =============================
+      id: 265346663989305006
+      identification: 
+        column-name: MANUAL_TRANSFER
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: JA | NEIN (TRUE|FALSE) # 223202727191171514
+
+      heading: 
+        heading: Manuelle Aussteuerung
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1110
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: WHOLEBUY_PARTNER ============================
+      id: 265347091130305010
+      identification: 
+        column-name: WHOLEBUY_PARTNER
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: WHOLEBUY-PARTNER # 215033117212809431
+
+      heading: 
+        heading: Wholebuy Partner
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1120
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: A4
+        orientation: Landscape
+        units: Millimeters
+        width: 297
+        height: 210
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Glascontainer Auftragsliste
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Hinweis zur letzten Synchronisierung ========
+  id: 235931000364360034
+  identification: 
+    name: Hinweis zur letzten Synchronisierung
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: htp.p(PCK_GLASCONTAINER.fv_html_pob_zuletzt_synchronisiert());
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Below Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: '<p style="margin: 8px 0; font-size: .7rem">'
+    footer-text: </p>
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Zeigt einen Hinweistext ("Die Auftragsliste wurde zuletzt synchronisiert am..."), zu welchem Datum und Uhrzeit die Auftragsliste zuletzt aktualisiert wurde
+
+- # ====== Region: Button-Container rechts =====================
+  id: 235931399037360038
+  identification: 
+    name: Button-Container rechts
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 6
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 238129485579044280
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Glascontainer # 234884631880092836
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Breadcrumbs # 238157555060796911
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P10_SEARCHFLAG ===========================
+  id: 69573275467798819
+  identification: 
+    name: P10_SEARCHFLAG
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 40
+    region: Glascontainer Auftragsliste # 224924544000269794
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '@ticket FTTH-4884: Nur wenn dieses Item nicht NULL ist, wird die Auftragsliste abgefragt. Verhindert unnötig lange Wartezeiten beim Einstieg in die Seite. Das Setzen erfolgt durch den Default Value bei gleichzeigigem "Items to Submit" im IR, das heißt bei jeglicher EIngabe durch den User wird das Flag gesetzt und durch "Clear Cache" im Navigationslink wieder geNULLT.'
+
+- # ====== Page Item: P10_TEMP_HREF ============================
+  id: 81403423771397451
+  identification: 
+    name: P10_TEMP_HREF
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: Glascontainer Auftragsliste # 224924544000269794
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      Speichert vorübergehend einen Link, damit eine Dynamic Action diesen verwenden kann.
+      @ticket FTTH-4470: Speichert den Link zur Siebel-Kundenmaske
+
+- # ====== Page Item: P10_TEMP_KNR =============================
+  id: 81403562821397452
+  identification: 
+    name: P10_TEMP_KNR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: Glascontainer Auftragsliste # 224924544000269794
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      Speichert vorübergehend eine Kundennummer, damit eine Dynamic Action diesen verwenden kann.
+      @ticket FTTH-4470: Speichert die vom User angeklickte Kundennummer
+
+- # ====== Page Item: P10_TEMP_ACCOUNT_ID ======================
+  id: 88193967500458506
+  identification: 
+    name: P10_TEMP_ACCOUNT_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: Glascontainer Auftragsliste # 224924544000269794
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: |
+      @ticket FTTH-4470: Speichert vorübergehend die Siebel Account ID, damit eine Dynamic Action diese verwenden kann.
+      
+
+- # ====== Page Item: P10_DIREKTEINGABE_UUID ===================
+  id: 202843040923982699
+  identification: 
+    name: P10_DIREKTEINGABE_UUID
+    type: Text Field
+
+  label: 
+    label: 'UUID: '
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: Direkteingabe UUID # 202842965236982698
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 9
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BTN_UUID_DIREKTEINGABE ======================
+  id: 202843103948982700
+  identification: 
+    button-name: BTN_UUID_DIREKTEINGABE
+    label: direkt abrufen
+
+  layout: 
+    sequence: 20
+    region: Direkteingabe UUID # 202842965236982698
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--iconLeft
+    - t-Button--padTop
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: BTN_SYNC_AUFTRAGSLISTE ======================
+  id: 235931184814360036
+  identification: 
+    button-name: BTN_SYNC_AUFTRAGSLISTE
+    label: Erneut synchronisieren
+
+  layout: 
+    sequence: 10
+    region: Button-Container rechts # 235931399037360038
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Right
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--link
+    - t-Button--iconLeft
+    icon: fa-refresh
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: PCK_GLASCONTAINER.fv_ws_sync_sperre(PCK_GLASCONTAINER.C_WS_STATIC_ID_PREORDERS) IS NULL
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  comments: 
+    comments: Button ist nur für Administratoren vwerfügbar
+
+dynamic-actions: 
+- # ====== Dynamic Action: Suche aktivieren ====================
+  id: 69573448030798820
+  identification: 
+    name: Suche aktivieren
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Before Refresh
+    selection-type: Region
+    region: Glascontainer Auftragsliste # 224924544000269794
+
+  comments: 
+    comments: '@ticket FTTH-4884: Setzt das Suchflag unmittelbar vor der Ausführung des IR.'
+
+  actions: 
+  - # ====== Action: P10_SEARCHFLAG setzen =======================
+    id: 69573504858798821
+    identification: 
+      name: P10_SEARCHFLAG setzen
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: 1
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P10_SEARCHFLAG
+
+    execution: 
+      sequence: 10
+      event: Suche aktivieren # 69573448030798820
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+    comments: 
+      comments: '@ticket FTTH-4884: Bitte beachten: Das Item darf hier nicht serverseitig persisitert werden, sonst läuft der Report schon beim Aufruf der Seite! Die Persistierung erfolgt durch die Angabe von "Items to Subnmit" im Report.'
+
+- # ====== Dynamic Action: Kundennummer öffnet Siebel ==========
+  id: 81403014183397447
+  identification: 
+    name: Kundennummer öffnet Siebel
+
+  execution: 
+    sequence: 30
+    event-scope: Dynamic
+    static-container-(jquery-selector): '#auftragslisteIR'
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: jQuery Selector
+    jquery-selector: td[headers='tdKnr'] > a
+
+  comments: 
+    comments: '@ticket FTTH-4470: Reagiert auf das Anklicken einer Kundennummer, indem ein neues Browserfenster mit der Siebel-Kundenmaske geöffnet wird'
+
+  actions: 
+  - # ====== Action: Kundennummer persistieren ===================
+    id: 81403255628397449
+    identification: 
+      name: Kundennummer persistieren
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        let $link = $(this.triggeringElement);
+        let knr = $link.text();
+        if(!knr) apex.da.cancel(); // abbrechen, wenn es keine Kundennummer gibt
+        
+        let accountId = $link.data('account_id');
+        if(!accountId) apex.da.cancel(); // abbrechen, wenn es keine account_id gibt
+        
+        apex.item('P10_TEMP_KNR').setValue(knr);
+        apex.item('P10_TEMP_ACCOUNT_ID').setValue(accountId);
+        
+
+    execution: 
+      sequence: 20
+      event: Kundennummer öffnet Siebel # 81403014183397447
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: '@ticket FTTH-4470: Zur Ermittlung des Links im nächsten Schritt werden die Werte der Kundennummer und der Account-ID in Hidden Items geschrieben.'
+
+  - # ====== Action: AccountId ermitteln =========================
+    id: 81403380205397450
+    identification: 
+      name: AccountId ermitteln
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        :P10_TEMP_HREF := PCK_GLASCONTAINER.fv_href_siebel_kundenmaske(
+            piv_account_id    => :P10_TEMP_ACCOUNT_ID
+          , piv_kundennummer  => :P10_TEMP_KNR
+        );
+      items-to-submit: 
+      - P10_TEMP_KNR
+      - ' P10_TEMP_ACCOUNT_ID'
+      items-to-return: 
+      - P10_TEMP_HREF
+      suppress-change-event: false
+
+    execution: 
+      sequence: 30
+      event: Kundennummer öffnet Siebel # 81403014183397447
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+    comments: 
+      comments: '@ticket FTTH-4470: Der Link zur Siebel-Kundenmaskte wird in dieser Action serverseitig generiert, da er umgebungsabhängig ist. Es wäre für die Report-Performance schädlich, im Voraus für jeden Auftrag diese zusätzliche Berechnung durchzuführen.'
+
+  - # ====== Action: Siebel in neuem Tab öffnen ==================
+    id: 81403682144397453
+    identification: 
+      name: Siebel in neuem Tab öffnen
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        let href = apex.item('P10_TEMP_HREF').getValue();
+        let knr = apex.item('P10_TEMP_KNR').getValue();
+        let accountId = apex.item('P10_TEMP_ACCOUNT_ID').getValue();
+        if(!!href) {
+            window.open(href, '_blank').focus();
+        } else {
+            apex.message.alert('Zur Kundennummer ' + knr + ' und Account-ID ' + accountId + ' existiert in Siebel keine passende GLOBAL_ID.\nDie Kundenmaske kann nicht geöffnet werden.');
+        }
+
+    execution: 
+      sequence: 40
+      event: Kundennummer öffnet Siebel # 81403014183397447
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: '@ticket FTTH-4470: Nur wenn ein gültiger Link ermittelt werden konnte, wird die siebel-Kundenmaske geöffnet, ansonsten wird eine Fehlermeldung angezeigt.'
+
+- # ====== Dynamic Action: IG Copy Hack ========================
+  id: 202842714606982696
+  identification: 
+    name: IG Copy Hack
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  configuration: 
+    build-option: 'DA: IG Copy Hack' # 202886674411582214
+
+  comments: 
+    comments: Ermöglicht es, den gesamten Textinhalt einer markierte Zelle im Interactive Grid in die Zwischenablage zu kopieren. Die DA ist hier zunächst nur als Zwischenspeicher für spätere Verwendung gedacht, da auf Seite 10 ein Interactive REPORT wohnt und kein GRID und dieses Problem daher in der Auftragsliste gar nicht existiert.
+
+  actions: 
+  - # ====== Action: copy-Event abfangen =========================
+    id: 202842847708982697
+    identification: 
+      name: copy-Event abfangen
+      action: Execute JavaScript Code
+
+    settings: 
+      code: initIgCopyHack()
+
+    execution: 
+      sequence: 10
+      event: IG Copy Hack # 202842714606982696
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    configuration: 
+      build-option: 'DA: IG Copy Hack' # 202886674411582214
+
+    comments: 
+      comments: '@url https://www.oneoracledeveloper.com/2022/03/copy-cell-value-from-ig-global-edition.html'
+
+- # ====== Dynamic Action: BTN_SYNC_AUFTRAGSLISTE ==============
+  id: 251252802959572612
+  identification: 
+    name: BTN_SYNC_AUFTRAGSLISTE
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_SYNC_AUFTRAGSLISTE # 235931184814360036
+
+  actions: 
+  - # ====== Action: Confirm =====================================
+    id: 251252880458572613
+    identification: 
+      action: Confirm
+
+    settings: 
+      message: Die Synchronisation kann mehrere Minuten in Anspruch nehmen, bitte lösen Sie den Vorgang nicht mehrfach aus.
+      style: Default
+
+    execution: 
+      sequence: 10
+      event: BTN_SYNC_AUFTRAGSLISTE # 251252802959572612
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    comments: 
+      comments: '2023-09-19: Nachdem inzwischen der normale Sync ebenfalls mehrere Minuten dauert, soll der User darauf hingewiesen werden, dass die Synchronisation einige Zeit in Anspruch nimmt'
+
+  - # ====== Action: Submit Page =================================
+    id: 251252960965572614
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: BTN_SYNC_AUFTRAGSLISTE
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: BTN_SYNC_AUFTRAGSLISTE # 251252802959572612
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+validations: 
+- # ====== Validation: UUID Direkteingabe existiert ============
+  id: 77931541370578831
+  identification: 
+    name: UUID Direkteingabe existiert
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Function Body (returning Error Text)
+    language: PL/SQL
+    pl/sql-function-body-returning-error-text: 'RETURN PCK_GLASCONTAINER.fv_uuid_existiert(:P10_DIREKTEINGABE_UUID);'
+    always-execute: false
+
+  error: 
+    display-location: Inline with Field and in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_UUID_DIREKTEINGABE # 202843103948982700
+
+  comments: 
+    comments: Prüft bei Direkteingabe einer UUID, ob ein solcher Datensatz im Preorderbuffer überhaupt existiert
+
+computations: 
+- # ====== Computation: P10_SEARCHFLAG =========================
+  id: 69573820124798824
+  identification: 
+    item-name: P10_SEARCHFLAG
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: 1
+
+  server-side-condition: 
+    type: Never
+
+  comments: 
+    comments: |
+      @ticket FTTH-4884. Nur wenn der Wert dieses Items im SQL des Interactive Report auf 1 steht, werden Reportergebnisse angezeigt (siehe WHERE-Klausel)
+      @bug: https://forums.oracle.com/ords/apexds/post/bug-negated-build-options-in-page-computations-not-being-ex-1629
+      => Darum auf NEVER gestellt, bis das Thema geklärt ist bzw. diese Build Option gelöscht. //// Anschließend diese Computation insgesamnt löschen.
+
+processes: 
+- # ====== Process: Preorderbuffer synchronisieren =============
+  id: 74686956920597909
+  identification: 
+    name: Preorderbuffer synchronisieren
+    type: Execution Chain
+    execution-chain: None
+
+  settings: 
+    run-in-background: true
+    temporary-file-handling: Ignore
+    submit-immediately: false
+
+  serialization: 
+    serialize: false
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Die Synchronisierung läuft im Hintergrund.
+
+  error: 
+    error-message: 'Fehler bei der Synchronisierung: #SQLERRM#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_SYNC_AUFTRAGSLISTE # 235931184814360036
+
+  comments: 
+    comments: Startet die ad-hoc-Synchronisiierung des Preorderbuffers, nachdem der Benutzer den Button-Link "Erneut synchronisieren" angeklickt hat
+
+- # ====== Process: SYNC_AUFTRAGSLISTE =========================
+  id: 235931562215360040
+  identification: 
+    name: SYNC_AUFTRAGSLISTE
+    type: Execute Code
+    execution-chain: Preorderbuffer synchronisieren # 74686956920597909
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      PCK_GLASCONTAINER.p_webservice_synchronisieren(
+          PCK_GLASCONTAINER.C_WS_STATIC_ID_PREORDERS
+      );
+
+  execution: 
+    sequence: 30
+
+  success-message: 
+    success-message: Die Synchronisierung wurde gestartet.
+
+  error: 
+    error-message: 'Synchronisierung konnte nicht gestartet werden: #SQLERRM#'
+
+  server-side-condition: 
+    type: Request = Value
+    value: BTN_SYNC_AUFTRAGSLISTE
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  comments: 
+    comments: Startet die Synchronisierung der Preorderbuffer-Tabelle
+
+branches: 
+- # ====== Branch: UUID Direkteingabe ==========================
+  id: 77931309680578829
+  identification: 
+    name: UUID Direkteingabe
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:20:&SESSION.::&DEBUG.::P20_UUID:&P10_DIREKTEINGABE_UUID.&success_msg=#SUCCESS_MSG#'
+      page: 20 # Auftragsdaten
+      values: 
+        p20_uuid: '&P10_DIREKTEINGABE_UUID.'
+
+  server-side-condition: 
+    when-button-pressed: BTN_UUID_DIREKTEINGABE # 202843103948982700
+
+  comments: 
+    comments: Springt zur Auftragsansicht, nachdem der Benutzer eine UUID direkt eingegeben und den Button "direkt abrufen" angeklickt hat
+
+- # ====== Branch: Berechtigung fehlt ==========================
+  id: 248950998173303460
+  identification: 
+    name: Berechtigung fehlt
+
+  execution: 
+    sequence: 40
+    point: Before Header
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:10050:&SESSION.::&DEBUG.::P10050_APPLIKATIONSSEITE,P10050_ROLLE_ERFORDERLICH:Auftragsliste,SUPERUSER&success_msg=#SUCCESS_MSG#'
+      page: 10050 # Glascontainer - Über diese Anwendung
+      values: 
+        p10050_applikationsseite: Auftragsliste
+        p10050_rolle_erforderlich: SUPERUSER
+
+  security: 
+    authorization-scheme: MODEL.LOV.NOT_W_ARGUMENT # 244597399936966998
+

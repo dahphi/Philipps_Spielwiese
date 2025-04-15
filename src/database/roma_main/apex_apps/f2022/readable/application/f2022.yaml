@@ -1,0 +1,287 @@
+---
+# ====== Application: Glascontainer ==========================
+id: 2022
+identification: 
+  name: Glascontainer
+  alias: GLASCONTAINER
+  version: 2025-03-11 1200
+  application-group: Glascontainer # 137002914701848690
+
+row-search: 
+  tokenize: false
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+
+report-printing: 
+  type: Use Instance Settings
+
+advanced: 
+  friendly-urls: true
+  allow-feedback: true
+  logging: false
+  debugging: true
+  compatibility-mode: 21.2 to 24.1
+  accessible-read-only-items: false
+  pass-ecid: N
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: Single Sign-on [SSOUSER] # 235084263838096053
+
+authorization: 
+  source-for-role-or-group-schemes: Access Control User Role Assignments
+
+session-management: 
+  rejoin-sessions: Disabled
+
+session-state-protection: 
+  enabled: false
+
+security: 
+  deep-linking: Enabled
+  browser-cache: Disabled
+  embed-in-frames: Deny
+  referrer-policy: strict-origin
+  html-escaping-mode: Extended
+
+database-session: 
+  parsing-schema: ROMA_MAIN
+
+globalization: 
+  primary-language: German (Germany) (de)
+  document-direction: Left-To-Right
+  language-derived-from: Application Primary Language
+  automatic-time-zone: false
+  automatic-csv-encoding: true
+
+application-format-masks: 
+  date: DS
+  date-time: DS
+  timestamp: DS
+  timestamp-time-zone: DS
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Text
+  text: Glascontainer
+
+progressive-web-app: 
+  enable: true
+  installable: false
+  display: Standalone
+  screen-orientation: Any
+  ios-status-bar-style: Default
+  enable-push-notifications: false
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:1:&SESSION.'
+    page: 1 # Start
+
+  login-url: 
+    url: 'f?p=&APP_ID.:LOGIN:&APP_SESSION.::&DEBUG.:::'
+    page: LOGIN
+
+navigation-menu: 
+  list-template: Top Navigation Menu
+  template-options: 
+  - '#DEFAULT#'
+  - js-tabLike
+  list-position: Top
+  list: Glascontainer Navigation Menu # 234885061298092840
+
+navigation-bar: 
+  implementation: List
+  list: Navigation Bar # 235072404281092953
+  list-template: Navigation Bar
+  template-options: 
+  - '#DEFAULT#'
+
+javascript: 
+  include-jquery-migrate: false
+
+css: 
+  file-urls: 
+  - '#APP_FILES#app-icon.css?version=#APP_VERSION#'
+
+attributes: 
+  theme: Universal Theme # 42
+  global-page: 0
+  enable-end-users-to-choose-theme-style: false
+  add-"built-with-apex"-to-footer: false
+  auto-dismiss-success-messages: true
+
+subscription: 
+  version-number: 4109007842507
+
+substitutions: 
+- # ====== Substitution: APP_NAME ==============================
+  id: 1
+  identification: 
+    name: APP_NAME
+
+  value: 
+    static-value: Glascontainer
+
+- # ====== Substitution: FM_DATE ===============================
+  id: 2
+  identification: 
+    name: FM_DATE
+
+  value: 
+    static-value: DD.MM.YYYY
+
+- # ====== Substitution: FM_DATETIME ===========================
+  id: 3
+  identification: 
+    name: FM_DATETIME
+
+  value: 
+    static-value: 'DD.MM.YYYY HH24:MI'
+
+- # ====== Substitution: FM_TIMESTAMP ==========================
+  id: 4
+  identification: 
+    name: FM_TIMESTAMP
+
+  value: 
+    static-value: 'DD.MM.YYYY HH24:MI:SS'
+
+component-settings: 
+- # ====== Component Setting: NATIVE_BOSS ======================
+  id: 1461878374775481
+  identification: 
+    name: NATIVE_BOSS
+    type: REST Data Source
+
+  subscription: 
+    version-number: 4108547205480
+
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 52955035710563607
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  subscription: 
+    version-number: 4063017195835
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 52967596351563608
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 4063017195837
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 52980209756563609
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 4063017195841
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 204885890386972728
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 205558913088169677
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 3995516629607
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 234881024659092833
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 234881348381092833
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 234881615646092833
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 234881869796092833
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 234882165493092833
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 234883114695092833
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 234883351591092833
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 234883699511092834
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  subscription: 
+    version-number: 1
+

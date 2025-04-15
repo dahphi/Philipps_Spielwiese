@@ -1,0 +1,1414 @@
+---
+# ====== Page: Fehlerstatistiken =============================
+id: 10051
+identification: 
+  name: Fehlerstatistiken
+  alias: FEHLERSTATISTIKEN
+  title: Fehlerstatistiken
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authorization-scheme: '* App - Administrator' # 238128469706691677
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+comments: 
+  comments: '@ticket FTTH-2648'
+
+regions: 
+- # ====== Region: Container Fehlerstatistik ===================
+  id: 72459074840963917
+  identification: 
+    name: Container Fehlerstatistik
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: APEX_COLLECTION.COLLECTION_EXISTS('FEHLERSTATISTIK')
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: APEX_COLLECTIONS ============================
+  id: 72459157224963918
+  identification: 
+    name: APEX_COLLECTIONS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: SELECT COLLECTION_NAME, N001, N002, C001, C002 FROM APEX_COLLECTIONS
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Never
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: COLLECTION_NAME =============================
+    id: 72459235128963919
+    identification: 
+      column-name: COLLECTION_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Collection Name
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: N001 ========================================
+    id: 72459376704963920
+    identification: 
+      column-name: N001
+      type: Plain Text
+
+    heading: 
+      heading: N001
+      alignment: end
+
+    layout: 
+      sequence: 20
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: N002 ========================================
+    id: 72459441510963921
+    identification: 
+      column-name: N002
+      type: Plain Text
+
+    heading: 
+      heading: N002
+      alignment: end
+
+    layout: 
+      sequence: 30
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: C001 ========================================
+    id: 72459564260963922
+    identification: 
+      column-name: C001
+      type: Plain Text
+
+    heading: 
+      heading: C001
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: C002 ========================================
+    id: 72459631292963923
+    identification: 
+      column-name: C002
+      type: Plain Text
+
+    heading: 
+      heading: C002
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Fehlerstatistik =============================
+  id: 321594947990057731
+  identification: 
+    name: Fehlerstatistik
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: Container Fehlerstatistik # 72459074840963917
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: FEHLERSTATISTIK Glascontainer ===============
+  id: 321595038090057732
+  identification: 
+    name: FEHLERSTATISTIK Glascontainer
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT N001 AS LOG_ID, N002 AS LINE, N003 AS ERROR_CODE
+           , D001 AS INSERTED
+           , TRUNC(D001) AS DATUM
+           , C001 AS SCOPE, C002 AS USER_NAME, C003 AS MODULE, C004 AS ACTION, C005 AS ROUTINE_NAME
+           , C006 AS ERROR_MESSAGE, C007 AS MESSAGE
+        FROM APEX_COLLECTIONS
+       WHERE COLLECTION_NAME = 'FEHLERSTATISTIK'
+
+  layout: 
+    sequence: 30
+    parent-region: Container Fehlerstatistik # 72459074840963917
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 321595115871057733
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+      maximum-rows-per-page: 50
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 329435800739875259
+      identification: 
+        name: Primary Report
+        alias: 1252727
+
+    columns: 
+    - # ====== Column: LOG_ID ======================================
+      id: 321595180111057734
+      identification: 
+        column-name: LOG_ID
+        type: Link
+
+      heading: 
+        heading: LOG_ID
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:10052:&SESSION.::&DEBUG.::P10052_LOG_ID:#LOG_ID#'
+          page: 10052 # Log-Details
+          values: 
+            p10052_log_id: '#LOG_ID#'
+
+        link-text: '#LOG_ID#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LINE ========================================
+      id: 321595348849057735
+      identification: 
+        column-name: LINE
+        type: Plain Text
+
+      heading: 
+        heading: Line
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ERROR_CODE ==================================
+      id: 321595362849057736
+      identification: 
+        column-name: ERROR_CODE
+        type: Plain Text
+
+      heading: 
+        heading: ERROR_CODE
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: INSERTED ====================================
+      id: 321595463909057737
+      identification: 
+        column-name: INSERTED
+        type: Plain Text
+
+      heading: 
+        heading: INSERTED
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 'YYYY-MM-DD HH24:MI:SS'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SCOPE =======================================
+      id: 321595559799057738
+      identification: 
+        column-name: SCOPE
+        type: Plain Text
+
+      heading: 
+        heading: Scope
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: USER_NAME ===================================
+      id: 321595707657057739
+      identification: 
+        column-name: USER_NAME
+        type: Plain Text
+
+      heading: 
+        heading: User Name
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MODULE ======================================
+      id: 321595814007057740
+      identification: 
+        column-name: MODULE
+        type: Plain Text
+
+      heading: 
+        heading: Module
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ACTION ======================================
+      id: 329425391608847191
+      identification: 
+        column-name: ACTION
+        type: Plain Text
+
+      heading: 
+        heading: Action
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ROUTINE_NAME ================================
+      id: 329425474667847192
+      identification: 
+        column-name: ROUTINE_NAME
+        type: Plain Text
+
+      heading: 
+        heading: Routine Name
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ERROR_MESSAGE ===============================
+      id: 329425574630847193
+      identification: 
+        column-name: ERROR_MESSAGE
+        type: Plain Text
+
+      heading: 
+        heading: Error Message
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MESSAGE =====================================
+      id: 329425733021847194
+      identification: 
+        column-name: MESSAGE
+        type: Plain Text
+
+      heading: 
+        heading: Message
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DATUM =======================================
+      id: 329426111242847198
+      identification: 
+        column-name: DATUM
+        type: Plain Text
+
+      heading: 
+        heading: Datum
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: A4
+        orientation: Landscape
+        units: Millimeters
+        width: 297
+        height: 210
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: FEHLERSTATISTIK Glascontainer
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Breadcrumb ==================================
+  id: 329410303503718499
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Glascontainer # 234884631880092836
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Routinen mit den meisten Fehler-Logs ========
+  id: 329413591456718506
+  identification: 
+    name: Routinen mit den meisten Fehler-Logs
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 20
+    parent-region: Fehlerstatistik # 321594947990057731
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 6
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 329413887920718506
+    chart: 
+      type: Pie
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format-scaling: Automatic
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: ROUTINE_NAME ================================
+      id: 329414377365718506
+      identification: 
+        name: ROUTINE_NAME
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT C005 AS LABEL, COUNT(*) AS VALUE
+            FROM APEX_COLLECTIONS
+           WHERE COLLECTION_NAME = 'FEHLERSTATISTIK'
+           GROUP BY C005
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+      performance: 
+        maximum-rows-to-process: 20
+
+- # ====== Region: Anzahl Fehler pro Tag innerhalb der letzten 4
+  id: 329415027868718506
+  identification: 
+    name: Anzahl Fehler pro Tag innerhalb der letzten 4 Wochen
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 10
+    parent-region: Fehlerstatistik # 321594947990057731
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 329415416972718506
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Fehler-Logs =================================
+      id: 329417060887718507
+      identification: 
+        name: Fehler-Logs
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          WITH kalender AS (
+            SELECT trunc(sysdate) + 1 - level AS datum
+              FROM dual
+            CONNECT BY
+              level <= 28
+          ), fehlerlogs AS (
+            SELECT DATUM,
+                   COUNT(*) AS ANZAHL
+              FROM (
+              SELECT TRUNC(D001) AS DATUM
+                FROM APEX_COLLECTIONS C
+               WHERE COLLECTION_NAME = 'FEHLERSTATISTIK'
+            )
+             GROUP BY DATUM
+          )
+          SELECT TO_CHAR(kalender.DATUM, 'DD.') AS LABEL,
+                 fehlerlogs.anzahl             AS value
+            FROM kalender
+            LEFT JOIN fehlerlogs
+          ON ( kalender.datum = fehlerlogs.datum )
+           ORDER BY kalender.datum
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: false
+
+      performance: 
+        maximum-rows-to-process: 90
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 329415894363718507
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+        step: 1
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 329416465241718507
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Log
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+
+processes: 
+- # ====== Process: CREATE_COLLECTION (async) ==================
+  id: 68204595934631854
+  identification: 
+    name: CREATE_COLLECTION (async)
+    type: Execute Code
+    execution-chain: CREATE_COLLECTION # 321594655074057729
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERYB2(
+        p_collection_name => 'FEHLERSTATISTIK'
+       ,p_query => '
+      SELECT log_id, line, error_code, NULL, NULL
+           , INSERTED, NULL, NULL, NULL, NULL
+           , scope, user_name, module, action, routine_name
+           , SUBSTR(error_message, 1, 4000), SUBSTR(message, 1, 4000)
+        FROM LOGS
+       WHERE (scope = ''POB''
+          OR module LIKE ''ROMA_MAIN/APEX:APP 2022%'')
+         AND inserted >= ADD_MONTHS(TRUNC(SYSDATE), -1)
+         AND ERROR_CODE IS NOT NULL
+         AND DEBUG_LEVEL >= 30
+       ORDER BY log_id DESC
+      '
+      );
+
+  execution: 
+    sequence: 10
+
+- # ====== Process: CREATE_COLLECTION ==========================
+  id: 321594655074057729
+  identification: 
+    name: CREATE_COLLECTION
+    type: Execution Chain
+    execution-chain: None
+
+  settings: 
+    run-in-background: false
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ":REQUEST = 'CREATE_COLLECTION' AND NOT APEX_COLLECTION.COLLECTION_EXISTS('FEHLERSTATISTIK')"
+
+  configuration: 
+    build-option: Commented Out # 234883986660092834
+
+  comments: 
+    comments: |
+      (@deprecated: Jetzt asnychron auf Seite 10050)
+      Erstellt eine Fehlerliste als Collection aus der Tabelle LOGS, in der alle Fehlereinträge enthalten sind, die nicht durch den User ORACLE (nächtliche Verarbeitung) erzeugt wurden. @date 2024-08-13: Im SQL ergänzt: Nur Fehler, keine Info-Logs selektieren
+

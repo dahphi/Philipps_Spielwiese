@@ -1,0 +1,452 @@
+---
+# ====== Page: Availability Check ============================
+id: 902
+identification: 
+  name: Availability Check
+  alias: AVAILABILITY-CHECK
+  title: Availability Check
+  page-group: Technische Tests # 75017970958392079
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    textarea {height: fit-content!important}
+    
+    table#technologien {
+      border-collapse:collapse;
+      width: 100%;
+        margin-bottom: 50px;
+    }
+    table#technologien > caption {
+        font-style: italic;
+        text-align: left;
+        padding: 1em 0;
+    }
+    table#technologien th,
+    table#technologien td {
+      padding: 4px 20px;
+      border:1px solid grey;
+      text-align: center;
+      background-color: #F6F6F6;
+    }
+    table#technologien td.numeric {
+        text-align:right;
+        padding-right: 30px;
+    }
+    
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+comments: 
+  comments: Testseite zum Abrufen des Anschlusschecks für eine HAUS_LFD_NR. Zeigt das JSON Resultset sowie die Darstellung der Technologien in Form einen HTML-Tabelle an, so wie sie im Dialog auf Seite 16 benutzt werden.
+
+regions: 
+- # ====== Region: Test: Availability Check ====================
+  id: 69573146344798817
+  identification: 
+    name: 'Test: Availability Check'
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Antwort =====================================
+  id: 77781641559327328
+  identification: 
+    name: Antwort
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    footer-text: '&P902_LANDLINE_PROMOTIONS_HTML!RAW.'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P902_HAUS_LFD_NR =========================
+  id: 69572939617798815
+  identification: 
+    name: P902_HAUS_LFD_NR
+    type: Text Field
+
+  label: 
+    label: Haus Lfd Nr
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: 'Test: Availability Check' # 69573146344798817
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P902_JSON ================================
+  id: 77781014407327322
+  identification: 
+    name: P902_JSON
+    type: Textarea
+
+  label: 
+    label: Antwort vom Availability Check
+    alignment: Left
+
+  settings: 
+    resizable: true
+    auto-height: false
+    character-counter: false
+    trim-spaces: Leading and Trailing
+
+  layout: 
+    sequence: 10
+    region: Antwort # 77781641559327328
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 60
+    height: 10
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P902_LANDLINE_PROMOTIONS_HTML ============
+  id: 77781481280327327
+  identification: 
+    name: P902_LANDLINE_PROMOTIONS_HTML
+    type: Text Field
+
+  label: 
+    label: Technologien (Landline Promotions)
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: Antwort # 77781641559327328
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 60
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BTN_SEND ====================================
+  id: 69573040982798816
+  identification: 
+    button-name: BTN_SEND
+    label: Availability-Check durchführen
+
+  layout: 
+    sequence: 40
+    region: 'Test: Availability Check' # 69573146344798817
+    slot: HELP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--iconLeft
+    icon: fa-location
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Antworten löschen ===================
+  id: 77781681981327329
+  identification: 
+    name: Antworten löschen
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_SEND # 69573040982798816
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 77781785570327330
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P902_JSON
+
+    execution: 
+      sequence: 10
+      event: Antworten löschen # 77781681981327329
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 77781963491327331
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P902_JSON
+      - P902_LANDLINE_PROMOTIONS_HTML
+
+    execution: 
+      sequence: 20
+      event: Antworten löschen # 77781681981327329
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+processes: 
+- # ====== Process: Availability Check aufrufen ================
+  id: 77781116749327323
+  identification: 
+    name: Availability Check aufrufen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :P902_JSON := PCK_POB_REST.fv_availability(
+         pin_haus_lfd_nr => :P902_HAUS_LFD_NR 
+        ,piv_username    => :APP_USER
+      );
+      
+      
+      :P902_LANDLINE_PROMOTIONS_HTML := PCK_GLASCONTAINER_ORDER.fv_landline_promotions_html(
+          piv_json => :P902_JSON
+         , piv_html_id => 'technologien'
+      );
+      
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_SEND # 69573040982798816
+

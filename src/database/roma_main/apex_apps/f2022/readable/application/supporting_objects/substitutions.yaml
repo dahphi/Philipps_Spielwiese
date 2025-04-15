@@ -1,0 +1,33 @@
+---
+- # ====== Substitution: APP_NAME ==============================
+  id: 1
+  identification: 
+    name: APP_NAME
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: FM_DATE ===============================
+  id: 2
+  identification: 
+    name: FM_DATE
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: FM_DATETIME ===========================
+  id: 3
+  identification: 
+    name: FM_DATETIME
+
+  installation: 
+    prompt-substitution: false
+
+- # ====== Substitution: FM_TIMESTAMP ==========================
+  id: 4
+  identification: 
+    name: FM_TIMESTAMP
+
+  installation: 
+    prompt-substitution: false
+
