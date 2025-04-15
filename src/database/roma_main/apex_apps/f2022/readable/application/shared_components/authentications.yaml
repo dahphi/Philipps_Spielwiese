@@ -12,7 +12,7 @@
 
   settings: 
     type: Social Sign-In
-    credential-store: 53375817198678569
+    credential-store: 85476629738434870
     authentication-provider: OpenID Connect Provider
     discovery-url: 'https://keycloak.it-test.nc.de/realms/ords/.well-known/openid-configuration'
     scope: email,profile

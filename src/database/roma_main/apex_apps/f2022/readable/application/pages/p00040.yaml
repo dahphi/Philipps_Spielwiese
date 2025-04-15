@@ -1121,7 +1121,7 @@ regions:
 
       layout: 
         sequence: 80
-        column-alignment: start
+        column-alignment: center
 
       accessibility: 
         value-identifies-row: false

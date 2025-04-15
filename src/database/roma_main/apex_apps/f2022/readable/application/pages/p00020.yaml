@@ -144,12 +144,12 @@ css:
         font-size: 100%; 
     }
     
-    table.kommentare tr.intro > td{
+    table.kommentare tr.intro > td {
         font-weight: bold;
         border-bottom: 1px solid #6e8598;
     }
     
-    #region_kommentare_ir tr{
+    #region_kommentare_ir tr {
         vertical-align: top;
     }
     #region_kommentare_ir pre {
@@ -217,7 +217,7 @@ css:
     div.WHOLEBUY_PARTNER.DG,
     div.WHOLEBUY_PARTNER.DGF {
         background-image: linear-gradient(to right, #14a0dc, transparent, transparent);
-        color:#FFF
+        color: #FFF;
     }
     
     button.preText {
@@ -1545,10 +1545,10 @@ regions:
       output-as: HTML
       expand-shortcuts: false
 
-- # ====== Region: Storno-Bestätigungsmail =====================
+- # ====== Region: Hinweis: Keine Storno-Bestätigungsmail ======
   id: 78722041803270544
   identification: 
-    name: Storno-Bestätigungsmail
+    name: 'Hinweis: Keine Storno-Bestätigungsmail'
     type: Static Content
 
   source: 
@@ -1589,7 +1589,9 @@ regions:
     customizable: Not Customizable By End Users
 
   comments: 
-    comments: '@krakar @ticket FTTH-4270: Eine zusätzliche Info-Box angelegt, die nur beim Auswählen der Stornogründe: "Auftragskorrektur, neu erfasst" und "Dublette" angezeigt wird'
+    comments: |
+      @krakar @ticket FTTH-4270: Eine zusätzliche Info-Box angelegt, die nur beim Auswählen der Stornogründe: "Auftragskorrektur, neu erfasst" und "Dublette" angezeigt wird
+      @ticket FTTH-4719: Automatisch gilt das nun auch für den Stornogrund "CLEARING_WB_ABBM" (siehe PCK_GLASCONTAINER.fv_stornogruende_ohne_mail)
 
   attributes: 
     settings: 
@@ -1801,7 +1803,7 @@ regions:
     template-options: 
     - '#DEFAULT#'
     - t-Region--noPadding
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -2123,7 +2125,7 @@ regions:
     template-options: 
     - '#DEFAULT#'
     - t-Region--noPadding
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -2218,7 +2220,7 @@ regions:
     template: Standard
     template-options: 
     - '#DEFAULT#'
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -2265,7 +2267,7 @@ regions:
     template: Standard
     template-options: 
     - '#DEFAULT#'
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -3052,7 +3054,7 @@ regions:
     template: Standard
     template-options: 
     - '#DEFAULT#'
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -3098,7 +3100,7 @@ regions:
     template: Standard
     template-options: 
     - '#DEFAULT#'
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     - margin-top-lg
@@ -3315,7 +3317,7 @@ regions:
     template-options: 
     - '#DEFAULT#'
     - t-Region--noPadding
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -3516,7 +3518,7 @@ regions:
     template-options: 
     - '#DEFAULT#'
     - t-Region--noPadding
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--scrollBody
     render-components: Above Content
 
@@ -3706,7 +3708,7 @@ regions:
     template-options: 
     - '#DEFAULT#'
     - t-Region--noPadding
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Below Content
@@ -5300,7 +5302,7 @@ regions:
     template-options: 
     - '#DEFAULT#'
     - t-Region--noPadding
-    - t-Region--hideHeader
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -19128,16 +19130,27 @@ buttons:
     language: PL/SQL
     pl/sql-expression: |
       :P20_AUFTRAG_ABGESCHLOSSEN IS NULL AND
-      (   :P20_SIEBEL_OFFEN = 1 OR
+        -- @ticket FTTH-5250 Sonderlogik Wholebuy
+        -- Wenn Siebel Ready und nicht Wholebuy Partner
+      (   
+        (:P20_SIEBEL_OFFEN = 1  and :P20_WHOLEBUY_PARTNER is null) OR
           -- @ticket FTTH-2911, @ticket FTTH-4851:
-           (:P20_WHOLEBUY_PARTNER IS NOT NULL AND :P20_STATUS = PCK_GLASCONTAINER.STATUS_IN_REVIEW)
+          -- oder Wholebuy Partner und Status "in review"
+           (:P20_WHOLEBUY_PARTNER IS NOT NULL AND :P20_STATUS = PCK_GLASCONTAINER.STATUS_IN_REVIEW and
+             (
+              -- Entweder ext. Auftragskennzeichen ja und Siebel Ready
+              (:P20_EXT_AUFTRAGSNUMMER is not null and :P20_SIEBEL_READY = 'true') or
+              -- oder ext. Auftragskennzeichen nicht gefüllt und nicht Siebel Ready
+              (:P20_EXT_AUFTRAGSNUMMER is null and :P20_SIEBEL_READY = 'false')
+             )
+           )
       )
 
   security: 
     authorization-scheme: '* App - User' # 238128121341675592
 
   comments: 
-    comments: '@ticket FTTH-2056. @ticket FTTH-2521, @ticket FTTH-2714'
+    comments: '@ticket FTTH-2056. @ticket FTTH-2521, @ticket FTTH-2714,FTTH-5250'
 
 - # ====== Button: BTN_AUFTRAG_ABSCHLIESSEN_OK =================
   id: 335126716127263716
@@ -19735,7 +19748,7 @@ dynamic-actions:
 
     affected-elements: 
       selection-type: Region
-      region: Storno-Bestätigungsmail # 78722041803270544
+      region: 'Hinweis: Keine Storno-Bestätigungsmail' # 78722041803270544
 
     execution: 
       sequence: 10
@@ -19751,7 +19764,7 @@ dynamic-actions:
 
     affected-elements: 
       selection-type: Region
-      region: Storno-Bestätigungsmail # 78722041803270544
+      region: 'Hinweis: Keine Storno-Bestätigungsmail' # 78722041803270544
 
     execution: 
       sequence: 10

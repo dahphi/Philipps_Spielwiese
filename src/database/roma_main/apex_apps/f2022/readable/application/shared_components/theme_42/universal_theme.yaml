@@ -5,7 +5,7 @@ identification:
   theme-number: 42
   name: Universal Theme
   identifier: UNIVERSAL_THEME
-  version: 24.1
+  version: 24.2
 
 navigation: 
   type: List
@@ -21,7 +21,7 @@ css:
   - '#THEME_FILES#css/Core#MIN#.css?v=#APEX_VERSION#'
 
 component-defaults: 
-  current-theme-style: Vita
+  current-theme-style: Vita - Slate
   page: Standard without Footer
   navigation-bar-list: Navigation Bar
   navigation-menu-list-position: Side
@@ -58,81 +58,31 @@ icons:
   library: Font APEX
 
 files: 
-  file-prefix: '#APEX_FILES#themes/theme_42/24.1/'
+  file-prefix: '#APEX_FILES#themes/theme_42/24.2/'
 
 styles: 
-- # ====== Style: Redwood Light ================================
-  id: 64238520048525720
+- # ====== Style: Glascontainer ================================
+  id: 87290949222835108
   identification: 
-    name: Redwood Light
-
-  settings: 
-    is-public: true
-    accessibility-tested: false
-
-  css: 
-    file-urls: 
-    - '#APEX_FILES#libraries/oracle-fonts/oraclesans-apex#MIN#.css?v=#APEX_VERSION#'
-    - '#THEME_FILES#css/Redwood#MIN#.css?v=#APEX_VERSION#'
-
-  theme-roller-attributes: 
-    read-only: true
-    input-parameter-file-urls: '#THEME_FILES#less/theme/Redwood-Theme.less'
-    output-css-file-url: '#THEME_FILES#css/Redwood-Theme#MIN#.css?v=#APEX_VERSION#'
-
-- # ====== Style: Vita =========================================
-  id: 64238940277525720
-  identification: 
-    name: Vita
+    name: Glascontainer
 
   settings: 
     is-public: true
     accessibility-tested: true
 
   theme-roller-attributes: 
-    read-only: true
+    read-only: false
     input-parameter-file-urls: '#THEME_FILES#less/theme/Vita.less'
-    output-css-file-url: '#THEME_FILES#css/Vita#MIN#.css?v=#APEX_VERSION#'
+    output-css-file-url: '#THEME_DB_FILES#63159180956227019.css'
+    json-configuration: '{"classes":[],"vars":{"@g_Color-Palette-15":"#ccd3d9","@g_Color-Palette-15-FG":"#14181c"},"customCSS":"","useCustomLess":"N"}'
 
-- # ====== Style: Vita - Dark ==================================
-  id: 64239293459525720
+files: 
+- # ====== File: 63159180956227019.css =========================
+  id: 87291285478835126
   identification: 
-    name: Vita - Dark
+    file-name: 63159180956227019.css
 
-  settings: 
-    is-public: true
-    accessibility-tested: false
-
-  theme-roller-attributes: 
-    read-only: true
-    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Dark.less'
-    output-css-file-url: '#THEME_FILES#css/Vita-Dark#MIN#.css?v=#APEX_VERSION#'
-
-- # ====== Style: Vita - Red ===================================
-  id: 64239773181525721
-  identification: 
-    name: Vita - Red
-
-  settings: 
-    is-public: true
-    accessibility-tested: false
-
-  theme-roller-attributes: 
-    read-only: true
-    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Red.less'
-    output-css-file-url: '#THEME_FILES#css/Vita-Red#MIN#.css?v=#APEX_VERSION#'
-
-- # ====== Style: Vita - Slate =================================
-  id: 64240167921525721
-  identification: 
-    name: Vita - Slate
-
-  settings: 
-    is-public: true
-    accessibility-tested: false
-
-  theme-roller-attributes: 
-    read-only: true
-    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Slate.less'
-    output-css-file-url: '#THEME_FILES#css/Vita-Slate#MIN#.css?v=#APEX_VERSION#'
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
 

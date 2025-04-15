@@ -1,4 +1,20 @@
 ---
+- # ====== Build Option: @deprecated - enfernt =================
+  id: 42985356186126770
+  identification: 
+    name: '@deprecated - enfernt'
+
+  status: 
+    status: Exclude
+    default-on-export: Exclude
+    on-upgrade-keep-status: false
+
+  comments: 
+    comments: Alle Items, die nicht mehr existieren sollen und nur noch übergangsweise zu Dokumentationszwecken in der App bleiben.
+
+  subscription: 
+    version-number: 4107931890477
+
 - # ====== Build Option: unsichtbar ============================
   id: 56473619035308559
   identification: 
@@ -47,10 +63,10 @@
   subscription: 
     version-number: 4101331427194
 
-- # ====== Build Option: @deprecated ===========================
+- # ====== Build Option: @deprecated - markiert ================
   id: 177183550576594203
   identification: 
-    name: '@deprecated'
+    name: '@deprecated - markiert'
 
   status: 
     status: Include
@@ -61,7 +77,7 @@
     comments: 'Muss immer auf "Include" stehen: Markiert alle Objekte, die als deprecated eingestuft sind und demnächst entfernt werden sollten. Dies kann beispielsweise ein Branch sein, der inzwischen obsolet ist, man sich aber nicht so recht traut ihn sofort zu löschen.'
 
   subscription: 
-    version-number: 4061454998878
+    version-number: 4107931909940
 
 - # ====== Build Option: DA: IG Copy Hack ======================
   id: 202886674411582214
@@ -79,29 +95,13 @@
   subscription: 
     version-number: 4047705787712
 
-- # ====== Build Option: Auftragsdaten synchronisieren =========
-  id: 213361558632846704
-  identification: 
-    name: Auftragsdaten synchronisieren
-
-  status: 
-    status: Include
-    default-on-export: Same as Current Status
-    on-upgrade-keep-status: false
-
-  comments: 
-    comments: Sorgt dafür. dass beim Aufruf eines Auftrags die gerade empfangenen JSON-Daten in die Tabelle FTTH_WS_SYNC_PREORDERS zurückgeschrieben werden. Dadurch ist die Auftragsliste zumindest für diesen Auftrag auf dem neuesten Stand, auch ohne allgemeine Synchronisierung.
-
-  subscription: 
-    version-number: 4000026037368
-
 - # ====== Build Option: DEV oder TEST =========================
   id: 228976553402207959
   identification: 
     name: DEV oder TEST
 
   status: 
-    status: Exclude
+    status: Include
     default-on-export: Exclude
     on-upgrade-keep-status: false
 
@@ -109,7 +109,7 @@
     comments: 'Elemente, die sowohl in der Entwicklung als auch in TEST zur Verfügung stehen sollen, jedoch nicht in der Produktion. Beachten: Diese Build Option muss in TEST manuell eingeschaltet werden, nachdem die Anwendung installiert wurde, da sie (sicherheitshalber) auf "Default on Export=Exclude" eingestellt ist.'
 
   subscription: 
-    version-number: 4103308491797
+    version-number: 4109254720929
 
 - # ====== Build Option: Commented Out =========================
   id: 234883986660092834

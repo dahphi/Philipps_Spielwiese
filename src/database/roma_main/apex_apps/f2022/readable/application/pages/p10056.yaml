@@ -487,302 +487,6 @@ regions:
     security: 
       escape-special-characters: false
 
-- # ====== Region: ALT --- Auswertung über alle VKZ im Zeitraum 
-  id: 56538050413052146
-  identification: 
-    name: ALT --- Auswertung über alle VKZ im Zeitraum
-    type: Interactive Report
-
-  source: 
-    location: Local Database
-    type: SQL Query
-    sql-query: |
-      -- welche VKZ haben wann eine Bestellung durchgeführt?
-      SELECT datum, vkz, count(*) AS anzahl
-        FROM (
-      SELECT trunc(cast(uhrzeit AS date)) AS datum
-           , REGEXP_REPLACE(ltrim(rtrim(substr(body,8,11), '",'), '",'), '[[:digit:]]') AS vkz 
-        FROM ftth_webservice_aufrufe 
-       WHERE method = 'POST' 
-         AND scope = 'p_internal_order_post'
-         AND  TRUNC(cast(uhrzeit AS date)) BETWEEN TRUNC(COALESCE(TO_DATE(:P10056_DATUM_VON), DATE '2024-09-20'))
-                                        AND TRUNC(COALESCE(TO_DATE(:P10056_DATUM_BIS), TO_DATE(:P10056_DATUM_VON), SYSDATE))
-      ) 
-       GROUP BY datum, vkz
-
-  layout: 
-    sequence: 40
-    parent-region: No Parent
-    slot: BODY
-    start-new-layout: false
-    start-new-row: true
-    column: Automatic
-    new-column: true
-    column-span: 7
-
-  appearance: 
-    template: Standard
-    template-options: 
-    - '#DEFAULT#'
-    - t-Region--removeHeader js-removeLandmark
-    - t-Region--noBorder
-    - t-Region--scrollBody
-    render-components: Above Content
-
-  accessibility: 
-    use-landmark: true
-    landmark-type: Template Default
-
-  advanced: 
-    region-display-selector: false
-    exclude-title-from-translation: false
-
-  header-and-footer: 
-    header-text: <h4>Auswertung über alle VKZ im Zeitraum</h4>
-
-  server-side-condition: 
-    type: Never
-
-  server-cache: 
-    caching: Disabled
-
-  customization: 
-    customizable: Not Customizable By End Users
-
-  attributes: 
-    id: 56538126280052147
-    link: 
-      link-column: Exclude Link Column
-
-    pagination: 
-      type: None
-
-    performance: 
-      lazy-loading: false
-      maximum-rows-to-process: 1000000
-
-    messages: 
-      when-no-data-found: Keine Bestellungen erfasst
-
-    search-bar: 
-      include-search-bar: true
-      search-field: true
-      finder-drop-down: true
-      reports-select-list: true
-      rows-per-page-selector: false
-
-    actions-menu: 
-      include-actions-menu: true
-      filter: true
-      select-columns: true
-      rows-per-page: true
-      sort: true
-      control-break: true
-      highlight: true
-      compute: true
-      aggregate: true
-      chart: true
-      group-by: true
-      pivot: true
-      flashback: true
-      save-report: true
-      save-public-report: false
-      reset: true
-      help: true
-      download: true
-      subscription: true
-
-    download: 
-      formats: 
-      - CSV
-      - HTML
-      - Excel
-      - PDF
-      send-as-email: true
-
-    heading: 
-      fixed-to: Page
-
-    icon-view: 
-      show: false
-
-    detail-view: 
-      show: false
-
-    saved-reports: 
-    - # ====== Saved Report: Primary Report ========================
-      id: 61466819374771775
-      identification: 
-        name: Primary Report
-        alias: 110933
-
-    columns: 
-    - # ====== Column: DATUM =======================================
-      id: 56538266371052148
-      identification: 
-        column-name: DATUM
-        type: Plain Text
-
-      heading: 
-        heading: Datum
-        alignment: center
-
-      single-row-view: 
-        use-column-heading: true
-
-      layout: 
-        sequence: 10
-        column-alignment: center
-
-      accessibility: 
-        value-identifies-row: false
-
-      source: 
-        primary-key: false
-
-      column-filter: 
-        type: Default Based on Column Type
-        date-ranges: All
-
-      enable-users-to: 
-        hide: true
-        sort: true
-        filter: true
-        highlight: true
-        control-break: true
-        aggregate: true
-        compute: true
-        chart: true
-        group-by: true
-        pivot: true
-
-      security: 
-        escape-special-characters: true
-
-    - # ====== Column: VKZ =========================================
-      id: 56538387129052149
-      identification: 
-        column-name: VKZ
-        type: Plain Text
-
-      heading: 
-        heading: VKZ[...]
-        alignment: center
-
-      single-row-view: 
-        use-column-heading: true
-
-      layout: 
-        sequence: 20
-        column-alignment: center
-
-      accessibility: 
-        value-identifies-row: false
-
-      source: 
-        primary-key: false
-
-      column-filter: 
-        type: Default Based on Column Type
-
-      enable-users-to: 
-        hide: true
-        sort: true
-        filter: true
-        highlight: true
-        control-break: true
-        aggregate: true
-        compute: true
-        chart: true
-        group-by: true
-        pivot: true
-
-      security: 
-        escape-special-characters: true
-
-    - # ====== Column: ANZAHL ======================================
-      id: 56538432215052150
-      identification: 
-        column-name: ANZAHL
-        type: Plain Text
-
-      heading: 
-        heading: Anzahl Bestellungen
-        alignment: center
-
-      single-row-view: 
-        use-column-heading: true
-
-      layout: 
-        sequence: 30
-        column-alignment: end
-
-      accessibility: 
-        value-identifies-row: false
-
-      source: 
-        primary-key: false
-
-      column-filter: 
-        type: Default Based on Column Type
-
-      enable-users-to: 
-        hide: true
-        sort: true
-        filter: true
-        highlight: true
-        control-break: true
-        aggregate: true
-        compute: true
-        chart: true
-        group-by: true
-        pivot: true
-
-      security: 
-        escape-special-characters: true
-
-    printing: 
-      output: 
-        layout: Default Report Layout
-        view-file-as: Attachment
-
-      page: 
-        size: A4
-        orientation: Landscape
-        units: Millimeters
-        width: 297
-        height: 210
-        border-width: 0.5
-        border-color: '#666666'
-
-      page-header: 
-        font: Helvetica
-        font-weight: Normal
-        font-size: 12
-        font-color: '#000000'
-        alignment: center
-
-      column-headings: 
-        font: Helvetica
-        font-weight: Bold
-        font-size: 10
-        font-color: '#000000'
-        background-color: '#EEEEEE'
-
-      columns: 
-        font: Helvetica
-        font-weight: Normal
-        font-size: 10
-        font-color: '#000000'
-        background-color: '#FFFFFF'
-
-      page-footer: 
-        font: Helvetica
-        font-weight: Normal
-        font-size: 12
-        font-color: '#000000'
-        alignment: center
-
 - # ====== Region: Breadcrumb ==================================
   id: 61246638099145622
   identification: 
@@ -1380,7 +1084,7 @@ regions:
     location: Local Database
     type: SQL Query
     sql-query: |
-      SELECT DATUM, COUNT(*) AS ANZAHL FROM (
+      SELECT DATUM, TO_CHAR(DATUM, 'DY') AS WOCHENTAG, COUNT(*) AS ANZAHL FROM (
       SELECT TRUNC(DATUM, 'DD') AS DATUM
         FROM POB_TRACKING
        WHERE APP_ID = 2022
@@ -1553,8 +1257,49 @@ regions:
         use-column-heading: true
 
       layout: 
-        sequence: 30
+        sequence: 40
         column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: WOCHENTAG ===================================
+      id: 87764920597074617
+      identification: 
+        column-name: WOCHENTAG
+        type: Plain Text
+
+      heading: 
+        heading: Wochentag
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: center
 
       accessibility: 
         value-identifies-row: false

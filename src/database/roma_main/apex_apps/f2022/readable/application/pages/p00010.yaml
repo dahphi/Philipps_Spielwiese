@@ -26,9 +26,16 @@ javascript:
 
 css: 
   inline: |
+    /** Horizontale Scrollbar auch oben im IG/IR einblenden */
     .scrollbar-on-top .a-GV-w-hdr  /*IG*/,
     .scrollbar-on-top .t-fht-thead /*IR*/
         {overflow-x: auto !important}
+    
+    /** kein Zeilenumbruch in den Spalten der Auftragsliste: */
+    #auftragslisteIR td.u-tC,
+    #auftragslisteIR td.u-tL {
+        white-space: nowrap;
+    }
 
 security: 
   authentication: Page Requires Authentication
@@ -77,10 +84,15 @@ regions:
           display:none;
       }
       */
+      
+      /** IR Formatierungsregeln ausblenden 
       li.a-IRR-controls-item.a-IRR-controls-item--highlight,
       li.a-IRR-reportSummary-item.a-IRR-reportSummary-item--highlight {
           display:none;
       }
+      */
+      
+      
 
   layout: 
     sequence: 40
@@ -290,7 +302,13 @@ regions:
              UPDATE_CUSTOMER_IN_SIEBEL,
              HOME_ID,
              ACCOUNT_ID,
-             POB.AVAILABILITY_DATE
+             POB.AVAILABILITY_DATE,
+             REPLACE(A.AUSBAUGEBIETE       , '|', '<br/>') AS AUSBAUGEBIETE,
+             REPLACE(A.AUSBAUGEBIETSTYPEN  , '|', '<br/>') AS AUSBAUGEBIETSTYPEN, 
+             REPLACE(A.ERSCHLIESSUNGEN     , '|', '<br/>') AS ERSCHLIESSUNGEN,
+             REPLACE(A.STATUS_AUSBAUGEBIET , '|', '<br/>') AS STATUS_AUSBAUGEBIET,
+             REPLACE(A.PROJEKTE            , '|', '<br/>') AS PROJEKTE,
+             REPLACE(A.PROJEKTNAMEN        , '|', '<br/>') AS PROJEKTNAMEN
         FROM FTTH_WS_SYNC_PREORDERS POB
         JOIN POB_ADRESSEN A ON (A.HAUS_LFD_NR = POB.HOUSESERIALNUMBER)
         JOIN FTTH_GLASCONTAINER_PRODUKTE PRODUKT ON (PRODUKT.TEMPLATE_ID = POB.TEMPLATEID)
@@ -405,41 +423,23 @@ regions:
       show: false
 
     saved-reports: 
-    - # ====== Saved Report: 5. Wholebuy ===========================
-      id: 10123207489644831
-      identification: 
-        name: 5. Wholebuy
-        alias: 101233
-
-    - # ====== Saved Report: OK Ready > in 2025 ====================
-      id: 63682804814224688
-      identification: 
-        name: OK Ready > in 2025
-        alias: 636829
-
     - # ====== Saved Report: SIEBEL ================================
       id: 89799521061854601
       identification: 
         name: SIEBEL
         alias: 394260
 
-    - # ====== Saved Report: Alle Spalten ==========================
-      id: 154339096176053784
+    - # ====== Saved Report: Wholebuy ==============================
+      id: 92206288429955262
       identification: 
-        name: Alle Spalten
-        alias: 1543391
-
-    - # ====== Saved Report: FTTH_Forecast_NC_Eigenausbau ==========
-      id: 154715113999490698
-      identification: 
-        name: FTTH_Forecast_NC_Eigenausbau
-        alias: 1547152
+        name: Wholebuy
+        alias: 680746
 
     - # ====== Saved Report: Wholebuy ==============================
       id: 187590604423501473
       identification: 
         name: Wholebuy
-        alias: 504723
+        alias: WHOLEBUY
 
     - # ====== Saved Report: Alle Spalten ==========================
       id: 221617092539208596
@@ -828,6 +828,270 @@ regions:
       comments: 
         comments: '@ticket FTTH-4470'
 
+    - # ====== Column: AUSBAUGEBIETE ===============================
+      id: 87765046362074618
+      identification: 
+        column-name: AUSBAUGEBIETE
+        type: Plain Text
+
+      heading: 
+        heading: Ausbaugebiete
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1260
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: '@ticket FTTH-4273'
+
+    - # ====== Column: AUSBAUGEBIETSTYPEN ==========================
+      id: 87765098893074619
+      identification: 
+        column-name: AUSBAUGEBIETSTYPEN
+        type: Plain Text
+
+      heading: 
+        heading: Ausbaugebietstypen
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1270
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: '@ticket FTTH-4273'
+
+    - # ====== Column: ERSCHLIESSUNGEN =============================
+      id: 87765259988074620
+      identification: 
+        column-name: ERSCHLIESSUNGEN
+        type: Plain Text
+
+      heading: 
+        heading: Erschließungen
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1280
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: '@ticket FTTH-4273'
+
+    - # ====== Column: STATUS_AUSBAUGEBIET =========================
+      id: 87765355519074621
+      identification: 
+        column-name: STATUS_AUSBAUGEBIET
+        type: Plain Text
+
+      heading: 
+        heading: Status Ausbaugebiet
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1290
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: '@ticket FTTH-4273'
+
+    - # ====== Column: PROJEKTE ====================================
+      id: 87765405712074622
+      identification: 
+        column-name: PROJEKTE
+        type: Plain Text
+
+      heading: 
+        heading: Projekte
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1300
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: '@ticket FTTH-4273'
+
+    - # ====== Column: PROJEKTNAMEN ================================
+      id: 87765473613074623
+      identification: 
+        column-name: PROJEKTNAMEN
+        type: Plain Text
+
+      heading: 
+        heading: Projektnamen
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 1310
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+      comments: 
+        comments: '@ticket FTTH-4273'
+
     - # ====== Column: KUNDENNUMMER ================================
       id: 88194033374458507
       identification: 
@@ -871,6 +1135,9 @@ regions:
 
       security: 
         escape-special-characters: false
+
+      comments: 
+        comments: 'Im Gegensatz zum Feld "Kundennummer" (CUSTOMER_NUMBER) bietet dieses Feld eine Verlinkung zu Siebel. Nachteil: Dadurch kann man in den Report-Einstellungen nicht mehr präzise auf die Kundennummer filtern!'
 
     - # ====== Column: CONNECTIVITY_ID =============================
       id: 212367337538296587
@@ -1725,6 +1992,9 @@ regions:
 
       accessibility: 
         value-identifies-row: false
+
+      column-formatting: 
+        html-expression: 'Im Gegensatz zum Feld "Kundennummer (Siebel)" bietet dieses Feld keine Verlinkung. Vorteil: Dadurch kann man in den Report-Einstellungen präzise auf die Kundennummer filtern.'
 
       source: 
         primary-key: false
@@ -5707,6 +5977,9 @@ regions:
         chart: false
         group-by: false
         pivot: false
+
+      comments: 
+        comments: Um die Färbung der Spalte "Wholebuy Partner" zu ändern, muss die CSS-Regel auskommentiert werden, die diese Einstellungen ausblendet (suche im Page CSS nach "IR Formatierungsregeln ausblenden")
 
     printing: 
       output: 

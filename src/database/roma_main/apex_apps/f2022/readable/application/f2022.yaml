@@ -4,8 +4,8 @@ id: 2022
 identification: 
   name: Glascontainer
   alias: GLASCONTAINER
-  version: 2025-03-11 1200
-  application-group: Glascontainer # 137002914701848690
+  version: 2025-04-09 0830
+  application-group: Glascontainer # 57684071950868678
 
 row-search: 
   tokenize: false
@@ -32,7 +32,7 @@ advanced:
 
 authentication: 
   public-user: APEX_PUBLIC_USER
-  authentication-scheme: Single Sign-on [SSOUSER] # 235084263838096053
+  authentication-scheme: keycloak # 77769113624738288
 
 authorization: 
   source-for-role-or-group-schemes: Access Control User Role Assignments
@@ -120,7 +120,7 @@ attributes:
   auto-dismiss-success-messages: true
 
 subscription: 
-  version-number: 4109007842507
+  version-number: 4109798322281
 
 substitutions: 
 - # ====== Substitution: APP_NAME ==============================
@@ -157,13 +157,13 @@ substitutions:
 
 component-settings: 
 - # ====== Component Setting: NATIVE_BOSS ======================
-  id: 1461878374775481
+  id: 25599461644995043
   identification: 
     name: NATIVE_BOSS
     type: REST Data Source
 
   subscription: 
-    version-number: 4108547205480
+    version-number: 4106710626053
 
 - # ====== Component Setting: NATIVE_SELECT_MANY ===============
   id: 52955035710563607

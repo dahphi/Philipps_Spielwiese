@@ -1,11 +1,11 @@
 ---
-- # ====== REST Data Source: preorders (Auftragsliste) =========
+- # ====== REST Data Source: Auftragsliste =====================
   id: 226004386971065012
   identification: 
-    name: preorders (Auftragsliste)
+    name: Auftragsliste
 
   subscription: 
-    version-number: 4105889336148
+    version-number: 4107937752393
 
   source: 
     type: HTTP
@@ -20,7 +20,7 @@
     total-rows-selector: totalCount
 
   authentication: 
-    credentials: 'AOE-Webservice: PreOrder-Buffer' # 149575738423418637
+    credentials: 'AOE-Webservice: PreOrder-Buffer' # 20702956587874144
 
   rest-synchronization: 
     job-is-active: true
@@ -38,6 +38,7 @@
 
   comments: 
     comments: |
+      @date 2025-03-11: Name geändert von "preorders (Auftragsliste)" zu "Auftragsliste".
       Nächtlich durchgeführte Synchronisierung mit dem PreOrder-Buffer im Backend (Richtung: AOE-Server => Glascontainer). Die Tabelle FTTH_WS_SYNC_PREORDERS ist die Datengrundlage für P10 "Auftragsliste". 
       Die Synchronsierung kann "außer der Reihe" jederzeit manuell in APEX gestartet werden (was im Normalfall unnötig ist), oder mit der Prozedur PCK_GLASCONTAINER.p_webservice_synchronisieren. Letzteres geschieht, wenn man als App-Administrator den Link "Erneut synchronisieren" unterhalb der Auftragsliste anklickt.
       Neue Spalten hinzufügen: siehe Button "Edit Data Profile" auf dieser Seite -- ... @SYNC
@@ -2704,13 +2705,13 @@
         language: PL/SQL
         pl/sql-expression: PCK_GLASCONTAINER.fn_last_modified_within_days
 
-- # ====== REST Data Source: cancellationReasons (Stornogründe) 
+- # ====== REST Data Source: Stornogründe ======================
   id: 263291089565110519
   identification: 
-    name: cancellationReasons (Stornogründe)
+    name: Stornogründe
 
   subscription: 
-    version-number: 4105889335359
+    version-number: 4107937805966
 
   source: 
     type: HTTP
@@ -2721,7 +2722,7 @@
     pagination-type: NO PAGINATION
 
   authentication: 
-    credentials: 'AOE-Webservice: PreOrder-Buffer' # 149575738423418637
+    credentials: 'AOE-Webservice: PreOrder-Buffer' # 20702956587874144
 
   rest-synchronization: 
     job-is-active: true
@@ -2737,6 +2738,7 @@
 
   comments: 
     comments: |
+      @date 2025-03-11: Name geändert von "cancellationReasons (Stornogründe)" in "Stornogründe"
       Damit neue Stornogründe automatisch im Glascontainer erscheinen (z.B. siehe @ticket FTTH-1597, @ticket FTTH-1600), 
       1. muss die nächtliche Synchronisierung dieser REST-Datasource aktiviert sein und
       2. muss vorab der entsprechende Eintrag in der Tabelle ENUM vorgenommen werden:
