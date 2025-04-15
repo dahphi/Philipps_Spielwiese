@@ -7,6 +7,8 @@ var version_id varchar2(50);
 exec :version_id :='&1' || '_' || '&2';
 var commit_msg varchar2(50);
 exec :commit_msg :='&3';
+
+define commmit_msg = 'Test ' || :app_id;
 /*
 -- Immer in den develop Branch wechseln und aktuellen Stand ziehen
 !git chekout develop
@@ -20,8 +22,7 @@ prompt &3
 
 project stage
 !git add .
-!git commit -m "Staging APEX " || version_id;
-!git push
+!git commit -m "Staging APEX &commmit_msg";
 /*
 project release -version &app_id2_0001;
 !git add .
