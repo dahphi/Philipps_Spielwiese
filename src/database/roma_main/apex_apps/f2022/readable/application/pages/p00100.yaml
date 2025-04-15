@@ -1128,7 +1128,6 @@ regions:
           trim(strasse || ' ' || hausnummer) as strasse_hausnr,
           plz,
           ort,
-          adresse_komplett,
           pck_glascontainer.fv_iban_maskiert(iban) as iban,
           '<button type="button" class="t-Button options" data-src="' || src || '" data-id="' || row_id || '" data-knr="' || kundennummer || '">weiter mit diesem Bestandskunden</button>' as button_option
       FROM TABLE (
@@ -1138,10 +1137,10 @@ regions:
                   , piv_vorname      => CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_VORNAME ELSE :P100_SIEBEL_VORNAME END
                   , pid_geburtsdatum => TO_DATE(CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_GEBURTSDATUM ELSE :P100_SIEBEL_GEBURTSDATUM END)
                   , piv_firmenname   => CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_FIRMENNAME ELSE :P100_SIEBEL_FIRMENNAME END
-               --   , piv_strasse      => :P100_STRAV_STRASSE
-               --   , piv_hausnummer   => TRIM(:P100_STRAV_HAUSNR || ' ' || :P100_STRAV_HAUSNR_ZUSATZ)
-               --   , piv_plz          => :P100_STRAV_PLZ
-               --   , piv_ort          => :P100_STRAV_ORT
+                  , piv_strasse      => :P100_STRAV_STRASSE
+                  , piv_hausnummer   => TRIM(:P100_STRAV_HAUSNR || ' ' || :P100_STRAV_HAUSNR_ZUSATZ)
+                  , piv_plz          => :P100_STRAV_PLZ
+                  , piv_ort          => :P100_STRAV_ORT
                   , piv_iban         => CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_IBAN ELSE :P100_SIEBEL_IBAN END
                   , pin_ignore_service_errors => :P10100_IGNORE_FUZZY_SERVICE_ERRORS
                   , piv_suchbereich  => 'SIE'
@@ -1193,9 +1192,7 @@ regions:
     build-option: Dubletten-Vorprüfung # 254911487918372194
 
   comments: 
-    comments: |
-      Der Siebel-Report soll nur angezeigt werden, wenn Dubletten vorliegen (nicht: leer). Das bedingt eine Vorabfrage, siehe SQL.
-      Der Kontrollbereich des IR wird per CSS ausgeblendet, da er stört ("a-MediaBlock a-IRR-controlsContainer")
+    comments: Der Kontrollbereich des IR wird per CSS ausgeblendet, da er stört ("a-MediaBlock a-IRR-controlsContainer")
 
   attributes: 
     id: 229254744314194635
@@ -1217,13 +1214,7 @@ regions:
       when-no-data-found: Keine Dubletten in Siebel gefunden
 
     toolbar: 
-      show: true
-      controls: 
-      - Search Column Selection
-      - Search Field
-      - Actions Menu
-      - Reset Button
-      - Save Button
+      show: false
 
     enable-users-to: 
       save-public-report: false
@@ -1248,61 +1239,6 @@ regions:
         alias: 267384
 
   columns: 
-  - # ====== Column: ADRESSE_KOMPLETT ============================
-    id: 87766119097074629
-    identification: 
-      column-name: ADRESSE_KOMPLETT
-      type: Text Field
-
-    heading: 
-      heading: Adresse
-      alignment: start
-
-    settings: 
-      trim-spaces: Leading and Trailing
-      text-case: NO CHANGE
-
-    layout: 
-      sequence: 180
-      column-alignment: start
-      stretch: Use Report Setting
-
-    accessibility: 
-      value-identifies-row: false
-
-    validation: 
-      value-required: false
-      maximum-length: 200
-
-    source: 
-      type: Database Column
-      database-column: ADRESSE_KOMPLETT
-      data-type: VARCHAR2
-      query-only: false
-      primary-key: false
-
-    default: 
-      duplicate-copies-existing-value: true
-
-    column-filter: 
-      enabled: true
-      performance-impacting-operators: 
-      - Contains
-      - Starts With
-      - Case Insensitive
-      - Regular Expression
-      text-case: Mixed
-      lov-type: Distinct Column
-      exact-match: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    enable-users-to: 
-      sort: true
-      control-break/aggregate: true
-      hide: true
-
   - # ====== Column: RULE_NUMBER =================================
     id: 229255105592194639
     identification: 
@@ -3156,9 +3092,6 @@ regions:
   attributes: 
     appearance: 
       list-template: Wizard Progress
-      template-options: 
-      - '#DEFAULT#'
-      - t-WizardSteps--displayLabels
 
 - # ====== Region: CSS für autosuggest =========================
   id: 235652650950458225
@@ -3555,18 +3488,6 @@ regions:
              TRIM(:P100_STRAV_STRASSE || ' ' || :P100_STRAV_HAUSNR || ' ' || :P100_STRAV_HAUSNR_ZUSATZ) AS STRASSE_HAUSNR,
              :P100_STRAV_PLZ AS PLZ,
              :P100_STRAV_ORT AS ORT,
-             PCK_ADRESSE.ADRESSE_KOMPLETT(
-                    piv_strasse                 => :P100_STRAV_STRASSE
-                  , piv_hausnummer              => :P100_STRAV_HAUSNR
-                  , piv_hausnummer_zusatz       => :P100_STRAV_HAUSNR_ZUSATZ
-                  , piv_hausnummer_bis          => NULL -- ////// danach im Formular suchen!
-                  , piv_hausnummer_zusatz_bis   => NULL -- ////// danach im Formular suchen!
-                  , piv_gebaeudeteil            => NULL -- ////// danach im Formular suchen!
-                  , piv_plz                     => :P100_STRAV_PLZ
-                  , piv_ort                     => :P100_STRAV_ORT
-                  , piv_ortsteil                => NULL -- ////// danach im Formular suchen!
-                  , piv_land                    => NULL
-             ) AS ADRESSE_KOMPLETT,
              :P100_NEUKUNDE_IBAN AS IBAN,
              '<button type="button" class="t-Button options" data-src="INP">keine Dublette &ndash; weiter als Neukunde</button>' as button_option
         FROM DUAL
@@ -3627,13 +3548,7 @@ regions:
       show-total-count: false
 
     toolbar: 
-      show: true
-      controls: 
-      - Search Column Selection
-      - Search Field
-      - Actions Menu
-      - Reset Button
-      - Save Button
+      show: false
 
     enable-users-to: 
       save-public-report: false
@@ -3658,64 +3573,6 @@ regions:
         alias: 536047
 
   columns: 
-  - # ====== Column: ADRESSE_KOMPLETT ============================
-    id: 87765994804074628
-    identification: 
-      column-name: ADRESSE_KOMPLETT
-      type: Textarea
-
-    heading: 
-      heading: Adresse
-      alignment: start
-
-    settings: 
-      resizable: true
-      auto-height: false
-      character-counter: false
-      trim-spaces: Leading and Trailing
-
-    layout: 
-      sequence: 110
-      column-alignment: start
-      stretch: Use Report Setting
-
-    accessibility: 
-      value-identifies-row: false
-
-    validation: 
-      value-required: false
-      maximum-length: 4000
-
-    source: 
-      type: Database Column
-      database-column: ADRESSE_KOMPLETT
-      data-type: VARCHAR2
-      query-only: false
-      primary-key: false
-
-    default: 
-      duplicate-copies-existing-value: true
-
-    session-state: 
-      data-type: VARCHAR2
-
-    column-filter: 
-      enabled: true
-      performance-impacting-operators: 
-      - Contains
-      - Starts With
-      - Case Insensitive
-      - Regular Expression
-      text-case: Mixed
-      lov-type: None
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    enable-users-to: 
-      sort: false
-      hide: true
-
   - # ====== Column: BUTTON_OPTION ===============================
     id: 243950849480875085
     identification: 
@@ -4264,7 +4121,6 @@ regions:
           trim(strasse || ' ' || hausnummer) as strasse_hausnr,
           plz,
           ort,
-          adresse_komplett,
           pck_glascontainer.fv_iban_maskiert(iban) as iban,
           '<a href="' || 
           APEX_PAGE.GET_URL (
@@ -4284,10 +4140,10 @@ regions:
                   , piv_vorname      => CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_VORNAME ELSE :P100_SIEBEL_VORNAME END
                   , pid_geburtsdatum => TO_DATE(CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_GEBURTSDATUM ELSE :P100_SIEBEL_GEBURTSDATUM END)
                   , piv_firmenname   => CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_FIRMENNAME ELSE :P100_SIEBEL_FIRMENNAME END
-               --   , piv_strasse      => :P100_STRAV_STRASSE
-               --   , piv_hausnummer   => TRIM(:P100_STRAV_HAUSNR || ' ' || :P100_STRAV_HAUSNR_ZUSATZ)
-               --   , piv_plz          => :P100_STRAV_PLZ
-               --   , piv_ort          => :P100_STRAV_ORT
+                  , piv_strasse      => :P100_STRAV_STRASSE
+                  , piv_hausnummer   => TRIM(:P100_STRAV_HAUSNR || ' ' || :P100_STRAV_HAUSNR_ZUSATZ)
+                  , piv_plz          => :P100_STRAV_PLZ
+                  , piv_ort          => :P100_STRAV_ORT
                   , piv_iban         => CASE WHEN :P100_KUNDENSTATUS = 'N' THEN :P100_NEUKUNDE_IBAN ELSE :P100_SIEBEL_IBAN END
                   , pin_ignore_service_errors => :P10100_IGNORE_FUZZY_SERVICE_ERRORS
                   , piv_suchbereich  => 'POB'
@@ -4335,10 +4191,8 @@ regions:
   customization: 
     customizable: Not Customizable By End Users
 
-  comments: 
-    comments: |
-      Der POB-Report soll nur angezeigt werden, wenn Dubletten vorliegen (nicht: leer). Das bedingt eine Vorabfrage, siehe SQL.
-      Der Kontrollbereich des IR wird per CSS ausgeblendet, da er stört ("a-MediaBlock a-IRR-controlsContainer")
+  configuration: 
+    build-option: Dubletten-Vorprüfung # 254911487918372194
 
   attributes: 
     id: 246640178085433647
@@ -4360,13 +4214,7 @@ regions:
       when-no-data-found: Keine Dubletten im Preorderbuffer gefunden
 
     toolbar: 
-      show: true
-      controls: 
-      - Search Column Selection
-      - Search Field
-      - Actions Menu
-      - Reset Button
-      - Save Button
+      show: false
 
     enable-users-to: 
       save-public-report: false
@@ -4391,61 +4239,6 @@ regions:
         alias: 536277
 
   columns: 
-  - # ====== Column: ADRESSE_KOMPLETT ============================
-    id: 87765928699074627
-    identification: 
-      column-name: ADRESSE_KOMPLETT
-      type: Text Field
-
-    heading: 
-      heading: Adresse
-      alignment: start
-
-    settings: 
-      trim-spaces: Leading and Trailing
-      text-case: NO CHANGE
-
-    layout: 
-      sequence: 180
-      column-alignment: start
-      stretch: Use Report Setting
-
-    accessibility: 
-      value-identifies-row: false
-
-    validation: 
-      value-required: false
-      maximum-length: 200
-
-    source: 
-      type: Database Column
-      database-column: ADRESSE_KOMPLETT
-      data-type: VARCHAR2
-      query-only: false
-      primary-key: false
-
-    default: 
-      duplicate-copies-existing-value: true
-
-    column-filter: 
-      enabled: true
-      performance-impacting-operators: 
-      - Contains
-      - Starts With
-      - Case Insensitive
-      - Regular Expression
-      text-case: Mixed
-      lov-type: Distinct Column
-      exact-match: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    enable-users-to: 
-      sort: true
-      control-break/aggregate: true
-      hide: true
-
   - # ====== Column: KUNDENNUMMER ================================
     id: 246640590932433651
     identification: 
@@ -15323,7 +15116,7 @@ validations:
     name: '[2]  E-Mail  < 50 Zeichen (Neukunde)'
 
   execution: 
-    sequence: 340
+    sequence: 440
 
   validation: 
     type: Expression
@@ -15346,7 +15139,7 @@ validations:
     name: '[4] Dublette ausgewählt?+'
 
   execution: 
-    sequence: 480
+    sequence: 720
 
   validation: 
     type: Item is NOT NULL
@@ -15362,12 +15155,12 @@ validations:
     value: P100_BTN_NEXT_4, P100_BTN_NEXT_4_FINAL
 
 - # ====== Validation: [1] VKZ (gültig) ========================
-  id: 95696230274719715
+  id: 111656010302500050
   identification: 
     name: '[1] VKZ (gültig)'
 
   execution: 
-    sequence: 220
+    sequence: 230
 
   validation: 
     type: Expression
@@ -15387,44 +15180,13 @@ validations:
       :REQUEST IN ('P100_BTN_NEXT_1', 'P100_BTN_NEXT_1_FINAL') AND 
       :P100_VKZ IS NOT NULL
 
-  configuration: 
-    build-option: '@deprecated - enfernt' # 42985356186126770
-
-  comments: 
-    comments: '@ticket FTTH-5048: Validierung deaktiviert, da aufgrund der gestiegenen Komplexität ersatzweise nur noch die neue Funktion CHK_VKZ verwendet wird'
-
-- # ====== Validation: [1] VKZ =================================
-  id: 111656010302500050
-  identification: 
-    name: '[1] VKZ'
-
-  execution: 
-    sequence: 230
-
-  validation: 
-    type: Function Body (returning Error Text)
-    language: PL/SQL
-    pl/sql-function-body-returning-error-text: 'RETURN PCK_GLASCONTAINER.chk_vkz(:P100_VKZ);'
-    always-execute: false
-
-  error: 
-    display-location: Inline with Field and in Notification
-    associated-item: P100_VKZ # 251255097502572635
-
-  server-side-condition: 
-    type: Request is contained in Value
-    value: P100_BTN_NEXT_1, P100_BTN_NEXT_1_FINAL
-
-  comments: 
-    comments: '@ticket FTTH-5048: Einteilige Prüfung, verwendet die neue Function CHK_VKZ'
-
 - # ====== Validation: [6] GEE Kontaktdaten bekannt (Kontext SIE
   id: 170417843211097053
   identification: 
     name: '[6] GEE Kontaktdaten bekannt (Kontext SIEBEL)'
 
   execution: 
-    sequence: 730
+    sequence: 1240
 
   validation: 
     type: Item is NOT NULL
@@ -15660,19 +15422,13 @@ validations:
     type: Request is contained in Value
     value: P100_BTN_NEXT_1, P100_BTN_NEXT_1_FINAL
 
-  configuration: 
-    build-option: '@deprecated - enfernt' # 42985356186126770
-
-  comments: 
-    comments: '@ticket FTTH-5048: Validierung deaktiviert, da aufgrund der gestiegenen Komplexität ersatzweise nur noch die neue Funktion CHK_VKZ verwendet wird'
-
 - # ====== Validation: [3] E-Mail stimmt überein (Bestandskunde)
   id: 222896500764637214
   identification: 
     name: '[3] E-Mail stimmt überein (Bestandskunde)'
 
   execution: 
-    sequence: 460
+    sequence: 680
 
   validation: 
     type: Expression
@@ -15700,7 +15456,7 @@ validations:
     name: '[3] E-Mail (Bestandskunde)'
 
   execution: 
-    sequence: 430
+    sequence: 620
 
   validation: 
     type: Item is NOT NULL
@@ -15724,7 +15480,7 @@ validations:
     name: '[3] Kundennummer ist gültig'
 
   execution: 
-    sequence: 420
+    sequence: 600
 
   validation: 
     type: Item is NOT NULL
@@ -15746,7 +15502,7 @@ validations:
     name: '[3] Vorwahl & Rufnummer gültig (Bestandskunde)'
 
   execution: 
-    sequence: 470
+    sequence: 700
 
   validation: 
     type: Expression
@@ -15772,7 +15528,7 @@ validations:
     name: '[2] IBAN gültig'
 
   execution: 
-    sequence: 400
+    sequence: 560
 
   validation: 
     type: Expression
@@ -15795,7 +15551,7 @@ validations:
     name: '[2] IBAN ausgefüllt'
 
   execution: 
-    sequence: 390
+    sequence: 540
 
   validation: 
     type: Item is NOT NULL
@@ -15817,7 +15573,7 @@ validations:
     name: '[2]  Vorname gültig'
 
   execution: 
-    sequence: 260
+    sequence: 270
 
   validation: 
     type: Expression
@@ -15865,7 +15621,7 @@ validations:
     name: '[2]  Geburtsdatum'
 
   execution: 
-    sequence: 280
+    sequence: 310
 
   validation: 
     type: Item is NOT NULL
@@ -15887,7 +15643,7 @@ validations:
     name: '[2]  E-Mail (Neukunde)'
 
   execution: 
-    sequence: 330
+    sequence: 410
 
   validation: 
     type: Item is NOT NULL
@@ -15909,7 +15665,7 @@ validations:
     name: '[2]  E-Mail stimmt überein (Neukunde)'
 
   execution: 
-    sequence: 360
+    sequence: 480
 
   validation: 
     type: Expression
@@ -15934,7 +15690,7 @@ validations:
     name: '[2] Abweichender Kontoinhaber'
 
   execution: 
-    sequence: 410
+    sequence: 580
 
   validation: 
     type: Expression
@@ -15961,7 +15717,7 @@ validations:
     name: '[2]  Länderkennung'
 
   execution: 
-    sequence: 370
+    sequence: 500
 
   validation: 
     type: Item is NOT NULL
@@ -15983,7 +15739,7 @@ validations:
     name: '[2]  Vorwahl & Rufnummer gültig (Neukunde)'
 
   execution: 
-    sequence: 380
+    sequence: 520
 
   validation: 
     type: Expression
@@ -16006,7 +15762,7 @@ validations:
     name: '[2]  Geburtsdatum frühestens'
 
   execution: 
-    sequence: 300
+    sequence: 350
 
   validation: 
     type: Expression
@@ -16036,7 +15792,7 @@ validations:
     name: '[2]  Geburtsdatum spätestens'
 
   execution: 
-    sequence: 310
+    sequence: 370
 
   validation: 
     type: Expression
@@ -16066,7 +15822,7 @@ validations:
     name: '[2]  Nachname gültig'
 
   execution: 
-    sequence: 270
+    sequence: 290
 
   validation: 
     type: Expression
@@ -16092,7 +15848,7 @@ validations:
     name: '[2]  Firmenname (Länge) (Neukunde)'
 
   execution: 
-    sequence: 320
+    sequence: 390
 
   validation: 
     type: Expression
@@ -16117,7 +15873,7 @@ validations:
     name: '[2]  E-Mail valide (Neukunde)'
 
   execution: 
-    sequence: 350
+    sequence: 460
 
   validation: 
     type: Expression
@@ -16146,7 +15902,7 @@ validations:
     name: '[3] E-Mail < 50 Zeichen (Bestandskunde)'
 
   execution: 
-    sequence: 440
+    sequence: 640
 
   validation: 
     type: Expression
@@ -16175,7 +15931,7 @@ validations:
     name: '[3]  E-Mail valide (Bestandskunde)'
 
   execution: 
-    sequence: 450
+    sequence: 660
 
   validation: 
     type: Expression
@@ -16204,7 +15960,7 @@ validations:
     name: '[2]  Geburtsdatum valide Eingabe'
 
   execution: 
-    sequence: 290
+    sequence: 330
 
   validation: 
     type: Expression
@@ -16234,7 +15990,7 @@ validations:
     name: '[6] Eigentümer einverstanden'
 
   execution: 
-    sequence: 710
+    sequence: 1200
 
   validation: 
     type: Item = Value
@@ -16260,7 +16016,7 @@ validations:
     name: '[6] GEE Kontaktdaten bekannt'
 
   execution: 
-    sequence: 720
+    sequence: 1220
 
   validation: 
     type: Item is NOT NULL
@@ -16285,7 +16041,7 @@ validations:
     name: '[6] GEE Rechtsform'
 
   execution: 
-    sequence: 740
+    sequence: 1260
 
   validation: 
     type: Item is NOT NULL
@@ -16310,7 +16066,7 @@ validations:
     name: '[6] GEE Firmenname'
 
   execution: 
-    sequence: 750
+    sequence: 1280
 
   validation: 
     type: Item is NOT NULL
@@ -16336,7 +16092,7 @@ validations:
     name: '[6] GEE Anrede'
 
   execution: 
-    sequence: 770
+    sequence: 1320
 
   validation: 
     type: Item is NOT NULL
@@ -16361,7 +16117,7 @@ validations:
     name: '[6] GEE Vorname'
 
   execution: 
-    sequence: 780
+    sequence: 1340
 
   validation: 
     type: Item is NOT NULL
@@ -16386,7 +16142,7 @@ validations:
     name: '[6] GEE Nachname'
 
   execution: 
-    sequence: 800
+    sequence: 1380
 
   validation: 
     type: Item is NOT NULL
@@ -16411,7 +16167,7 @@ validations:
     name: '[6] GEE Land'
 
   execution: 
-    sequence: 820
+    sequence: 1420
 
   validation: 
     type: Item is NOT NULL
@@ -16436,7 +16192,7 @@ validations:
     name: '[6] GEE PLZ'
 
   execution: 
-    sequence: 830
+    sequence: 1440
 
   validation: 
     type: Item is NOT NULL
@@ -16461,7 +16217,7 @@ validations:
     name: '[6] GEE Ort'
 
   execution: 
-    sequence: 850
+    sequence: 1480
 
   validation: 
     type: Item is NOT NULL
@@ -16486,7 +16242,7 @@ validations:
     name: '[6] GEE Straße'
 
   execution: 
-    sequence: 870
+    sequence: 1520
 
   validation: 
     type: Item is NOT NULL
@@ -16511,7 +16267,7 @@ validations:
     name: '[6] GEE Hausnummer'
 
   execution: 
-    sequence: 890
+    sequence: 1560
 
   validation: 
     type: Item is NOT NULL
@@ -16536,7 +16292,7 @@ validations:
     name: '[6] GEE E-Mail'
 
   execution: 
-    sequence: 920
+    sequence: 1620
 
   validation: 
     type: Item is NOT NULL
@@ -16561,7 +16317,7 @@ validations:
     name: '[6] GEE Ländervorwahl'
 
   execution: 
-    sequence: 940
+    sequence: 1660
 
   validation: 
     type: Item is NOT NULL
@@ -16586,7 +16342,7 @@ validations:
     name: '[6] GEE Rufnummer'
 
   execution: 
-    sequence: 950
+    sequence: 1680
 
   validation: 
     type: Item is NOT NULL
@@ -16611,7 +16367,7 @@ validations:
     name: '[6] GEE Informationspflicht'
 
   execution: 
-    sequence: 970
+    sequence: 1720
 
   validation: 
     type: Item is NOT NULL
@@ -16636,7 +16392,7 @@ validations:
     name: '[6] GEE Firmenname gültig'
 
   execution: 
-    sequence: 760
+    sequence: 1300
 
   validation: 
     type: Expression
@@ -16663,7 +16419,7 @@ validations:
     name: '[6] GEE Vorname gültig'
 
   execution: 
-    sequence: 790
+    sequence: 1360
 
   validation: 
     type: Expression
@@ -16691,7 +16447,7 @@ validations:
     name: '[6] GEE Nachname gültig'
 
   execution: 
-    sequence: 810
+    sequence: 1400
 
   validation: 
     type: Expression
@@ -16719,7 +16475,7 @@ validations:
     name: '[6] GEE PLZ gültig'
 
   execution: 
-    sequence: 840
+    sequence: 1460
 
   validation: 
     type: Expression
@@ -16747,7 +16503,7 @@ validations:
     name: '[6] GEE Hausnummer gültig'
 
   execution: 
-    sequence: 900
+    sequence: 1580
 
   validation: 
     type: Expression
@@ -16773,7 +16529,7 @@ validations:
     name: '[6] GEE E-Mail gültig'
 
   execution: 
-    sequence: 930
+    sequence: 1640
 
   validation: 
     type: Expression
@@ -16802,7 +16558,7 @@ validations:
     name: '[6] GEE Ort gültig'
 
   execution: 
-    sequence: 860
+    sequence: 1500
 
   validation: 
     type: Expression
@@ -16828,7 +16584,7 @@ validations:
     name: '[6] GEE Straße gültig'
 
   execution: 
-    sequence: 880
+    sequence: 1540
 
   validation: 
     type: Expression
@@ -16854,7 +16610,7 @@ validations:
     name: '[6] GEE Rufnummer gültig'
 
   execution: 
-    sequence: 960
+    sequence: 1700
 
   validation: 
     type: Expression
@@ -16880,7 +16636,7 @@ validations:
     name: '[5] Wohndauer'
 
   execution: 
-    sequence: 500
+    sequence: 770
 
   validation: 
     type: Item is NOT NULL
@@ -16905,7 +16661,7 @@ validations:
     name: '[5] Wohnt dort?'
 
   execution: 
-    sequence: 490
+    sequence: 750
 
   validation: 
     type: Item is NOT NULL
@@ -16927,7 +16683,7 @@ validations:
     name: '[5] Voradresse PLZ gültig'
 
   execution: 
-    sequence: 520
+    sequence: 810
 
   validation: 
     type: Expression
@@ -16953,7 +16709,7 @@ validations:
     name: '[5] Voradresse Ort'
 
   execution: 
-    sequence: 530
+    sequence: 830
 
   validation: 
     type: Item is NOT NULL
@@ -16978,7 +16734,7 @@ validations:
     name: '[5] Voradresse Straße'
 
   execution: 
-    sequence: 550
+    sequence: 870
 
   validation: 
     type: Item is NOT NULL
@@ -17003,7 +16759,7 @@ validations:
     name: '[5] Voradresse Hausnr'
 
   execution: 
-    sequence: 570
+    sequence: 910
 
   validation: 
     type: Item is NOT NULL
@@ -17028,7 +16784,7 @@ validations:
     name: '[5] Voradresse PLZ'
 
   execution: 
-    sequence: 510
+    sequence: 790
 
   validation: 
     type: Item is NOT NULL
@@ -17053,7 +16809,7 @@ validations:
     name: '[5] Anbieterwechsel'
 
   execution: 
-    sequence: 590
+    sequence: 950
 
   validation: 
     type: Item is NOT NULL
@@ -17075,7 +16831,7 @@ validations:
     name: '[5] Bisheriger Anbieter'
 
   execution: 
-    sequence: 600
+    sequence: 970
 
   validation: 
     type: Item is NOT NULL
@@ -17100,7 +16856,7 @@ validations:
     name: '[5] Rufnummernmitnahme'
 
   execution: 
-    sequence: 610
+    sequence: 990
 
   validation: 
     type: Item is NOT NULL
@@ -17125,7 +16881,7 @@ validations:
     name: '[5] ABW Vorwahl'
 
   execution: 
-    sequence: 620
+    sequence: 1010
 
   validation: 
     type: Item is NOT NULL
@@ -17149,7 +16905,7 @@ validations:
     name: '[5] ABW Rufnummer'
 
   execution: 
-    sequence: 630
+    sequence: 1040
 
   validation: 
     type: Item is NOT NULL
@@ -17174,7 +16930,7 @@ validations:
     name: '[5] ABW Anschlussinhaber'
 
   execution: 
-    sequence: 650
+    sequence: 1080
 
   validation: 
     type: Item is NOT NULL
@@ -17199,7 +16955,7 @@ validations:
     name: '[5] ABW Anrede'
 
   execution: 
-    sequence: 660
+    sequence: 1100
 
   validation: 
     type: Item is NOT NULL
@@ -17224,7 +16980,7 @@ validations:
     name: '[5] ABW Vorname'
 
   execution: 
-    sequence: 670
+    sequence: 1120
 
   validation: 
     type: Item is NOT NULL
@@ -17249,7 +17005,7 @@ validations:
     name: '[5] ABW Nachname'
 
   execution: 
-    sequence: 690
+    sequence: 1160
 
   validation: 
     type: Item is NOT NULL
@@ -17274,7 +17030,7 @@ validations:
     name: '[5] ABW Vorname gültig'
 
   execution: 
-    sequence: 680
+    sequence: 1140
 
   validation: 
     type: Expression
@@ -17300,7 +17056,7 @@ validations:
     name: '[5] ABW Nachname gültig'
 
   execution: 
-    sequence: 700
+    sequence: 1180
 
   validation: 
     type: Expression
@@ -17326,7 +17082,7 @@ validations:
     name: '[5] Voradresse Ort gültig'
 
   execution: 
-    sequence: 540
+    sequence: 850
 
   validation: 
     type: Expression
@@ -17355,7 +17111,7 @@ validations:
     name: '[5] Voradresse Straße gültig'
 
   execution: 
-    sequence: 560
+    sequence: 890
 
   validation: 
     type: Expression
@@ -17384,7 +17140,7 @@ validations:
     name: '[5] Voradresse Hausnr gültig'
 
   execution: 
-    sequence: 580
+    sequence: 930
 
   validation: 
     type: Expression
@@ -17410,7 +17166,7 @@ validations:
     name: '[6] GEE Postalischer Zusatz gültig'
 
   execution: 
-    sequence: 910
+    sequence: 1600
 
   validation: 
     type: Expression
@@ -17436,7 +17192,7 @@ validations:
     name: '[5] ABW Rufnummer gültig'
 
   execution: 
-    sequence: 640
+    sequence: 1060
 
   validation: 
     type: Expression
@@ -19752,7 +19508,7 @@ branches:
     when-button-pressed: P100_BTN_NEXT_3 # 220875632242136198
 
   configuration: 
-    build-option: '@deprecated - markiert' # 177183550576594203
+    build-option: '@deprecated' # 177183550576594203
 
   comments: 
     comments: |
@@ -19818,7 +19574,7 @@ branches:
       (:P100_ROLLE != 'OWNER' AND :P100_EIGENTUEMERDATEN_NOTWENDIG = 1))
 
   configuration: 
-    build-option: '@deprecated - markiert' # 177183550576594203
+    build-option: '@deprecated' # 177183550576594203
 
   comments: 
     comments: |
@@ -19858,7 +19614,7 @@ branches:
       :P100_EIGENTUEMERDATEN_NOTWENDIG = 0)
 
   configuration: 
-    build-option: '@deprecated - markiert' # 177183550576594203
+    build-option: '@deprecated' # 177183550576594203
 
   comments: 
     comments: |
@@ -20194,7 +19950,7 @@ branches:
     value: N
 
   configuration: 
-    build-option: '@deprecated - markiert' # 177183550576594203
+    build-option: '@deprecated' # 177183550576594203
 
   comments: 
     comments: |
@@ -20291,7 +20047,7 @@ branches:
       (:P100_ROLLE != 'OWNER' AND :P100_EIGENTUEMERDATEN_NOTWENDIG = 1))
 
   configuration: 
-    build-option: '@deprecated - markiert' # 177183550576594203
+    build-option: '@deprecated' # 177183550576594203
 
   comments: 
     comments: |

@@ -8,5 +8,8 @@
 <include file="2022_2_0/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="2022_2_0001/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="version_id/release.changelog.xml" relativeToChangelogFile="true"/>
+<include file="12_0003/release.changelog.xml" relativeToChangelogFile="true"/>
+<include file="2022_2_0003/release.changelog.xml" relativeToChangelogFile="true"/>
+<include file="2022_2_0004/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="next/release.changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

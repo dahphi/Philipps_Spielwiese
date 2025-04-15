@@ -350,7 +350,7 @@ regions:
     template: Standard
     template-options: 
     - '#DEFAULT#'
-    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--hideHeader
     - t-Region--scrollBody
     render-components: Above Content
 

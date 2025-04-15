@@ -5,7 +5,7 @@
     name: glascontainer-webservice
 
   endpoint-url: 
-    url: 'https://api-e.dss.svc.netcologne.intern/'
+    url: 'https://api.dss.svc.netcologne.intern/'
 
   advanced: 
     static-id: glascontainer_webservice

@@ -1497,7 +1497,7 @@
     name: SPERRE
 
   subscription: 
-    version-number: 4106057362875
+    version-number: 1
 
   source: 
     location: Static Values
@@ -1507,7 +1507,7 @@
     id: 235340267698567495
     entry: 
       sequence: 1
-      display: <span aria-hidden="true" class="fa fa-lock fam-clock fam-is-warning" title="Dieser Auftrag ist zur Zeit gegen Bearbeitung gesperrt"></span>
+      display: <span aria-hidden="true" class="fa fa-lock fam-clock fam-is-warning fa-lg" title="Dieser Auftrag ist zur Zeit gegen Bearbeitung gesperrt"></span>
       return: true
 
   - # ====== Entry: - ============================================

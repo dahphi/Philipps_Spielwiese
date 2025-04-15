@@ -39,662 +39,9 @@ server-cache:
 
 regions: 
 - # ====== Region: Datenbank-Jobs ==============================
-  id: 82049780291968937
-  identification: 
-    name: Datenbank-Jobs
-    type: Static Content
-
-  layout: 
-    sequence: 30
-    parent-region: No Parent
-    slot: BODY
-    start-new-layout: false
-    start-new-row: true
-    column: Automatic
-    new-column: true
-    column-span: Automatic
-
-  appearance: 
-    template: Collapsible
-    template-options: 
-    - '#DEFAULT#'
-    - t-Region--noPadding
-    - js-useLocalStorage
-    - is-collapsed
-    - t-Region--accent15
-    - t-Region--noBorder
-    - t-Region--scrollBody
-    render-components: Above Content
-
-  accessibility: 
-    use-landmark: true
-    landmark-type: Template Default
-
-  advanced: 
-    region-display-selector: true
-    exclude-title-from-translation: false
-
-  customization: 
-    customizable: Not Customizable By End Users
-
-  comments: 
-    comments: '@ticket FTTH-5025, FTTH-5062: Neue Übersicht der Datenbank-Jobs, die im Zusammenhang mit den Applikationen "Glascontainer" und "Vermarktungscluster" stehen'
-
-  attributes: 
-    settings: 
-      output-as: HTML
-      expand-shortcuts: false
-
-- # ====== Region: Welche Datenbankjobs existieren? ============
-  id: 145132597790866179
-  identification: 
-    name: Welche Datenbankjobs existieren?
-    type: Classic Report
-
-  source: 
-    location: Local Database
-    type: Table / View
-    table-owner: Parsing Schema
-    table-name: USER_SCHEDULER_PROGRAMS
-    include-rowid-column: false
-
-  order-by: 
-    type: None
-
-  layout: 
-    sequence: 10
-    parent-region: Datenbank-Jobs # 82049780291968937
-    slot: SUB_REGIONS
-    start-new-layout: false
-    start-new-row: true
-    column: Automatic
-    new-column: true
-    column-span: Automatic
-
-  appearance: 
-    template: Standard
-    template-options: 
-    - '#DEFAULT#'
-    - t-Region--noPadding
-    - t-Region--noBorder
-    - t-Region--scrollBody
-    render-components: Above Content
-
-  accessibility: 
-    use-landmark: true
-    landmark-type: Template Default
-
-  advanced: 
-    region-display-selector: false
-    exclude-title-from-translation: false
-
-  server-cache: 
-    caching: Disabled
-
-  customization: 
-    customizable: Not Customizable By End Users
-
-  comments: 
-    comments: Report zeigt die Datenbank-Programme, die von Jobs aufgerufen werden, welche für die Applikationen "Glascontainer" und "Vermarktungscluster" benötigt werden
-
-  attributes: 
-    layout: 
-      number-of-rows-type: Static Value
-      number-of-rows: 15
-
-    appearance: 
-      template-type: Theme
-      template: Standard
-      template-options: 
-      - '#DEFAULT#'
-      - t-Report--altRowsDefault
-      - t-Report--rowHighlight
-
-    pagination: 
-      type: Row Ranges X to Y (with next and previous links)
-      display-position: Bottom - Right
-      partial-page-refresh: true
-
-    performance: 
-      lazy-loading: false
-
-    break-formatting: 
-      break-columns: No Break
-
-    advanced: 
-      strip-html: false
-      sort-nulls: Last
-
-    heading: 
-      type: Custom Headings
-
-    download: 
-      csv-export-enabled: false
-
-    printing: 
-      enabled: false
-
-  columns: 
-  - # ====== Column: PROGRAM_NAME ================================
-    id: 87216661523505353
-    identification: 
-      column-name: PROGRAM_NAME
-      type: Plain Text
-
-    heading: 
-      heading: Program Name
-      alignment: start
-
-    layout: 
-      sequence: 10
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-  - # ====== Column: PROGRAM_TYPE ================================
-    id: 87216999090505353
-    identification: 
-      column-name: PROGRAM_TYPE
-      type: Plain Text
-
-    heading: 
-      heading: Program Type
-      alignment: start
-
-    layout: 
-      sequence: 20
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: PROGRAM_ACTION ==============================
-    id: 87217408589505354
-    identification: 
-      column-name: PROGRAM_ACTION
-      type: Plain Text
-
-    heading: 
-      heading: Program Action
-      alignment: start
-
-    layout: 
-      sequence: 30
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-  - # ====== Column: NUMBER_OF_ARGUMENTS =========================
-    id: 87217862614505354
-    identification: 
-      column-name: NUMBER_OF_ARGUMENTS
-      type: Plain Text
-
-    heading: 
-      heading: Number Of Arguments
-      alignment: end
-
-    layout: 
-      sequence: 40
-      column-alignment: end
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: ENABLED =====================================
-    id: 87218195093505354
-    identification: 
-      column-name: ENABLED
-      type: Plain Text
-
-    heading: 
-      heading: Enabled
-      alignment: start
-
-    layout: 
-      sequence: 50
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: DETACHED ====================================
-    id: 87218574920505354
-    identification: 
-      column-name: DETACHED
-      type: Plain Text
-
-    heading: 
-      heading: Detached
-      alignment: start
-
-    layout: 
-      sequence: 60
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: SCHEDULE_LIMIT ==============================
-    id: 87219019632505355
-    identification: 
-      column-name: SCHEDULE_LIMIT
-      type: Plain Text
-
-    heading: 
-      heading: Schedule Limit
-      alignment: start
-
-    layout: 
-      sequence: 70
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: PRIORITY ====================================
-    id: 87219444251505355
-    identification: 
-      column-name: PRIORITY
-      type: Plain Text
-
-    heading: 
-      heading: Priority
-      alignment: end
-
-    layout: 
-      sequence: 80
-      column-alignment: end
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: WEIGHT ======================================
-    id: 87219817515505355
-    identification: 
-      column-name: WEIGHT
-      type: Plain Text
-
-    heading: 
-      heading: Weight
-      alignment: end
-
-    layout: 
-      sequence: 90
-      column-alignment: end
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: MAX_RUNS ====================================
-    id: 87220237076505355
-    identification: 
-      column-name: MAX_RUNS
-      type: Plain Text
-
-    heading: 
-      heading: Max Runs
-      alignment: end
-
-    layout: 
-      sequence: 100
-      column-alignment: end
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: MAX_FAILURES ================================
-    id: 87220637528505355
-    identification: 
-      column-name: MAX_FAILURES
-      type: Plain Text
-
-    heading: 
-      heading: Max Failures
-      alignment: end
-
-    layout: 
-      sequence: 110
-      column-alignment: end
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: MAX_RUN_DURATION ============================
-    id: 87221038343505356
-    identification: 
-      column-name: MAX_RUN_DURATION
-      type: Plain Text
-
-    heading: 
-      heading: Max Run Duration
-      alignment: start
-
-    layout: 
-      sequence: 120
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: HAS_CONSTRAINTS =============================
-    id: 87221458399505356
-    identification: 
-      column-name: HAS_CONSTRAINTS
-      type: Plain Text
-
-    heading: 
-      heading: Has Constraints
-      alignment: start
-
-    layout: 
-      sequence: 130
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: NLS_ENV =====================================
-    id: 87221820116505356
-    identification: 
-      column-name: NLS_ENV
-      type: Plain Text
-
-    heading: 
-      heading: Nls Env
-      alignment: start
-
-    layout: 
-      sequence: 140
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-    configuration: 
-      build-option: Commented Out # 234883986660092834
-
-  - # ====== Column: COMMENTS ====================================
-    id: 87222220614505356
-    identification: 
-      column-name: COMMENTS
-      type: Plain Text
-
-    heading: 
-      heading: Comments
-      alignment: start
-
-    layout: 
-      sequence: 150
-      column-alignment: start
-
-    accessibility: 
-      value-identifies-row: false
-
-    sorting: 
-      sortable: true
-
-    export-/-printing: 
-      include-in-export-/-print: true
-
-    advanced: 
-      compute-sum: false
-
-    ui-defaults-reference: 
-      table-owner: Parsing Schema
-
-    security: 
-      escape-special-characters: true
-
-- # ====== Region: Wann wurden die Jobs ausgeführt? ============
   id: 201916496970045910
   identification: 
-    name: Wann wurden die Jobs ausgeführt?
+    name: Datenbank-Jobs
     type: Interactive Report
 
   source: 
@@ -753,8 +100,8 @@ regions:
 
   layout: 
     sequence: 20
-    parent-region: Datenbank-Jobs # 82049780291968937
-    slot: SUB_REGIONS
+    parent-region: No Parent
+    slot: BODY
     start-new-layout: false
     start-new-row: true
     column: Automatic
@@ -762,9 +109,10 @@ regions:
     column-span: Automatic
 
   appearance: 
-    template: Standard
+    template: Collapsible
     template-options: 
     - '#DEFAULT#'
+    - is-expanded
     - t-Region--scrollBody
     render-components: Above Content
 
@@ -773,7 +121,7 @@ regions:
     landmark-type: Template Default
 
   advanced: 
-    region-display-selector: false
+    region-display-selector: true
     exclude-title-from-translation: false
 
   server-cache: 
@@ -1316,14 +664,14 @@ regions:
 
       heading: 
         heading: Job Style
-        alignment: center
+        alignment: start
 
       single-row-view: 
         use-column-heading: true
 
       layout: 
         sequence: 140
-        column-alignment: center
+        column-alignment: start
 
       accessibility: 
         value-identifies-row: false
@@ -1357,14 +705,14 @@ regions:
 
       heading: 
         heading: Job Creator
-        alignment: center
+        alignment: start
 
       single-row-view: 
         use-column-heading: true
 
       layout: 
         sequence: 150
-        column-alignment: center
+        column-alignment: start
 
       accessibility: 
         value-identifies-row: false
@@ -1644,14 +992,14 @@ regions:
 
       heading: 
         heading: Enabled
-        alignment: center
+        alignment: start
 
       single-row-view: 
         use-column-heading: true
 
       layout: 
         sequence: 220
-        column-alignment: center
+        column-alignment: start
 
       accessibility: 
         value-identifies-row: false
@@ -1685,14 +1033,14 @@ regions:
 
       heading: 
         heading: State
-        alignment: center
+        alignment: start
 
       single-row-view: 
         use-column-heading: true
 
       layout: 
         sequence: 230
-        column-alignment: center
+        column-alignment: start
 
       accessibility: 
         value-identifies-row: false
@@ -1726,14 +1074,14 @@ regions:
 
       heading: 
         heading: Job Priority
-        alignment: center
+        alignment: end
 
       single-row-view: 
         use-column-heading: true
 
       layout: 
         sequence: 240
-        column-alignment: center
+        column-alignment: end
 
       accessibility: 
         value-identifies-row: false
@@ -1849,14 +1197,14 @@ regions:
 
       heading: 
         heading: Last Start Date
-        alignment: center
+        alignment: start
 
       single-row-view: 
         use-column-heading: true
 
       layout: 
         sequence: 270
-        column-alignment: center
+        column-alignment: start
 
       accessibility: 
         value-identifies-row: false
@@ -1891,17 +1239,20 @@ regions:
 
       heading: 
         heading: Next Run Date
-        alignment: center
+        alignment: start
 
       single-row-view: 
         use-column-heading: true
 
       layout: 
         sequence: 280
-        column-alignment: center
+        column-alignment: start
 
       accessibility: 
         value-identifies-row: false
+
+      appearance: 
+        format-mask: 'YYYY-MM-DD HH24:MI'
 
       source: 
         primary-key: false
@@ -2115,7 +1466,7 @@ regions:
     template: Standard
     template-options: 
     - '#DEFAULT#'
-    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--hideHeader
     - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
@@ -2209,7 +1560,7 @@ regions:
          AND APP_USER IS NULL OR APP_USER = :APP_USER
 
   layout: 
-    sequence: 40
+    sequence: 30
     parent-region: No Parent
     slot: BODY
     start-new-layout: false
@@ -2222,11 +1573,8 @@ regions:
     template: Collapsible
     template-options: 
     - '#DEFAULT#'
-    - t-Region--noPadding
     - js-useLocalStorage
     - is-collapsed
-    - t-Region--accent15
-    - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
 
@@ -2954,7 +2302,7 @@ regions:
       )
 
   layout: 
-    sequence: 50
+    sequence: 40
     parent-region: No Parent
     slot: BODY
     start-new-layout: false
@@ -2967,11 +2315,8 @@ regions:
     template: Collapsible
     template-options: 
     - '#DEFAULT#'
-    - t-Region--noPadding
     - js-useLocalStorage
     - is-collapsed
-    - t-Region--accent15
-    - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
 
@@ -3573,7 +2918,7 @@ regions:
     include-rowid-column: false
 
   layout: 
-    sequence: 60
+    sequence: 50
     parent-region: No Parent
     slot: BODY
     start-new-layout: false
@@ -3586,11 +2931,8 @@ regions:
     template: Collapsible
     template-options: 
     - '#DEFAULT#'
-    - t-Region--noPadding
     - js-useLocalStorage
     - is-collapsed
-    - t-Region--accent15
-    - t-Region--noBorder
     - t-Region--scrollBody
     render-components: Above Content
 
@@ -4148,6 +3490,71 @@ regions:
         font-size: 12
         font-color: '#000000'
         alignment: center
+
+buttons: 
+- # ====== Button: BTN_DELETE_WEBSERVICE_LOGS ==================
+  id: 265350111559305040
+  identification: 
+    button-name: BTN_DELETE_WEBSERVICE_LOGS
+    label: Webservice Logs löschen (älter als 30 Tage)
+
+  layout: 
+    sequence: 10
+    region: Lesen und Schreiben von Auftragsdaten # 245585243386556239
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--iconLeft
+    icon: fa-eraser
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+processes: 
+- # ====== Process: Webservice-Logs löschen ====================
+  id: 213364762335392091
+  identification: 
+    name: Webservice-Logs löschen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: PCK_GLASCONTAINER.p_delete_webservice_logs(pin_anzahl_tage => 30);
+
+  execution: 
+    sequence: 80
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Alle Logs älter als 30 Tage wurden gelöscht
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_DELETE_WEBSERVICE_LOGS # 265350111559305040
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
 
 branches: 
 - # ====== Branch: Berechtigung fehlt ==========================

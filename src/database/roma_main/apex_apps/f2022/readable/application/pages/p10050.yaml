@@ -131,7 +131,7 @@ regions:
       
 
   layout: 
-    sequence: 70
+    sequence: 40
     parent-region: frühere Versionen 2025 # 231427362677892215
     slot: BODY
     start-new-layout: false
@@ -166,18 +166,20 @@ regions:
       output-as: HTML
       expand-shortcuts: false
 
-- # ====== Region:  2025-03-25 =================================
+- # ====== Region:  2025-03-05 =================================
   id: 72459881346963925
   identification: 
-    name: ' 2025-03-25'
+    name: ' 2025-03-05'
     type: Static Content
 
   source: 
     html-code: |
       <ul>
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-3880" target="_blank">FTTH-3880</a>: Ein Warnhweis wird eingeblendet, wenn beim Stornieren eines Auftrags eine Kostenpflicht für die Kund*in entsteht.</li>
       
-      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-4273" target="_blank">FTTH-4273</a> Im Hauptreport der Auftragsliste werden nun zusätzliche Angaben zum Ausbaustatus angezeigt, sofern vorhanden. Außerdem erzeugen die Spalten des Reports nun keinen Zeilenumbruch mehr. In diesem Zuge wurde auch das Schloss-Icon (für gesperrte Aufträge) verkleinert, so dass nun durchgehend 15 anstatt 10 Zeilen in einem Standard-Browserfenster angezeigt werden können.</li>
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-4456" target="_blank">FTTH-4456</a>: Bei der Adressensuche im Tab "Vorbestellung" erscheinen nun auch Adressen, die keinem Vermarktungscluster zugeordnet sind.<br/>Beim Anklicken einer solchen Adresse (oder wenn der Vermarktungscluster NICHT den passenden Status für eine Bestellung über den Glascontainer besitzt), werden die an der Installationsadresse verfügbaren Technologien angzeigt und ein Link zum Öffnen der Siebel-App eingeblendet. So kann die Bestellung ggf. direkt in Siebel erfolgen.</li>
       
+      <li>Bugticket <a href="https://jira.netcologne.intern/browse/FTTH-4851" target="_blank">FTTH-4851</a>: Gefixt: Der Link zum Abschließen eines Auftrags in Siebel wird nach ebendiesem Schließen selbst dann nicht mehr angezeigt, wenn das Backend immer noch den Status "In Review" meldet.</li>
       </ul>
       
       
@@ -234,7 +236,7 @@ regions:
       
 
   layout: 
-    sequence: 60
+    sequence: 30
     parent-region: frühere Versionen 2025 # 231427362677892215
     slot: BODY
     start-new-layout: false
@@ -285,7 +287,7 @@ regions:
       
 
   layout: 
-    sequence: 50
+    sequence: 20
     parent-region: frühere Versionen 2025 # 231427362677892215
     slot: BODY
     start-new-layout: false
@@ -330,166 +332,6 @@ regions:
     html-code: |
       <ul>
       <li>Bugticket <a href="https://jira.netcologne.intern/browse/FTTH-5017" target="_blank">FTTH-5017</a>: Gefixt. Ein <a href="https://forums.oracle.com/ords/apexds/post/bug-negated-build-options-in-page-computations-not-being-ex-1629" target="_blank">APEX-Bug</a> führte dazu, dass die Installationsadresse beim Absenden der Bestellung nicht mitgesendet wurde.</li>
-      </ul>
-      
-      
-
-  layout: 
-    sequence: 40
-    parent-region: frühere Versionen 2025 # 231427362677892215
-    slot: BODY
-    start-new-layout: false
-    start-new-row: true
-    column: Automatic
-    new-column: true
-    column-span: Automatic
-
-  appearance: 
-    template: Collapsible
-    template-options: 
-    - '#DEFAULT#'
-    - js-useLocalStorage
-    - is-expanded
-    - t-Region--noBorder
-    - t-Region--scrollBody
-    render-components: Above Content
-
-  accessibility: 
-    use-landmark: true
-    landmark-type: Template Default
-
-  advanced: 
-    region-display-selector: false
-    exclude-title-from-translation: false
-
-  customization: 
-    customizable: Not Customizable By End Users
-
-  attributes: 
-    settings: 
-      output-as: HTML
-      expand-shortcuts: false
-
-- # ====== Region:  2025-03-11 =================================
-  id: 82049629187968935
-  identification: 
-    name: ' 2025-03-11'
-    type: Static Content
-
-  source: 
-    html-code: |
-      <ul>
-      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-3880" target="_blank">FTTH-3880</a>: Ein Warnhweis wird eingeblendet, wenn beim Stornieren eines Auftrags eine Kostenpflicht für die Kund*in entsteht.</li>
-      
-      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-4456" target="_blank">FTTH-4456</a>: Bei der Adressensuche im Tab "Vorbestellung" erscheinen nun auch Adressen, die keinem Vermarktungscluster zugeordnet sind.<br/>Beim Anklicken einer solchen Adresse (oder wenn der Vermarktungscluster NICHT den passenden Status für eine Bestellung über den Glascontainer besitzt), werden die an der Installationsadresse verfügbaren Technologien angzeigt und ein Link zum Öffnen der Siebel-App eingeblendet. So kann die Bestellung ggf. direkt in Siebel erfolgen.</li>
-      
-      <li>Bugticket <a href="https://jira.netcologne.intern/browse/FTTH-4851" target="_blank">FTTH-4851</a>: Gefixt: Der Link zum Abschließen eines Auftrags in Siebel wird nach ebendiesem Schließen selbst dann nicht mehr angezeigt, wenn das Backend immer noch den Status "In Review" meldet.</li>
-      </ul>
-      
-      
-
-  layout: 
-    sequence: 30
-    parent-region: frühere Versionen 2025 # 231427362677892215
-    slot: BODY
-    start-new-layout: false
-    start-new-row: true
-    column: Automatic
-    new-column: true
-    column-span: Automatic
-
-  appearance: 
-    template: Collapsible
-    template-options: 
-    - '#DEFAULT#'
-    - js-useLocalStorage
-    - is-expanded
-    - t-Region--noBorder
-    - t-Region--scrollBody
-    render-components: Above Content
-
-  accessibility: 
-    use-landmark: true
-    landmark-type: Template Default
-
-  advanced: 
-    region-display-selector: false
-    exclude-title-from-translation: false
-
-  customization: 
-    customizable: Not Customizable By End Users
-
-  attributes: 
-    settings: 
-      output-as: HTML
-      expand-shortcuts: false
-
-- # ====== Region:  2025-03-12 =================================
-  id: 87764133538074609
-  identification: 
-    name: ' 2025-03-12'
-    type: Static Content
-
-  source: 
-    html-code: |
-      <ul>
-      
-      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-5025" target="_blank">FTTH-5025</a>: Neue Übersicht der Datenbankjobs (Glascontainer und Vermarktungscluster) auf der Seite "Einstellungen"</li>
-      
-      </ul>
-      
-      
-
-  layout: 
-    sequence: 20
-    parent-region: frühere Versionen 2025 # 231427362677892215
-    slot: BODY
-    start-new-layout: false
-    start-new-row: true
-    column: Automatic
-    new-column: true
-    column-span: Automatic
-
-  appearance: 
-    template: Collapsible
-    template-options: 
-    - '#DEFAULT#'
-    - js-useLocalStorage
-    - is-expanded
-    - t-Region--noBorder
-    - t-Region--scrollBody
-    render-components: Above Content
-
-  accessibility: 
-    use-landmark: true
-    landmark-type: Template Default
-
-  advanced: 
-    region-display-selector: false
-    exclude-title-from-translation: false
-
-  customization: 
-    customizable: Not Customizable By End Users
-
-  attributes: 
-    settings: 
-      output-as: HTML
-      expand-shortcuts: false
-
-- # ====== Region:  2025-03-18 =================================
-  id: 87765787614074626
-  identification: 
-    name: ' 2025-03-18'
-    type: Static Content
-
-  source: 
-    html-code: |
-      <ul>
-      
-      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-5113" target="_blank">FTTH-5113</a> Gefixt: Der Ausbaustatus für Deutsche Glasfaser wird nun korrekt ermittelt, selbst wenn in der TCOM_ADR_BSA ein Eintrag gefunden wird, der einen leeren Ausbaustatus hat.</li>
-      
-      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-5020" target="_blank">FTTH-5020/a>: Neue zahlenmäßige Auswertung der eingeblendeten Warnhinweise für Siebel-Ready in der Glascontainer-Bestellerfassung.</li>
-      
       </ul>
       
       
@@ -752,7 +594,7 @@ regions:
     type: Static Content
 
   layout: 
-    sequence: 80
+    sequence: 90
     parent-region: Versionshistorie # 237082737139883897
     slot: SUB_REGIONS
     start-new-layout: false
@@ -1512,56 +1354,6 @@ page-items:
 
   comments: 
     comments: Die aktuelle Session-ID muss in diesem Item persistiert werden, damit sie im Prozess "CREATE_COLLECTION (FEHLERSTATISTIK)" übergeben werden kann (ansonsten würde die asynchrone Process Chain ihre eigene, abweichende APP_SESSION-Variable generieren, wodurch die APEX_COLLECTION zwar erzeugt wird, aber nicht sichtbar wäre für die GUI-Session)
-
-- # ====== Page Item: P10050_PCK_GLASCONTAINER_JOBS ============
-  id: 82049728451968936
-  identification: 
-    name: P10050_PCK_GLASCONTAINER_JOBS
-    type: Display Only
-
-  label: 
-    label: 'PCK_GLASCONTAINER_JOBS:'
-    alignment: Left
-
-  settings: 
-    format: HTML (Unsafe)
-    send-on-page-submit: true
-
-  layout: 
-    sequence: 60
-    region: PL/SQL Datenbank-Packages # 240062500025494083
-    slot: BODY
-    alignment: Left
-    start-new-layout: false
-    start-new-row: true
-    column: Automatic
-    new-column: true
-    column-span: Automatic
-    label-column-span: 6
-
-  appearance: 
-    template: Optional
-    template-options: 
-    - '#DEFAULT#'
-
-  advanced: 
-    warn-on-unsaved-changes: Page Default
-
-  source: 
-    type: Null
-    used: Only when current value in session state is null
-
-  session-state: 
-    data-type: VARCHAR2
-    storage: Per Session (Persistent)
-
-  security: 
-    session-state-protection: Unrestricted
-    store-value-encrypted-in-session-state: false
-    restricted-characters: All characters can be saved.
-
-  comments: 
-    comments: '@ticket FTTH-5025: die aktuelle Versionsnummer des Package P10050_PCK_GLASCONTAINER_JOBS'
 
 - # ====== Page Item: P10050_AUTOR_BACKEND =====================
   id: 211160747999286722
@@ -2350,7 +2142,7 @@ page-items:
     send-on-page-submit: true
 
   layout: 
-    sequence: 70
+    sequence: 60
     region: PL/SQL Datenbank-Packages # 240062500025494083
     slot: BODY
     alignment: Left
@@ -2484,7 +2276,7 @@ page-items:
     send-on-page-submit: true
 
   layout: 
-    sequence: 110
+    sequence: 90
     region: PL/SQL Datenbank-Packages # 240062500025494083
     slot: BODY
     alignment: Left
@@ -2602,7 +2394,7 @@ page-items:
     send-on-page-submit: true
 
   layout: 
-    sequence: 80
+    sequence: 70
     region: PL/SQL Datenbank-Packages # 240062500025494083
     slot: BODY
     alignment: Left
@@ -2702,7 +2494,7 @@ page-items:
     send-on-page-submit: true
 
   layout: 
-    sequence: 90
+    sequence: 80
     region: PL/SQL Datenbank-Packages # 240062500025494083
     slot: BODY
     alignment: Left
@@ -3291,7 +3083,6 @@ processes:
       :P10050_PCK_GLASCONTAINER_ORDER := GREATEST(PCK_GLASCONTAINER_ORDER.version, PCK_GLASCONTAINER_ORDER.get_body_version);
       :P10050_PCK_POB_REST            := GREATEST(PCK_POB_REST.version, PCK_POB_REST.get_body_version);
       :P10050_PCK_VERMARKTUNGSCLUSTER := GREATEST(PCK_VERMARKTUNGSCLUSTER.version, PCK_VERMARKTUNGSCLUSTER.get_body_version);
-      :P10050_PCK_GLASCONTAINER_JOBS  := GREATEST(PCK_GLASCONTAINER_JOBS.version, PCK_GLASCONTAINER_JOBS.get_body_version);
       END;
 
   execution: 
