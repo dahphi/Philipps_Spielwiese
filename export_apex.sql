@@ -19,6 +19,5 @@ project stage
 project release -version &version_id1;
 project gen-artifact -version &version_id1;
 !git add .
-!git commit -m "Staging APEX &commmit_msg";
+!git commit -m "Export APEX APP: &commmit_msg";
 !git push
-*/
