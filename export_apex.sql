@@ -8,7 +8,7 @@ exec :version_id :='&1' || '_' || '&2';
 var commit_msg varchar2(50);
 exec :commit_msg :='&3';
 
-define commmit_msg = "Test :app_id";
+define commmit_msg = "Test &app_id";
 /*
 -- Immer in den develop Branch wechseln und aktuellen Stand ziehen
 !git chekout develop
