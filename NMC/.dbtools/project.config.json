@@ -5,7 +5,7 @@
     "version" : "24.4.4.0"
   },
   "schemas" : [ "NMC_MANAGER" ],
-  "lastReleaseVersion" : "2022_2_005",
+  "lastReleaseVersion" : "2022_2_001",
   "export" : {
     "format" : {
       "enable" : true
