@@ -1,17 +1,11 @@
-!git fetch origin;
-project export -o apex.2022;
-!git add .
-!git commit -m "Exporting APEX 2022 project";
-!git push
+set serveroutput on;
+
+define version_id1 = "&1._&2";
+define commmit_msg = "&3";
+project export -o apex.&1;
 project stage
+project release -version &version_id1;
+project gen-artifact -version &version_id1;
 !git add .
-!git commit -m "Staging APEX 2022 project";
-!git push
-project release -version 2022_2_0001;
-!git add .
-!git commit -m "Release APEX 2022 project";
-!git push
-project gen-artifact -version 2022_2_0001;
-!git add .
-!git commit -m "Generating APEX 2022 artifact";
+!git commit -m "&commmit_msg";
 !git push
