@@ -1,0 +1,1569 @@
+---
+# ====== Page: Fuzzy-Direktabfrage ===========================
+id: 42
+identification: 
+  name: Fuzzy-Direktabfrage
+  alias: FUZZY-DIREKTABFRAGE
+  title: Fuzzy-Direktabfrage
+  page-group: Fuzzy Dublettensuche # 77868900765297320
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Fuzzy-Suchergebnisse ========================
+  id: 296768738751326814
+  identification: 
+    name: Fuzzy-Suchergebnisse
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      WITH FUZZY AS (
+      SELECT  'PHO' AS SUCHTYP
+             ,row_id
+             ,score
+             ,vorname
+             ,nachname
+             ,geburtsdatum
+             ,firmenname
+             ,strasse
+             ,hausnummer
+             ,plz
+             ,ort
+             ,iban
+      FROM TABLE(
+          PCK_FUZZYDOUBLE.ft_phonetic_search(
+               piv_nachname   => :P42_NACHNAME
+              ,piv_vorname    => :P42_VORNAME
+              ,piv_firmenname => :P42_FIRMENNAME
+              ,piv_strasse    => :P42_STRASSE
+              ,piv_hausnummer => :P42_HAUSNUMMER
+              ,piv_plz        => :P42_PLZ
+              ,piv_ort        => :P42_ORT
+              ,pin_ignore_service_errors => :P10100_IGNORE_FUZZY_SERVICE_ERRORS
+              )
+          )
+      UNION ALL
+      SELECT 'IBAN' AS SUCHTYP
+             ,row_id
+             ,score
+             ,vorname
+             ,nachname
+             ,geburtsdatum
+             ,firmenname
+             ,strasse
+             ,hausnummer
+             ,plz
+             ,ort
+             ,iban
+         FROM TABLE(PCK_FUZZYDOUBLE.ft_doublet_check_bank(
+                       piv_iban => :P42_IBAN
+                     , pin_ignore_service_errors => :P10100_IGNORE_FUZZY_SERVICE_ERRORS
+                 )
+             )
+      )
+      SELECT  FUZZY.SUCHTYP
+             ,FUZZY.row_id
+             ,FUZZY.score
+             ,TO_CHAR(NULL) AS KUNDENNUMMER
+             ,FUZZY.vorname
+             ,FUZZY.nachname
+             ,FUZZY.geburtsdatum
+             ,FUZZY.firmenname
+             ,FUZZY.strasse
+             ,FUZZY.hausnummer
+             ,FUZZY.plz
+             ,FUZZY.ort
+             ,FUZZY.iban
+         FROM FUZZY
+      ---   LEFT JOIN v_apx_gc_customerdata@siebp.netcologne.intern@siebel_inf SIEBEL -- 2023-02-23: knallt in der Produktion
+      ---     ON (FUZZY.row_id = SIEBEL.GLOBAL_ID)
+       WHERE FUZZY.score >= COALESCE(:P10100_FUZZY_MIN_SCORE_PHO, 80) -- sonst ufert das aus!
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <p>Fuzzy-Rohdaten</p>
+
+  server-side-condition: 
+    type: Request = Value
+    value: FUZZY_DIREKTABFRAGE
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: |
+      Die Fuzzy-Abfrage wird nur ausgeführt, wenn der Request FUZZY lautet. @next: Dieses SQL führt in PROD zu Internal Server Error, daher brauchen wir eine Pipelined Function, die die SIEBEL-Ergebnisse einzeln hinzufügt:
+      WITH FUZZY AS (
+      SELECT  'PHO' AS SUCHTYP
+             ,row_id
+             ,score
+             ,vorname
+             ,nachname
+             ,geburtsdatum
+             ,firmenname
+             ,strasse
+             ,hausnummer
+             ,plz
+             ,ort
+             ,iban
+      FROM TABLE(
+          PCK_FUZZYDOUBLE.ft_phonetic_search(
+               piv_nachname   => :P42_NACHNAME
+              ,piv_vorname    => :P42_VORNAME
+              ,piv_firmenname => :P42_FIRMENNAME
+              ,piv_strasse    => :P42_STRASSE
+              ,piv_hausnummer => :P42_HAUSNUMMER
+              ,piv_plz        => :P42_PLZ
+              ,piv_ort        => :P42_ORT
+              )
+          )
+      UNION ALL
+      SELECT 'IBAN' AS SUCHTYP
+             ,row_id
+             ,score
+             ,vorname
+             ,nachname
+             ,geburtsdatum
+             ,firmenname
+             ,strasse
+             ,hausnummer
+             ,plz
+             ,ort
+             ,iban
+         FROM TABLE(PCK_FUZZYDOUBLE.ft_doublet_check_bank(piv_iban => :P42_IBAN))
+      )
+      SELECT  FUZZY.SUCHTYP
+             ,FUZZY.row_id
+             ,FUZZY.score
+             ,SIEBEL.KUNDENNUMMER
+             ,COALESCE(SIEBEL.vorname, FUZZY.vorname) AS vorname
+             ,COALESCE(SIEBEL.nachname, FUZZY.nachname) AS nachname
+             ,COALESCE(SIEBEL.geburtsdatum, FUZZY.geburtsdatum) AS geburtsdatum
+             ,COALESCE(SIEBEL.FIRMENNAME, FUZZY.firmenname) AS firmenname
+             ,COALESCE(SIEBEL.STRASSE, FUZZY.strasse) AS strasse
+             ,COALESCE(TRIM(SIEBEL.HAUSNR_VON || ' ' || SIEBEL.HAUSNR_ZUSATZ_VON), FUZZY.hausnummer) AS hausnummer
+             ,COALESCE(SIEBEL.plz, FUZZY.plz) AS plz
+             ,COALESCE(SIEBEL.ort, FUZZY.ort) AS ort
+             ,COALESCE(SIEBEL.iban, FUZZY.iban) AS iban
+         FROM FUZZY
+         LEFT JOIN v_apx_gc_customerdata@siebp.netcologne.intern@siebel_inf SIEBEL
+           ON (FUZZY.row_id = SIEBEL.GLOBAL_ID)
+       WHERE FUZZY.score >= 80 -- sonst ufert das aus!
+
+  attributes: 
+    id: 301497971497519694
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Top and Bottom - Left
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    messages: 
+      when-no-data-found: Fuzzy liefert keine ähnlichen Kunden zurück
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 301615720562714892
+      identification: 
+        name: Primary Report
+        alias: 974526
+
+    columns: 
+    - # ====== Column: SUCHTYP =====================================
+      id: 301498079695519695
+      identification: 
+        column-name: SUCHTYP
+        type: Plain Text
+
+      heading: 
+        heading: Typ
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ROW_ID ======================================
+      id: 301498226040519696
+      identification: 
+        column-name: ROW_ID
+        type: Plain Text
+
+      heading: 
+        heading: ROW_ID
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SCORE =======================================
+      id: 301498292518519697
+      identification: 
+        column-name: SCORE
+        type: Plain Text
+
+      heading: 
+        heading: Score
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: VORNAME =====================================
+      id: 301498408446519698
+      identification: 
+        column-name: VORNAME
+        type: Plain Text
+
+      heading: 
+        heading: Vorname
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NACHNAME ====================================
+      id: 301498535156519699
+      identification: 
+        column-name: NACHNAME
+        type: Plain Text
+
+      heading: 
+        heading: Nachname
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: GEBURTSDATUM ================================
+      id: 301498618791519700
+      identification: 
+        column-name: GEBURTSDATUM
+        type: Plain Text
+
+      heading: 
+        heading: Geb.Datum
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FIRMENNAME ==================================
+      id: 301498738059519701
+      identification: 
+        column-name: FIRMENNAME
+        type: Plain Text
+
+      heading: 
+        heading: Firma
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STRASSE =====================================
+      id: 301498766666519702
+      identification: 
+        column-name: STRASSE
+        type: Plain Text
+
+      heading: 
+        heading: Straße
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: HAUSNUMMER ==================================
+      id: 301498942496519703
+      identification: 
+        column-name: HAUSNUMMER
+        type: Plain Text
+
+      heading: 
+        heading: Nr.
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLZ =========================================
+      id: 301499008251519704
+      identification: 
+        column-name: PLZ
+        type: Plain Text
+
+      heading: 
+        heading: PLZ
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ORT =========================================
+      id: 301499128005519705
+      identification: 
+        column-name: ORT
+        type: Plain Text
+
+      heading: 
+        heading: Ort
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IBAN ========================================
+      id: 301499239490519706
+      identification: 
+        column-name: IBAN
+        type: Plain Text
+
+      heading: 
+        heading: IBAN
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: KUNDENNUMMER ================================
+      id: 301499464063519709
+      identification: 
+        column-name: KUNDENNUMMER
+        type: Plain Text
+
+      heading: 
+        heading: SIEBEL-KNr.
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: A4
+        orientation: Landscape
+        units: Millimeters
+        width: 297
+        height: 210
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Fuzzy-Suchergebnisse
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Fuzzy!Double Direktabfrage ==================
+  id: 296770338093326830
+  identification: 
+    name: Fuzzy!Double Direktabfrage
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <p>Die Fuzzy!Double-Suche wird mit den folgenen Suchparametern aufgerufen. Die Ergebnisse dieser Abfrage werden nicht gespeichert.<p>
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 301455140308374416
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Glascontainer # 234884631880092836
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Breadcrumbs # 238157555060796911
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P42_UUID =================================
+  id: 296768573718326813
+  identification: 
+    name: P42_UUID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 301455140308374416
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_NACHNAME =============================
+  id: 296770428135326831
+  identification: 
+    name: P42_NACHNAME
+    type: Text Field
+
+  label: 
+    label: Nachname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_VORNAME ==============================
+  id: 296770530136326832
+  identification: 
+    name: P42_VORNAME
+    type: Text Field
+
+  label: 
+    label: Vorname
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_FIRMENNAME ===========================
+  id: 296770624133326833
+  identification: 
+    name: P42_FIRMENNAME
+    type: Text Field
+
+  label: 
+    label: Firma
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_STRASSE ==============================
+  id: 296770735487326834
+  identification: 
+    name: P42_STRASSE
+    type: Text Field
+
+  label: 
+    label: Straße
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_HAUSNUMMER ===========================
+  id: 296770841186326835
+  identification: 
+    name: P42_HAUSNUMMER
+    type: Text Field
+
+  label: 
+    label: ' Nr.'
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_PLZ ==================================
+  id: 296770892536326836
+  identification: 
+    name: P42_PLZ
+    type: Text Field
+
+  label: 
+    label: PLZ
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_ORT ==================================
+  id: 296770951074326837
+  identification: 
+    name: P42_ORT
+    type: Text Field
+
+  label: 
+    label: Ort
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P42_IBAN =================================
+  id: 301497728360519691
+  identification: 
+    name: P42_IBAN
+    type: Text Field
+
+  label: 
+    label: IBAN
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 80
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BTN_FUZZY_DIREKTABFRAGE =====================
+  id: 296771144604326838
+  identification: 
+    button-name: BTN_FUZZY_DIREKTABFRAGE
+    label: Fuzzy!Double-Suche ausführen
+
+  layout: 
+    sequence: 80
+    region: Fuzzy!Double Direktabfrage # 296770338093326830
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: BTN_FUZZY_DIREKTABFRAGE =============
+  id: 301499693740519711
+  identification: 
+    name: BTN_FUZZY_DIREKTABFRAGE
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_FUZZY_DIREKTABFRAGE # 296771144604326838
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 301499781955519712
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: FUZZY_DIREKTABFRAGE
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: BTN_FUZZY_DIREKTABFRAGE # 301499693740519711
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Felder vorbelegen ==========================
+  id: 296771273302326840
+  identification: 
+    name: Felder vorbelegen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      SELECT customer_name_last
+           , customer_name_first
+           , customer_businessname
+           , install_addr_street
+           , trim(install_addr_housenumber || ' ' || install_addr_addition)
+           , install_addr_zipcode
+           , install_addr_city
+           , account_iban
+        INTO :P42_NACHNAME
+           , :P42_VORNAME
+           , :P42_FIRMENNAME
+           , :P42_STRASSE
+           , :P42_HAUSNUMMER
+           , :P42_PLZ
+           , :P42_ORT
+           , :P42_IBAN
+        FROM FTTH_WS_SYNC_PREORDERS
+       WHERE ID = :P42_UUID
+      ;
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P42_UUID
+
+branches: 
+- # ====== Branch: Berechtigung fehlt ==========================
+  id: 248954640589410498
+  identification: 
+    name: Berechtigung fehlt
+
+  execution: 
+    sequence: 30
+    point: Before Header
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:10050:&SESSION.::&DEBUG.::P10050_APPLIKATIONSSEITE,P10050_ROLLE_ERFORDERLICH:Fuzzy-Direktabfrage,SUPERUSER&success_msg=#SUCCESS_MSG#'
+      page: 10050 # Glascontainer - Über diese Anwendung
+      values: 
+        p10050_applikationsseite: Fuzzy-Direktabfrage
+        p10050_rolle_erforderlich: SUPERUSER
+
+  security: 
+    authorization-scheme: MODEL.LOV.NOT_W_ARGUMENT # 244597399936966998
+
+  comments: 
+    comments: '@ticket FTTH-2695: Besitzt der User nicht die erforderliche Berechtigung, wird zur Seite "über diese Anwendung" gesprungen'
+
+- # ====== Branch: Request-Weitergabe und Reset UUID ===========
+  id: 301499851606519713
+  identification: 
+    name: Request-Weitergabe und Reset UUID
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:42:&SESSION.:FUZZY:&DEBUG.::P42_UUID:&success_msg=#SUCCESS_MSG#'
+      page: 42 # Fuzzy-Direktabfrage
+      request: FUZZY
+      values: 
+
+  server-side-condition: 
+    type: Request = Value
+    value: FUZZY
+

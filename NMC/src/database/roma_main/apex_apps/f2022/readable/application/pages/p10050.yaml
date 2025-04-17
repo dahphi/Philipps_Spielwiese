@@ -1,0 +1,3376 @@
+---
+# ====== Page: Glascontainer - Über diese Anwendung ==========
+id: 10050
+identification: 
+  name: Glascontainer - Über diese Anwendung
+  alias: ABOUT
+  title: Glascontainer - Über diese Anwendung
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+javascript: 
+  function-and-global-variable-declaration: |
+    "FN_DISABLE_ELEMENTS"
+    "FN_COPY_HTML_TO_CLIPBOARD"
+  execute-when-page-loads: disableElements('noEdit');
+
+css: 
+  inline: |
+    span#P10050_APPLICATION_COMMENT_DISPLAY {
+      font-size:100%;
+      font-weight: normal;
+    }
+    
+    div.infobox div.t-ContentBlock-body div.container {
+        min-height: 150px!important;
+    }
+    
+    .copyToClipboard {
+      border: 2px dashed transparent;
+      padding: 5px;
+      cursor: pointer;
+    }
+    
+    .copyToClipboard:hover {
+      border-color:#9DB;
+    }
+    .copyToClipboard.copied
+    {
+      border-style:solid;
+      border-color:#9DB;
+      background-color:#DFE;
+    }
+    
+    table.info.webservice {
+        font-size: 75%;
+        border-collapse: collapse;
+    }
+    
+    table.info.webservice td{
+        border-bottom: 1px solid #CCC;
+    }
+    
+    span.green {
+        color: rgb(16, 170, 2);
+        padding-right: 1em;
+    }
+    
+    .red {
+        color: rgb(170, 2, 2);
+        padding-right: 1em;
+    }
+    
+    table#rollendisplay {
+      border-collapse: collapse;
+    }
+    
+    table#rollendisplay td {
+      padding: 0 1em;
+      border-bottom: 1px solid #CCC;
+    }
+    table#rollendisplay td.janein {
+      color: #333;
+    font-style:italic;
+    }
+    table#rollendisplay td.janein.ja {
+      background-color: #54ff9f;
+    }
+    
+    
+    table#rollendisplay td.janein.nein {
+      background-color: #EEE;
+    }
+
+security: 
+  authorization-scheme: MODEL.LOV.MUST_NOT_BE_PUBLIC_USER
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: 'Diese Seite zeigt einen Überblick der wesentlichen Entwicklungsschritte der Anwendung: Wann kam welches Feature hinzu, welche maßgeblichen Änderungen haben stattgefunden, welche Fehler wurden behoben.'
+
+regions: 
+- # ====== Region:  2025-01-21 =================================
+  id: 61956119238854130
+  identification: 
+    name: ' 2025-01-21'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      <li>ticket <a href="https://jira.netcologne.intern/browse/FTTH-4625" target="_blank">FTTH-4625</a>: In der Listenansicht wird die Adresse nun komform zu den neuen Formatierungsregeln angezeigt (Hausnummer komplett, Gebäudeteil, Ort komplett)</li>
+      <li>ticket <a href="https://jira.netcologne.intern/browse/FTTH-4314" target="_blank">FTTH-4314</a>: Beim (versehentlichen) Ausführen derselben Aktion aus mehreren geöffneten Browser-Tabs wird ein entsprechender Hinweis angezeigt, und der Vorgang wird nicht mehr intern als Fehler geloggt.</li>
+      <li>ticket <a href="https://jira.netcologne.intern/browse/FTTH-3880" target="_blank">FTTH-3880</a>: Bei Wholebuy-Aufträgen wird darauf hingewiesen, falls eine Stornierung kostenpflichtig ist.</li>
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 70
+    parent-region: frühere Versionen 2025 # 231427362677892215
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region:  2025-03-25 =================================
+  id: 72459881346963925
+  identification: 
+    name: ' 2025-03-25'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-4273" target="_blank">FTTH-4273</a> Im Hauptreport der Auftragsliste werden nun zusätzliche Angaben zum Ausbaustatus angezeigt, sofern vorhanden. Außerdem erzeugen die Spalten des Reports nun keinen Zeilenumbruch mehr. In diesem Zuge wurde auch das Schloss-Icon (für gesperrte Aufträge) verkleinert, so dass nun durchgehend 15 anstatt 10 Zeilen in einem Standard-Browserfenster angezeigt werden können.</li>
+      
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 60
+    parent-region: Versionshistorie # 237082737139883897
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region:  2025-02-11 =================================
+  id: 77780897075327321
+  identification: 
+    name: ' 2025-02-11'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      <li>ticket <a href="https://jira.netcologne.intern/browse/FTTH-4619" target="_blank">FTTH-4619</a>: Die Darstellung der Ergebnisse einer Adresssuche wurden an die neue kompakte Darstellung angepasst (Hausnr., Zusatz, Gebäudeteil, Ortseil)</li>
+      <li>ticket <a href="https://jira.netcologne.intern/browse/FTTH-4464" target="_blank">FTTH-4464</a>: Unmittelbar nach dem Abschluss einer Bestellung springt der Glascontainer nun direkt zum neuen Auftrag.</li>
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 60
+    parent-region: frühere Versionen 2025 # 231427362677892215
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region:  2025-02-19 =================================
+  id: 77932162863578837
+  identification: 
+    name: ' 2025-02-19'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-4884" target="_blank">FTTH-4884</a>: Die Auftragsliste führt nun inital keine Suchanfrage durch. Erst wenn Suchkriterien eingegeben sind, werden im Report die Ergebnisse dargestellt. Die Seite lädt beim Aufruf entsprechend schneller. Es wird vermieden, dass man zunächst 15 Sekunden warten muss, um überhaupt Suchkriterien eingeben zu können. Es ist trotzdem weiterhin möglich, mit der Schaltfläche [Suche ausführen] auch ohne ein explizites Suchkriterium die ungefilterten Ergebnisse anzuzeigen.</li>
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-4622" target="_blank">FTTH-4622</a>: Bei der Bestellerfassung im Glascontainer wird nun durchgängig die Installationsadresse in der neuen Formatierung angezeigt, somit keine Einzel-Felder mehr.</li>
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 50
+    parent-region: frühere Versionen 2025 # 231427362677892215
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region:  2025-02-26 =================================
+  id: 82046998225968909
+  identification: 
+    name: ' 2025-02-26'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      <li>Bugticket <a href="https://jira.netcologne.intern/browse/FTTH-5017" target="_blank">FTTH-5017</a>: Gefixt. Ein <a href="https://forums.oracle.com/ords/apexds/post/bug-negated-build-options-in-page-computations-not-being-ex-1629" target="_blank">APEX-Bug</a> führte dazu, dass die Installationsadresse beim Absenden der Bestellung nicht mitgesendet wurde.</li>
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 40
+    parent-region: frühere Versionen 2025 # 231427362677892215
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region:  2025-03-11 =================================
+  id: 82049629187968935
+  identification: 
+    name: ' 2025-03-11'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-3880" target="_blank">FTTH-3880</a>: Ein Warnhweis wird eingeblendet, wenn beim Stornieren eines Auftrags eine Kostenpflicht für die Kund*in entsteht.</li>
+      
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-4456" target="_blank">FTTH-4456</a>: Bei der Adressensuche im Tab "Vorbestellung" erscheinen nun auch Adressen, die keinem Vermarktungscluster zugeordnet sind.<br/>Beim Anklicken einer solchen Adresse (oder wenn der Vermarktungscluster NICHT den passenden Status für eine Bestellung über den Glascontainer besitzt), werden die an der Installationsadresse verfügbaren Technologien angzeigt und ein Link zum Öffnen der Siebel-App eingeblendet. So kann die Bestellung ggf. direkt in Siebel erfolgen.</li>
+      
+      <li>Bugticket <a href="https://jira.netcologne.intern/browse/FTTH-4851" target="_blank">FTTH-4851</a>: Gefixt: Der Link zum Abschließen eines Auftrags in Siebel wird nach ebendiesem Schließen selbst dann nicht mehr angezeigt, wenn das Backend immer noch den Status "In Review" meldet.</li>
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 30
+    parent-region: frühere Versionen 2025 # 231427362677892215
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region:  2025-03-12 =================================
+  id: 87764133538074609
+  identification: 
+    name: ' 2025-03-12'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-5025" target="_blank">FTTH-5025</a>: Neue Übersicht der Datenbankjobs (Glascontainer und Vermarktungscluster) auf der Seite "Einstellungen"</li>
+      
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 20
+    parent-region: frühere Versionen 2025 # 231427362677892215
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region:  2025-03-18 =================================
+  id: 87765787614074626
+  identification: 
+    name: ' 2025-03-18'
+    type: Static Content
+
+  source: 
+    html-code: |
+      <ul>
+      
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-5113" target="_blank">FTTH-5113</a> Gefixt: Der Ausbaustatus für Deutsche Glasfaser wird nun korrekt ermittelt, selbst wenn in der TCOM_ADR_BSA ein Eintrag gefunden wird, der einen leeren Ausbaustatus hat.</li>
+      
+      <li>Ticket <a href="https://jira.netcologne.intern/browse/FTTH-5020" target="_blank">FTTH-5020/a>: Neue zahlenmäßige Auswertung der eingeblendeten Warnhinweise für Siebel-Ready in der Glascontainer-Bestellerfassung.</li>
+      
+      </ul>
+      
+      
+
+  layout: 
+    sequence: 10
+    parent-region: frühere Versionen 2025 # 231427362677892215
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Ihre Berechtigungen im Glascontainer ========
+  id: 213365006645392093
+  identification: 
+    name: Ihre Berechtigungen im Glascontainer
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: 'RETURN PCK_GLASCONTAINER.fc_rollen_display(:G_ROLLENLISTE);'
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--padded
+    - t-ContentBlock--h3
+    - t-ContentBlock--lightBG
+    css-classes: 
+    - infobox
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: '<p>Sie besitzen folgende Autorisierungen für den Glascontainer:</p>'
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: App =========================================
+  id: 214745639714891292
+  identification: 
+    name: App
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: Über diese Anwendung # 218306227260216568
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: 1
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: APEX Workspace ==============================
+  id: 214745732700891293
+  identification: 
+    name: APEX Workspace
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: Über diese Anwendung # 218306227260216568
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Datenbank ===================================
+  id: 214745765048891294
+  identification: 
+    name: Datenbank
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: Über diese Anwendung # 218306227260216568
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Über diese Anwendung ========================
+  id: 218306227260216568
+  identification: 
+    name: Über diese Anwendung
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 9
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--padded
+    - t-ContentBlock--h3
+    - t-ContentBlock--lightBG
+    css-classes: 
+    - infobox
+    render-components: Below Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: 'Basisdaten der Anwendung '
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: frühere Versionen 2025 ======================
+  id: 231427362677892215
+  identification: 
+    name: frühere Versionen 2025
+    type: Static Content
+
+  layout: 
+    sequence: 80
+    parent-region: Versionshistorie # 237082737139883897
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: ToDo-LIste für die App "Glascontainer" ======
+  id: 233137882602500612
+  identification: 
+    name: ToDo-LIste für die App "Glascontainer"
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: |
+      BEGIN
+      htp.p('<ol>');
+      FOR todo IN (SELECT D AS TEXT, R AS PRIO FROM TABLE(PCK_GLASCONTAINER.TODOLIST)) LOOP
+        IF todo.TEXT IS NULL THEN
+          htp.p('<hr style="margin-top: 1em;" />');
+        ELSE
+          htp.p('<li>' || todo.TEXT || '</li>');
+        END IF;
+      END LOOP;
+      htp.p('</ol>');
+      EXCEPTION
+        WHEN OTHERS THEN
+          htp.p('Liste kann nicht angezeigt werden: ' || SQLERRM);
+      END;
+
+  layout: 
+    sequence: 120
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Drawer
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-class-t-Drawer--pullOutEnd
+    - js-dialog-class-t-Drawer--md
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: |
+      <style>
+        div#todoliste li {
+          margin-top: 1em;
+        }
+      </style>
+      <div id="todoliste">
+    footer-text: </div>
+
+  server-side-condition: 
+    type: Item != Value
+    item: P10050_ENVIRONMENT
+    value: NMC
+
+  security: 
+    authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: Nicht in der Produktion anzeigen
+
+- # ====== Region: Versionshistorie ============================
+  id: 237082737139883897
+  identification: 
+    name: Versionshistorie
+    type: Static Content
+
+  layout: 
+    sequence: 110
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 9
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--padded
+    - t-ContentBlock--h3
+    - t-ContentBlock--lightBG
+    css-classes: 
+    - infobox
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: '* App - User' # 238128121341675592
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  comments: 
+    comments: |
+      Change Log der Anwendung.
+      
+      Zur Ermittlung von Lines of Code / Characters per Line / Length:
+      SELECT 'Datenbank-Quellcode (PL/SQL): ' || to_char(len, 'FM999G999G999G990') || ' Zeichen, Lines of Code: ' || TO_CHAR(loc, 'FM999G999G999G990') || ', Characters per Line: ' || TO_CHAR(cpl, 'FM999G999G999G990')
+        FROM v_glascontainer_loc;
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: PL/SQL Datenbank-Packages ===================
+  id: 240062500025494083
+  identification: 
+    name: PL/SQL Datenbank-Packages
+    type: Static Content
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--padded
+    - t-ContentBlock--h3
+    - t-ContentBlock--lightBG
+    css-classes: 
+    - infobox
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Ansprechpartner =============================
+  id: 244129644387229119
+  identification: 
+    name: Ansprechpartner
+    type: Static Content
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--padded
+    - t-ContentBlock--h3
+    - t-ContentBlock--lightBG
+    css-classes: 
+    - infobox
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Hinweis für die Zuordnung ===================
+  id: 251252287895572607
+  identification: 
+    name: Hinweis für die Zuordnung
+    type: Static Content
+
+  source: 
+    html-code: <p>Im NetCologne Active Directory (AD) ist lediglich die Zuweisung zur obersten in Frage kommenden Rolle nötig. Der Glascontainer erkennt die untergeordneten Rollen selbständig.</p>
+
+  layout: 
+    sequence: 10
+    parent-region: Ihre Berechtigungen im Glascontainer # 213365006645392093
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    - margin-top-md
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Berechtigung fehlt ==========================
+  id: 278658492059923934
+  identification: 
+    name: Berechtigung fehlt
+    type: Static Content
+
+  source: 
+    html-code: <strong>Für die Anwendungsseite &laquo;&P10050_APPLIKATIONSSEITE.&raquo; benötigen Sie die Rolle &quot;&P10050_ROLLENNAME_AD_ERFORDERLICH.&quot; im NetCologne Active Directory.</strong>
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - margin-top-none
+    - margin-bottom-none
+    - margin-left-none
+    - margin-right-none
+    css-classes: 
+    - problem
+    icon: fa-crosshairs fa-2x fam-is-warning
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P10050_APPLIKATIONSSEITE
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Fehler-Logs =================================
+  id: 321594252599057725
+  identification: 
+    name: Fehler-Logs
+    type: Static Content
+
+  source: 
+    html-code: |
+      <pre class="copyToClipboard" style="margin:0">SELECT log_id
+           , to_char(inserted, 'YYYY-MM-DD HH24:MI:SS') AS ZEIT
+           , scope, user_name, module, action, routine_name
+           , line, error_code, error_message, message 
+        FROM CORE.LOGS
+       WHERE (scope = 'POB' OR module LIKE 'ROMA_MAIN/APEX:APP 2022%')
+       ORDER BY log_id DESC;
+      </pre>
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--padded
+    - t-ContentBlock--h3
+    - t-ContentBlock--lightBG
+    css-classes: 
+    - infobox
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Konzepte, Anwendungs-Architektur und Dokument
+  id: 335125770169263707
+  identification: 
+    name: Konzepte, Anwendungs-Architektur und Dokumentation ...
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>Die APEX-Applikation "Glascontainer" erlaubt den Mitarbeiter*innen, die Aufträge im FTTH-PreOrder-Buffer einzusehen und, berechtigungsgesteuert, bestimmte Daten zu ändern.</p>
+      
+      <p>Die Bewegungsdaten befinden sich in den Tabellen FTTH_WS_SYNC_PREORDERS und FTTH_WS_SYNC_STORNOGRUENDE (beide sind in den Shared Components mit der entsprechenden REST Data Source verknüpft und werden automatisch nächtlich synchronisiert).
+      Außerdem erfolgt die Klassifizierung von möglichen Dubletten in der Zieltabelle FTTH_DUBLETTEN_BEWERTUNG.</p>
+      <ul>Weitere verwendete Tabellen und Views:
+      <li>APEX_REST_SOURCE_SYNC_LOG</li>    
+      <li>FTTH_DUBLETTEN_BEWERTUNG</li>
+      <li>FTTH_GLASCONTAINER_AKTIONEN</li>
+      <li>FTTH_GLASCONTAINER_PRODUKTE</li>
+      <li>FTTH_LOG_SIEBEL_READY_VCO</li>
+      <li>FTTH_WEBSERVICE_AUFRUFE</li>
+      <li>POB_ADRESSEN</li>
+      <li>POB_TRACKING, POB_TRACKING_EXTRA</li>
+      <li>V_ADRESSEN</li>
+      
+      </ul>
+      
+      <p><strong>Tickets in JIRA werden im PL/SQL-Quellcode der Packages, in Table- und View-Comments sowie in APEX-Objektkommentaren gemäß der @Tag-Schreibweise erwähnt und verknüpft:</strong></p>
+      <p>Beispielsweise bezieht sich die Quellcode-Fundstelle <tt>@ticket FTTH-1874</tt> auf das JIRA-Ticket <a href="https://jira.netcologne.intern/browse/FTTH-1874">https://jira.netcologne.intern/browse/FTTH-1874</a>, so dass man bei der Suche nach Ticket-Lösungen dieses Suchmuster verwenden sollte (APEX-Volltextsuche, USER_SOURCE, USER_VIEWS, USER_TAB_COMMENTS, USER_COL_COMMENTS usw.) Zur strukturierten Suche in den APEX-Objektkommentaren wird in den Entwicklungs- und Testumgebungen der Link zur Seite "Entwicklerdokumentation" eingeblendet (siehe Navigationsleiste, rechts oben). Dort erscheinen sämtliche Entwicklerkommentare, kontextsensitiv für die jeweils aktuelle APEX-Seite, in einem Interactive Report.</p>
+      <p>Die Unit-Test-Suite wird in den Entwicklungsumgebungen (NMCE bzw. NMCE3) hierdurch gestartet:<br/>
+      <tt>SELECT * FROM ROMA_MAIN.UT.RUN('UT_GLASCONTAINER');</tt>
+      </p>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 9
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    - margin-top-none
+    - margin-bottom-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: '* App - User' # 238128121341675592
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Webservice URLs =============================
+  id: 335127621577263725
+  identification: 
+    name: Webservice URLs
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: PCK_GLASCONTAINER.htp_webservice_urls;
+
+  layout: 
+    sequence: 90
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 5
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--padded
+    - t-ContentBlock--h3
+    - t-ContentBlock--lightBG
+    css-classes: 
+    - infobox
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+page-items: 
+- # ====== Page Item: P10050_TICKET_INFO =======================
+  id: 61953778974854107
+  identification: 
+    name: P10050_TICKET_INFO
+    type: Display Only
+
+  label: 
+    label: 'Bei technischen Problemen:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 60
+    region: Ansprechpartner # 244129644387229119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: '<a href="https://jira.netcologne.intern/secure/CreateIssue!default.jspa" target="_blank">Ticket im Projekt Support KMS/Venedig (SKV)</a> erstellen'
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Name des Projektverantwortlichen für den Glascontainer
+
+- # ====== Page Item: P10050_BG_ID_COLLECTION ==================
+  id: 72458122166963908
+  identification: 
+    name: P10050_BG_ID_COLLECTION
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Fehler-Logs # 321594252599057725
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Speichert die Daten des Background-Prozesses, der die Fehlerstatistik asynchron generiert. Ggf einblenden zu Kontrollzwecken.
+
+- # ====== Page Item: P10050_BG_STATE_COLLECTION ===============
+  id: 72458359225963910
+  identification: 
+    name: P10050_BG_STATE_COLLECTION
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Fehler-Logs # 321594252599057725
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Speichert die Daten des Background-Prozesses, der die Fehlerstatistik asynchron generiert. Ggf einblenden zu Kontrollzwecken.
+
+- # ====== Page Item: P10050_BG_SOFAR_COLLECTION ===============
+  id: 72458450563963911
+  identification: 
+    name: P10050_BG_SOFAR_COLLECTION
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Fehler-Logs # 321594252599057725
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Speichert die Daten des Background-Prozesses, der die Fehlerstatistik asynchron generiert. Ggf einblenden zu Kontrollzwecken.
+
+- # ====== Page Item: P10050_BG_TOTALWORK_COLLECTION ===========
+  id: 72458587039963912
+  identification: 
+    name: P10050_BG_TOTALWORK_COLLECTION
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: Fehler-Logs # 321594252599057725
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Speichert die Daten des Background-Prozesses, der die Fehlerstatistik asynchron generiert. Ggf einblenden zu Kontrollzwecken.
+
+- # ====== Page Item: P10050_APP_SESSION =======================
+  id: 72459695556963924
+  identification: 
+    name: P10050_APP_SESSION
+    type: Display Only
+
+  label: 
+    label: 'APP_SESSION:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: App # 214745639714891292
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Die aktuelle Session-ID muss in diesem Item persistiert werden, damit sie im Prozess "CREATE_COLLECTION (FEHLERSTATISTIK)" übergeben werden kann (ansonsten würde die asynchrone Process Chain ihre eigene, abweichende APP_SESSION-Variable generieren, wodurch die APEX_COLLECTION zwar erzeugt wird, aber nicht sichtbar wäre für die GUI-Session)
+
+- # ====== Page Item: P10050_PCK_GLASCONTAINER_JOBS ============
+  id: 82049728451968936
+  identification: 
+    name: P10050_PCK_GLASCONTAINER_JOBS
+    type: Display Only
+
+  label: 
+    label: 'PCK_GLASCONTAINER_JOBS:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 60
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '@ticket FTTH-5025: die aktuelle Versionsnummer des Package P10050_PCK_GLASCONTAINER_JOBS'
+
+- # ====== Page Item: P10050_AUTOR_BACKEND =====================
+  id: 211160747999286722
+  identification: 
+    name: P10050_AUTOR_BACKEND
+    type: Display Only
+
+  label: 
+    label: Backend (PL/SQL)
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 30
+    region: Ansprechpartner # 244129644387229119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: '<a href="mailto:Andreas.Wismann@netcologne.com?subject=APEX-App &quot;&APP_NAME.&quot;">Andreas Wismann</a>'
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: Commented Out # 234883986660092834
+
+  comments: 
+    comments: Name des aktuellen Entwicklers des Datenbank-Packages für den Glascontainer
+
+- # ====== Page Item: P10050_AUTOR_FRONTEND ====================
+  id: 211161055184286724
+  identification: 
+    name: P10050_AUTOR_FRONTEND
+    type: Display Only
+
+  label: 
+    label: 'Frontend (APEX):'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 40
+    region: Ansprechpartner # 244129644387229119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: '<a href="mailto:Andreas.Wismann@netcologne.com?subject=APEX-App &quot;&APP_NAME.&quot;">Andreas Wismann</a>'
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: Commented Out # 234883986660092834
+
+  comments: 
+    comments: Name des Entwicklers dieser APEX-App
+
+- # ====== Page Item: P10050_PCK_GLASCONTAINER =================
+  id: 211162156087286726
+  identification: 
+    name: P10050_PCK_GLASCONTAINER
+    type: Display Only
+
+  label: 
+    label: 'PCK_GLASCONTAINER:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 30
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer des Package PCK_GLASCONTAINER
+
+- # ====== Page Item: P10050_APP_ID ============================
+  id: 211166521412286728
+  identification: 
+    name: P10050_APP_ID
+    type: Display Only
+
+  label: 
+    label: 'APEX Anwendungs-ID:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: App # 214745639714891292
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Anwendung-ID dieser APEX-App als Display-Item
+
+- # ====== Page Item: P10050_WORKSPACE =========================
+  id: 211166932072286728
+  identification: 
+    name: P10050_WORKSPACE
+    type: Display Only
+
+  label: 
+    label: 'APEX Workspace:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 40
+    region: APEX Workspace # 214745732700891293
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Der Workspace, in dem sich diese Anwendung befindet
+
+- # ====== Page Item: P10050_LAST_UPDATED_BY ===================
+  id: 211167344768286729
+  identification: 
+    name: P10050_LAST_UPDATED_BY
+    type: Display Only
+
+  label: 
+    label: 'zuletzt aktualisiert von:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 30
+    region: App # 214745639714891292
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Tatsächlich letzter Editierungsstand der Anwendung in der Datenbank
+
+- # ====== Page Item: P10050_APP_VERSION =======================
+  id: 211167661722286729
+  identification: 
+    name: P10050_APP_VERSION
+    type: Display Only
+
+  label: 
+    label: 'Anwendungs-Version:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: App # 214745639714891292
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer dieser APEX-App als Display-Item
+
+- # ====== Page Item: P10050_PARSING_SCHEMA ====================
+  id: 211168137661286729
+  identification: 
+    name: P10050_PARSING_SCHEMA
+    type: Display Only
+
+  label: 
+    label: 'Parsing-Schema:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 50
+    region: APEX Workspace # 214745732700891293
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Das Parsing-Schema, welches diese Anwendung benutzt
+
+- # ====== Page Item: P10050_LAST_UPDATED_ON ===================
+  id: 211168502649286729
+  identification: 
+    name: P10050_LAST_UPDATED_ON
+    type: Display Only
+
+  label: 
+    label: 'App-Zeitstempel:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 40
+    region: App # 214745639714891292
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Tatsächlich letzter User, der diese Anwendung editiert hat
+
+- # ====== Page Item: P10050_ENVIRONMENT =======================
+  id: 211168910872286729
+  identification: 
+    name: P10050_ENVIRONMENT
+    type: Display Only
+
+  label: 
+    label: 'Laufzeitumgebung:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: APEX Workspace # 214745732700891293
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Umgebung
+
+- # ====== Page Item: P10050_APEX_VERSION_NO ===================
+  id: 211169292477286730
+  identification: 
+    name: P10050_APEX_VERSION_NO
+    type: Display Only
+
+  label: 
+    label: 'APEX-Release:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: Datenbank # 214745765048891294
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Versionsnummer der APEX-Engine
+
+- # ====== Page Item: P10050_DATABASE_RELEASE ==================
+  id: 211169712965286730
+  identification: 
+    name: P10050_DATABASE_RELEASE
+    type: Display Only
+
+  label: 
+    label: 'Datenbank-Release:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 30
+    region: Datenbank # 214745765048891294
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Release-Info der Datenbank
+
+- # ====== Page Item: P10050_PCK_GLASCONTAINER_EXT =============
+  id: 221028119871343419
+  identification: 
+    name: P10050_PCK_GLASCONTAINER_EXT
+    type: Display Only
+
+  label: 
+    label: 'PCK_GLASCONTAINER_EXT:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 40
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer des Package PCK_GLASCONTAINER_EXT
+
+- # ====== Page Item: P10050_ROLLE_ZUWEISEN ====================
+  id: 226519079514787615
+  identification: 
+    name: P10050_ROLLE_ZUWEISEN
+    type: Select List
+
+  label: 
+    label: 'AD-Rolle simulieren:'
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Hinweis für die Zuordnung # 251252287895572607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-top-lg
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT 'Administrator' AS D, PCK_GLASCONTAINER.fv_rollenname_ad('ADMINISTRATOR') AS R FROM DUAL UNION ALL
+      SELECT 'Superuser',          PCK_GLASCONTAINER.fv_rollenname_ad('SUPERUSER')          FROM DUAL UNION ALL
+      SELECT 'User',               PCK_GLASCONTAINER.fv_rollenname_ad('USER')               FROM DUAL UNION ALL
+      SELECT 'ReadOnly',           PCK_GLASCONTAINER.fv_rollenname_ad('READONLY')           FROM DUAL
+      
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: '- auswählen - '
+
+  advanced: 
+    css-classes: 
+    - berechtigung
+    - customCSS
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Never
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Die Benutzerrolle kann zu Testzwecken umgeschaltet werden (nur in Entwicklungs- und Testumgebung).'
+
+- # ====== Page Item: P10050_APPLICATION_COMMENT ===============
+  id: 236633336472815294
+  identification: 
+    name: P10050_APPLICATION_COMMENT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Konzepte, Anwendungs-Architektur und Dokumentation ... # 335125770169263707
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10050_PCK_GLASCONTAINER_ORDER ===========
+  id: 243947188521875048
+  identification: 
+    name: P10050_PCK_GLASCONTAINER_ORDER
+    type: Display Only
+
+  label: 
+    label: 'PCK_GLASCONTAINER_ORDER:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 70
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer des Package PCK_GLASCONTAINER_ORDER
+
+- # ====== Page Item: P10050_APPLIKATIONSSEITE =================
+  id: 246327643915951426
+  identification: 
+    name: P10050_APPLIKATIONSSEITE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Berechtigung fehlt # 278658492059923934
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '@ticket FTTH-2722: Wenn von einer anderen Seite nach hier verlinkt wurde, weil eine Berechtigung fehlt, dann wird hier der Name der Seite gespeichert'
+
+- # ====== Page Item: P10050_ACTIVE_DIRECTORY ==================
+  id: 251252186243572606
+  identification: 
+    name: P10050_ACTIVE_DIRECTORY
+    type: Display Only
+
+  label: 
+    label: 'Berechtigungen (AD):'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 50
+    region: Ansprechpartner # 244129644387229119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: jeweilige(r) Vorgesetzte(r)
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Name des Ansprechpartners für das NetCologne Active Directory
+
+- # ====== Page Item: P10050_PCK_VERMARKTUNGSCLUSTER ===========
+  id: 251252464738572609
+  identification: 
+    name: P10050_PCK_VERMARKTUNGSCLUSTER
+    type: Display Only
+
+  label: 
+    label: 'PCK_VERMARKTUNGSCLUSTER:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 110
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer des Package PCK_VERMARKTUNGSCLUSTER
+
+- # ====== Page Item: P10050_ROLLE_ERFORDERLICH ================
+  id: 251252648008572610
+  identification: 
+    name: P10050_ROLLE_ERFORDERLICH
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Berechtigung fehlt # 278658492059923934
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '@ticket FTTH-2722: Wenn von einer anderen Seite nach hier verlinkt wurde, weil eine Berechtigung fehlt, dann wird hier die fehlende Rolle gespeichert'
+
+- # ====== Page Item: P10050_ROLLENNAME_AD_ERFORDERLICH ========
+  id: 251252651037572611
+  identification: 
+    name: P10050_ROLLENNAME_AD_ERFORDERLICH
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Berechtigung fehlt # 278658492059923934
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'PCK_GLASCONTAINER.fv_rollenname_ad(:P10050_ROLLE_ERFORDERLICH)'
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: '@ticket FTTH-2722: Wenn von einer anderen Seite nach hier verlinkt wurde, weil eine Berechtigung fehlt, dann wird hier der AD-Name der fehlenden Rolle ermittet'
+
+- # ====== Page Item: P10050_PCK_FUZZYDOUBLE ===================
+  id: 259422202419197922
+  identification: 
+    name: P10050_PCK_FUZZYDOUBLE
+    type: Display Only
+
+  label: 
+    label: 'PCK_FUZZYDOUBLE:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 80
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer des Package PCK_FUZZYDOUBLE
+
+- # ====== Page Item: P10050_PCK_GLASCONTAINER_DUBL ============
+  id: 301499572064519710
+  identification: 
+    name: P10050_PCK_GLASCONTAINER_DUBL
+    type: Display Only
+
+  label: 
+    label: 'PCK_GLASCONTAINER_DUBLETTEN:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 50
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer des Package PCK_GLASCONTAINER_DUBLETTEN
+
+- # ====== Page Item: P10050_PCK_POB_REST ======================
+  id: 321594169143057724
+  identification: 
+    name: P10050_PCK_POB_REST
+    type: Display Only
+
+  label: 
+    label: 'PCK_POB_REST:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 90
+    region: PL/SQL Datenbank-Packages # 240062500025494083
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: die aktuelle Versionsnummer des Package PCK_POB_REST
+
+- # ====== Page Item: P10050_APP_URL ===========================
+  id: 329426434416847201
+  identification: 
+    name: P10050_APP_URL
+    type: Display Only
+
+  label: 
+    label: 'Anwendungs-URL:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 60
+    region: APEX Workspace # 214745732700891293
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Link zur Homepage der Glascontainer-Anwendung
+
+- # ====== Page Item: P10050_PRODUCT_OWNER =====================
+  id: 329426649983847203
+  identification: 
+    name: P10050_PRODUCT_OWNER
+    type: Display Only
+
+  label: 
+    label: 'Product Owner:'
+    alignment: Left
+
+  settings: 
+    format: HTML (Unsafe)
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: Ansprechpartner # 244129644387229119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: '<a href="mailto:Florian.Schoenemeyer@netcologne.com?subject=APEX-App &quot;&APP_NAME.&quot;">Florian Schönemeyer</a>'
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+  comments: 
+    comments: Name des Projektverantwortlichen für den Glascontainer
+
+buttons: 
+- # ====== Button: BTN_FEHLERSTATISTIK_1 =======================
+  id: 68204757789631855
+  identification: 
+    button-name: BTN_FEHLERSTATISTIK_1
+    label: Fehler-Logs im Hintergrund erstellen
+
+  layout: 
+    sequence: 20
+    region: Fehler-Logs # 321594252599057725
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: true
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      :P10050_BG_ID_COLLECTION IS NULL AND
+      NOT APEX_COLLECTION.COLLECTION_EXISTS('FEHLERSTATISTIK')
+
+  security: 
+    authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  comments: 
+    comments: '@ticket FTTH-2648. Button wird als erster angezeigt, um die Collection ansynchron zu erzeugen.'
+
+- # ====== Button: BTN_FEHLERSTATISTIK_2 =======================
+  id: 72458608082963913
+  identification: 
+    button-name: BTN_FEHLERSTATISTIK_2
+    label: Fehler-Logs (Status abfragen)
+
+  layout: 
+    sequence: 30
+    region: Fehler-Logs # 321594252599057725
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: true
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      :P10050_BG_ID_COLLECTION IS NOT NULL AND
+      NVL(:P10050_BG_STATE_COLLECTION, '-')
+       IN (
+          '-'
+         ,APEX_BACKGROUND_PROCESS.C_STATUS_ENQUEUED
+         ,APEX_BACKGROUND_PROCESS.C_STATUS_SCHEDULED
+         ,APEX_BACKGROUND_PROCESS.C_STATUS_EXECUTING
+      )
+
+  security: 
+    authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  comments: 
+    comments: '@ticket FTTH-2648. Button wird angezeigt, nachdem die Erzeugung der Collection angestoßen wurde, und prüft, ob die Collection bereits fertig gerendert ist. Klick aktualisiert die Hidden Items, die entscheiden, ob die Collection komplett ist'
+
+- # ====== Button: BTN_TODO_LISTE ==============================
+  id: 233138165017500615
+  identification: 
+    button-name: BTN_TODO_LISTE
+    label: ToDo-Liste
+
+  layout: 
+    sequence: 10
+    region: Versionshistorie # 237082737139883897
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-list-ol
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Item != Value
+    item: P10050_ENVIRONMENT
+    value: NMC
+
+  security: 
+    authorization-scheme: '* App - Administrator' # 238128469706691677
+
+  comments: 
+    comments: Nicht in der Produktion anzeigen
+
+- # ====== Button: BTN_FEHLERSTATISTIK_3 =======================
+  id: 321594599604057728
+  identification: 
+    button-name: BTN_FEHLERSTATISTIK_3
+    label: Fehler-Logs anzeigen
+
+  layout: 
+    sequence: 40
+    region: Fehler-Logs # 321594252599057725
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      APEX_COLLECTION.COLLECTION_EXISTS('FEHLERSTATISTIK') OR
+      :P10050_BG_STATE_COLLECTION IN (
+          APEX_BACKGROUND_PROCESS.C_STATUS_SUCCESS
+         ,APEX_BACKGROUND_PROCESS.C_STATUS_FAILED
+         ,APEX_BACKGROUND_PROCESS.C_STATUS_TERMINATED
+      )
+
+  security: 
+    authorization-scheme: Entwickler und Tester # 216442017267608171
+
+  comments: 
+    comments: '@ticket FTTH-2648. Button wird angezeigt, wenn die Collection finalisiert ist und verzweigt dann zur Folgeseite "Fehlerstatistik"'
+
+dynamic-actions: 
+- # ====== Dynamic Action: ToDo-Liste anzeigen =================
+  id: 233138013890500613
+  identification: 
+    name: ToDo-Liste anzeigen
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_TODO_LISTE # 233138165017500615
+
+  actions: 
+  - # ====== Action: Open Region =================================
+    id: 233138066362500614
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: ToDo-LIste für die App "Glascontainer" # 233137882602500612
+
+    execution: 
+      sequence: 10
+      event: ToDo-Liste anzeigen # 233138013890500613
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Rolle wechseln ======================
+  id: 246328356599951434
+  identification: 
+    name: Rolle wechseln
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: jQuery Selector
+    jquery-selector: div#berechtigungen span.a-Switch-toggle
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 246328577679951436
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        const $switch = $(this.triggeringElement).parent().find('input');
+        console.log('Switch:', $switch);
+        console.log('ADMINISTRATOR: ', apex.item('P10050_ROLLE_ADMINISTRATOR').getValue());
+
+    execution: 
+      sequence: 10
+      event: Rolle wechseln # 246328356599951434
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: In Zwischenablage kopieren ==========
+  id: 321594362309057726
+  identification: 
+    name: In Zwischenablage kopieren
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: jQuery Selector
+    jquery-selector: .copyToClipboard
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 321594481555057727
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        var $element = $(this.triggeringElement).addClass('copied');
+        var title = $element.attr('title') || '';
+        copyHtmlToClipboard($element.html() + "\n")
+        apex.message.showPageSuccess(title + ' in Zwischenablage kopiert');
+
+    execution: 
+      sequence: 10
+      event: In Zwischenablage kopieren # 321594362309057726
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Fehler-Logs im Hintergrund erstellen =======
+  id: 72457913090963906
+  identification: 
+    name: Fehler-Logs im Hintergrund erstellen
+    type: Execution Chain
+    execution-chain: None
+
+  settings: 
+    run-in-background: true
+    return-id-into-item: P10050_BG_ID_COLLECTION
+    temporary-file-handling: Ignore
+    submit-immediately: false
+
+  serialization: 
+    serialize: true
+    when-already-running: Wait
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: |
+      Die Fehler-Logs werden nun im Hintergrund erstellt. 
+      Übliche Dauer: 5-10 Minuten
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_FEHLERSTATISTIK_1 # 68204757789631855
+
+- # ====== Process: CREATE_COLLECTION (FEHLERSTATISTIK) ========
+  id: 72458005519963907
+  identification: 
+    name: CREATE_COLLECTION (FEHLERSTATISTIK)
+    type: Execute Code
+    execution-chain: Fehler-Logs im Hintergrund erstellen # 72457913090963906
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      PCK_GLASCONTAINER.CREATE_COLLECTION(
+            piv_collection_name => 'FEHLERSTATISTIK'
+          , piv_app_id          => '&APP_ID.'
+          , piv_app_page_id     => '&APP_PAGE_ID.'
+          , piv_app_session     => '&P10050_APP_SESSION.'
+          , piv_app_user        => '&APP_USER.'
+      );
+
+  execution: 
+    sequence: 10
+
+  comments: 
+    comments: Die aktuelle Session-ID muss aus dem Item P10050_APP_SESSION ausgelesen werden, ansonsten würde diese asynchrone Process Chain ihre eigene, abweichende APP_SESSION-Variable generieren, wodurch die APEX_COLLECTION zwar erzeugt wird, aber nicht sichtbar wäre für die GUI-Session
+
+- # ====== Process: Fehler-Logs Fortschritt prüfen =============
+  id: 72458249296963909
+  identification: 
+    name: Fehler-Logs Fortschritt prüfen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+          l_execution apex_background_process.t_execution;
+      BEGIN
+          l_execution := apex_background_process.get_execution(
+                         p_application_id     => 2022,
+                         p_execution_id       => :P10050_BG_ID_COLLECTION
+          );
+          :P10050_BG_STATE_COLLECTION     := l_execution.state ;
+          :P10050_BG_SOFAR_COLLECTION     := l_execution.sofar ;
+          :P10050_BG_TOTALWORK_COLLECTION := l_execution.totalwork ;
+      END;
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Die Fehler-Logs sind in Arbeit ... bitte noch etwas Geduld
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_FEHLERSTATISTIK_2 # 72458608082963913
+    type: Item is NOT NULL
+    item: P10050_BG_ID_COLLECTION
+
+  comments: 
+    comments: Fragt den Fortschritt des Hintergrund-Prozesses ab, der die Fehlerlogs erstellt. Die Schaltfläche BTN_FEHLERSTATISTIK_3 wird erst eingeblendet, sobald die Fehlerstatistik erfolgreich erstellt wurde.
+
+- # ====== Process: Versionen abfragen =========================
+  id: 211170107378286736
+  identification: 
+    name: Versionen abfragen
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+        FUNCTION ORA(text IN VARCHAR2) return varchar2 is
+        BEGIN
+          RETURN '<span class="u-danger">' || text || '</span>';
+        END ORA;
+      BEGIN
+      <<APPLICATION>>
+      BEGIN
+        SELECT :APP_SESSION, application_id, version, workspace_display_name, owner, to_char(last_updated_on, 'YYYY-MM-DD HH24:MI:SS'), last_updated_by
+          INTO :P10050_APP_SESSION, :P10050_APP_ID, :P10050_APP_VERSION, :P10050_WORKSPACE, :P10050_PARSING_SCHEMA, :P10050_LAST_UPDATED_ON, :P10050_LAST_UPDATED_BY
+        FROM apex_applications WHERE application_id = :APP_ID;
+      EXCEPTION
+        WHEN OTHERS THEN
+          :P10050_APP_ID          := :APP_ID;
+          :P10050_APP_VERSION     := '#APP_VERSION#';
+          :P10050_WORKSPACE       := ORA(SQLERRM);
+          :P10050_PARSING_SCHEMA  := NULL;
+          :P10050_LAST_UPDATED_ON := NULL;
+          :P10050_LAST_UPDATED_BY := NULL;
+          
+      END APPLICATION;
+      
+      <<APPLICATION_COMMENT>>
+      BEGIN
+        SELECT application_comment
+          INTO :P10050_APPLICATION_COMMENT
+          FROM apex_applications
+         WHERE application_id = :APP_ID;
+      END;
+      
+      <<APEX_VERSION>>
+      BEGIN
+        SELECT version_no INTO :P10050_APEX_VERSION_NO 
+         FROM apex_release;
+      EXCEPTION
+        WHEN OTHERS THEN
+          :P10050_APEX_VERSION_NO := ORA(SQLERRM);
+      END APEX_VERSION;
+      
+      <<APPLICATION_COMMENT>>
+      BEGIN
+        SELECT application_comment
+          INTO :P10050_APPLICATION_COMMENT
+          FROM apex_applications
+         WHERE application_id = :APP_ID;
+      END;
+      
+      <<DATABASE>>
+      BEGIN
+        SELECT global_name || ' (&quot;' || pck_env.fv_db_name || '&quot;)' INTO :P10050_ENVIRONMENT from GLOBAL_NAME;
+        SELECT banner INTO :P10050_DATABASE_RELEASE FROM v$version WHERE ROWNUM = 1;
+        :P10050_APP_URL := APEX_UTIL.HOST_URL || SUBSTR(APEX_PAGE.GET_URL, 1, INSTR(APEX_PAGE.GET_URL, '/', -1));
+      EXCEPTION
+      WHEN OTHERS THEN
+        :P10050_ENVIRONMENT      := ORA(SQLERRM);
+        :P10050_DATABASE_RELEASE := ORA(SQLERRM);
+      END DATABASE;
+      
+      <<PACKAGES>>
+      :P10050_PCK_GLASCONTAINER       := GREATEST(PCK_GLASCONTAINER.version, PCK_GLASCONTAINER.get_body_version);
+      :P10050_PCK_GLASCONTAINER_EXT   := GREATEST(PCK_GLASCONTAINER_EXT.version, PCK_GLASCONTAINER_EXT.get_body_version);
+      :P10050_PCK_FUZZYDOUBLE         := GREATEST(PCK_FUZZYDOUBLE.version, PCK_FUZZYDOUBLE.get_body_version);
+      :P10050_PCK_GLASCONTAINER_DUBL  := GREATEST(PCK_GLASCONTAINER_DUBLETTEN.version, PCK_GLASCONTAINER_DUBLETTEN.get_body_version);
+      :P10050_PCK_GLASCONTAINER_ORDER := GREATEST(PCK_GLASCONTAINER_ORDER.version, PCK_GLASCONTAINER_ORDER.get_body_version);
+      :P10050_PCK_POB_REST            := GREATEST(PCK_POB_REST.version, PCK_POB_REST.get_body_version);
+      :P10050_PCK_VERMARKTUNGSCLUSTER := GREATEST(PCK_VERMARKTUNGSCLUSTER.version, PCK_VERMARKTUNGSCLUSTER.get_body_version);
+      :P10050_PCK_GLASCONTAINER_JOBS  := GREATEST(PCK_GLASCONTAINER_JOBS.version, PCK_GLASCONTAINER_JOBS.get_body_version);
+      END;
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+  comments: 
+    comments: Ermittelt die aktuellen Versionen bestimmter Objekte (hauptsächlich Packages), um sie informativ anzuzeigen
+
+- # ====== Process: ROLLE_ZUWEISEN =============================
+  id: 246328798118951438
+  identification: 
+    name: ROLLE_ZUWEISEN
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      :G_INIT_FLAG := '1';
+      :G_ROLLENLISTE := PCK_GLASCONTAINER.fv_rollenliste(:P10050_ROLLE_ZUWEISEN);
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P10050_ROLLE_ZUWEISEN
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Die Benutzerrolle kann zu Testzwecken umgeschaltet werden (nur in Entwicklungs- und Testumgebung). Dazu wird der String :G_ROLLENLISTE geändert, der nach der Initialisierung der Applikation die Abfrage des Active Directory umgeht.'
+
+branches: 
+- # ====== Branch: Gehe zur Fehlerstatistik ====================
+  id: 72458767491963914
+  identification: 
+    name: Gehe zur Fehlerstatistik
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:10051:&SESSION.::&DEBUG.:10050, 10051::&success_msg=#SUCCESS_MSG#'
+      page: 10051 # Fehlerstatistiken
+      clear-cache: 10050,10051
+
+  server-side-condition: 
+    when-button-pressed: BTN_FEHLERSTATISTIK_3 # 321594599604057728
+
+- # ====== Branch: nach ROLLE_ZUWEISEN =========================
+  id: 251254559290572630
+  identification: 
+    name: nach ROLLE_ZUWEISEN
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:10050:&SESSION.::&DEBUG.:10050::&success_msg=#SUCCESS_MSG#'
+      page: 10050 # Glascontainer - Über diese Anwendung
+      clear-cache: 10050
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P10050_ROLLE_ZUWEISEN
+
