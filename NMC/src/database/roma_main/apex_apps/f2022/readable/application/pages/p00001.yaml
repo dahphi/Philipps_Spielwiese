@@ -1,0 +1,423 @@
+---
+# ====== Page: Start =========================================
+id: 1
+identification: 
+  name: Start
+  alias: START
+  title: Glascontainer
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authorization-scheme: MODEL.LOV.MUST_NOT_BE_PUBLIC_USER
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+comments: 
+  comments: Eine Startseite soll es nicht geben. Da die Applikation aber immer eine solche erfordert (denn nur Admins dürfen Seite 10 sehen und ohne einen Auftrag angeklickt zu haben, macht Seite 20 ebenfalls keinen Sinn) - wird man beim Versehentlichen Aufrufen der Homepage zur Seite "über diese Anwendung" weitergeleitet.
+
+regions: 
+- # ====== Region: Glascontainer ===============================
+  id: 235082104990092985
+  identification: 
+    name: Glascontainer
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    icon: app-icon
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Breadcrumbs # 238157555060796911
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Simulation der Rolle im Active Directory ====
+  id: 251251372017572598
+  identification: 
+    name: Simulation der Rolle im Active Directory
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: 4
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    - margin-top-lg
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Request = Value
+    value: AD_SIMULATION
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P1_REDIRECT ==============================
+  id: 251250780188572592
+  identification: 
+    name: P1_REDIRECT
+    type: Display Only
+
+  label: 
+    label: zurückspringen zu Seite
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: Simulation der Rolle im Active Directory # 251251372017572598
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Speichert die Seite, zu der zurückgesprungen werden soll, nachdem die Berechtigung umgestellt wurde'
+
+- # ====== Page Item: P1_ROLLE =================================
+  id: 251251157234572596
+  identification: 
+    name: P1_ROLLE
+    type: Display Only
+
+  label: 
+    label: neue simulierte Rolle
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: Simulation der Rolle im Active Directory # 251251372017572598
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 6
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Speichert die Rolle, zu der gewechselt werden soll, als UPPER String (ADMINISTRATOR|SUPERUSER|USER|READONLY)'
+
+buttons: 
+- # ====== Button: BTN_REDIRECT ================================
+  id: 251251299268572597
+  identification: 
+    button-name: BTN_REDIRECT
+    label: Ausführen
+
+  layout: 
+    sequence: 30
+    region: Simulation der Rolle im Active Directory # 251251372017572598
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Führt den Rollenwechsel durch'
+
+- # ====== Button: BTN_ROLLE_CANCEL ============================
+  id: 251251460104572599
+  identification: 
+    button-name: BTN_ROLLE_CANCEL
+    label: Zurück ohne Rollenwechsel
+
+  layout: 
+    sequence: 40
+    region: Simulation der Rolle im Active Directory # 251251372017572598
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+processes: 
+- # ====== Process: AD_SIMULATION ==============================
+  id: 251250883415572593
+  identification: 
+    name: AD_SIMULATION
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+        v_rollenname_ad VARCHAR2(1000);
+      BEGIN
+        v_rollenname_ad := PCK_GLASCONTAINER.fv_rollenname_ad(:P1_ROLLE); 
+        :G_INIT_FLAG := '1';
+        :G_ROLLENLISTE := PCK_GLASCONTAINER.fv_rollenliste(v_rollenname_ad);
+      END;
+
+  execution: 
+    sequence: 10
+    point: After Submit
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Rolle wurde geändert zu &P1_ROLLE.
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_REDIRECT # 251251299268572597
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Setzt die neue Rolle im Application Item :G_ROLLENLISTE'
+
+branches: 
+- # ====== Branch: Anwender: Redirect zur Seite "Über diese Anwe
+  id: 214748014192891316
+  identification: 
+    name: 'Anwender: Redirect zur Seite "Über diese Anwendung"'
+
+  execution: 
+    sequence: 20
+    point: Before Header
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:10050:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: 10050 # Glascontainer - Über diese Anwendung
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':REQUEST IS NULL'
+
+- # ====== Branch: AD_SIMULATION ===============================
+  id: 251250738759572591
+  identification: 
+    name: AD_SIMULATION
+
+  execution: 
+    sequence: 20
+    point: After Submit
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:&P1_REDIRECT.:&SESSION.:REDIRECT:&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: '&P1_REDIRECT.'
+      request: REDIRECT
+
+  server-side-condition: 
+    when-button-pressed: BTN_REDIRECT # 251251299268572597
+
+  security: 
+    authorization-scheme: MODEL.LOV.MUST_NOT_BE_PUBLIC_USER
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Leitet den User wieder zur Ausgangsseite zurück, nachdem die Rolle geändert wurde'
+
+- # ====== Branch: AD_SIMULATION_CANCEL ========================
+  id: 251251550732572600
+  identification: 
+    name: AD_SIMULATION_CANCEL
+
+  execution: 
+    sequence: 10
+    point: After Submit
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:&P1_REDIRECT.:&SESSION.:REDIRECT:&DEBUG.:::'
+      page: '&P1_REDIRECT.'
+      request: REDIRECT
+
+  server-side-condition: 
+    when-button-pressed: BTN_ROLLE_CANCEL # 251251460104572599
+
+  security: 
+    authorization-scheme: MODEL.LOV.MUST_NOT_BE_PUBLIC_USER
+
+  configuration: 
+    build-option: DEV oder TEST # 228976553402207959
+
+  comments: 
+    comments: '@ticket FTTH-2722: Leitet den User wieder zur Ausgangsseite zurück, ohne dass die Rolle geändert wurde'
+

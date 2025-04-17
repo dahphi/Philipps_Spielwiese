@@ -1,0 +1,347 @@
+---
+- # ====== Shortcut: FN_IG_COPY_HACK ===========================
+  id: 86370539562660621
+  identification: 
+    name: FN_IG_COPY_HACK
+
+  subscription: 
+    version-number: 4103290641894
+
+  source: 
+    type: HTML Text
+    html-code: function initIgCopyHack(){document.addEventListener("copy",e=>{e.clipboardData.setData("text/plain",$(document.activeElement)[0].innerText||window.getSelection()),e.preventDefault()})}
+
+  comments: 
+    comments: |
+      Ermöglicht es, den gesamten Textinhalt einer markierte Zelle im Interactive Grid in die Zwischenablage zu kopieren. Die DA ist hier zunächst nur als Zwischenspeicher für spätere Verwendung gedacht, da auf Seite 10 ein Interactive REPORT wohnt und kein GRID und dieses Problem daher in der Auftragsliste gar nicht existiert.
+      @url https://www.oneoracledeveloper.com/2022/03/copy-cell-value-from-ig-global-edition.html
+      
+      function initIgCopyHack() {
+      document.addEventListener('copy', (event) => {
+          event.clipboardData.setData('text/plain', $(document.activeElement)[0].innerText || window.getSelection());
+          event.preventDefault();
+      });
+      }
+
+- # ====== Shortcut: GLOBAL_NOTIFICATION_AKTUALISIERUNG ========
+  id: 86375911213966041
+  identification: 
+    name: GLOBAL_NOTIFICATION_AKTUALISIERUNG
+
+  subscription: 
+    version-number: 4084312174616
+
+  source: 
+    type: HTML Text
+    html-code: '<div style="text-align:center;margin:20px;padding:1em 2em;border:4px dashed #f39c12;background-color:#fdebd0">Der Glascontainer wird in Kürze aktualisiert und steht dann für wenige Minuten nicht zur Verfügung. Bitte schließen Sie offene Aktionen baldmöglich ab.</div>'
+
+  comments: 
+    comments: |
+      Leider unterstützt die GLOBAL_NOTIFICATION keine Shortcut-Auflösung. Dieser Text ist deshalb nur als Textspeicher gedacht: Kurz vor der Aktualisierung des Glascontainers sollte er kopiert werden in das folgende Feld der noch produktiven App:
+      Application Definition > Global Notification > Message to be displayed in page #GLOBAL_NOTIFICATION# substitution string
+
+- # ====== Shortcut: FN_PAGESPINNER ============================
+  id: 222919967986057191
+  identification: 
+    name: FN_PAGESPINNER
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: HTML Text
+    html-code: |
+      let pageSpinnerObject;
+      
+      function pageSpinner(state) {
+        if(!!state) pageSpinnerObject= apex.widget.waitPopup();
+        if(!state)  pageSpinnerObject.remove();
+      }
+
+  comments: 
+    comments: |
+      Schaltet den APEX Wait Spinner an oder aus (das kleine Lade-Symbol beim Abrufen von Informationen). Voraussetzung: Die Seite, auf der der Funktionsaufruf stattfinden soll, muss diesen Shortcut unter "Functions and Global Variables" referenzieren. Dazu den Namen dieses Shortcuts in Doppelte Anführungszeichen setzen:
+      "FN_PAGESPINNER"
+      @see https://cardoso.hashnode.dev/how-implement-load-and-wait-spinners-in-oracle-apex
+
+- # ====== Shortcut: FN_FORMAT_IBAN ============================
+  id: 226065854122759769
+  identification: 
+    name: FN_FORMAT_IBAN
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: HTML Text
+    html-code: function formatIBAN(t){for(let e=0;e<t.length;e++)t[e].addEventListener("input",e=>{var t=e.target.value.toUpperCase().replace(/ /g,"");let r="";for(let e=0;e<t.length;e++)r+=t[e],(e+1)%4==0&&0<e&&(r+=" ");e.target.value=r.trim()})}
+
+  comments: 
+    comments: |
+      /**
+       * Fügt allen Elementen im Argument "el" je einen Event-Handler hinzu,
+       * der bei der Eingabe die IBAN in Viererblöcke formatiert
+       * 
+       * @param el Collection von DOM-Elementen
+       */
+      function formatIBAN(el){
+          for (let n = 0; n < el.length; n++) {
+          el[n].addEventListener('input', (event) => {
+              let v = event.target.value.toUpperCase().replace(/ /g, '');
+              let r = '';
+              for (let i = 0; i < v.length; i ++) {
+                  r += v[i];
+                  if ((i + 1) % 4 === 0 && i > 0) r += ' ';
+              }
+              event.target.value = r.trim();
+              })
+          }
+      }
+
+- # ====== Shortcut: FN_AUTODISMISS_MESSAGES ===================
+  id: 229597766786369182
+  identification: 
+    name: FN_AUTODISMISS_MESSAGES
+
+  subscription: 
+    version-number: 4092768353311
+
+  source: 
+    type: HTML Text
+    html-code: |
+      function autodismissMessages(milliseconds) {
+        apex.theme42.util.configAPEXMsgs({
+          autoDismiss:true,
+          duration:(!!milliseconds?milliseconds:10000)
+        })
+      }
+
+  comments: 
+    comments: |
+      https://apex.oracle.com/pls/apex/r/apex_pm/ut/javascript-apis
+      /// @deprecated: Wird seit APEX Version 24 nativ unterstützt: Application Properties > User Interface > Auto Dismiss Success Messages
+
+- # ====== Shortcut: FN_COPY_HTML_TO_CLIPBOARD =================
+  id: 233427742243875008
+  identification: 
+    name: FN_COPY_HTML_TO_CLIPBOARD
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: HTML Text
+    html-code: function copyHtmlToClipboard(e){function t(t){t.clipboardData.setData("text/html",e),t.clipboardData.setData("text/plain",e),t.preventDefault()}var n,a,i=$("<div>"+e+"</div>");i.find("section").each(function(){$(this).replaceWith("\n"+$(this).html()+"\n")}),i.find("span").each(function(){$(this).replaceWith($(this).html())}),n=i.html(),(a=document.createElement("textarea")).innerHTML=n,e=a.value,document.addEventListener("copy",t),document.execCommand("copy"),document.removeEventListener("copy",t)}
+
+  comments: 
+    comments: |
+      /**
+       * Kopiert Rich Text / HTML in die Zwischenablage, wobei alle "<span>...</span>"-Abschnitte 
+       * durch ihren Inhalt ersetzt und HTML-Entities entfernt werden. 
+       * Die Funktion erwartet den formatierten Text als Parameter (kein Item oder jQuery-Objekt!). 
+       * Falls immer noch HTML-Tags enthalten sind, werden diese mit ausgegeben.
+       * 
+       * Beispiel-Aufruf in einer Dynamic Action:
+       * 
+       *   copyHtmlToClipboard($(this.triggeringElement).html());
+       */
+      
+      function copyHtmlToClipboard(html) {
+      
+        function decodeEntities(encodedString) {
+          var textArea = document.createElement('textarea');
+          textArea.innerHTML = encodedString;
+          return textArea.value;
+        }
+        function listener(e) {
+          e.clipboardData.setData('text/html', html);
+          e.clipboardData.setData('text/plain', html);
+          e.preventDefault();
+        }
+      
+        var $html=$('<div>' + html + '</div>');
+        $html.find('section').each(function(){$(this).replaceWith("\n"+$(this).html()+"\n");});
+        $html.find('span').each(function(){$(this).replaceWith($(this).html());});
+        html = decodeEntities($html.html());
+      
+        document.addEventListener('copy', listener);
+        document.execCommand('copy');
+        document.removeEventListener('copy', listener);
+      }
+      
+
+- # ====== Shortcut: FN_DISABLE_ELEMENTS =======================
+  id: 238802090435301708
+  identification: 
+    name: FN_DISABLE_ELEMENTS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: HTML Text
+    html-code: |
+      function disableElements(disabledClass) {
+        $(':input.' + disabledClass).prop("disabled", true)
+      }
+
+  comments: 
+    comments: 'JavaScript, welches alle Formularelemente unbearbeitbar macht, die eine bestimmte Klasse besitzen. Siehe auch CSS Page 0: .customCSS.noEdit'
+
+- # ====== Shortcut: FN_IS_SERVICE_PLUS_EMAIL_PRODUKT ==========
+  id: 246344092018304291
+  identification: 
+    name: FN_IS_SERVICE_PLUS_EMAIL_PRODUKT
+
+  subscription: 
+    version-number: 4092768365867
+
+  source: 
+    type: Function Body returning VARCHAR2
+    language: PL/SQL
+    pl/sql-function-body: RETURN PCK_GLASCONTAINER.js_fn_is_service_plus_email_produkt;
+
+  comments: 
+    comments: |
+      @ticket FTTH-2411
+      Die function isServicePlusEmailProdukt wird in der Datenbank generiert und auf Seite P20 gerendert, damit die Informationen nicht an zwei Stellen gepflegt werden müssen. Durch Rückfrage an diese Funktion werden AJAX-Calls vermieden, die ansonsten beim Umstellen auf ein anderes Produkt nötig wären und darüber entscheiden, ob das Feld "E-Mail (Sicherheitspaket)" angezeigt werden muss oder nicht.
+
+- # ====== Shortcut: FN_PROMOTION_AENDERN ======================
+  id: 246599375294892581
+  identification: 
+    name: FN_PROMOTION_AENDERN
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: HTML Text
+    html-code: |
+      function promotionAendern() {
+          $('#P20_TARIF_DISPLAY').text('&G_NEUE_AKTION_DISPLAY.');
+          $('#P20_TARIF_LABEL').addClass('aenderung').html('Neue&nbsp;Aktion&nbsp;&nbsp;&#9654;');
+          $('#P20_PRODUKT_LABEL').addClass('aenderung').html('Neues&nbsp;Produkt&nbsp;&nbsp;&#9654;');
+          hinweisTarifwechsel = true;
+      }
+
+  comments: 
+    comments: '@ticket FTTH-2411'
+
+- # ====== Shortcut: FN_DIFF_GRID ==============================
+  id: 246600483802918559
+  identification: 
+    name: FN_DIFF_GRID
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: HTML Text
+    html-code: 'function diffGrid(o,r,t){const a=getInteractiveGridModel(o);if(a){const i=t.split(",");for(var n=0;n<i.length;n++)!function(n){var i,c;n&&(i="",c=0,a.forEach(function(t){c++;t=a.getValue(t,n);1==c?i=t:i!=t&&($("#"+o+" tr:nth-child("+(c-1)+") span."+n).closest("td").addClass(r),i=t)}))}(i[n].trim())}}'
+
+  comments: 
+    comments: |
+      /**
+       * P20 (Auftragshistorie): Markiert die Zellen, die sich zwischen zwei aufeinanderfolgenen 
+       * Zeilen unterscheiden (siehe function diffAuftragshistorie)
+       */
+      function diffGrid(staticId, markerClass, columnList) {
+          const IG = getInteractiveGridModel(staticId);
+          if(!IG) return;
+          const columns = columnList.split(',');
+      
+          for(var i = 0; i < columns.length; i++) {
+            findDifferences(columns[i].trim());
+          }
+      
+          function findDifferences(columnAlias) {
+              if(!columnAlias) return; 
+              var previousValue = "";
+              var rowNumber = 0;
+              IG.forEach(function(record) {
+                  rowNumber++;
+                  var columnValue = IG.getValue(record, columnAlias);  
+                  if(rowNumber == 1) previousValue = columnValue;
+                  else {
+                      if(previousValue != columnValue) {
+                          const upperRowSelector = '#' + staticId + ' tr:nth-child(' + (rowNumber - 1) + ')' + ' span.' + columnAlias;
+                          $(upperRowSelector).closest('td').addClass(markerClass);
+                          previousValue = columnValue;               
+                      }
+                  }           
+              });       
+          }    
+      }
+
+- # ====== Shortcut: FN_COPY_ELEMENT_TO_CLIPBOARD ==============
+  id: 329404003636509296
+  identification: 
+    name: FN_COPY_ELEMENT_TO_CLIPBOARD
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    type: HTML Text
+    html-code: function copyElementToClipboard(t){var e=$(t).html();function a(t){t.clipboardData.setData("text/html",e),t.clipboardData.setData("text/plain",e),t.preventDefault()}document.addEventListener("copy",a),document.execCommand("copy"),document.removeEventListener("copy",a)}
+
+  comments: 
+    comments: |
+      /**
+      * Ermöglicht das Kopieren des Textes eines Items in die Zwischenablage. Die Funktion erwartet ein
+      * beliebiges Element (Selektor, DOM-Element, jQuery-Objekt, ...), dessen Text vollständig
+      * ausgelesen wird.
+      */
+      function copyElementToClipboard(elem) {
+      
+        var $elem= $(elem);
+        var text= $elem.html();
+      
+        function listener(e) {
+          e.clipboardData.setData("text/html", text);
+          e.clipboardData.setData("text/plain", text);
+          e.preventDefault();
+        }
+        document.addEventListener("copy", listener);
+        document.execCommand("copy");
+        document.removeEventListener("copy", listener);
+      }
+      
+
+- # ====== Shortcut: FN_GET_INTERACTIVE_GRID_MODEL =============
+  id: 358040518981854329
+  identification: 
+    name: FN_GET_INTERACTIVE_GRID_MODEL
+
+  subscription: 
+    master: 
+      referenced-id: 153807022351726899
+
+  source: 
+    type: HTML Text
+    html-code: |
+      function getInteractiveGridModel(staticId) {
+        var region = apex.region(staticId);
+            if(!region) return;
+        var widget = region.widget();
+            if(!region) return;
+        var grid = widget.interactiveGrid('getViews','grid');
+            if(!grid) return;
+        return grid.model;
+      }
+
+  comments: 
+    comments: |
+      Function zum Einsatz in diversen Seiten, wo man sich mit JavaScript auf ein Interaktives Grid beziehen möchte. Man übergibt die Static ID des Grids (wie im Page Designer bei der Region deklariert) und erhält entweder das grid.model-Objekt zurück oder undefined. Vorteil: Code-Kapselung (die IG-Methoden ändern sich oft!). Die Funktion prüft nach jeder Zuweisung, ob diese erfolgreich war, so dass niemals Methoden eines nicht existierenden Objekts aufgerufen werden, was Laufzeitfehler verursachen würde. Beispiel: Man ändert die statische ID des Grids und ermittelt das model auf herkömmliche Art, dann schlägt ggf. das gesamte JavaScript der Seite fehl!
+      
+      @author  Andreas Wismann  <wismann@when-others.com>
+      
+      @usage korrekt:
+        var model = getInteractiveGridModel('meineStatischeID');
+        // diese Prüfung muss erfolgen:
+        if(!!model) { /* weitermachen */ }
+      
+      @usage anstatt wie im Internet häufig zu finden ist:
+        var model = apex.region("existiertNicht").widget().interactiveGrid("getViews", "grid").model();
+        // dies ergibt einen Laufzeitfehler, noch bevor man den Rückgabewert überhaupt prüfen kann
+

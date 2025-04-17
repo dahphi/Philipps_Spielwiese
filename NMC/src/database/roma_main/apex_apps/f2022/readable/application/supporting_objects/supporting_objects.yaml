@@ -1,0 +1,29 @@
+---
+- # ====== Supporting Object:  =================================
+  id: 240039685979049964
+  prerequisites: 
+    free-space: 100
+    system-privileges: 
+    - CREATE PROCEDURE
+    - CREATE TABLE
+    - CREATE TRIGGER
+    - CREATE VIEW
+
+  messages: 
+    validations: The following validations will be performed to ensure your system is compatible with this application.
+    application-substitutions: You can configure the following attributes of your application.
+    build-options: You can choose to include the following build options.
+
+  installation-messages: 
+    welcome: This application installer will guide you through the process of creating your database objects and seed data.
+    confirmation: Please confirm that you would like to install this application's supporting objects.
+
+  upgrade-messages: 
+    welcome: The application installer has detected that this application's supporting objects were previously installed.  This wizard will guide you through the process of upgrading these supporting objects.
+    confirmation: Please confirm that you would like to install this application's supporting objects.
+    success: Your application's supporting objects have been installed.
+    failure: Installation of database objects and seed data has failed.
+
+  deinstallation-messages: 
+    post-deinstall: Deinstallation complete.
+

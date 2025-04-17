@@ -1,0 +1,46 @@
+---
+- # ====== Static Application File: app-icon.svg ===============
+  id: 235073703566092962
+  identification: 
+    file-name: app-icon.svg
+
+  attributes: 
+    mime-type: image/svg+xml
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: app-icon.css ===============
+  id: 235073994159092965
+  identification: 
+    file-name: app-icon.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: app-icon.png ===============
+  id: 235085980717119904
+  identification: 
+    file-name: app-icon.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: app-icon.min.css ===========
+  id: 235086480115121260
+  identification: 
+    file-name: app-icon.min.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: glasfaserkabel.png =========
+  id: 235086939126126250
+  identification: 
+    file-name: glasfaserkabel.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+

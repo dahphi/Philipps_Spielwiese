@@ -1,0 +1,1803 @@
+---
+- # ====== List of Values: VKZ (GEKÜRZT) =======================
+  id: 68501681233936848
+  identification: 
+    name: VKZ (GEKÜRZT)
+
+  subscription: 
+    version-number: 4069294721962
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT VKZ || '...' AS D, VKZ AS R FROM (
+          SELECT DISTINCT REGEXP_REPLACE(vkz, '[[:digit:]]') as vkz
+           FROM v_siebel_vkz
+      )
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: D
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: TECHNOLOGY (REPORTING) ==============
+  id: 200135646163901550
+  identification: 
+    name: TECHNOLOGY (REPORTING)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: FTTH =========================================
+    id: 200135947018901559
+    entry: 
+      sequence: 70
+      display: FTTH
+      return: FTTH
+
+  - # ====== Entry: FTTH BSA L2 ==================================
+    id: 200136373258901560
+    entry: 
+      sequence: 89
+      display: FTTH BSA L2
+      return: FTTH_BSA_L2
+
+  - # ====== Entry: FTTH BSA L2 DG ===============================
+    id: 200136745792901560
+    entry: 
+      sequence: 90
+      display: FTTH BSA L2 DG
+      return: FTTH_BSA_L2_DG
+
+  - # ====== Entry: G.fast =======================================
+    id: 200137136210901560
+    entry: 
+      sequence: 71
+      display: G.fast
+      return: G_FAST
+
+  - # ====== Entry: FTTB =========================================
+    id: 200137532234901560
+    entry: 
+      sequence: 51
+      display: FTTB
+      return: FTTB
+
+- # ====== List of Values: BESTÄTIGUNG VVI =====================
+  id: 210599720902716629
+  identification: 
+    name: BESTÄTIGUNG VVI
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: liegt vor ====================================
+    id: 210600020269716630
+    entry: 
+      sequence: 1
+      display: liegt vor
+      return: 1
+
+  - # ====== Entry: versenden (kein Clearing) ====================
+    id: 210600414822716630
+    entry: 
+      sequence: 2
+      display: versenden (kein Clearing)
+      return: 2
+
+  - # ====== Entry: versenden (Clearing) =========================
+    id: 210600785767716630
+    entry: 
+      sequence: 3
+      display: versenden (Clearing)
+      return: 3
+
+  - # ====== Entry: keine Angabe =================================
+    id: 210630152794012197
+    entry: 
+      sequence: 0
+      display: keine Angabe
+      return: '-1'
+
+- # ====== List of Values: WHOLEBUY-PARTNER ====================
+  id: 215033117212809431
+  identification: 
+    name: WHOLEBUY-PARTNER
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Telekom ======================================
+    id: 215033427518809437
+    entry: 
+      sequence: 1
+      display: Telekom
+      return: TCOM
+
+  - # ====== Entry: Deutsche Glasfaser ===========================
+    id: 215033775129809439
+    entry: 
+      sequence: 2
+      display: Deutsche Glasfaser
+      return: DG
+
+- # ====== List of Values: JAHRE ===============================
+  id: 216097681362173616
+  identification: 
+    name: JAHRE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT JAHR AS D, JAHR AS R FROM (
+          SELECT TO_CHAR(ADD_MONTHS(TRUNC(SYSDATE, 'YYYY'), -12*LEVEL+24), 'YYYY') AS JAHR
+            FROM DUAL
+         CONNECT BY LEVEL <= 12
+      )
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: R
+    sort-direction: Descending (Nulls First)
+
+- # ====== List of Values: AKTION ==============================
+  id: 218717649817079093
+  identification: 
+    name: AKTION
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT name as d,
+             code as r
+        FROM ftth_glascontainer_aktionen
+       WHERE aktuell = 1
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: D
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: MANDANT =============================
+  id: 222119487343653087
+  identification: 
+    name: MANDANT
+
+  subscription: 
+    master: 
+      referenced-id: 58865574415664170
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: NetCologne ===================================
+    id: 254921644331472705
+    entry: 
+      sequence: 1
+      display: NetCologne
+      return: NC
+
+  - # ====== Entry: NetAachen ====================================
+    id: 254922090084472706
+    entry: 
+      sequence: 2
+      display: NetAachen
+      return: NA
+
+- # ====== List of Values: JA | NEIN (TRUE|FALSE) ==============
+  id: 223202727191171514
+  identification: 
+    name: JA | NEIN (TRUE|FALSE)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ja ===========================================
+    id: 223202974835171514
+    entry: 
+      sequence: 1
+      display: ja
+      return: true
+
+  - # ====== Entry: nein =========================================
+    id: 223203441100171515
+    entry: 
+      sequence: 2
+      display: nein
+      return: false
+
+- # ====== List of Values: LAENDERVORWAHL ======================
+  id: 223569233828426026
+  identification: 
+    name: LAENDERVORWAHL
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT '+' || RETURN_VALUE || ' (' || DISPLAY_VALUE || ')' AS DISPLAY_VALUE
+           , RETURN_VALUE
+           , INFO_1
+        FROM TABLE(PCK_RUFNUMMER.FP_LAENDERVORWAHL_BESTELLSTRECKE)
+
+  column-mapping: 
+    return: RETURN_VALUE
+    display: DISPLAY_VALUE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: ROUTER_AUSWAHL ======================
+  id: 223742718835674366
+  identification: 
+    name: ROUTER_AUSWAHL
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('deviceCategory')) -- war: 'ROUTER_AUSWAHL'"
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: ANREDE ==============================
+  id: 223744860630739051
+  identification: 
+    name: ANREDE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('salutation')) -- war: 'ANREDE'
+       ORDER BY r DESC
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: WS_DATENTYPEN =======================
+  id: 224013713993578208
+  identification: 
+    name: WS_DATENTYPEN
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: STRING =======================================
+    id: 224014032162578209
+    entry: 
+      sequence: 1
+      display: STRING
+      return: STRING
+
+  - # ====== Entry: INTEGER ======================================
+    id: 224014429614578211
+    entry: 
+      sequence: 2
+      display: INTEGER
+      return: INTEGER
+
+  - # ====== Entry: OBJECT =======================================
+    id: 224014771077578211
+    entry: 
+      sequence: 10
+      display: OBJECT
+      return: OBJECT
+
+  - # ====== Entry: DATE =========================================
+    id: 224015566737618468
+    entry: 
+      sequence: 13
+      display: DATE
+      return: DATE
+
+  - # ====== Entry: NUMBER =======================================
+    id: 224016107989621925
+    entry: 
+      sequence: 4
+      display: NUMBER
+      return: NUMBER
+
+  - # ====== Entry: BOOLEAN ======================================
+    id: 224030190647729642
+    entry: 
+      sequence: 3
+      display: BOOLEAN
+      return: BOOLEAN
+
+  - # ====== Entry: ENUM =========================================
+    id: 224169661039098944
+    entry: 
+      sequence: 5
+      display: ENUM
+      return: ENUM
+
+  - # ====== Entry: TIMESTAMP ====================================
+    id: 235270687041439381
+    entry: 
+      sequence: 14
+      display: TIMESTAMP
+      return: TIMESTAMP
+
+- # ====== List of Values: JA | NEIN (1|0) =====================
+  id: 224055591124963777
+  identification: 
+    name: JA | NEIN (1|0)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ja ===========================================
+    id: 224055911581963780
+    entry: 
+      sequence: 1
+      display: ja
+      return: 1
+
+  - # ====== Entry: nein =========================================
+    id: 224056279317963780
+    entry: 
+      sequence: 2
+      display: nein
+      return: 0
+
+- # ====== List of Values: WOHNDAUER ===========================
+  id: 224170188040277772
+  identification: 
+    name: WOHNDAUER
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('residentStatus')) -- war: 'WOHNDAUER'"
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: TITEL ===============================
+  id: 225131516831863015
+  identification: 
+    name: TITEL
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Dr. ==========================================
+    id: 225131786982863030
+    entry: 
+      sequence: 1
+      display: Dr.
+      return: Dr.
+
+  - # ====== Entry: Prof. ========================================
+    id: 225132152938863031
+    entry: 
+      sequence: 2
+      display: Prof.
+      return: Prof.
+
+  - # ====== Entry: Dr.med. ======================================
+    id: 225132612024863031
+    entry: 
+      sequence: 3
+      display: Dr.med.
+      return: Dr.med.
+
+  - # ====== Entry: Dipl.-Ing. ===================================
+    id: 225132956046863031
+    entry: 
+      sequence: 4
+      display: Dipl.-Ing.
+      return: Dipl.-Ing.
+
+  - # ====== Entry: Prof. Dr. ====================================
+    id: 225133355429863032
+    entry: 
+      sequence: 5
+      display: Prof. Dr.
+      return: Prof. Dr.
+
+  - # ====== Entry: Rechtsanwalt D.E.A. ==========================
+    id: 225133795801863032
+    entry: 
+      sequence: 6
+      display: Rechtsanwalt D.E.A.
+      return: Rechtsanwalt D.E.A.
+
+  - # ====== Entry: Dipl.-Psych. =================================
+    id: 225134178444863032
+    entry: 
+      sequence: 7
+      display: Dipl.-Psych.
+      return: Dipl.-Psych.
+
+  - # ====== Entry: Dipl.-Kfm. ===================================
+    id: 225134625125863032
+    entry: 
+      sequence: 8
+      display: Dipl.-Kfm.
+      return: Dipl.-Kfm.
+
+- # ====== List of Values: ROUTER_EIGENTUM =====================
+  id: 226169709237313649
+  identification: 
+    name: ROUTER_EIGENTUM
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('deviceOwnership')) -- war: 'ROUTER_EIGENTUM'"
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: INSTALLATIONSSERVICE ================
+  id: 226174773618511121
+  identification: 
+    name: INSTALLATIONSSERVICE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT --- d, r FROM TABLE(PCK_GLASCONTAINER.LOV('installationService')) -- ///@ändern: 2022-11-02: NetStart Plus in der Produktion rausgeworfen, darum ist die Abfrage zur Zeit nicht serverbasiert:
+             'ohne Service' AS D, 'NONE' AS R FROM DUAL UNION ALL
+      SELECT 'NetStart', 'NETSTART' FROM DUAL
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: AUFTRAGSSTATUS ("STATE") ============
+  id: 226176519267562629
+  identification: 
+    name: AUFTRAGSSTATUS ("STATE")
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('state'))
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: GEE_ROLLE ===========================
+  id: 226276840356020082
+  identification: 
+    name: GEE_ROLLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('propertyOwnerRole')) -- war:'GEE_ROLLE'"
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: KUNDENSTATUS ========================
+  id: 227317722483099978
+  identification: 
+    name: KUNDENSTATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Neukunde =====================================
+    id: 227317978306099979
+    entry: 
+      sequence: 1
+      display: Neukunde
+      return: N
+
+  - # ====== Entry: Bestandskunde ================================
+    id: 227318418468099980
+    entry: 
+      sequence: 2
+      display: Bestandskunde
+      return: B
+
+- # ====== List of Values: RECHTSFORM ==========================
+  id: 227956299445087691
+  identification: 
+    name: RECHTSFORM
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('legalForm')) -- war: 'RECHTSFORM'"
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: ANZAHL_WE ===========================
+  id: 228552306473143172
+  identification: 
+    name: ANZAHL_WE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('residentialUnit')) -- war: 'ANZAHL_WE'"
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: D
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: APEX_STATUS (FTTH_FACTORY) ==========
+  id: 228637820745961376
+  identification: 
+    name: APEX_STATUS (FTTH_FACTORY)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: OK ===========================================
+    id: 228638063899961390
+    entry: 
+      sequence: 1
+      display: OK
+      return: OK
+
+  - # ====== Entry: NOK ==========================================
+    id: 228638500398961391
+    entry: 
+      sequence: 2
+      display: NOK
+      return: NOK
+
+  - # ====== Entry: ///unklar ====================================
+    id: 228638913458961392
+    entry: 
+      sequence: 3
+      display: ///unklar
+      return: ///
+
+  - # ====== Entry: leer =========================================
+    id: 228639316412961392
+    entry: 
+      sequence: 4
+      display: leer
+      return: L
+
+  - # ====== Entry: entfernt =====================================
+    id: 230701461527046481
+    entry: 
+      sequence: 6
+      display: entfernt
+      return: X
+
+  - # ====== Entry: hidden =======================================
+    id: 230891987891240894
+    entry: 
+      sequence: 5
+      display: hidden
+      return: H
+
+  - # ====== Entry: - ============================================
+    id: 230914537350385740
+    entry: 
+      sequence: 0
+      display: '-'
+      return: '-'
+
+  - # ====== Entry: n.v. =========================================
+    id: 230957007344722645
+    entry: 
+      sequence: 7
+      display: n.v.
+      return: NV
+
+- # ====== List of Values: ROUTER_AUSWAHL MIT BASIC ============
+  id: 229551692826930338
+  identification: 
+    name: ROUTER_AUSWAHL MIT BASIC
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('deviceCategory', 'TCOM'))
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: LAND ================================
+  id: 231331853640129333
+  identification: 
+    name: LAND
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV_LAND)
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: JA (1) ==============================
+  id: 231371651582558526
+  identification: 
+    name: JA (1)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ja ===========================================
+    id: 231371976347558534
+    entry: 
+      sequence: 1
+      display: ja
+      return: 1
+
+- # ====== List of Values: ONT_PROVIDER ========================
+  id: 232069849353781513
+  identification: 
+    name: ONT_PROVIDER
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: NetCologne Glasfaser-Modem ===================
+    id: 232070142174781513
+    entry: 
+      sequence: 1
+      display: NetCologne Glasfaser-Modem
+      return: NETCOLOGNE
+
+  - # ====== Entry: Eigenes Gerät ================================
+    id: 232070505628781514
+    entry: 
+      sequence: 2
+      display: Eigenes Gerät
+      return: BYOD
+
+  - # ====== Entry: kein ONT =====================================
+    id: 233990861616284111
+    entry: 
+      sequence: 3
+      display: kein ONT
+      return: NONE
+
+- # ====== List of Values: WOHNDAUER (OHNE NO_RESIDENT) ========
+  id: 232472978582298337
+  identification: 
+    name: WOHNDAUER (OHNE NO_RESIDENT)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT CASE r
+               WHEN 'RESIDENT_LESS_THAN_SIX_MONTHS' THEN 'nein'
+               WHEN 'RESIDENT_SIX_OR_MORE_MONTHS'   THEN 'ja'
+             END AS D
+           , r
+        FROM TABLE(PCK_GLASCONTAINER.LOV('residentStatus'))
+       WHERE r <> 'NO_RESIDENT'
+       ORDER BY
+             CASE r
+               WHEN 'RESIDENT_SIX_OR_MORE_MONTHS' THEN 1     
+               WHEN 'RESIDENT_LESS_THAN_SIX_MONTHS'   THEN 2
+             END
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: NEIN | JA (0|1) =====================
+  id: 232479267021767606
+  identification: 
+    name: NEIN | JA (0|1)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ja ===========================================
+    id: 232479650021767607
+    entry: 
+      sequence: 2
+      display: ja
+      return: 1
+
+  - # ====== Entry: nein =========================================
+    id: 232480012270767609
+    entry: 
+      sequence: 1
+      display: nein
+      return: 0
+
+- # ====== List of Values: HTTP_STATUSCODE =====================
+  id: 232506644377076626
+  identification: 
+    name: HTTP_STATUSCODE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: "	SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV('HTTP_STATUSCODE')) "
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: D
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: ANBIETER (MIT SCHLÜSSELWERT) ========
+  id: 232923940790452110
+  identification: 
+    name: ANBIETER (MIT SCHLÜSSELWERT)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Telekom Deutschland GmbH =====================
+    id: 232924181397452119
+    entry: 
+      sequence: 10
+      display: Telekom Deutschland GmbH
+      return: TELEKOM
+
+  - # ====== Entry: Vodafone GmbH ================================
+    id: 232924635295452120
+    entry: 
+      sequence: 20
+      display: Vodafone GmbH
+      return: VODAFONE
+
+  - # ====== Entry: Vodafone Kabel Deutschl. GmbH ================
+    id: 232924970386463189
+    entry: 
+      sequence: 30
+      display: Vodafone Kabel Deutschl. GmbH
+      return: VODAFE_KABEL
+
+  - # ====== Entry: Vodafone NRW Unitymedia GmbH =================
+    id: 232925312391467684
+    entry: 
+      sequence: 40
+      display: Vodafone NRW Unitymedia GmbH
+      return: VODAFONE_UNITY
+
+  - # ====== Entry: 1&1 Internet AG ==============================
+    id: 232925601374470717
+    entry: 
+      sequence: 50
+      display: 1&1 Internet AG
+      return: EINS_UND_EINS
+
+  - # ====== Entry: O2 Telefonica Germany ========================
+    id: 232925910037474147
+    entry: 
+      sequence: 60
+      display: O2 Telefonica Germany
+      return: O2
+
+  - # ====== Entry: Deutsche Glasfaser GmbH ======================
+    id: 232926213712476614
+    entry: 
+      sequence: 70
+      display: Deutsche Glasfaser GmbH
+      return: DEUTSCHE_GLASFASER
+
+  - # ====== Entry: 010090 GmbH ==================================
+    id: 232926482648479992
+    entry: 
+      sequence: 100
+      display: 010090 GmbH
+      return: NULL10090
+
+  - # ====== Entry: 3U Telecom GmbH ==============================
+    id: 232926849699482285
+    entry: 
+      sequence: 110
+      display: 3U Telecom GmbH
+      return: DREI_U
+
+  - # ====== Entry: bn t Blatzheim Networks ======================
+    id: 232927121184484881
+    entry: 
+      sequence: 120
+      display: bn t Blatzheim Networks
+      return: BN_T
+
+  - # ====== Entry: BT Germany GmbH & Co. OHG ====================
+    id: 232927405126488262
+    entry: 
+      sequence: 130
+      display: BT Germany GmbH & Co. OHG
+      return: BT_GERMANY
+
+  - # ====== Entry: Communication Services (Tele2) ===============
+    id: 232927722893492108
+    entry: 
+      sequence: 140
+      display: Communication Services (Tele2)
+      return: COM_TELE2
+
+  - # ====== Entry: congstar GmbH ================================
+    id: 232928007546493660
+    entry: 
+      sequence: 150
+      display: congstar GmbH
+      return: CONGSTAR
+
+  - # ====== Entry: Deutsche Telefon Standard AG =================
+    id: 232928315594496329
+    entry: 
+      sequence: 160
+      display: Deutsche Telefon Standard AG
+      return: DEUTSCHE_TELEFON
+
+  - # ====== Entry: DNS:NET Internet =============================
+    id: 232928592068498482
+    entry: 
+      sequence: 170
+      display: 'DNS:NET Internet'
+      return: DNS_NET
+
+  - # ====== Entry: easybell GmbH ================================
+    id: 232928857787500614
+    entry: 
+      sequence: 180
+      display: easybell GmbH
+      return: EASYBELL
+
+  - # ====== Entry: Ecotel Communication AG ======================
+    id: 232929220531502455
+    entry: 
+      sequence: 190
+      display: Ecotel Communication AG
+      return: ECOTEL
+
+  - # ====== Entry: envia TEL GmbH ===============================
+    id: 232929538939504702
+    entry: 
+      sequence: 200
+      display: envia TEL GmbH
+      return: ENVIA
+
+  - # ====== Entry: EWE TEL GmbH =================================
+    id: 232929829523506599
+    entry: 
+      sequence: 210
+      display: EWE TEL GmbH
+      return: EWE
+
+  - # ====== Entry: innogy TelNet GmbH ===========================
+    id: 232930087701508674
+    entry: 
+      sequence: 220
+      display: innogy TelNet GmbH
+      return: INNOGY
+
+  - # ====== Entry: NFON AG ======================================
+    id: 232930357202510422
+    entry: 
+      sequence: 230
+      display: NFON AG
+      return: NFON
+
+  - # ====== Entry: PrimaCom Berlin GmbH =========================
+    id: 232930741394512155
+    entry: 
+      sequence: 240
+      display: PrimaCom Berlin GmbH
+      return: PRIMACOM
+
+  - # ====== Entry: Primastrom ===================================
+    id: 232930967408514110
+    entry: 
+      sequence: 250
+      display: Primastrom
+      return: PRIMASTROM
+
+  - # ====== Entry: QSC AG =======================================
+    id: 232931260164516922
+    entry: 
+      sequence: 260
+      display: QSC AG
+      return: QSC
+
+  - # ====== Entry: RelAix Networks GmbH =========================
+    id: 232931599415518973
+    entry: 
+      sequence: 270
+      display: RelAix Networks GmbH
+      return: RELAIX
+
+  - # ====== Entry: RSB Rhein Sieg ===============================
+    id: 232931896700520832
+    entry: 
+      sequence: 280
+      display: RSB Rhein Sieg
+      return: RSB
+
+  - # ====== Entry: RWE Highspeed ================================
+    id: 232932235479522775
+    entry: 
+      sequence: 290
+      display: RWE Highspeed
+      return: RWE
+
+  - # ====== Entry: Schönenberg Computer GmbH ====================
+    id: 232932479147532398
+    entry: 
+      sequence: 300
+      display: Schönenberg Computer GmbH
+      return: SCHOENENBERG
+
+  - # ====== Entry: sipgate GmbH =================================
+    id: 232932801150534294
+    entry: 
+      sequence: 310
+      display: sipgate GmbH
+      return: SIPGATE
+
+  - # ====== Entry: SOCO Networks Solutions GmbH =================
+    id: 232933101582535971
+    entry: 
+      sequence: 320
+      display: SOCO Networks Solutions GmbH
+      return: SOCO
+
+  - # ====== Entry: TELE2 ========================================
+    id: 232933423063538090
+    entry: 
+      sequence: 330
+      display: TELE2
+      return: TELE2
+
+  - # ====== Entry: Ventelo ======================================
+    id: 232933677583539576
+    entry: 
+      sequence: 340
+      display: Ventelo
+      return: VENTELO
+
+  - # ====== Entry: Verizon Deutschland GmbH =====================
+    id: 232933951413541418
+    entry: 
+      sequence: 350
+      display: Verizon Deutschland GmbH
+      return: VERIZON
+
+  - # ====== Entry: Versatel West GmbH / Telelev =================
+    id: 232934294145543575
+    entry: 
+      sequence: 360
+      display: Versatel West GmbH / Telelev
+      return: VERSATEL
+
+  - # ====== Entry: voxenergie GmbH ==============================
+    id: 232934552813545491
+    entry: 
+      sequence: 370
+      display: voxenergie GmbH
+      return: VOXENERGIE
+
+  - # ====== Entry: Drillisch Online GmbH ========================
+    id: 232935549231569198
+    entry: 
+      sequence: 80
+      display: Drillisch Online GmbH
+      return: DRILLISCH
+
+  - # ====== Entry: Greenfiber Internet & Dienste ================
+    id: 232935829418570415
+    entry: 
+      sequence: 215
+      display: Greenfiber Internet & Dienste
+      return: GREENFIBER
+
+  - # ====== Entry: Maingau Energie GmbH =========================
+    id: 248725388668022645
+    entry: 
+      sequence: 225
+      display: Maingau Energie GmbH
+      return: MAINGAU
+
+- # ====== List of Values: ANBIETER (NAME, NAME) ===============
+  id: 232944257294876552
+  identification: 
+    name: ANBIETER (NAME, NAME)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Telekom Deutschland GmbH =====================
+    id: 232944628897876553
+    entry: 
+      sequence: 10
+      display: Telekom Deutschland GmbH
+      return: Telekom Deutschland GmbH
+
+  - # ====== Entry: Vodafone GmbH ================================
+    id: 232944990855876554
+    entry: 
+      sequence: 20
+      display: Vodafone GmbH
+      return: Vodafone GmbH
+
+  - # ====== Entry: Vodafone Kabel Deutschl. GmbH ================
+    id: 232945414983876555
+    entry: 
+      sequence: 30
+      display: Vodafone Kabel Deutschl. GmbH
+      return: Vodafone Kabel Deutschl. GmbH
+
+  - # ====== Entry: Vodafone NRW Unitymedia GmbH =================
+    id: 232945769205876555
+    entry: 
+      sequence: 40
+      display: Vodafone NRW Unitymedia GmbH
+      return: Vodafone NRW Unitymedia GmbH
+
+  - # ====== Entry: 1&1 Internet AG ==============================
+    id: 232946165101876555
+    entry: 
+      sequence: 50
+      display: 1&1 Internet AG
+      return: 1&1 Internet AG
+
+  - # ====== Entry: O2 Telefonica Germany ========================
+    id: 232946639998876555
+    entry: 
+      sequence: 60
+      display: O2 Telefonica Germany
+      return: O2 Telefonica Germany
+
+  - # ====== Entry: Deutsche Glasfaser GmbH ======================
+    id: 232947023390876555
+    entry: 
+      sequence: 70
+      display: Deutsche Glasfaser GmbH
+      return: Deutsche Glasfaser GmbH
+
+  - # ====== Entry: Drillisch Online GmbH ========================
+    id: 232947396262876555
+    entry: 
+      sequence: 80
+      display: Drillisch Online GmbH
+      return: Drillisch Online GmbH
+
+  - # ====== Entry: 010090 GmbH ==================================
+    id: 232947818520876556
+    entry: 
+      sequence: 100
+      display: 010090 GmbH
+      return: 010090 GmbH
+
+  - # ====== Entry: 3U Telecom GmbH ==============================
+    id: 232948210978876556
+    entry: 
+      sequence: 110
+      display: 3U Telecom GmbH
+      return: 3U Telecom GmbH
+
+  - # ====== Entry: bn t Blatzheim Networks ======================
+    id: 232948556531876556
+    entry: 
+      sequence: 120
+      display: bn t Blatzheim Networks
+      return: bn t Blatzheim Networks
+
+  - # ====== Entry: BT Germany GmbH & Co. OHG ====================
+    id: 232948979900876556
+    entry: 
+      sequence: 130
+      display: BT Germany GmbH & Co. OHG
+      return: BT Germany GmbH & Co. OHG
+
+  - # ====== Entry: Communication Services (Tele2) ===============
+    id: 232949384005876556
+    entry: 
+      sequence: 140
+      display: Communication Services (Tele2)
+      return: Communication Services (Tele2)
+
+  - # ====== Entry: congstar GmbH ================================
+    id: 232949791925876557
+    entry: 
+      sequence: 150
+      display: congstar GmbH
+      return: congstar GmbH
+
+  - # ====== Entry: Deutsche Telefon Standard AG =================
+    id: 232950220991876557
+    entry: 
+      sequence: 160
+      display: Deutsche Telefon Standard AG
+      return: Deutsche Telefon Standard AG
+
+  - # ====== Entry: DNS:NET Internet =============================
+    id: 232950598517876557
+    entry: 
+      sequence: 170
+      display: 'DNS:NET Internet'
+      return: 'DNS:NET Internet'
+
+  - # ====== Entry: easybell GmbH ================================
+    id: 232950962501876557
+    entry: 
+      sequence: 180
+      display: easybell GmbH
+      return: easybell GmbH
+
+  - # ====== Entry: Ecotel Communication AG ======================
+    id: 232951450272876559
+    entry: 
+      sequence: 190
+      display: Ecotel Communication AG
+      return: Ecotel Communication AG
+
+  - # ====== Entry: envia TEL GmbH ===============================
+    id: 232951831317876559
+    entry: 
+      sequence: 200
+      display: envia TEL GmbH
+      return: envia TEL GmbH
+
+  - # ====== Entry: EWE TEL GmbH =================================
+    id: 232952167249876559
+    entry: 
+      sequence: 210
+      display: EWE TEL GmbH
+      return: EWE TEL GmbH
+
+  - # ====== Entry: Greenfiber Internet & Dienste ================
+    id: 232952567525876559
+    entry: 
+      sequence: 215
+      display: Greenfiber Internet & Dienste
+      return: Greenfiber Internet & Dienste
+
+  - # ====== Entry: innogy TelNet GmbH ===========================
+    id: 232952961085876560
+    entry: 
+      sequence: 220
+      display: innogy TelNet GmbH
+      return: innogy TelNet GmbH
+
+  - # ====== Entry: NFON AG ======================================
+    id: 232953393634876561
+    entry: 
+      sequence: 230
+      display: NFON AG
+      return: NFON AG
+
+  - # ====== Entry: PrimaCom Berlin GmbH =========================
+    id: 232953800016876561
+    entry: 
+      sequence: 240
+      display: PrimaCom Berlin GmbH
+      return: PrimaCom Berlin GmbH
+
+  - # ====== Entry: Primastrom ===================================
+    id: 232954222768876561
+    entry: 
+      sequence: 250
+      display: Primastrom
+      return: Primastrom
+
+  - # ====== Entry: QSC AG =======================================
+    id: 232954618460876562
+    entry: 
+      sequence: 260
+      display: QSC AG
+      return: QSC AG
+
+  - # ====== Entry: RelAix Networks GmbH =========================
+    id: 232955020682876562
+    entry: 
+      sequence: 270
+      display: RelAix Networks GmbH
+      return: RelAix Networks GmbH
+
+  - # ====== Entry: RSB Rhein Sieg ===============================
+    id: 232955439097876562
+    entry: 
+      sequence: 280
+      display: RSB Rhein Sieg
+      return: RSB Rhein Sieg
+
+  - # ====== Entry: RWE Highspeed ================================
+    id: 232955820922876562
+    entry: 
+      sequence: 290
+      display: RWE Highspeed
+      return: RWE Highspeed
+
+  - # ====== Entry: Schönenberg Computer GmbH ====================
+    id: 232956202287876563
+    entry: 
+      sequence: 300
+      display: Schönenberg Computer GmbH
+      return: Schönenberg Computer GmbH
+
+  - # ====== Entry: sipgate GmbH =================================
+    id: 232956556799876563
+    entry: 
+      sequence: 310
+      display: sipgate GmbH
+      return: sipgate GmbH
+
+  - # ====== Entry: SOCO Networks Solutions GmbH =================
+    id: 232956996978876563
+    entry: 
+      sequence: 320
+      display: SOCO Networks Solutions GmbH
+      return: SOCO Networks Solutions GmbH
+
+  - # ====== Entry: TELE2 ========================================
+    id: 232957407473876563
+    entry: 
+      sequence: 330
+      display: TELE2
+      return: TELE2
+
+  - # ====== Entry: Ventelo ======================================
+    id: 232957760786876564
+    entry: 
+      sequence: 340
+      display: Ventelo
+      return: Ventelo
+
+  - # ====== Entry: Verizon Deutschland GmbH =====================
+    id: 232958202081876564
+    entry: 
+      sequence: 350
+      display: Verizon Deutschland GmbH
+      return: Verizon Deutschland GmbH
+
+  - # ====== Entry: Versatel West GmbH / Telelev =================
+    id: 232958566627876564
+    entry: 
+      sequence: 360
+      display: Versatel West GmbH / Telelev
+      return: Versatel West GmbH / Telelev
+
+  - # ====== Entry: voxenergie GmbH ==============================
+    id: 232958980204876564
+    entry: 
+      sequence: 370
+      display: voxenergie GmbH
+      return: voxenergie GmbH
+
+  - # ====== Entry: Maingau Energie GmbH =========================
+    id: 249107309634018186
+    entry: 
+      sequence: 225
+      display: Maingau Energie GmbH
+      return: Maingau Energie GmbH
+
+- # ====== List of Values: PRODUKT =============================
+  id: 234362109273527770
+  identification: 
+    name: PRODUKT
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: SELECT d, r FROM TABLE(PCK_GLASCONTAINER.LOV_PRODUKTE)
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: LOGIN_REMEMBER_USERNAME =============
+  id: 235077640891092978
+  identification: 
+    name: LOGIN_REMEMBER_USERNAME
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Remember username ============================
+    id: 235077986827092978
+    entry: 
+      sequence: 10
+      display: Remember username
+      return: Y
+
+- # ====== List of Values: WEBSERVICE_STATUSCODE ===============
+  id: 235092069846621190
+  identification: 
+    name: WEBSERVICE_STATUSCODE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: 503 - Service unavailable ====================
+    id: 232211289598653703
+    entry: 
+      sequence: 503
+      display: 503 - Service unavailable
+      return: 503
+
+  - # ====== Entry: 500 - Internal Server Error ==================
+    id: 232212389959665826
+    entry: 
+      sequence: 500
+      display: 500 - Internal Server Error
+      return: 500
+
+  - # ====== Entry: 200 - OK =====================================
+    id: 235092431922621192
+    entry: 
+      sequence: 200
+      display: 200 - OK
+      return: 200
+
+  - # ====== Entry: 400 - Bad Request ============================
+    id: 235092799116621194
+    entry: 
+      sequence: 400
+      display: 400 - Bad Request
+      return: 400
+
+  - # ====== Entry: 404 - Page not found =========================
+    id: 235093193356621194
+    entry: 
+      sequence: 404
+      display: 404 - Page not found
+      return: 404
+
+  - # ====== Entry: 502 - Bad Gateway ============================
+    id: 235093620263621194
+    entry: 
+      sequence: 502
+      display: 502 - Bad Gateway
+      return: 502
+
+- # ====== List of Values: SPERRE ==============================
+  id: 235340049631567470
+  identification: 
+    name: SPERRE
+
+  subscription: 
+    version-number: 4106057362875
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: <span aria-hidden="true" class="fa fa-lock fam
+    id: 235340267698567495
+    entry: 
+      sequence: 1
+      display: <span aria-hidden="true" class="fa fa-lock fam-clock fam-is-warning" title="Dieser Auftrag ist zur Zeit gegen Bearbeitung gesperrt"></span>
+      return: true
+
+  - # ====== Entry: - ============================================
+    id: 235340741672567496
+    entry: 
+      sequence: 2
+      display: '-'
+      return: false
+
+- # ====== List of Values: TRUE | FALSE ========================
+  id: 235354587007905201
+  identification: 
+    name: TRUE | FALSE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: true =========================================
+    id: 235354877918905201
+    entry: 
+      sequence: 1
+      display: true
+      return: true
+
+  - # ====== Entry: false ========================================
+    id: 235355277387905202
+    entry: 
+      sequence: 2
+      display: false
+      return: false
+
+- # ====== List of Values: GEE (ERTEILT) =======================
+  id: 237171698421134506
+  identification: 
+    name: GEE (ERTEILT)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: erteilt ======================================
+    id: 237172010286134520
+    entry: 
+      sequence: 1
+      display: erteilt
+      return: 1
+
+  - # ====== Entry: - ============================================
+    id: 237172388185134521
+    entry: 
+      sequence: 2
+      display: '-'
+      return: 0
+
+- # ====== List of Values: ONT_PROVIDER (OHNE NONE) ============
+  id: 237432505508068756
+  identification: 
+    name: ONT_PROVIDER (OHNE NONE)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: NetCologne Glasfaser-Modem ===================
+    id: 237432755668068763
+    entry: 
+      sequence: 1
+      display: NetCologne Glasfaser-Modem
+      return: NETCOLOGNE
+
+  - # ====== Entry: Eigenes Gerät ================================
+    id: 237433219543068764
+    entry: 
+      sequence: 2
+      display: Eigenes Gerät
+      return: BYOD
+
+  - # ====== Entry: kein ONT =====================================
+    id: 237433571116068764
+    entry: 
+      sequence: 3
+      display: kein ONT
+      return: NONE
+
+    server-side-condition: 
+      type: Never
+
+- # ====== List of Values: WS_MODUS ============================
+  id: 238298669259237386
+  identification: 
+    name: WS_MODUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Online. Bei Problemen: zuvor synchronisierte D
+    id: 238299027143237398
+    entry: 
+      sequence: 1
+      display: 'Online. Bei Problemen: zuvor synchronisierte Daten anzeigen (empfohlen)'
+      return: ONLINE_AND_OFFLINE
+
+  - # ====== Entry: nur Online, synchronisierte Daten ignorieren =
+    id: 238299391281237400
+    entry: 
+      sequence: 2
+      display: nur Online, synchronisierte Daten ignorieren
+      return: ONLINE
+
+  - # ====== Entry: komplett Offline, Webservice ignorieren (nicht
+    id: 238299831079237400
+    entry: 
+      sequence: 3
+      display: komplett Offline, Webservice ignorieren (nicht empfohlen)
+      return: OFFLINE
+
+- # ====== List of Values: STORNOGRÜNDE ========================
+  id: 238440131180816461
+  identification: 
+    name: STORNOGRÜNDE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT d, r, 0 DUMMY_ORDER FROM TABLE(PCK_GLASCONTAINER.LOV_STORNOGRUND) -- /// bei Gelegenheit umbenennen zu "STORNOGRUENDE"
+      
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: DUMMY_ORDER
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: PRODUKTAKTION =======================
+  id: 246999547762923758
+  identification: 
+    name: PRODUKTAKTION
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT d, r
+        FROM TABLE(PCK_GLASCONTAINER.LOV(
+          piv_name       => 'PRODUKTAKTION'
+        )
+      );
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: D
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: EINRICHTUNGSSERVICE =================
+  id: 250772871376132756
+  identification: 
+    name: EINRICHTUNGSSERVICE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT --- d, r FROM TABLE(PCK_GLASCONTAINER.LOV('installationService'))  -- war: 'INSTALLATIONSSERVICE'
+             'ohne Service' AS D, 'NONE' AS R FROM DUAL UNION ALL
+      SELECT 'NetStart', 'NETSTART' FROM DUAL UNION ALL
+      SELECT 'NetStart Plus (nicht verfügbar!)', 'NETSTART_PLUS' FROM DUAL
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: FUZZY_DUBLETTEN =====================
+  id: 269582178433413024
+  identification: 
+    name: FUZZY_DUBLETTEN
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: <span aria-hidden="true" class="fa fa-synonym 
+    id: 269582511484413036
+    entry: 
+      sequence: 1
+      display: <span aria-hidden="true" class="fa fa-synonym " title="Dubletten ..."></span>
+      return: 1
+
+  - # ====== Entry: 0 ============================================
+    id: 269582898131413037
+    entry: 
+      sequence: 2
+      display: 0
+      return: 0
+
+- # ====== List of Values: WS_SYNC_AUSFUEHRUNG =================
+  id: 282377634735009088
+  identification: 
+    name: WS_SYNC_AUSFUEHRUNG
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: manuell ======================================
+    id: 282377911683009096
+    entry: 
+      sequence: 1
+      display: manuell
+      return: No
+
+  - # ====== Entry: Job ==========================================
+    id: 282378295820009097
+    entry: 
+      sequence: 2
+      display: Job
+      return: Yes
+
+- # ====== List of Values: DUBLETTEN_BEWERTUNG_ICON ============
+  id: 300800598199095759
+  identification: 
+    name: DUBLETTEN_BEWERTUNG_ICON
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('G', 1) AS D, 'G' AS R FROM DUAL UNION ALL
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('W', 1) AS D, 'W' AS R FROM DUAL UNION ALL
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('F', 1) AS D, 'F' AS R FROM DUAL UNION ALL
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('X', 1) AS D, 'X' AS R FROM DUAL
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: DUBLETTEN_BEWERTUNG =================
+  id: 301210223559222585
+  identification: 
+    name: DUBLETTEN_BEWERTUNG
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('G', 0) AS D, 'G' AS R FROM DUAL UNION ALL
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('W', 0) AS D, 'W' AS R FROM DUAL UNION ALL
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('F', 0) AS D, 'F' AS R FROM DUAL UNION ALL
+      SELECT PCK_GLASCONTAINER_DUBLETTEN.BEWERTUNGSTEXT('X', 0) AS D, 'X' AS R FROM DUAL
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+

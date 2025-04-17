@@ -1,0 +1,27 @@
+---
+- # ====== Page Group: Technische Tests ========================
+  id: 75017970958392079
+  identification: 
+    name: Technische Tests
+
+  description: 
+    description: Elemente, die nicht in der Anwendung auftauchen, sondern zum Testen von Prozessen oder Algorithmen während der Entwicklung dienen.
+
+- # ====== Page Group: Bestellerfassung ========================
+  id: 77801068779551336
+  identification: 
+    name: Bestellerfassung
+
+  description: 
+    description: Alle Seiten und Dialoge, die zum Prozess der Bestellerfassung gehören.
+
+- # ====== Page Group: Fuzzy Dublettensuche ====================
+  id: 77868900765297320
+  identification: 
+    name: Fuzzy Dublettensuche
+
+- # ====== Page Group: Administration ==========================
+  id: 235075580543092967
+  identification: 
+    name: Administration
+

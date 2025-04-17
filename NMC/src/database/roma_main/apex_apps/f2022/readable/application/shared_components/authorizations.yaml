@@ -1,0 +1,275 @@
+---
+- # ====== Authorization: PO (Product Owner), Developer ========
+  id: 215565984188408515
+  identification: 
+    name: PO (Product Owner), Developer
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "RETURN UPPER(:APP_USER) IN ('SCHFLO', 'WISAND');"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  comments: 
+    comments: 2023-06-06 auf Wunsch hinzugefügt, damit Florian Schnönemeyer der Einzige ist, der die Buttons auf der Seite "Einstellungen" betätigen kann, insbesondere zum Aussetzen der Synchronisierung
+
+- # ====== Authorization: Entwickler und Tester ================
+  id: 216442017267608171
+  identification: 
+    name: Entwickler und Tester
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "RETURN UPPER(:APP_USER) IN ('WISAND', 'KRAKAR', 'SALNUS');"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  comments: 
+    comments: Autorisierung für Objekte, die nur der Entwickler zu sehen bekommt (typischerweise Debugging, Tests etc.)
+
+- # ====== Authorization: * App - ReadOnly =====================
+  id: 235084824408102045
+  identification: 
+    name: '* App - ReadOnly'
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      DECLARE
+        berechtigt BOOLEAN;
+      BEGIN
+        berechtigt := PCK_GLASCONTAINER.fb_hat_rolle(
+          piv_username     => :APP_USER
+         ,piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_READONLY
+         ,piv_rollenliste  => NULL --- CASE :G_INIT_FLAG WHEN '1' THEN :G_ROLLENLISTE END
+        );
+        IF berechtigt THEN
+          PCK_GLASCONTAINER.p_rolle_hinzufuegen(
+              piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_READONLY
+             ,piov_rollenliste => :G_ROLLENLISTE
+          );
+        END IF;
+        RETURN berechtigt;
+      END;
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Berechtigung fehlt
+
+  comments: 
+    comments: |
+      @ticket FTTH-2722:
+      Entweder gehört der User zur Benutzergruppe "ReadOnly"
+      oder (außer in der Produktion NMC, siehe @ticket FTTH-1332) zur Gruppe "ReadOnly (externe Entwickler)".
+      Shared Components > Security Attributes > Authorization > "Run on Public Pages" muss eingeschaltet sein.
+
+- # ====== Authorization: * App - User =========================
+  id: 238128121341675592
+  identification: 
+    name: '* App - User'
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      DECLARE
+        berechtigt BOOLEAN;
+      BEGIN
+        berechtigt := PCK_GLASCONTAINER.fb_hat_rolle(
+          piv_username     => :APP_USER
+         ,piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_USER
+         ,piv_rollenliste  => CASE :G_INIT_FLAG WHEN '1' THEN :G_ROLLENLISTE END
+        );
+        IF berechtigt THEN
+          PCK_GLASCONTAINER.p_rolle_hinzufuegen(
+              piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_USER
+             ,piov_rollenliste => :G_ROLLENLISTE
+          );
+        END IF;
+        RETURN berechtigt;
+      END;
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Berechtigung fehlt
+
+  comments: 
+    comments: |
+      @ticket FTTH-2722:
+      Entweder gehört der User zur Benutzergruppe "User"
+      oder (außer in der Produktion NMC, siehe @ticket FTTH-1332) zur Gruppe "User (externe Entwickler)".
+      Shared Components > Security Attributes > Authorization > "Run on Public Pages" muss eingeschaltet sein.
+
+- # ====== Authorization: * App - Administrator ================
+  id: 238128469706691677
+  identification: 
+    name: '* App - Administrator'
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      DECLARE
+        berechtigt BOOLEAN;
+      BEGIN
+        berechtigt := PCK_GLASCONTAINER.fb_hat_rolle(
+          piv_username     => :APP_USER
+         ,piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_ADMINISTRATOR
+         ,piv_rollenliste  => CASE :G_INIT_FLAG WHEN '1' THEN :G_ROLLENLISTE END
+        );
+        IF berechtigt THEN
+          PCK_GLASCONTAINER.p_rolle_hinzufuegen(
+              piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_ADMINISTRATOR
+             ,piov_rollenliste => :G_ROLLENLISTE
+          );
+        END IF;
+        RETURN berechtigt;
+      END;
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Berechtigung fehlt
+
+  comments: 
+    comments: |
+      @ticket FTTH-2722: Entweder gehört der User zur Benutzergruppe "AccApp FTTHAgentView - Adminstrator" (der Tippfehler im Namen hat sich so im Active Directory eingeschlichen) oder (außer in der Produktion NMC, siehe @ticket FTTH-1332) zur Gruppe "Adminstrator (externe Entwickler)".
+      Shared Components > Security Attributes > Authorization > "Run on Public Pages" muss eingeschaltet sein.
+
+- # ====== Authorization: * App - Superuser ====================
+  id: 244597399936966998
+  identification: 
+    name: '* App - Superuser'
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      DECLARE
+        berechtigt BOOLEAN;
+      BEGIN
+        berechtigt := PCK_GLASCONTAINER.fb_hat_rolle(
+          piv_username     => :APP_USER
+         ,piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_SUPERUSER
+         ,piv_rollenliste  => CASE :G_INIT_FLAG WHEN '1' THEN :G_ROLLENLISTE END
+        );
+        IF berechtigt THEN
+          PCK_GLASCONTAINER.p_rolle_hinzufuegen(
+              piv_rolle        => PCK_GLASCONTAINER.C_ROLLE_SUPERUSER
+             ,piov_rollenliste => :G_ROLLENLISTE
+          );
+        END IF;
+        RETURN berechtigt;
+      END;
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Berechtigung fehlt
+
+  comments: 
+    comments: |
+      @ticket FTTH-2722:
+      2023-08-16 neue Gruppe zur Berechtigung der Fuzzydouble-Dublettensuche, löst das Authorization Scheme "Dublettenbereinigung Personenkreis" ab. Siehe @ticket SIT-48205 und @ticket FTTH-2695.
+      Shared Components > Security Attributes > Authorization > "Run on Public Pages" muss eingeschaltet sein.
+      
+
+- # ====== Authorization: Dublettenbereinigung Personenkreis ===
+  id: 272775586608710461
+  identification: 
+    name: Dublettenbereinigung Personenkreis
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      RETURN FALSE AND UPPER(:APP_USER) IN (
+        'CHINIC' -- Nicole Chinellato
+       ,'DEIKEV' -- Kevin Deimling
+       ,'FRESTE' -- Stefan Fredersdorf
+       ,'HALVAL' -- Valdon Halimi
+       ,'HUBAND' -- Andreas Hubert
+       ,'HOHDEN' -- Dennis Hohaus
+       ,'HUECOR' -- Corinna Hüllen
+       ,'KROCHR' -- Christian Krol
+       ,'LIMANA' -- Ana Limon
+       ,'MARLIL' -- Liliana Marschall
+       ,'SCHFLO' -- Florian Schönemeyer
+       ,'STEANJ' -- Anja Steiner
+       ,'STEFRE' -- Stefan Federsdorf
+       ,'WESTHO' -- Thorsten Westenberg
+       ,'WISAND' -- Andreas Wismann
+       ,'WURJEN' -- Jens Wurtinger
+      );
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Abgeschaltet - Verknüpfungen mit diesem Authorization Scheme dürfen nicht mehr bestehen. Die Dublettensuche stand zunächst nur einem eingeschränkten Personenkreis zur Verfügung.
+
+  comments: 
+    comments: |
+      @ticket FTTH-2722: ///@deprecated, ersetzen durch Authorization Scheme "Superuser".
+      Personenkreis, der in der Produktion während der Umsetzungsphase von @ticket FTTH-531 frühzeitigen Zugriff auf die Dublettensuche und dazugehörige Funktionen aus Fuzzy!Double haben soll.  
+      @deprecated, siehe @ticket FTTH-2695
+
+- # ====== Authorization: NMCE/NMCE3 ===========================
+  id: 338825540376847832
+  identification: 
+    name: NMCE/NMCE3
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: RETURN pck_env.fv_db_name IN ('NMCE', 'NMCE3');
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  comments: 
+    comments: Betrifft Objekte, die unabhängig von einer Build Option) tatsächlich nur in der Entwicklungsumgebung angezeigt werden sollen.
+
