@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo "Connecting to Oracle DB..."
                 sh '''
-                    sql apex_export_user/tiger@localhost:8522/freepdb1 <<EOF
+                    sql apex_export_user/tiger@oracle_apex_lb:1521/freepdb1 as sysdb <<EOF
                     SELECT 'Connected to DB' FROM dual;
                     EXIT;
                     EOF
