@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo "Connecting to Oracle DB..."
                 sh '''
-                    sqlplus apex_export_user/tiger@//localhost:8522/8522 <<EOF
+                    sql apex_export_user/tiger@//localhost:8522/8522 <<EOF
                     SELECT 'Connected to DB' FROM dual;
                     EXIT;
                     EOF
