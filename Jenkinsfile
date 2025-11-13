@@ -41,9 +41,17 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Show Latest Commit') {
+        stage('Pull Project') {
             steps {
-                sh 'git log -1'
+                echo "Cloning project repository..."
+                sh '''
+                if [ -d "Philipps_Spielwiese" ]; then
+                    sudo rm -rf Philipps_Spielwiese
+                fi
+                git clone https://github.com/dahphi/Philipps_Spielwiese.git
+                cd philipps_spielwiese
+                git checkout ${BRANCH}
+                '''
             }
         }
         stage('Connect to DB') {
