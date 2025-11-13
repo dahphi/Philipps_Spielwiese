@@ -54,6 +54,41 @@ pipeline {
                 '''
             }
         }
+        stage('Initialize Project') {
+            when {
+                expression { params.OPERATION == 'export' }
+            }
+            steps {
+                echo "[DEBUG] Initialize Project ..."
+                withCredentials([
+                    usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
+                ]) {sh '''
+                    cd Philipps_Spielwiese
+                    find . -name "history.log" | xargs -iXX rm -v XX
+                    chmod 0755 ../scripts/shell/p1_initialize_project.sh
+                    ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID
+                '''
+                }
+            }
+        }
+        stage('process db files') {
+            steps {
+                echo "Processing files created in previous stage"
+                sh '''
+                    cd Philipps_Spielwiese
+                    git checkout ${BRANCH}
+                    if [ -n "$(git status --porcelain)" ]; then
+                        echo "Changes detected. Committing."
+                        git add .
+                        git commit -m "Initialize project for APEX App ID ${APEX_APP_ID}"
+                        git push
+                    else
+                        echo "No changes detected. Skipping commit."
+                    fi
+                    git status
+                '''
+            }
+        }
         stage('Connect to DB') {
             steps {
                 withCredentials([
