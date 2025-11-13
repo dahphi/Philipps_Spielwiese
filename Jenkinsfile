@@ -76,8 +76,9 @@ pipeline {
         stage('process db files') {
             steps {
                 echo "Processing files created in previous stage"
-                withCredentials([usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                sh '''
+                withCredentials([
+                    usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
+                ]) {sh '''
                     cd Philipps_Spielwiese
                     git checkout ${BRANCH}
                     if [ -n "$(git status --porcelain)" ]; then
@@ -91,6 +92,7 @@ pipeline {
                     fi
                     git status
                 '''
+                }
             }
         }
         stage('Connect to DB') {
