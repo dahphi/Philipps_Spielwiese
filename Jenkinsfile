@@ -29,7 +29,7 @@ pipeline {
     environment {
         PROJECT                = "${projectName}"
         BUILD_BRANCH           = "${env.BRANCH_NAME}"
-        BUILD_TMP_DIR          = "${env.WORKSPACE/tmp"
+        BUILD_TMP_DIR          = "${env.WORKSPACE}/tmp"
         DB_CONN_STR            = "oracle_apex_lb:1521/freepdb1"
         BASE_DIR               = "${baseDir}"
     }
