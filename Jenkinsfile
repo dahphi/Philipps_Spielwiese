@@ -76,6 +76,7 @@ pipeline {
         stage('process db files') {
             steps {
                 echo "Processing files created in previous stage"
+                withCredentials([usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                 sh '''
                     cd Philipps_Spielwiese
                     git checkout ${BRANCH}
@@ -83,6 +84,7 @@ pipeline {
                         echo "Changes detected. Committing."
                         git add .
                         git commit -m "Initialize project for APEX App ID ${APEX_APP_ID}"
+                        it remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dahphi/Philipps_Spielwiese.git
                         git push
                     else
                         echo "No changes detected. Skipping commit."
