@@ -48,6 +48,9 @@ pipeline {
         }
         stage('Connect to DB') {
             steps {
+                withCredentials([
+                    usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
+                ]) {
                 echo "Connecting to Oracle DB..."
                 sh '''
                     sql $DBUSERNAME/$DBPASSWORD@//$DB_CONN_STR <<EOF
