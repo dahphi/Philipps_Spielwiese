@@ -85,7 +85,7 @@ pipeline {
                         echo "Changes detected. Committing."
                         git add .
                         git commit -m "Initialize project for APEX App ID ${APEX_APP_ID}"
-                        it remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dahphi/Philipps_Spielwiese.git
+                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dahphi/Philipps_Spielwiese.git
                         git push
                     else
                         echo "No changes detected. Skipping commit."
