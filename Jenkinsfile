@@ -46,7 +46,7 @@ pipeline {
                 echo "Cloning project repository..."
                 sh '''
                 if [ -d "Philipps_Spielwiese" ]; then
-                    sudo rm -rf Philipps_Spielwiese
+                    rm -rf Philipps_Spielwiese
                 fi
                 git clone https://github.com/dahphi/Philipps_Spielwiese.git
                 cd philipps_spielwiese
