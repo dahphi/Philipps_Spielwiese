@@ -51,6 +51,8 @@ pipeline {
                 git clone https://github.com/dahphi/Philipps_Spielwiese.git
                 cd philipps_spielwiese
                 git checkout ${BRANCH}
+                git config --global user.email "philipp.dahlem@netcologne.com"
+                git config --global user.name "Philipp"
                 '''
             }
         }
