@@ -58,6 +58,7 @@ pipeline {
                     EXIT;
                     EOF
                 '''
+                }
             }
         }
     }
