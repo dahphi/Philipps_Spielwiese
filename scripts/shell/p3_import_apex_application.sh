@@ -13,7 +13,7 @@ if [[ -z "$DBUSERNAME" || -z "$DBPASSWORD" || -z "$APEX_APP_ID" || -z "$VERSION"
   exit 1
 fi
 
-cd mis-apexlab-core/apexlab/f${APEX_APP_ID}
+cd Philipps_Spielwiese/apex/f${APEX_APP_ID}
 sql "$DBUSERNAME/$DBPASSWORD@//$CONNECT_STRING" <<EOF
 project gen-artifact -version ${VERSION} -force
 project deploy -file artifact/f${APEX_APP_ID}-${VERSION}.zip                    

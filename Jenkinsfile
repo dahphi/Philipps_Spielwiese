@@ -67,7 +67,7 @@ pipeline {
                 ]) {sh '''
                     cd Philipps_Spielwiese
                     chmod 0755 ../scripts/shell/p1_initialize_project.sh
-                    ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID
+                    ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $APEX_APP_ID
                 '''
                 }
             }

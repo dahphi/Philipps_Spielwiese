@@ -13,7 +13,7 @@ fi
 APP_ID=$4
 
 sql "${CONN}" <<EOF
-cd apexlab/f$APP_ID
+cd apex/f$APP_ID
 project stage
 exit;
 EOF

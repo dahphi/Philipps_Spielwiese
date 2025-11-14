@@ -12,7 +12,7 @@ if [[ -z "$DBUSERNAME" || -z "$DBPASSWORD" || -z "$APEX_APP_ID" ]]; then
   exit 1
 fi
 
-APP_FOLDER="apexlab/f${APEX_APP_ID}"
+APP_FOLDER="apex/f${APEX_APP_ID}"
 if [ ! -d "$APP_FOLDER" ]; then
     mkdir -p "$APP_FOLDER"
     echo "Created folder: $APP_FOLDER"
