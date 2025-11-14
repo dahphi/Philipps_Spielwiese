@@ -105,7 +105,7 @@ pipeline {
                 ]) {sh '''
                     env
                     cd Philipps_Spielwiese
-                    ../scripts/shell/p1_export_apex_app.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR ${APEX_APP_ID}
+                    ../scripts/shell/p1_export_apex_app.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR ${APEX_APP_ID}
                     find . -user root | xargs -iXX chown 990016:990016 XX
                    '''
                }
