@@ -49,7 +49,7 @@ pipeline {
                     rm -rf Philipps_Spielwiese
                 fi
                 git clone https://github.com/dahphi/Philipps_Spielwiese.git
-                cd philipps_spielwiese
+                cd Philipps_Spielwiese
                 git checkout ${BRANCH}
                 git config --global user.email "philipp.dahlem@netcologne.com"
                 git config --global user.name "Philipp"
@@ -66,7 +66,6 @@ pipeline {
                     usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
                 ]) {sh '''
                     cd Philipps_Spielwiese
-                    find . -name "history.log" | xargs -iXX rm -v XX
                     chmod 0755 ../scripts/shell/p1_initialize_project.sh
                     ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID
                 '''
@@ -95,19 +94,39 @@ pipeline {
                 }
             }
         }
-        stage('Connect to DB') {
+        stage('Export App') {
+            when {
+                expression { params.OPERATION == 'export' }
+            }
             steps {
+                echo "[DEBUG] Connect to Database ..."
                 withCredentials([
                     usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
-                ]) {
-                echo "Connecting to Oracle DB..."
+                ]) {sh '''
+                    env
+                    cd Philipps_Spielwiese
+                    ../scripts/shell/p1_export_apex_app.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR ${APEX_APP_ID}
+                    find . -user root | xargs -iXX chown 990016:990016 XX
+                   '''
+               }
+            }
+        }
+        stage('process exported files') {
+            when {
+                expression { params.OPERATION == 'export' }
+            }
+            steps {
+                echo "Processing files created in previous stage"
                 sh '''
-                    sql $DBUSERNAME/$DBPASSWORD@//$DB_CONN_STR <<EOF
-                    SELECT 'Connected to DB' FROM dual;
-                    EXIT;
-                    EOF
+                    find . -type f
+                    git --version
+                    cd Philipps_Spielwiese
+                    git checkout ${BRANCH}
+                    git add .
+                    git commit -a -m "Export APEX App ID ${APEX_APP_ID}"
+                    git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dahphi/Philipps_Spielwiese.git
+                    git push
                 '''
-                }
             }
         }
     }
