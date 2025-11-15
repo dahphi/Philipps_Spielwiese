@@ -3,6 +3,7 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
-<include file="next/release.changelog.xml" relativeToChangelogFile="true"/>
+<include file="APEX_F101_1_0/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="apex/apex.changelog.xml" relativeToChangelogFile="true"/>
+<include file="next/release.changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

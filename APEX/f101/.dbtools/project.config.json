@@ -5,7 +5,7 @@
     "version" : "25.3.0.0"
   },
   "schemas" : [ "APEX_EXPORT_USER" ],
-  "lastReleaseVersion" : "",
+  "lastReleaseVersion" : "APEX_F101_1_0",
   "export" : {
     "format" : {
       "enable" : true
