@@ -39,12 +39,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo "Checking out repository..."
-                checkout scm
-            }
-        }
         stage('Pull Project') {
             steps {
                 echo "Cloning project repository..."
