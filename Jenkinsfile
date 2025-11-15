@@ -71,7 +71,7 @@ pipeline {
                 ]) {sh '''
                     cd Philipps_Spielwiese
                     chmod 0755 ../scripts/shell/p1_initialize_project.sh
-                    ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $APEX_APP_ID
+                    ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID
                 '''
                 }
             }
@@ -101,7 +101,7 @@ pipeline {
                 ]) {sh '''
                     env
                     cd Philipps_Spielwiese
-                    ../scripts/shell/p1_export_apex_app.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR ${APEX_APP_ID}
+                    ../scripts/shell/p1_export_apex_app.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR ${APEX_APP_ID}
                     find . -user root | xargs -iXX chown 990016:990016 XX
                    '''
                }
@@ -135,7 +135,7 @@ pipeline {
                     env
                     cd Philipps_Spielwiese
                     chmod 0755 ../scripts/shell/p2_stage.sh
-                    ../scripts/shell/p2_stage.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR ${APEX_APP_ID}
+                    ../scripts/shell/p2_stage.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR ${APEX_APP_ID}
                     find . -user root | xargs -iXX chown 990016:990016 XX
                    '''
                }
@@ -169,7 +169,7 @@ pipeline {
                     env
                     cd Philipps_Spielwiese
                     chmod 0755 ../scripts/shell/p2_release_version.sh
-                    ../scripts/shell/p2_release_version.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR ${APEX_APP_ID} ${VERSION}
+                    ../scripts/shell/p2_release_version.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR ${APEX_APP_ID} ${VERSION}
                     find . -user root | xargs -iXX chown 990016:990016 XX
                    '''
                }
@@ -204,8 +204,6 @@ pipeline {
                     chmod 0755 scripts/shell/p3_import_apex_application.sh
                     chmod 0755 scripts/shell/p3_enable_synch.sh
                     ../scripts/shell/p3_import_apex_application.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID $VERSION
-                    ../scripts/shell/p3_enable_synch.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $APEX_APP_ID
-                '''
                 }
             }
         }        

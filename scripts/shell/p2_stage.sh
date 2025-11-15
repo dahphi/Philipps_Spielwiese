@@ -3,6 +3,8 @@
 DB_USER=$1
 DB_PASS=$2
 DB_HOST=$3
+BASE_DIR=$4
+APP_ID=$5
 CONN="${DB_USER}/${DB_PASS}@${DB_HOST}"
 
 if [ -z "$4" ]; then
@@ -10,10 +12,8 @@ if [ -z "$4" ]; then
   exit 1
 fi
 
-APP_ID=$4
-
 sql "${CONN}" <<EOF
-cd apex/f$APP_ID
-project stage
+cd $BASE_DIR/f$APP_ID
+project stage -verbose
 exit;
 EOF
