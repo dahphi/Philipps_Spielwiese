@@ -153,5 +153,22 @@ pipeline {
                 }
             }
         }
+        stage('release Version') {
+            when {
+                expression { params.OPERATION == 'release' }
+            }
+            steps {
+                echo "[DEBUG] Connect to Database ..."
+                withCredentials([
+                    usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
+                ]) {sh '''
+                    env
+                    cd Philipps_Spielwiese
+                    chmod 0755 ../scripts/shell/p2_release_version.sh
+                    ../scripts/shell/p2_release_version.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR ${APEX_APP_ID} ${VERSION}
+                    find . -user root | xargs -iXX chown 990016:990016 XX
+                   '''
+               }
+            }
     }
 }
