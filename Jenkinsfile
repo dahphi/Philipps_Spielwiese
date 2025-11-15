@@ -62,19 +62,19 @@ pipeline {
                 echo "[DEBUG] Initialize Project ..."
                 withCredentials([
                     usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
-                ]) {sh '''
-                    cd Philipps_Spielwiese
-                    chmod 0755 ../scripts/shell/p1_initialize_project.sh
-                    ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID
-                '''
-                }
-            }
-            steps {
-                 withCredentials([
-                    usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
-                ]) {sh '''
+                ]) {
+                    sh '''
                         cd Philipps_Spielwiese
-                        chmod 0755 ./scripts/shell/p0_push_git.sh
+                        chmod 0755 ../scripts/shell/p1_initialize_project.sh
+                        ../scripts/shell/p1_initialize_project.sh "$DBUSERNAME" "$DBPASSWORD" "$DB_CONN_STR" "$BASE_DIR" "$APEX_APP_ID"
+                    '''
+                }
+                withCredentials([
+                    usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
+                ]) {
+                    sh '''
+                        cd Philipps_Spielwiese
+                        chmod 0755 ../scripts/shell/p0_push_git.sh
                         ../scripts/shell/p0_push_git.sh "Initialize project for APEX App ID ${APEX_APP_ID}"
                     '''
                 }
