@@ -73,15 +73,6 @@ pipeline {
                     chmod 0755 ../scripts/shell/p1_initialize_project.sh
                     ../scripts/shell/p1_initialize_project.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID
                 '''
-                }
-            }
-        }
-        stage('process db files') {
-            steps {
-                echo "Processing files created in previous stage"
-                withCredentials([
-                    usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
-                ]) {
                     sh '''
                         cd Philipps_Spielwiese
                         chmod 0755 ./scripts/shell/p0_push_git.sh
