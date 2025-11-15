@@ -81,7 +81,7 @@ pipeline {
                     sh '''
                         cd Philipps_Spielwiese
                         chmod 0755 ./scripts/shell/p0_push_git.sh
-                        ./scripts/shell/p0_push_git.sh "Initialize project for APEX App ID ${APEX_APP_ID}"
+                        ../scripts/shell/p0_push_git.sh "Initialize project for APEX App ID ${APEX_APP_ID}"
                     '''
                 }
             }
@@ -114,7 +114,7 @@ pipeline {
                 ]) {
                     sh '''
                         cd Philipps_Spielwiese
-                        ./scripts/shell/p0_push_git.sh "Export APEX App ID ${APEX_APP_ID}"
+                        ../scripts/shell/p0_push_git.sh "Export APEX App ID ${APEX_APP_ID}"
                     '''
                 }
             }
