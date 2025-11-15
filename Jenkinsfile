@@ -129,7 +129,7 @@ pipeline {
                     usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
                 ]) {sh '''
                     env
-                    cd mis-apexlab-core
+                    cd Philipps_Spielwiese
                     chmod 0755 ../scripts/shell/p2_stage.sh
                     ../scripts/shell/p2_stage.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR ${APEX_APP_ID}
                     find . -user root | xargs -iXX chown 990016:990016 XX
@@ -147,8 +147,8 @@ pipeline {
                     usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
                 ]) {
                     sh '''
-                        cd mis-apexlab-core
-                        ../scripts/shell/p0_push_git.sh "S"staging Apexfiles for App ID ${APEX_APP_ID}"
+                        cd Philipps_Spielwiese
+                        ../scripts/shell/p0_push_git.sh "staging Apexfiles for App ID ${APEX_APP_ID}"
                     '''
                 }
             }
