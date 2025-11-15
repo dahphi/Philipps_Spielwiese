@@ -23,6 +23,10 @@ def baseDirMap = [
 def dbCredsId = credsMap[params.TARGET_DATABASE.toUpperCase()] ?: 'DBUSER_SCDT_APEXLAB'
 def baseDir = baseDirMap[params.TARGET_DATABASE.toUpperCase()] ?: params.TARGET_DATABASE
 
+// Map DB host based on TARGET_DATABASE
+def dbHost = (params.TARGET_DATABASE.toUpperCase() == 'PROD') ? 'oracle_apex_lb_prod' : 'oracle_apex_lb'
+def dbConnStr = "${dbHost}:1521/freepdb1"
+
 pipeline {
     agent any
 
@@ -30,7 +34,7 @@ pipeline {
         PROJECT                = "${projectName}"
         BUILD_BRANCH           = "${env.BRANCH_NAME}"
         BUILD_TMP_DIR          = "${env.WORKSPACE}/tmp"
-        DB_CONN_STR            = "oracle_apex_lb:1521/freepdb1"
+        DB_CONN_STR            = "${dbConnStr}"
         BASE_DIR               = "${baseDir}"
     }
 
