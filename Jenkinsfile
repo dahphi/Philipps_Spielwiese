@@ -79,6 +79,7 @@ pipeline {
                     usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
                 ]) {
                     sh '''
+                        chmod 0755 ../scripts/shell/p0_push_git.sh
                         ./scripts/shell/p0_push_git.sh "Initialize project for APEX App ID ${APEX_APP_ID}"
                     '''
                 }
