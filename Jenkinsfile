@@ -170,5 +170,22 @@ pipeline {
                    '''
                }
             }
+        }
+        stage('process release files') {
+            when {
+                expression { params.OPERATION == 'release' }
+            }
+            steps {
+                echo "Processing files created in previous stage"
+                withCredentials([
+                    usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
+                ]) {
+                    sh '''
+                        cd Philipps_Spielwiese
+                        ../scripts/shell/p0_push_git.sh "release Version for App ID ${APEX_APP_ID} Version ${VERSION}"
+                    '''
+                }
+            }
+        }        
     }
 }
