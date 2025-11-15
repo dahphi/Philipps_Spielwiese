@@ -113,6 +113,7 @@ pipeline {
                     usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
                 ]) {
                     sh '''
+                        cd Philipps_Spielwiese
                         ./scripts/shell/p0_push_git.sh "Export APEX App ID ${APEX_APP_ID}"
                     '''
                 }
