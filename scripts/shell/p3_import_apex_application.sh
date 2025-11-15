@@ -14,10 +14,13 @@ if [[ -z "$DBUSERNAME" || -z "$DBPASSWORD" || -z "$APEX_APP_ID" || -z "$VERSION"
   exit 1
 fi
 
-cd $BASE_DIR/f${APEX_APP_ID}
+
+cd "$BASE_DIR/f${APEX_APP_ID}"
+ARTIFACT_NAME="f${APEX_APP_ID}-${BASE_DIR}_F${APEX_APP_ID}_${VERSION}.zip"
+echo "Artifact filename: $ARTIFACT_NAME"
 sql "$DBUSERNAME/$DBPASSWORD@//$CONNECT_STRING" <<EOF
 project gen-artifact -version ${BASE_DIR}_F${APEX_APP_ID}_${VERSION}
-project deploy -file artifact/f${APEX_APP_ID}-${BASE_DIR}_F${APEX_APP_ID}_${VERSION}.zip -verbose
+project deploy -file artifact/$ARTIFACT_NAME -verbose
 exit;
 EOF
 
