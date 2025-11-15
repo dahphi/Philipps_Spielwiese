@@ -80,7 +80,7 @@ pipeline {
                 ]) {
                     sh '''
                         cd Philipps_Spielwiese
-                        chmod 0755 ../scripts/shell/p0_push_git.sh
+                        chmod 0755 ./scripts/shell/p0_push_git.sh
                         ./scripts/shell/p0_push_git.sh "Initialize project for APEX App ID ${APEX_APP_ID}"
                     '''
                 }
