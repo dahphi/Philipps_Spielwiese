@@ -77,20 +77,10 @@ pipeline {
                 echo "Processing files created in previous stage"
                 withCredentials([
                     usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
-                ]) {sh '''
-                    cd Philipps_Spielwiese
-                    git checkout ${BRANCH}
-                    if [ -n "$(git status --porcelain)" ]; then
-                        echo "Changes detected. Committing."
-                        git add .
-                        git commit -m "Initialize project for APEX App ID ${APEX_APP_ID}"
-                        git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dahphi/Philipps_Spielwiese.git
-                        git push
-                    else
-                        echo "No changes detected. Skipping commit."
-                    fi
-                    git status
-                '''
+                ]) {
+                    sh '''
+                        ./scripts/shell/p0_push_git.sh "Initialize project for APEX App ID ${APEX_APP_ID}"
+                    '''
                 }
             }
         }
@@ -117,16 +107,13 @@ pipeline {
             }
             steps {
                 echo "Processing files created in previous stage"
-                sh '''
-                    find . -type f
-                    git --version
-                    cd Philipps_Spielwiese
-                    git checkout ${BRANCH}
-                    git add .
-                    git commit -a -m "Export APEX App ID ${APEX_APP_ID}"
-                    git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dahphi/Philipps_Spielwiese.git
-                    git push
-                '''
+                withCredentials([
+                    usernamePassword(credentialsId: 'GITHUB_PUSH', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
+                ]) {
+                    sh '''
+                        ./scripts/shell/p0_push_git.sh "Export APEX App ID ${APEX_APP_ID}"
+                    '''
+                }
             }
         }
     }
