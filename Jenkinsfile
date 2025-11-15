@@ -199,11 +199,13 @@ pipeline {
                 echo "Importing Application"
                 withCredentials([
                     usernamePassword(credentialsId: dbCredsId, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')
-                ]) {sh '''
+                ]) {
+                    sh '''
                     cd Philipps_Spielwiese
                     chmod 0755 scripts/shell/p3_import_apex_application.sh
                     chmod 0755 scripts/shell/p3_enable_synch.sh
                     ../scripts/shell/p3_import_apex_application.sh $DBUSERNAME $DBPASSWORD $DB_CONN_STR $BASE_DIR $APEX_APP_ID $VERSION
+                    '''
                 }
             }
         }        
