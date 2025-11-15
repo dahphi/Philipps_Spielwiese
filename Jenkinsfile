@@ -5,7 +5,7 @@ node {
     parameters([
       choice(name: 'OPERATION', choices: ['export', 'import','release'], description: 'Select the operation to perform'),
       string(name: 'TARGET_DATABASE', defaultValue: 'DEV', description: 'Enter a value for the Database'),
-      string(name: 'APEX_APP_ID', defaultValue: '110', description: 'Enter a value for the APEX Application ID'),
+      string(name: 'APEX_APP_ID', defaultValue: '101', description: 'Enter a value for the APEX Application ID'),
       string(name: 'VERSION', defaultValue: '1_0', description: 'Enter a value for new Version'),
       string(name: 'BRANCH', defaultValue: 'develop', description: 'Enter a branch name (e.g. main, develop, feature/xyz)')
     ])
