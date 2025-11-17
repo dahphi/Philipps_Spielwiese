@@ -1,8 +1,8 @@
 # Oracle SQLcl Projects
-artifact/*
+#artifact/*
 var/*
 *.tar.gz
 *.tz
-*.zip
+#*.zip
 *.log
 **/.DS_Store
