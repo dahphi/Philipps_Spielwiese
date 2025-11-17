@@ -1,18 +1,18 @@
 ---
 - # ====== List: Navigation Menu ===============================
-  id: 13924489574906259
+  id: 13324331548125518
   identification: 
     name: Navigation Menu
 
   subscription: 
-    version-number: 7511481
+    version-number: 8588534
 
   source: 
     type: Static Values
 
   entries: 
   - # ====== Entry: Home =========================================
-    id: 13936251801906304
+    id: 13336093775125563
     label: 
       label: Home
 
@@ -36,8 +36,35 @@
     user-defined-attributes: 
       translatable: false
 
+  - # ====== Entry: Secret_page ==================================
+    id: 14120631632704704
+    label: 
+      label: Secret_page
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 3
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+        page: 3 # Secret_page
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
 - # ====== List: Navigation Bar ================================
-  id: 13925655353906272
+  id: 13325497327125531
   identification: 
     name: Navigation Bar
 
@@ -49,7 +76,7 @@
 
   entries: 
   - # ====== Entry: &APP_USER. ===================================
-    id: 13937736722906311
+    id: 13337578696125570
     label: 
       label: '&APP_USER.'
 
@@ -73,13 +100,13 @@
       2.: has-username
 
   - # ====== Entry: --- ==========================================
-    id: 13938234023906311
+    id: 13338075997125570
     label: 
       label: '---'
 
     layout: 
       sequence: 20
-      parent-entry: '&APP_USER.' # 13937736722906311
+      parent-entry: '&APP_USER.' # 13337578696125570
 
     is-current: 
       type: Target Page
@@ -97,7 +124,7 @@
       type: User is Authenticated (not public)
 
   - # ====== Entry: Sign Out =====================================
-    id: 13938627978906312
+    id: 13338469952125571
     label: 
       label: Sign Out
 
@@ -106,7 +133,7 @@
 
     layout: 
       sequence: 30
-      parent-entry: '&APP_USER.' # 13937736722906311
+      parent-entry: '&APP_USER.' # 13337578696125570
 
     is-current: 
       type: Target Page
