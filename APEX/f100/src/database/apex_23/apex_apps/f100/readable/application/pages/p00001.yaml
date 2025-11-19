@@ -38,7 +38,7 @@ server-cache:
 
 regions: 
 - # ====== Region: New =========================================
-  id: 13918749324631643
+  id: 14518907351412384
   identification: 
     name: New
     type: Static Content
