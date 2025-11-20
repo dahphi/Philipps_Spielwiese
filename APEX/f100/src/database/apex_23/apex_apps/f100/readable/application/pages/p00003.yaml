@@ -1,10 +1,10 @@
 ---
-# ====== Page: Home ==========================================
-id: 1
+# ====== Page: Secret_page ===================================
+id: 3
 identification: 
-  name: Home
-  alias: HOME
-  title: Philipp_Test
+  name: Secret_page
+  alias: SECRET-PAGE
+  title: Secret_page
 
 appearance: 
   page-mode: Normal
@@ -38,10 +38,13 @@ server-cache:
 
 regions: 
 - # ====== Region: New =========================================
-  id: 15318807105490376
+  id: 15318870805490377
   identification: 
     name: New
     type: Static Content
+
+  source: 
+    html-code: Philipp was here
 
   layout: 
     sequence: 10
@@ -54,21 +57,15 @@ regions:
     column-span: Automatic
 
   appearance: 
-    template: Image
+    template: Standard
     template-options: 
     - '#DEFAULT#'
-    - t-ImageRegion--auto
-    - t-ImageRegion--cover
-    - t-ImageRegion--square
-    - t-ImageRegion--noFilter
+    - t-Region--scrollBody
     render-components: Above Content
 
   accessibility: 
     use-landmark: true
     landmark-type: Template Default
-
-  image: 
-    file-url: '#APP_FILES#Image.jpg'
 
   advanced: 
     region-display-selector: false
@@ -81,4 +78,47 @@ regions:
     settings: 
       output-as: HTML
       expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 15521054022563441
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 14723878171984248
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
 

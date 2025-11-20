@@ -19,3 +19,17 @@
         url: 'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::'
         page: 1 # Home
 
+  - # ====== Entry: Secret_page ==================================
+    id: 15521537827563444
+    identification: 
+      name: Secret_page
+      page-number: 3
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+        page: 3 # Secret_page
+

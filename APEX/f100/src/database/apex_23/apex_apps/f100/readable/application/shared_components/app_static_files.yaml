@@ -53,3 +53,12 @@
     mime-type: image/jpeg
     file-character-set: Unicode UTF-8
 
+- # ====== Static Application File: Image.jpg ==================
+  id: 15520220496552199
+  identification: 
+    file-name: Image.jpg
+
+  attributes: 
+    mime-type: image/jpeg
+    file-character-set: Unicode UTF-8
+
