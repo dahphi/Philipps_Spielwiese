@@ -1,4 +1,4 @@
-create or replace package body roma_main.pck_pob_rest as
+create or replace package body pck_pob_rest as
 
     body_version constant varchar2(30) := '2025-04-29 0900';
 
@@ -2075,4 +2075,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"0a40e5bf24677acd9dc47a0db661cf633164528c","type":"PACKAGE_BODY","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"28ab8ed66dc6625b473d4a604d93e64a60046093","type":"PACKAGE_BODY","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}

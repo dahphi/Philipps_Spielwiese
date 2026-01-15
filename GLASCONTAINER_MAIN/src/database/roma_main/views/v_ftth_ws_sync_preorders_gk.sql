@@ -1,4 +1,4 @@
-create or replace force editionable view roma_main.v_ftth_ws_sync_preorders_gk (
+create or replace force editionable view v_ftth_ws_sync_preorders_gk (
     id,
     templateid,
     devicecategory,
@@ -241,4 +241,4 @@ create or replace force editionable view roma_main.v_ftth_ws_sync_preorders_gk (
         businessunit = 'GK';
 
 
--- sqlcl_snapshot {"hash":"60fcbf34f5fa8a98610a05fb443c162d5dce06c0","type":"VIEW","name":"V_FTTH_WS_SYNC_PREORDERS_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"e45ca7f8744299c1b61032dbd5feac8183cf283a","type":"VIEW","name":"V_FTTH_WS_SYNC_PREORDERS_GK","schemaName":"ROMA_MAIN","sxml":""}

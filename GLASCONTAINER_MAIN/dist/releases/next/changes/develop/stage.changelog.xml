@@ -39,7 +39,6 @@
 <include file="roma_main/package_specs/pck_glascontainer_ext.sql" relativeToChangelogFile="true"/>
 <include file="roma_main/views/lov_siebel_ansprechpartner.sql" relativeToChangelogFile="true"/>
 <include file="roma_main/package_bodies/pck_adresse.sql" relativeToChangelogFile="true"/>
-<include file="roma_main/package_bodies/pck_glascontainer_ext.sql" relativeToChangelogFile="true"/>
 <include file="roma_main/package_bodies/pck_glascontainer_jobs.sql" relativeToChangelogFile="true"/>
 <include file="roma_main/package_specs/pck_glascontainer.sql" relativeToChangelogFile="true"/>
 <include file="roma_main/package_bodies/pck_glascontainer.sql" relativeToChangelogFile="true"/>

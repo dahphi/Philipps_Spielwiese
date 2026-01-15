@@ -1,4 +1,4 @@
-create or replace package body roma_main.pck_glascontainer_order_gk as
+create or replace package body pck_glascontainer_order_gk as
 
   /**
   * Hilfsroutinen für die Applikation 2022 "Glascontainer" zur Durchführung von
@@ -1116,4 +1116,4 @@ end pck_glascontainer_order_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"a5f94510d73c66924f7a03bfaab3bc2b2998de0d","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"22b230cde2d746d92acdf5d94991ca2a20162d96","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}

@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_glascontainer_jobs as 
+create or replace package pck_glascontainer_jobs as 
 
 /**
  * Sammelt alle Einstiegspunkte für Jobs, die im Zusammenhang mit der Applikation "Glascontainer" stehen
@@ -34,4 +34,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"e8d6623606dade7fd8b8da628f81aa40000c51a3","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_JOBS","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"6c29a35cc08736d9f8e57d3c69d6b0688c417189","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_JOBS","schemaName":"ROMA_MAIN","sxml":""}

@@ -1,4 +1,4 @@
-create or replace function roma_main.fb_is_valid_vkz (
+create or replace function fb_is_valid_vkz (
     piv_vkz in varchar2
 ) return boolean is
 /**
@@ -45,4 +45,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"f1907e91d566633041e1641264399989ab43cffc","type":"FUNCTION","name":"FB_IS_VALID_VKZ","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"aef258f478ff258636c5f6f6043c1380552900b2","type":"FUNCTION","name":"FB_IS_VALID_VKZ","schemaName":"ROMA_MAIN","sxml":""}

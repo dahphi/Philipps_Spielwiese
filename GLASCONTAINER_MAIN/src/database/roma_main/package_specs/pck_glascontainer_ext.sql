@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_glascontainer_ext as 
+create or replace package pck_glascontainer_ext as 
 /**
  * Routinen für die APEX-App 2022 Glascontainer, die in andere Datenbank-Schemata
  * als ROMA_MAIN verzweigen oder hauptsächlich von dort lesen
@@ -321,4 +321,4 @@ end pck_glascontainer_ext;
 /
 
 
--- sqlcl_snapshot {"hash":"ba1ebe4ff840d4141e82398d886130b588e2484f","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_EXT","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"46bdf44670a682e147974c6d0af5e507af3401ab","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_EXT","schemaName":"ROMA_MAIN","sxml":""}

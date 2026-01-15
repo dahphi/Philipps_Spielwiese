@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_fuzzydouble as
+create or replace package pck_fuzzydouble as
 /**
  * Hilfsroutinen zum Abfragen und Auswerten der Fuzzy Double Dublettensuche
  * sowie der Dublettensuche im Glascontainer
@@ -309,4 +309,4 @@ end pck_fuzzydouble;
 /
 
 
--- sqlcl_snapshot {"hash":"d9629d8a44c2b46c1fc923e6fe78d5dbe274f965","type":"PACKAGE_SPEC","name":"PCK_FUZZYDOUBLE","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"e51ce6d39d5fc19e43dfa6f580a230ed6e1589fa","type":"PACKAGE_SPEC","name":"PCK_FUZZYDOUBLE","schemaName":"ROMA_MAIN","sxml":""}

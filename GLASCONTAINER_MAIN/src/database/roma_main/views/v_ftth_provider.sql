@@ -1,4 +1,4 @@
-create or replace force editionable view roma_main.v_ftth_provider (
+create or replace force editionable view v_ftth_provider (
     r,
     d1,
     d_siebel
@@ -13,4 +13,4 @@ create or replace force editionable view roma_main.v_ftth_provider (
         pv_key1 = 'FTTH_PROVIDER';
 
 
--- sqlcl_snapshot {"hash":"b6a487caca324d089c72ea3cef20c9988fe8f9a8","type":"VIEW","name":"V_FTTH_PROVIDER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"e5ddd4237c59bc7b21335753b1cdaf1723fe1239","type":"VIEW","name":"V_FTTH_PROVIDER","schemaName":"ROMA_MAIN","sxml":""}

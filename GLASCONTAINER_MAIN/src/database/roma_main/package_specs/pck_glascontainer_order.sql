@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_glascontainer_order as 
+create or replace package pck_glascontainer_order as 
 /**
  * Hilfsroutinen für die Applikation 2022 "Glascontainer" zur Durchführung von
  * internen Vorbestellungen (Seiten 100, 110)
@@ -940,4 +940,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"e1172707c7b2c892418131f7a31b680d9f306fd7","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_ORDER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"8b5160e58459500df437d17339154dfe2f6b2fd2","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_ORDER","schemaName":"ROMA_MAIN","sxml":""}

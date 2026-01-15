@@ -1,4 +1,4 @@
-create or replace force editionable view roma_main.v_pob_tracking (
+create or replace force editionable view v_pob_tracking (
     id,
     datum,
     app_page_id,
@@ -86,4 +86,4 @@ create or replace force editionable view roma_main.v_pob_tracking (
         request != 'SIEBEL GK';
 
 
--- sqlcl_snapshot {"hash":"f3be353197fa7dc35671ead2cb033a1c873ccdc7","type":"VIEW","name":"V_POB_TRACKING","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"a7dd7f850971537700f2e46672c7d92b399efd41","type":"VIEW","name":"V_POB_TRACKING","schemaName":"ROMA_MAIN","sxml":""}

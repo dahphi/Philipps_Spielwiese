@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_pob_rest as 
+create or replace package pck_pob_rest as 
 /**
  * Routinen, die von anderen Packages für die Aussendung
  * von REST Web Service Calls im Zusammenhang mit dem FTTH Preorderbuffer (POB)
@@ -581,4 +581,4 @@ end pck_pob_rest;
 /
 
 
--- sqlcl_snapshot {"hash":"218a13e47206ef6d44f2168bcb515b701dedf640","type":"PACKAGE_SPEC","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"2fe7b89e352f145ab4cf20c78bb20ae0ac42902c","type":"PACKAGE_SPEC","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}

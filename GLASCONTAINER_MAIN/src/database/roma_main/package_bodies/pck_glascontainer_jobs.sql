@@ -1,4 +1,4 @@
-create or replace package body roma_main.pck_glascontainer_jobs as
+create or replace package body pck_glascontainer_jobs as
  
   -- Umlaut-Test: ÄÖÜäöüß
   -- Eurozeichen: ? -- SELECT UNISTR('\20AC') FROM DUAL 
@@ -41,4 +41,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"54336ab39cd5c480771517f7d274e6ee4c3f4990","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_JOBS","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"7099ef2036ea9467207d455683723bb6ae2473de","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_JOBS","schemaName":"ROMA_MAIN","sxml":""}

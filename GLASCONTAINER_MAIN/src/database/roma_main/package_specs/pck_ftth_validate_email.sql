@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_ftth_validate_email as
+create or replace package pck_ftth_validate_email as
     -- Konstanten für Logging und Webservice-Kontext
     c_scope constant varchar2(30 char) := 'pck_ftth_validate_email';
     c_kontext constant varchar2(20 char) := 'WEBSERVICE';
@@ -16,4 +16,4 @@ end pck_ftth_validate_email;
 /
 
 
--- sqlcl_snapshot {"hash":"09273cfb25fd633f992fb5f0b59e5122ef6fed8b","type":"PACKAGE_SPEC","name":"PCK_FTTH_VALIDATE_EMAIL","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"c8456205ec472e2b4eabd053ded87de69b2ba6e0","type":"PACKAGE_SPEC","name":"PCK_FTTH_VALIDATE_EMAIL","schemaName":"ROMA_MAIN","sxml":""}

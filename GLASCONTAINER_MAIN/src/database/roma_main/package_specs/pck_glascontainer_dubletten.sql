@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_glascontainer_dubletten as 
+create or replace package pck_glascontainer_dubletten as 
 /**
  * Funktionen zur Darstellung von Kunden-Dubletten in der APEX-App 2022 "Glascontainer"
  *
@@ -138,4 +138,4 @@ end pck_glascontainer_dubletten;
 /
 
 
--- sqlcl_snapshot {"hash":"628ea20cba4947ee2fd8db412f90c054ece6040b","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_DUBLETTEN","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"ef3e8f72a513936a96dbb72c6df136a06e7059f5","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_DUBLETTEN","schemaName":"ROMA_MAIN","sxml":""}

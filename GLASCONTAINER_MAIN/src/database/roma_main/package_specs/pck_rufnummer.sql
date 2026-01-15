@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_rufnummer as 
+create or replace package pck_rufnummer as 
 /**
  * Hilfsroutinen zur Formatierung von Telefonnummern
  *
@@ -176,4 +176,4 @@ end pck_rufnummer;
 /
 
 
--- sqlcl_snapshot {"hash":"ed18f5a4522cd268643d131a917def1c34663648","type":"PACKAGE_SPEC","name":"PCK_RUFNUMMER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"a37a30863a5bdba44a548d8ad73fc30e1864d39a","type":"PACKAGE_SPEC","name":"PCK_RUFNUMMER","schemaName":"ROMA_MAIN","sxml":""}

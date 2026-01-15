@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_adresse as
+create or replace package pck_adresse as
     version constant varchar2(30) := '2025-03-27 1200';
 
 
@@ -402,4 +402,4 @@ end pck_adresse;
 /
 
 
--- sqlcl_snapshot {"hash":"07e02175d771b97b7d0016fa59704a38943c0cc9","type":"PACKAGE_SPEC","name":"PCK_ADRESSE","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"08fe29f3a137165f793d5f5937a5d34f8fd0bf1e","type":"PACKAGE_SPEC","name":"PCK_ADRESSE","schemaName":"ROMA_MAIN","sxml":""}

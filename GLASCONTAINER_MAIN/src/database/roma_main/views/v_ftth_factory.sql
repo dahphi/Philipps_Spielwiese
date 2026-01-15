@@ -1,4 +1,4 @@
-create or replace force editionable view roma_main.v_ftth_factory (
+create or replace force editionable view v_ftth_factory (
     ftth_id,
     ftthag_id,
     ansichtsgruppe,
@@ -50,4 +50,4 @@ create or replace force editionable view roma_main.v_ftth_factory (
     );
 
 
--- sqlcl_snapshot {"hash":"d38ec316b669631d73297d75cb55fca4bfd68f9f","type":"VIEW","name":"V_FTTH_FACTORY","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"748d6663b3d78af430f1345f1c742baf2eede339","type":"VIEW","name":"V_FTTH_FACTORY","schemaName":"ROMA_MAIN","sxml":""}

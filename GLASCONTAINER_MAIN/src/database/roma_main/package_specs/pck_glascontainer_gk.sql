@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_glascontainer_gk as
+create or replace package pck_glascontainer_gk as
     type t_auftragsdaten_gk is record (
             uuid                           varchar2(4000 char),
             vkz                            varchar2(4000 char),
@@ -352,4 +352,4 @@ end pck_glascontainer_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"3dc3153601326b6c6ca301284f7024c6abda1630","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"e606bdb336c6dc10210ae07d4ed1adeb1635626b","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}

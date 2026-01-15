@@ -1,4 +1,4 @@
-create or replace function roma_main.fv_vkz (
+create or replace function fv_vkz (
     piv_user in varchar2
 ) return varchar2 is
 /**
@@ -41,4 +41,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"28408f3f1f0714b9d7c166d78c5f13dc2b16d9e9","type":"FUNCTION","name":"FV_VKZ","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"50581a4794cd799a4e6c04dad5a9de6fe57547f0","type":"FUNCTION","name":"FV_VKZ","schemaName":"ROMA_MAIN","sxml":""}

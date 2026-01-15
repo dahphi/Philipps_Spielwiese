@@ -1,4 +1,4 @@
-create or replace package body roma_main.pck_glascontainer as 
+create or replace package body pck_glascontainer as 
 /** 
  * Programmcode zur APEX-Anwendung 2022 "Glascontainer" 
  * 
@@ -11190,4 +11190,4 @@ end pck_glascontainer;
 /
 
 
--- sqlcl_snapshot {"hash":"1e4f85f5531aaf4dfae984049dbc6ab6ac0b1bff","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"657a3cb724f2b774898f30186646735d0dbc901d","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER","schemaName":"ROMA_MAIN","sxml":""}

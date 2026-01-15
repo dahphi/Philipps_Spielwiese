@@ -1,4 +1,4 @@
-create or replace package body roma_main.pck_glascontainer_gk as
+create or replace package body pck_glascontainer_gk as
 
     g_scope                   constant varchar2(400 char) := 'Glascontainer GK Bestellstrecke';
     cv_wb_partner_tcom        constant varchar2(40 char) := 'TCOM';
@@ -2659,4 +2659,4 @@ end pck_glascontainer_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"43250a82ed3a2bce5ad83ddc8b273a33d13d4559","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"3f8de7129a8cf3ad17b8557162abd43ebba9e2e3","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}

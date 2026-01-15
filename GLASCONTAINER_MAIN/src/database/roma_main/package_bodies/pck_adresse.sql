@@ -1,4 +1,4 @@
-create or replace package body roma_main.pck_adresse as 
+create or replace package body pck_adresse as 
 /**
  * Gibt TRUE zurück, wenn in einer Kundenadresse der Vorname bzw. Nachname
  * als gültig betrachtet wird,
@@ -983,4 +983,4 @@ end pck_adresse;
 /
 
 
--- sqlcl_snapshot {"hash":"a86c20e93f05ce6d681bd65dd9795b4e48e4a6a6","type":"PACKAGE_BODY","name":"PCK_ADRESSE","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"378daa30c6463eed68954485580c1b64c68e10ca","type":"PACKAGE_BODY","name":"PCK_ADRESSE","schemaName":"ROMA_MAIN","sxml":""}

@@ -1,4 +1,4 @@
-create or replace package roma_main.pck_glascontainer_admin as 
+create or replace package pck_glascontainer_admin as 
 
 /**
  * Package dient der Durchführung und Aufzeichnung von konfigurativen Aktionen in der APEX-Applikation "Glascontainer",
@@ -91,4 +91,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"5842a3b0d1e0a5c8e98728d85b4c067b8e5f5010","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_ADMIN","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"5982743e4d57cb8819074b44a09a541c6c2495ae","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_ADMIN","schemaName":"ROMA_MAIN","sxml":""}

@@ -1,4 +1,4 @@
-create or replace force editionable view roma_main.lov_siebel_ansprechpartner (
+create or replace force editionable view lov_siebel_ansprechpartner (
     anrede,
     titel,
     vorname,
@@ -58,4 +58,4 @@ create or replace force editionable view roma_main.lov_siebel_ansprechpartner (
         vorname asc nulls last;
 
 
--- sqlcl_snapshot {"hash":"bf00e4499764093f9f8b4a965e49ce801d2f82e3","type":"VIEW","name":"LOV_SIEBEL_ANSPRECHPARTNER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"456a170dad69f75e1ef17ed0f3bc748c1c2f1793","type":"VIEW","name":"LOV_SIEBEL_ANSPRECHPARTNER","schemaName":"ROMA_MAIN","sxml":""}

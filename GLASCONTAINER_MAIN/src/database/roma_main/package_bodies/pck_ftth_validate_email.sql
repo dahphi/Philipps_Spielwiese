@@ -1,4 +1,4 @@
-create or replace package body roma_main.pck_ftth_validate_email as
+create or replace package body pck_ftth_validate_email as
     -- Hilfsfunktion: Ermittelt die aktuelle DB-Umgebung (Instanzname)
     function f_get_db_env return varchar2 as
 
@@ -237,4 +237,4 @@ end pck_ftth_validate_email;
 /
 
 
--- sqlcl_snapshot {"hash":"ccc378001e17a151e8932b772d3edf4c93f796e2","type":"PACKAGE_BODY","name":"PCK_FTTH_VALIDATE_EMAIL","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"953d88c539d01f3758689c6d65fc60978bb7539c","type":"PACKAGE_BODY","name":"PCK_FTTH_VALIDATE_EMAIL","schemaName":"ROMA_MAIN","sxml":""}
