@@ -33,7 +33,7 @@ not (object_type = 'TRIGGER' and object_name ='DATABASECHANGELOG_ACTIONS_TRG'),
 -- DM generated tables
 --not (object_type = 'TABLE' and object_name like 'DM$%' ),
 --not (object_type = 'VIEW' and object_name like 'DM$V%' ),
-object type != 'SYNONYM',
+object_type != 'SYNONYM',
 object_name not like 'DM$%',      -- covers tables, views, indexes 
 
 export_type not in ('USER','ORDS_SCHEMA'),
@@ -75,7 +75,7 @@ or object_name = 'PCK_POB_REST'
 or object_name = 'PCK_RUFNUMMER' 
 or object_name = 'PCK_STR' 
 or object_name = 'PCK_STRAV_QUERY' 
-or object_name = 'PCK_VERMARKTUNGSCLUSTER' 
+-- or object_name = 'PCK_VERMARKTUNGSCLUSTER' 
 or object_name = 'POB' 
 or object_name = 'POB_ADRESSEN'
 or object_name = 'POB_TRACKING'
@@ -86,6 +86,6 @@ or object_name = 'V_FTTH_WS_SYNC_PREORDERS_GK'
 or object_name = 'V_POB_TRACKING' 
 or object_name = 'V_SIEBEL_KUNDENDATEN' 
 or object_name = 'V_SIEBEL_VKZ'  
-or object_name = 'VERMARKTUNGSCLUSTER'
-or object_name = 'VERMARKTUNGSCLUSTER_OBJEKT'
+--or object_name = 'VERMARKTUNGSCLUSTER'
+--or object_name = 'VERMARKTUNGSCLUSTER_OBJEKT'
 or object_name = 'FTTH_WS_SYNC_STORNOGRUENDE'
