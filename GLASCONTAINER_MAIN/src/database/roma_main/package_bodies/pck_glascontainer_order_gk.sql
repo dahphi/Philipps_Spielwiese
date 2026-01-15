@@ -31,7 +31,7 @@ create or replace package body roma_main.pck_glascontainer_order_gk as
     ) is
 
         v_json          varchar2(32767); -- 32k ist wesentlich größer als die Antwort vom Anschlusscheck
-    
+
   -- Hilfsroutine zur Fehlerbehandlung------------------------------------------
         cv_routine_name constant logs.routine_name%type := 'p_gk_daten_acheck_light';
 
@@ -47,23 +47,22 @@ create or replace package body roma_main.pck_glascontainer_order_gk as
             pin_haus_lfd_nr => pin_haus_lfd_nr,
             piv_username    => piv_app_user
         );
-        dbms_output.put_line(v_json);
+  --dbms_output.put_line(v_json);
+
         select
             jt.planned_bandwidth,
             jt.eigentuemerdaten,
             jt.partner,
             jt.merged_access_type,
             jt.adress_complete,
-            jt.mandant,
-            jt.ausbau_status
+            jt.mandant
         into
             pov_planned_bandwidth,
             pov_eigentuemerdaten,
             pov_wholebuy_partner,
             pov_merged_access_type,
             pov_adress_complete,
-            pov_mandant,
-            pov_ausbaus_status
+            pov_mandant
         from
             dual,
             json_table ( v_json, '$'
@@ -72,14 +71,38 @@ create or replace package body roma_main.pck_glascontainer_order_gk as
                         eigentuemerdaten varchar2 path '$.objectInformation.wholebuy.eigentuemerdatenErforderlich',
                         partner varchar2 path '$.objectInformation.wholebuy.partner',
                         merged_access_type varchar2 path '$.objectInformation.mergedAccessType',
-                        ausbau_status varchar2 path '$.objectInformation.ausbauStatus',
                         adress_complete varchar2 path '$.address.addressComplete',
                         mandant varchar2 path '$.address.mandant'
                     )
                 )
             jt;
-           --pov_merged_access_type := 'FTTH_BSA_L2';
-           --pov_planned_bandwidth := 1400;
+
+    -- Ausbaustatus soll aus den LandlinePromotions ermittelt werden
+    -- Diese müssen über den mergedAccessType abgeglichen werden.
+    -- Und es exisitert nicht immer Eintrag mit der entsprechenden Technologie 
+        begin
+            select
+                jt.ausbaustatus
+            into pov_ausbaus_status
+            from
+                dual,
+                json_table ( v_json, '$'
+                        columns (
+                            nested path '$.landlinePromotions[*]'
+                                columns (
+                                    technology varchar2 ( 50 ) path '$.technology',
+                                    ausbaustatus varchar2 ( 50 ) path '$.ausbauStatus'
+                                )
+                        )
+                    )
+                jt
+            where
+                jt.technology = pov_merged_access_type;
+
+        exception
+            when others then
+                pov_ausbaus_status := 'UNBEKANNT';
+        end;
 
     exception
         when others then
@@ -197,7 +220,7 @@ create or replace package body roma_main.pck_glascontainer_order_gk as
             from
                 dual
             where
-                'BU GK' in (
+                piv_parameter in (
                     select
                         *
                     from
@@ -1093,4 +1116,4 @@ end pck_glascontainer_order_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"d44c1b0c42bc5e041910a44ae286f68731ecd7b9","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"a5f94510d73c66924f7a03bfaab3bc2b2998de0d","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}
