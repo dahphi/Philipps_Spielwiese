@@ -33,6 +33,7 @@ not (object_type = 'TRIGGER' and object_name ='DATABASECHANGELOG_ACTIONS_TRG'),
 -- DM generated tables
 --not (object_type = 'TABLE' and object_name like 'DM$%' ),
 --not (object_type = 'VIEW' and object_name like 'DM$V%' ),
+object type != 'SYNONYM',
 object_name not like 'DM$%',      -- covers tables, views, indexes 
 
 export_type not in ('USER','ORDS_SCHEMA'),
