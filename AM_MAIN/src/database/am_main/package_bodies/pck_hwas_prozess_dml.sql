@@ -282,8 +282,105 @@ create or replace package body am_main.pck_hwas_prozess_dml as
 
     end merge_prozess_system;
 
+--MERGE Prozess/BSI Bausteine
+    procedure merge_bsi_bausteine (
+        p_przp_uid     in number,
+        p_bsi_uid_list in varchar2,
+        p_user         in varchar2 default nvl(
+            v('APP_USER'),
+            user
+        )
+    ) as
+    begin
+        if p_przp_uid is null then
+            raise_application_error(-20001, 'P_PRZP_UID darf nicht NULL sein.');
+        end if;
+
+    /*
+      1. Lösche Zuordnungen, die für den Prozess existieren,
+         aber nicht mehr im Shuttle enthalten sind.
+    */
+        delete from hwas_prozesse_bsi_bausteine t
+        where
+                t.przp_uid_fk = p_przp_uid
+            and not exists (
+                select
+                    1
+                from
+                    (
+                        select distinct
+                            to_number(column_value) as bsi_uid
+                        from
+                            table ( apex_string.split(
+                                nvl(p_bsi_uid_list, ''),
+                                ':'
+                            ) )
+                        where
+                            column_value is not null
+                    ) s
+                where
+                    s.bsi_uid = t.bsi_uid_fk
+            );
+
+    /*
+      2. Füge neue Zuordnungen ein, die im Shuttle stehen,
+         aber noch nicht existieren.
+    */
+        insert into hwas_prozesse_bsi_bausteine (
+            przpbsi_uid,
+            bsi_uid_fk,
+            przp_uid_fk,
+            inserted_date,
+            inserted_by,
+            updated_date,
+            updated_by
+        )
+            select
+                to_number(substr(
+                    rawtohex(sys_guid()),
+                    1,
+                    30
+                ),
+                          'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') as przpbsi_uid,
+                s.bsi_uid,
+                p_przp_uid,
+                sysdate,
+                p_user,
+                null,
+                null
+            from
+                (
+                    select distinct
+                        to_number(column_value) as bsi_uid
+                    from
+                        table ( apex_string.split(
+                            nvl(p_bsi_uid_list, ''),
+                            ':'
+                        ) )
+                    where
+                        column_value is not null
+                ) s
+            where
+                not exists (
+                    select
+                        1
+                    from
+                        hwas_prozesse_bsi_bausteine t
+                    where
+                            t.przp_uid_fk = p_przp_uid
+                        and t.bsi_uid_fk = s.bsi_uid
+                );
+
+    exception
+        when value_error then
+            raise_application_error(-20002, 'Ungültiger Wert in P_BSI_UID_LIST. Die Liste darf nur numerische BSI_UID-Werte enthalten.'
+            );
+        when others then
+            raise;
+    end merge_bsi_bausteine;
+
 end pck_hwas_prozess_dml;
 /
 
 
--- sqlcl_snapshot {"hash":"1f636187cf23cf4f5bd6ff2069e664154cb6ba0a","type":"PACKAGE_BODY","name":"PCK_HWAS_PROZESS_DML","schemaName":"AM_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"d63ab74b31e3977e300d6e3666efaf541023a13a","type":"PACKAGE_BODY","name":"PCK_HWAS_PROZESS_DML","schemaName":"AM_MAIN","sxml":""}

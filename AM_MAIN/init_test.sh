@@ -4,10 +4,6 @@
 sql AM_MAIN/mPbiFi_lsDGkFjTuZwmHmVZGpmAi8J@scdt.ora.netcologne.intern:1521/scdt.netcologne.intern <<EOF
 -- You can put SQL commands here if needed
 
-
-Project init -name rk_main -schemas am_main
-
-
 !git add .
 !git commit -m "init"
 !git push
