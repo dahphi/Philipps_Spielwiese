@@ -14,7 +14,8 @@ create or replace force editionable view apex_export_user.emp_details_view (
     city,
     state_province,
     country_name,
-    region_name
+    region_name,
+    philipp_test
 ) as
     select
         e.employee_id,
@@ -32,7 +33,8 @@ create or replace force editionable view apex_export_user.emp_details_view (
         l.city,
         l.state_province,
         c.country_name,
-        r.region_name
+        r.region_name,
+        null as philipp_test
     from
         employees   e,
         departments d,
@@ -49,4 +51,4 @@ create or replace force editionable view apex_export_user.emp_details_view (
 with read only;
 
 
--- sqlcl_snapshot {"hash":"32d4ee65000ecc5f420ecc87f649ef714f5cfb6d","type":"VIEW","name":"EMP_DETAILS_VIEW","schemaName":"APEX_EXPORT_USER","sxml":""}
+-- sqlcl_snapshot {"hash":"26c8a51520e4b509ca419b1d6830346f32d8c047","type":"VIEW","name":"EMP_DETAILS_VIEW","schemaName":"APEX_EXPORT_USER","sxml":""}
