@@ -1,7 +1,7 @@
 
 #!/bin/bash
 # Connect to Oracle database (non-interactive, just for demonstration)
-sqlplus AM_MAIN/ae9ae12b4e1c776496ab6c7190y@scdp.ora.netcologne.intern:1521/scdp.netcologne.intern <<EOF
+sql AM_MAIN/ae9ae12b4e1c776496ab6c7190y@scdp.ora.netcologne.intern:1521/scdp.netcologne.intern <<EOF
 -- You can put SQL commands here if needed
 
 
