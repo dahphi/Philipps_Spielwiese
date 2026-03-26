@@ -1,11 +1,10 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557120432 stripComments:false logicalFilePath:SCDP/am_main/ref_constraints/fk_hwas_prozessstufe_parent.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
--- sqlcl_snapshot AM_MAIN/src/database/am_main/ref_constraints/fk_hwas_prozessstufe_parent.sql:null:8abfc9b59b7f457169b9566b213bdb1d63760299:create
+-- changeset AM_MAIN:1774557220980 stripComments:false logicalFilePath:SCDP/am_main/ref_constraints/fk_hwas_prozessstufe_parent.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- sqlcl_snapshot AM_MAIN/src/database/am_main/ref_constraints/fk_hwas_prozessstufe_parent.sql:null:c34e3f4f584a8c4c39872e920ca56eb6a9d5de8e:create
 
 alter table am_main.hwas_prozessstufe
     add constraint fk_hwas_prozessstufe_parent
         foreign key ( parent_przs_uid )
             references am_main.hwas_prozessstufe ( przs_uid )
-                on delete cascade
         enable;
 

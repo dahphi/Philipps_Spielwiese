@@ -1,6 +1,6 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557119941 stripComments:false logicalFilePath:SCDP/am_main/package_specs/pck_hwas_dienstleister.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
--- sqlcl_snapshot AM_MAIN/src/database/am_main/package_specs/pck_hwas_dienstleister.sql:null:a7804ee25a11daba0250cd6c8e4a8c7a9c88f889:create
+-- changeset AM_MAIN:1774557220487 stripComments:false logicalFilePath:SCDP/am_main/package_specs/pck_hwas_dienstleister.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- sqlcl_snapshot AM_MAIN/src/database/am_main/package_specs/pck_hwas_dienstleister.sql:null:c50ddc1f78360e75c972556fa40b4ad2a455beae:create
 
 create or replace package am_main.pck_hwas_dienstleister is
     procedure merge_dienstleister (
@@ -24,7 +24,7 @@ create or replace package am_main.pck_hwas_dienstleister is
         p_rec in out sap_lieferanten%rowtype
     );
   ---------------------------------NEW------------------------------------
-
+  
   -- Insert via ROWTYPE
     procedure insert_row (
         p_rec              in out hwas_bean_funktionsklassen%rowtype,

@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557121469 stripComments:false logicalFilePath:SCDP/am_main/tables/hwas_prozess.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- changeset AM_MAIN:1774557222038 stripComments:false logicalFilePath:SCDP/am_main/tables/hwas_prozess.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
 -- sqlcl_snapshot AM_MAIN/src/database/am_main/tables/hwas_prozess.sql:null:ab2c289591e87a20737f43d450313f658f65250b:create
 
 create table am_main.hwas_prozess (
@@ -23,13 +23,7 @@ create table am_main.hwas_prozess (
 )
 no inmemory;
 
-create unique index am_main.przp_uid_pk on
-    am_main.hwas_prozess (
-        przp_uid
-    );
-
 alter table am_main.hwas_prozess
-    add constraint przp_uid_pk
-        primary key ( przp_uid )
-            using index am_main.przp_uid_pk enable;
+    add constraint przp_uid_pk primary key ( przp_uid )
+        using index enable;
 

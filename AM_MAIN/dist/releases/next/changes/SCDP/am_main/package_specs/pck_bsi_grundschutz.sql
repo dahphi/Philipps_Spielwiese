@@ -1,6 +1,6 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557119877 stripComments:false logicalFilePath:SCDP/am_main/package_specs/pck_bsi_grundschutz.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
--- sqlcl_snapshot AM_MAIN/src/database/am_main/package_specs/pck_bsi_grundschutz.sql:null:697c91d30ce0ff9d90edc0da6e652a9465858fb7:create
+-- changeset AM_MAIN:1774557220423 stripComments:false logicalFilePath:SCDP/am_main/package_specs/pck_bsi_grundschutz.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- sqlcl_snapshot AM_MAIN/src/database/am_main/package_specs/pck_bsi_grundschutz.sql:null:24b81ac16d96af7470e6cccabfb0cfca33e82547:create
 
 create or replace package am_main.pck_bsi_grundschutz as
 
@@ -16,6 +16,13 @@ create or replace package am_main.pck_bsi_grundschutz as
   -- Löschen perBSI BAUSTEINE
     procedure delete_baustein (
         p_bsi_uid in number
+    );
+
+    procedure sync_asset_bausteine (
+        p_ass_uid_fk    in number,
+        p_asset_typ     in varchar2,
+        p_shuttle_value in varchar2,
+        p_inserted_by   in varchar2 default null
     );
 
 end pck_bsi_grundschutz;

@@ -1,6 +1,6 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557119318 stripComments:false logicalFilePath:SCDP/am_main/package_bodies/pck_hwas_vertragsmanagement.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
--- sqlcl_snapshot AM_MAIN/src/database/am_main/package_bodies/pck_hwas_vertragsmanagement.sql:null:51aa288998978048b000a3cb42c7651211056bae:create
+-- changeset AM_MAIN:1774557219859 stripComments:false logicalFilePath:SCDP/am_main/package_bodies/pck_hwas_vertragsmanagement.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- sqlcl_snapshot AM_MAIN/src/database/am_main/package_bodies/pck_hwas_vertragsmanagement.sql:null:dc58bc752e9b797eac21770b26357f6fa4b280a3:create
 
 create or replace package body am_main.pck_hwas_vertragsmanagement as
 
@@ -596,12 +596,13 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
         merge into hwas_produktbestandteil tgt
         using (
             select
-                v_rec.prod_bes_uid as prod_bes_uid,
-                v_rec.name         as name,
-                v_rec.prod_uid_fk  as prod_uid_fk,
-                v_rec.kommentar    as kommentar,
-                v_now              as now_ts,
-                v_user             as usr
+                v_rec.prod_bes_uid         as prod_bes_uid,
+                v_rec.name                 as name,
+                v_rec.prod_uid_fk          as prod_uid_fk,
+                v_rec.kommentar            as kommentar,
+                v_now                      as now_ts,
+                v_user                     as usr,
+                v_rec.tech_ansprechpartner as tech_ansprechpartner
             from
                 dual
         ) src on ( tgt.prod_bes_uid = src.prod_bes_uid )
@@ -610,7 +611,8 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
             tgt.prod_uid_fk = src.prod_uid_fk,
             tgt.kommentar = src.kommentar,
             tgt.updated = src.now_ts,
-            tgt.updated_by = src.usr
+            tgt.updated_by = src.usr,
+            tgt.tech_ansprechpartner = src.tech_ansprechpartner
         when not matched then
         insert (
             prod_bes_uid,
@@ -620,7 +622,8 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
             inserted,
             inserted_by,
             updated,
-            updated_by )
+            updated_by,
+            tech_ansprechpartner )
         values
             ( src.prod_bes_uid,
               src.name,
@@ -629,7 +632,8 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
               src.now_ts,
               src.usr,
               src.now_ts,
-              src.usr );
+              src.usr,
+              src.tech_ansprechpartner );
 
     end merge_produktbestandteil;
 
@@ -738,14 +742,15 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
         merge into hwas_vertragsdetails tgt
         using (
             select
-                v_rec.vd_uid          as vd_uid,
-                v_rec.prod_uid_fk     as prod_uid_fk,
-                v_rec.vert_uid_fk     as vert_uid_fk,
-                v_rec.ver_ti_uid_fk   as ver_ti_uid_fk,
-                v_rec.prod_bes_uid_fk as prod_bes_uid_fk,
-                v_now                 as now_dt,
-                v_user                as usr,
-                v_rec.bemerkung       as bemerkung
+                v_rec.vd_uid           as vd_uid,
+                v_rec.prod_uid_fk      as prod_uid_fk,
+                v_rec.vert_uid_fk      as vert_uid_fk,
+                v_rec.ver_ti_uid_fk    as ver_ti_uid_fk,
+                v_rec.prod_bes_uid_fk  as prod_bes_uid_fk,
+                v_now                  as now_dt,
+                v_user                 as usr,
+                v_rec.bemerkung        as bemerkung,
+                v_rec.betriebsrelevanz as betriebsrelevanz
             from
                 dual
         ) src on ( tgt.vd_uid = src.vd_uid )
@@ -756,7 +761,8 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
             tgt.prod_bes_uid_fk = src.prod_bes_uid_fk,
             tgt.updated = src.now_dt,
             tgt.updated_by = src.usr,
-            tgt.bemerkung = src.bemerkung
+            tgt.bemerkung = src.bemerkung,
+            tgt.betriebsrelevanz = src.betriebsrelevanz
         when not matched then
         insert (
             vd_uid,
@@ -768,7 +774,8 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
             inserted_by,
             updated,
             updated_by,
-            bemerkung )
+            bemerkung,
+            betriebsrelevanz )
         values
             ( src.vd_uid,
               src.prod_uid_fk,
@@ -779,7 +786,9 @@ create or replace package body am_main.pck_hwas_vertragsmanagement as
               src.usr,
               src.now_dt,
               src.usr,
-              src.bemerkung );
+              src.bemerkung,
+              src.betriebsrelevanz --09.03.2026 hinzugefügt
+               );
 
     end merge_vertragsdetails;
 

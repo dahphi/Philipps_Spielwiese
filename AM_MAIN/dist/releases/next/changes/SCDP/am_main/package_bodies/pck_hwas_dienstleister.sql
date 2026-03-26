@@ -1,6 +1,6 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557116661 stripComments:false logicalFilePath:SCDP/am_main/package_bodies/pck_hwas_dienstleister.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
--- sqlcl_snapshot AM_MAIN/src/database/am_main/package_bodies/pck_hwas_dienstleister.sql:null:fe3969a4e796271b3965386d8eed84ad7474c46c:create
+-- changeset AM_MAIN:1774557216994 stripComments:false logicalFilePath:SCDP/am_main/package_bodies/pck_hwas_dienstleister.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- sqlcl_snapshot AM_MAIN/src/database/am_main/package_bodies/pck_hwas_dienstleister.sql:null:39f2b9bd4fc5daa2ebd2c326466012858e75c0f8:create
 
 create or replace package body am_main.pck_hwas_dienstleister is
 
@@ -180,14 +180,18 @@ create or replace package body am_main.pck_hwas_dienstleister is
             l.updated_by = nvl(
             v('APP_USER'),
             user
-        )
+        ),
+            l.bemerkung = p_rec.bemerkung,
+            l.gek_lfd_nr = p_rec.gek_lfd_nr
         when not matched then
         insert (
             lie_uid,
             bezeichnung,
             kreditoren_nr,
             inserted,
-            inserted_by )
+            inserted_by,
+            bemerkung,
+            gek_lfd_nr )
         values
             ( p_rec.lie_uid,
               p_rec.bezeichnung,
@@ -196,7 +200,9 @@ create or replace package body am_main.pck_hwas_dienstleister is
               nvl(
                   v('APP_USER'),
                   user
-              ) );
+              ),
+              p_rec.bemerkung,
+              p_rec.gek_lfd_nr );
 
     end merge_lieferanten;
 --------------------------------------------NEW-----------------------------------------------------------

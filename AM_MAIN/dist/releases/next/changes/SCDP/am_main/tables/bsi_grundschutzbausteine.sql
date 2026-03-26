@@ -1,6 +1,6 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557120765 stripComments:false logicalFilePath:SCDP/am_main/tables/bsi_grundschutzbausteine.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
--- sqlcl_snapshot AM_MAIN/src/database/am_main/tables/bsi_grundschutzbausteine.sql:null:694166355bd0b634b70ca6a30c36da70de523a41:create
+-- changeset AM_MAIN:1774557221319 stripComments:false logicalFilePath:SCDP/am_main/tables/bsi_grundschutzbausteine.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- sqlcl_snapshot AM_MAIN/src/database/am_main/tables/bsi_grundschutzbausteine.sql:null:3786a59eb9b1c75a67f3be99fa9fb2ece9321b11:create
 
 create table am_main.bsi_grundschutzbausteine (
     bsi_uid     number default to_number(sys_guid(), 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') not null enable,
@@ -10,7 +10,10 @@ create table am_main.bsi_grundschutzbausteine (
     inserted    date default sysdate,
     inserted_by varchar2(100 char),
     updated     date,
-    updated_by  varchar2(100 char)
+    updated_by  varchar2(100 char),
+    art         number,
+    iv_relevanz number,
+    bemerkung   varchar2(400 byte)
 )
 no inmemory;
 

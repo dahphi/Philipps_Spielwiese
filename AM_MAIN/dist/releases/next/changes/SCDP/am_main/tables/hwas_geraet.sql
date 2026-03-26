@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557121051 stripComments:false logicalFilePath:SCDP/am_main/tables/hwas_geraet.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- changeset AM_MAIN:1774557221609 stripComments:false logicalFilePath:SCDP/am_main/tables/hwas_geraet.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
 -- sqlcl_snapshot AM_MAIN/src/database/am_main/tables/hwas_geraet.sql:null:581d8211bf7b1ef3decd6b9a94719f111a15b7bc:create
 
 create table am_main.hwas_geraet (
@@ -26,16 +26,17 @@ create table am_main.hwas_geraet (
 )
 no inmemory;
 
-create unique index am_main.hwas_geraet_uk2 on
-    am_main.hwas_geraet (
-        grt_assetname
-    );
-
 alter table am_main.hwas_geraet
     add constraint hwas_geraet_pk primary key ( grt_uid )
         using index enable;
 
 alter table am_main.hwas_geraet
-    add constraint hwas_geraet_uk1 unique ( grt_assetname )
-        using index am_main.hwas_geraet_uk2 enable;
+    add constraint hwas_geraet_uk1
+        unique ( grt_assetname )
+            using index (
+                create unique index am_main.hwas_geraet_uk2 on
+                    am_main.hwas_geraet (
+                        grt_assetname
+                    )
+            ) enable;
 

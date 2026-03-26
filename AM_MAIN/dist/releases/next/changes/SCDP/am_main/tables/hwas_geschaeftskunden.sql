@@ -1,6 +1,6 @@
 -- liquibase formatted sql
--- changeset AM_MAIN:1774557121118 stripComments:false logicalFilePath:SCDP/am_main/tables/hwas_geschaeftskunden.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
--- sqlcl_snapshot AM_MAIN/src/database/am_main/tables/hwas_geschaeftskunden.sql:null:93ad0d89a30f19edbe3d02330037f8492b2fc073:create
+-- changeset AM_MAIN:1774557221680 stripComments:false logicalFilePath:SCDP/am_main/tables/hwas_geschaeftskunden.sql runAlways:false runOnChange:false replaceIfExists:true failOnError:true
+-- sqlcl_snapshot AM_MAIN/src/database/am_main/tables/hwas_geschaeftskunden.sql:null:0f1881a54fd31ab8eb209e7feda0f9016d4c7da2:create
 
 create table am_main.hwas_geschaeftskunden (
     gesku_uid                         number default to_number(sys_guid(), 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') not null enable,
@@ -18,7 +18,7 @@ create table am_main.hwas_geschaeftskunden (
     dora_relevant                     number,
     kundennr_siebel                   number,
     ansprech_mail                     varchar2(50 byte),
-    ansprech_telefon                  varchar2(20 byte),
+    ansprech_telefon                  varchar2(50 byte),
     kritis_relevant                   number
 )
 no inmemory;
@@ -26,6 +26,9 @@ no inmemory;
 alter table am_main.hwas_geschaeftskunden
     add constraint pk_hwas_geschaeftskunden primary key ( gesku_uid )
         using index enable;
+
+alter table am_main.hwas_geschaeftskunden add constraint siebel_geschaeftskunden_uk1 unique ( kundennr_siebel )
+    using index enable;
 
 alter table am_main.hwas_geschaeftskunden add constraint uc_geschaeftskunden_hubspot_id unique ( hubspot_datensatz_id )
     using index enable;
