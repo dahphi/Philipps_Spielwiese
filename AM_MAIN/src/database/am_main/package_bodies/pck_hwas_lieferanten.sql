@@ -176,14 +176,16 @@ create or replace package body am_main.pck_hwas_lieferanten is
             l.updated_by = nvl(
             v('APP_USER'),
             user
-        )
+        ),
+            l.bemerkung = p_rec.bemerkung
         when not matched then
         insert (
             lie_uid,
             bezeichnung,
             kreditoren_nr,
             inserted,
-            inserted_by )
+            inserted_by,
+            bemerkung )
         values
             ( p_rec.lie_uid,
               p_rec.bezeichnung,
@@ -192,7 +194,8 @@ create or replace package body am_main.pck_hwas_lieferanten is
               nvl(
                   v('APP_USER'),
                   user
-              ) );
+              ),
+              p_rec.bemerkung );
 
     end merge_lieferanten;
 
@@ -200,4 +203,4 @@ end pck_hwas_lieferanten;
 /
 
 
--- sqlcl_snapshot {"hash":"8e77827fb8aa1f7a3dceabd67bfe59f2191f9ee7","type":"PACKAGE_BODY","name":"PCK_HWAS_LIEFERANTEN","schemaName":"AM_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"a8c073b8b5936a2d386aaa45a092f06756cebd55","type":"PACKAGE_BODY","name":"PCK_HWAS_LIEFERANTEN","schemaName":"AM_MAIN","sxml":""}
