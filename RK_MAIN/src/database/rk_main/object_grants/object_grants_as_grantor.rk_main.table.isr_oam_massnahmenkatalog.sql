@@ -1,8 +1,12 @@
+grant read on rk_main.isr_oam_massnahmenkatalog to awh_read_jira;
+
 grant select on rk_main.isr_oam_massnahmenkatalog to rk_apex;
+
+grant read on rk_main.isr_oam_massnahmenkatalog to rk_read;
 
 grant select on rk_main.isr_oam_massnahmenkatalog to awh_apex;
 
 
 
 
--- sqlcl_snapshot {"hash":"71258cc2256a55e3edd6bf5662c0943867a9f71a","type":"OBJECT_GRANT","name":"object_grants_as_grantor.RK_MAIN.TABLE.ISR_OAM_MASSNAHMENKATALOG","schemaName":"RK_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"4a799f3304bac10b857ea81c436e0aa611d19d26","type":"OBJECT_GRANT","name":"object_grants_as_grantor.RK_MAIN.TABLE.ISR_OAM_MASSNAHMENKATALOG","schemaName":"RK_MAIN","sxml":""}

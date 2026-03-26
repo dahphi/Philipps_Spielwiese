@@ -230,10 +230,10 @@ create or replace package body rk_main.pck_isr_oam_massnahmenkatalog_dml as
                 r_isr_oam_massnahmenkatalog.mnk_uid := to_number ( sys_guid(), 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' );
                 r_isr_oam_massnahmenkatalog.rsk_uid := msn.rsk_uid;
                 insert into isr_oam_massnahmenkatalog values r_isr_oam_massnahmenkatalog;
-            
+
            --History--
                 r_isr_oam_massnahmenkatalog_hist.mnk_uid := r_isr_oam_massnahmenkatalog.mnk_uid;
-                r_isr_oam_massnahmenkatalog_hist.insert_info := 'Maßnahme & Risiko wurden hinzugefüht';
+                r_isr_oam_massnahmenkatalog_hist.insert_info := 'Maßnahme  wurden hinzugefüht';
                 rk_main.pck_isr_oam_massnahmenkatalog_hist_dml.p_insert(pior_massnahmenkatalog_hist => r_isr_oam_massnahmenkatalog_hist
                 );
             end if;
@@ -577,4 +577,4 @@ end pck_isr_oam_massnahmenkatalog_dml;
 /
 
 
--- sqlcl_snapshot {"hash":"2eb5e429aba09a368bd837d55e19be0c4375c330","type":"PACKAGE_BODY","name":"PCK_ISR_OAM_MASSNAHMENKATALOG_DML","schemaName":"RK_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"f82159701dfc97e1da18b3ec7475df1fc792f9e4","type":"PACKAGE_BODY","name":"PCK_ISR_OAM_MASSNAHMENKATALOG_DML","schemaName":"RK_MAIN","sxml":""}
