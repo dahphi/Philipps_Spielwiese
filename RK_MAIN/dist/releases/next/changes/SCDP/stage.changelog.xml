@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+<include file="rk_main/object_grants/object_grants_as_grantor.core.view.v_members.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.ad_abteilung.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.ad_abteilungsaccount.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.asm_am_asset.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.asm_am_assettypen.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.asm_am_erkenntnisquellen.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.asm_isr_assets_risiken.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_asset_geefahren.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_assettyp_gefaehrdung.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_assettypen_gefaehrdungkat.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_auswirkung.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_brm_elem_gefaehrdung.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_brm_gefaehrdung.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_brm_gefaehrdungkat.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_brm_massnahmenkat.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_brm_schwachstellenkat.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_eintrittswahrscheinlichkeit.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_iso_27001_anhang_a.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_iso_27001_controls.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_massnahme_iso_27001.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_massnahme_kontext.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_massnahmenkomplexitaet.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_adressat.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_massnahme.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_massnahmenkatalog.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_massnahmenkontext.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_risikoakzeptanzkriterien.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_risikoinventar.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_risikokategorie_oa.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_risikosteuerung.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_oam_umsetzungsstatus.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_parameter.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_risiko_erkenntnisquelle.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.table.isr_wirkbereich.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/object_grants/object_grants_as_grantor.rk_main.view.isr_risikobewertung.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/package_specs/pck_isr_eintrittswahrscheinlichkeit_dml.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/package_bodies/pck_asm_isr_assets_risiken_dml.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/package_bodies/pck_isr_oam_massnahmenkatalog_dml.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>
