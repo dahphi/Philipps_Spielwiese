@@ -5,7 +5,7 @@
     "version" : "24.4.4.0"
   },
   "schemas" : [ "RK_MAIN" ],
-  "lastReleaseVersion" : "1.0",
+  "lastReleaseVersion" : "1.1",
   "export" : {
     "format" : {
       "enable" : true
