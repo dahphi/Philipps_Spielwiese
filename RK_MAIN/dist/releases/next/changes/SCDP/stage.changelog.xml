@@ -3,6 +3,7 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
-<!--CHANGES-->
-<include file="changes/SCDP/stage.changelog.xml" relativeToChangelogFile="true"/>
+<include file="rk_main/package_specs/pck_isr_eintrittswahrscheinlichkeit_dml.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/package_bodies/pck_asm_isr_assets_risiken_dml.sql" relativeToChangelogFile="true"/>
+<include file="rk_main/package_bodies/pck_isr_oam_massnahmenkatalog_dml.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
