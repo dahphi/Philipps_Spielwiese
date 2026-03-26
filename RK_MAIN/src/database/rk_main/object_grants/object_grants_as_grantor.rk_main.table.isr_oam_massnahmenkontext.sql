@@ -1,8 +1,6 @@
 grant select on rk_main.isr_oam_massnahmenkontext to rk_apex;
 
-grant read on rk_main.isr_oam_massnahmenkontext to rk_read;
 
 
 
-
--- sqlcl_snapshot {"hash":"76d7908504bc5341108a40da52e626d01cbfc698","type":"OBJECT_GRANT","name":"object_grants_as_grantor.RK_MAIN.TABLE.ISR_OAM_MASSNAHMENKONTEXT","schemaName":"RK_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"87f787617f020b583bc225e5e7de56abf4b8bf80","type":"OBJECT_GRANT","name":"object_grants_as_grantor.RK_MAIN.TABLE.ISR_OAM_MASSNAHMENKONTEXT","schemaName":"RK_MAIN","sxml":""}
