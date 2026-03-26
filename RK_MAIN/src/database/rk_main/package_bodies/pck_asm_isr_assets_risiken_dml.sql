@@ -399,7 +399,7 @@ create or replace package body rk_main.pck_asm_isr_assets_risiken_dml as
                                       || ':', ':'
                                               || air.ass_uid
                                               || ':') = 0
-
+      
           --FOR del_row IN (
   --SELECT asri_uid
   --FROM asm_isr_assets_risiken
@@ -670,4 +670,4 @@ end pck_asm_isr_assets_risiken_dml;
 /
 
 
--- sqlcl_snapshot {"hash":"69c0162477aed837e4120a1f45a3558a93ecd917","type":"PACKAGE_BODY","name":"PCK_ASM_ISR_ASSETS_RISIKEN_DML","schemaName":"RK_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"3016c1c0c69a72abb331072de83278256fde31a1","type":"PACKAGE_BODY","name":"PCK_ASM_ISR_ASSETS_RISIKEN_DML","schemaName":"RK_MAIN","sxml":""}
