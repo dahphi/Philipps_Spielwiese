@@ -57,18 +57,8 @@ create or replace package am_main.pck_hwas_prozess_dml as
         p_asy_list in varchar2
     );
 
---Merge Prozess/BSI Baustein
-    procedure merge_bsi_bausteine (
-        p_przp_uid     in number,
-        p_bsi_uid_list in varchar2,
-        p_user         in varchar2 default nvl(
-            v('APP_USER'),
-            user
-        )
-    );
-
 end pck_hwas_prozess_dml;
 /
 
 
--- sqlcl_snapshot {"hash":"45ad5ca7c49c9275708cd371a35fa007fc8dec1b","type":"PACKAGE_SPEC","name":"PCK_HWAS_PROZESS_DML","schemaName":"AM_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"1d5ea4a6404ec57222a9ec2e1cabd2a3f5610972","type":"PACKAGE_SPEC","name":"PCK_HWAS_PROZESS_DML","schemaName":"AM_MAIN","sxml":""}

@@ -176,18 +176,14 @@ create or replace package body am_main.pck_hwas_dienstleister is
             l.updated_by = nvl(
             v('APP_USER'),
             user
-        ),
-            l.bemerkung = p_rec.bemerkung,
-            l.gek_lfd_nr = p_rec.gek_lfd_nr
+        )
         when not matched then
         insert (
             lie_uid,
             bezeichnung,
             kreditoren_nr,
             inserted,
-            inserted_by,
-            bemerkung,
-            gek_lfd_nr )
+            inserted_by )
         values
             ( p_rec.lie_uid,
               p_rec.bezeichnung,
@@ -196,9 +192,7 @@ create or replace package body am_main.pck_hwas_dienstleister is
               nvl(
                   v('APP_USER'),
                   user
-              ),
-              p_rec.bemerkung,
-              p_rec.gek_lfd_nr );
+              ) );
 
     end merge_lieferanten;
 --------------------------------------------NEW-----------------------------------------------------------
@@ -262,4 +256,4 @@ end pck_hwas_dienstleister;
 /
 
 
--- sqlcl_snapshot {"hash":"39f2b9bd4fc5daa2ebd2c326466012858e75c0f8","type":"PACKAGE_BODY","name":"PCK_HWAS_DIENSTLEISTER","schemaName":"AM_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"fe3969a4e796271b3965386d8eed84ad7474c46c","type":"PACKAGE_BODY","name":"PCK_HWAS_DIENSTLEISTER","schemaName":"AM_MAIN","sxml":""}
