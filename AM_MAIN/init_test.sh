@@ -25,7 +25,7 @@ project release -version 1.1 -verbose
 !git commit -m "release"
 !git push
 
-project gen-artifact -version 1.1
+project gen-artifact -version 1.1 -force
 !git add .
 !git commit -m "artifact"
 !git push
