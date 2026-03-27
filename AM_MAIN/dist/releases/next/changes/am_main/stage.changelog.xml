@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+<include file="am_main/package_specs/pkg_sap_bestellungen_import.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/bsi_asset_baustein.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/bsi_grundschutzbausteine.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/hwas_geschaeftskunden.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/hwas_produktbestandteil.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/hwas_prozesse_bsi_bausteine.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/hwas_vertragsdetails.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/sap_lieferanten.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_bodies/pkg_sap_bestellungen_import.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_specs/pck_bsi_grundschutz.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_specs/pck_hwas_dienstleister.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_specs/pck_hwas_prozess_dml.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_specs/pck_hwas_vertragsmanagement.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_bodies/pck_bsi_grundschutz.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_bodies/pck_hwas_dienstleister.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_bodies/pck_hwas_lieferanten.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_bodies/pck_hwas_prozess_dml.sql" relativeToChangelogFile="true"/>
+<include file="am_main/package_bodies/pck_hwas_vertragsmanagement.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/bsi_bausteinart.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/bsi_baustein_schicht.sql" relativeToChangelogFile="true"/>
+<include file="am_main/tables/bsi_iv_relevanz.sql" relativeToChangelogFile="true"/>
+<include file="am_main/comments/bsi_asset_baustein.sql" relativeToChangelogFile="true"/>
+<include file="am_main/comments/bsi_grundschutzbausteine.sql" relativeToChangelogFile="true"/>
+<include file="am_main/comments/hwas_vertragsdetails.sql" relativeToChangelogFile="true"/>
+<include file="am_main/comments/sap_lieferanten.sql" relativeToChangelogFile="true"/>
+<include file="am_main/indexes/idx_sap_bestellungen_pk_sap.sql" relativeToChangelogFile="true"/>
+<include file="am_main/ref_constraints/fk_hvd_prod_bes.sql" relativeToChangelogFile="true"/>
+<include file="am_main/ref_constraints/fk_hvd_ver_ti.sql" relativeToChangelogFile="true"/>
+<include file="am_main/ref_constraints/fk_hwas_prozessstufe_parent.sql" relativeToChangelogFile="true"/>
+<include file="am_main/ref_constraints/fk_hwas_prozessstufe_prozesstyp.sql" relativeToChangelogFile="true"/>
+<include file="am_main/ref_constraints/fk_przpbsi_bsi.sql" relativeToChangelogFile="true"/>
+<include file="am_main/ref_constraints/fk_przpbsi_przp.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>
