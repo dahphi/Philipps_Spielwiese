@@ -20,7 +20,7 @@ create or replace package am_main.pck_hwas_dienstleister is
         p_rec in out sap_lieferanten%rowtype
     );
   ---------------------------------NEW------------------------------------
-
+  
   -- Insert via ROWTYPE
     procedure insert_row (
         p_rec              in out hwas_bean_funktionsklassen%rowtype,
@@ -46,4 +46,4 @@ end pck_hwas_dienstleister;
 /
 
 
--- sqlcl_snapshot {"hash":"a7804ee25a11daba0250cd6c8e4a8c7a9c88f889","type":"PACKAGE_SPEC","name":"PCK_HWAS_DIENSTLEISTER","schemaName":"AM_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"c50ddc1f78360e75c972556fa40b4ad2a455beae","type":"PACKAGE_SPEC","name":"PCK_HWAS_DIENSTLEISTER","schemaName":"AM_MAIN","sxml":""}

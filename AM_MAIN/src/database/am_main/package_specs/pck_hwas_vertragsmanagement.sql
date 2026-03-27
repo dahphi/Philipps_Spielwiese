@@ -28,7 +28,8 @@ create or replace package am_main.pck_hwas_vertragsmanagement as
     procedure delete_promotion (
         p_prom_uid in hwas_promotion.prom_uid%type
     );
-
+  
+  
     -- Produkte
     procedure merge_produkt (
         p_row in hwas_produkt%rowtype
@@ -37,7 +38,7 @@ create or replace package am_main.pck_hwas_vertragsmanagement as
     procedure delete_produkt (
         p_prod_uid in number
     );
-
+  
    -- Vertragsdetails (Relation Vertrag <-> Produkt) erstmal obsolet
     procedure sync_vertrag_produkte (
         p_vert_uid  in number,
@@ -77,7 +78,7 @@ create or replace package am_main.pck_hwas_vertragsmanagement as
     procedure delete_vertrag_titel (
         p_rec in hwas_vertrag_titel%rowtype
     );
-
+  
   --Merge Produktbestandteil
     procedure merge_produktbestandteil (
         p_rec in hwas_produktbestandteil%rowtype
@@ -86,7 +87,7 @@ create or replace package am_main.pck_hwas_vertragsmanagement as
     procedure delete_produktbestandteil (
         p_rec in hwas_produktbestandteil%rowtype
     );
-
+  
   --Merge VERTRAG_PRODUKT
     procedure merge_vertrag_produkt (
         p_row  in out hwas_vertrag_produkt%rowtype,
@@ -96,7 +97,7 @@ create or replace package am_main.pck_hwas_vertragsmanagement as
     procedure delete_vertrag_produkt (
         p_ver_prod_uid in hwas_vertrag_produkt.ver_prod_uid%type
     );
-
+  
   --Merge Vertragsdetails
     procedure merge_vertragsdetails (
         p_rec in hwas_vertragsdetails%rowtype
@@ -105,7 +106,7 @@ create or replace package am_main.pck_hwas_vertragsmanagement as
     procedure delete_vertragsdetails (
         p_rec in hwas_vertragsdetails%rowtype
     );
-
+  
   -- MERGE Vertragsdetial zu Assets
     procedure merge_lieferant_vertragsdetail (
         p_rec     in hwas_lieferant_vertragsdetail%rowtype,
@@ -116,7 +117,7 @@ create or replace package am_main.pck_hwas_vertragsmanagement as
         p_rec     in hwas_prozesse_vertragsdetails%rowtype,
         p_vd_list in varchar2
     );
-
+  
   --Merge Prozesse zu Anwendungen
     procedure merge_awh_eb3 (
         p_przp_uid_fk in number,
@@ -128,4 +129,4 @@ end pck_hwas_vertragsmanagement;
 /
 
 
--- sqlcl_snapshot {"hash":"f21a7848e0fe8c101a59a7898fd10ad88a27d526","type":"PACKAGE_SPEC","name":"PCK_HWAS_VERTRAGSMANAGEMENT","schemaName":"AM_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"c7ff1856684c3806ba2f41f8ddc6136a00dec9ad","type":"PACKAGE_SPEC","name":"PCK_HWAS_VERTRAGSMANAGEMENT","schemaName":"AM_MAIN","sxml":""}
