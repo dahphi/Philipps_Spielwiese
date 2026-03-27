@@ -5,7 +5,7 @@
     "version" : "24.4.4.0"
   },
   "schemas" : [ "AM_MAIN" ],
-  "lastReleaseVersion" : "",
+  "lastReleaseVersion" : "1.0",
   "export" : {
     "format" : {
       "enable" : true
