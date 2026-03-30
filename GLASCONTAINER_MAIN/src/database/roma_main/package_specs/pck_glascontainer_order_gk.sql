@@ -81,23 +81,25 @@ create or replace package pck_glascontainer_order_gk as
   * @param       pov_ausbaus_status        OUT VARCHAR2      => Ausbau Status
   * @param       pov_merged_access_type    OUT VARCHAR2      => Technologie
   * @param       pov_planned_bandwidth     OUT VARCHAR2      => max. Bandbreite
+  * @param       pov_availability_date_raw OUT VARCHAR2      => Verfügbarkeits Datum
   *                                                  
   *
   */
     procedure p_gk_daten_acheck_light (
-        pin_haus_lfd_nr        in number,
-        piv_app_user           in varchar2,
-        pov_mandant            out varchar2,
-        pov_wholebuy_partner   out varchar2,
-        pov_ausbaus_status     out varchar2,
-        pov_merged_access_type out varchar2,
-        pov_planned_bandwidth  out varchar2,
-        pov_eigentuemerdaten   out varchar2,
-        pov_adress_complete    out varchar2
+        pin_haus_lfd_nr           in number,
+        piv_app_user              in varchar2,
+        pov_mandant               out varchar2,
+        pov_wholebuy_partner      out varchar2,
+        pov_ausbaus_status        out varchar2,
+        pov_merged_access_type    out varchar2,
+        pov_planned_bandwidth     out varchar2,
+        pov_eigentuemerdaten      out varchar2,
+        pov_adress_complete       out varchar2,
+        pov_availability_date_raw out varchar2
     ); 
 
  -- -----------------------------------------------------------------------------------------------
- 
+
 /**
   * Kundennummer für die Anzeige darstellen.
   *
@@ -111,9 +113,9 @@ create or replace package pck_glascontainer_order_gk as
         pin_knd_nr       in number,
         piv_unter_knd_nr in varchar2
     ) return varchar2;
-  
+
 -- -----------------------------------------------------------------------------------------------
- 
+
 /**
   * HAUS_LFD_NR als Link 
   *
@@ -125,9 +127,9 @@ create or replace package pck_glascontainer_order_gk as
     function fv_format_haus_lfd_nr (
         pin_haus_lfd_nr in number
     ) return varchar2;
- 
+
 -- -----------------------------------------------------------------------------------------------
- 
+
 /**
   * Check der Parameter des Aufruflinks 
   *
@@ -147,7 +149,7 @@ create or replace package pck_glascontainer_order_gk as
     ) return varchar2;
 
 -- -----------------------------------------------------------------------------------------------
- 
+
 /**
   * Check der GK Wholeby Bestellung 
   *
@@ -318,8 +320,12 @@ create or replace package pck_glascontainer_order_gk as
                                 */
     ) return ftth_ws_sync_preorders.id%type;
 
-end;
+    function f_get_availability_date (
+        pi_json in varchar2
+    ) return varchar2;
+
+end pck_glascontainer_order_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"7f43c9d9ed716539eec0c8049dd24eaa682d2a6d","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"984c0baad93c7913c7f71b7fa97230eafd24ef47","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}

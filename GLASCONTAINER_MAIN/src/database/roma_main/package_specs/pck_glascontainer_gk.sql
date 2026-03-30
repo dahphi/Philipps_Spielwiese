@@ -167,7 +167,7 @@ create or replace package pck_glascontainer_gk as
 
   -- Maximale Länge eines ENUM-Auflistungstyps: 
     subtype t_enum is varchar2(50) not null; 
-  
+
   -- Konstanten, die mit den ENUMs des Webservice korrespondieren: 
     enum_anrede_maennlich constant t_enum := 'MISTER';
     enum_anrede_weiblich constant t_enum := 'MISS';
@@ -204,7 +204,6 @@ create or replace package pck_glascontainer_gk as
   -- Siehe auch Trigger auf Tabelle FTTH_WS_SYNC_PREORDERS (dort wird derselbe 
   -- String verwendet, aber ohne Bezug auf dieses Package, da sonst der 
   -- Trigger überflüssigerweise ein komplettes Package instanziieren müsste 
-  
 
 --------------------------------------------------------------------------------
 
@@ -230,7 +229,8 @@ create or replace package pck_glascontainer_gk as
   * 
   */
     function f_has_contact (
-        pi_knd_nr in varchar2
+        pi_knd_nr       in varchar2,
+        pi_unter_knd_nr in varchar2
     ) return boolean;
 
 --------------------------------------------------------------------------------
@@ -240,6 +240,7 @@ create or replace package pck_glascontainer_gk as
   */
     procedure get_first_contact_details (
         pi_knd_nr                in varchar2,
+        pi_unter_knd_nr          in varchar2,
         po_ap_row_id             out varchar2,
         po_anrede                out varchar2,
         po_titel                 out varchar2,
@@ -315,7 +316,7 @@ create or replace package pck_glascontainer_gk as
         pic_preorder_json    in clob,
         pov_auftragsdaten_gk out t_auftragsdaten_gk
     ); 
-    
+
   /** 
    * Gibt einen JSON Timestamp-String als DATE zurück, indem auf Sekunden gekürzt wird 
    * 
@@ -325,7 +326,7 @@ create or replace package pck_glascontainer_gk as
         i_timestamp in varchar2
     ) return date
         deterministic; 
-    
+
   /** 
    * Gibt einen JSON Timestamp-String als DATE zurück, indem auf Sekunden gekürzt wird 
    * 
@@ -352,4 +353,4 @@ end pck_glascontainer_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"e606bdb336c6dc10210ae07d4ed1adeb1635626b","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"cf0f628ce2c4e43c64fdac02555ee4896c4e3451","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}

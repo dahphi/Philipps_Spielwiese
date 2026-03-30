@@ -4391,7 +4391,15 @@ create or replace package body pck_glascontainer as
         -- (dies liegt inzwischen in der Tabelle ROMA_MAIN.ENUM, 'salutation') 
                     when 'ANREDE' then
                         pipe row ( new t_lov_entry('Herr', enum_anrede_maennlich) );
-                        pipe row ( new t_lov_entry('Frau', enum_anrede_weiblich) ); 
+                        pipe row ( new t_lov_entry('Frau', enum_anrede_weiblich) );
+        -- (dies liegt inzwischen in der Tabelle ROMA_MAIN.ENUM, 'salutation') 
+                    when 'ANREDE_GK' then
+                        pipe row ( new t_lov_entry('Herr', enum_anrede_maennlich) );
+                        pipe row ( new t_lov_entry('Frau', enum_anrede_weiblich) );
+                        pipe row ( new t_lov_entry('keine Anrede', enum_anrede_unknown) );
+                        pipe row ( new t_lov_entry('Bruder', enum_anrede_bruder) );
+                        pipe row ( new t_lov_entry('Schwester', enum_anrede_schwester) );
+                        pipe row ( new t_lov_entry('Familie', enum_anrede_familie) );
             -------------------------- 
         -- (dies liegt inzwischen in der Tabelle ROMA_MAIN.ENUM , 'residentialUnit') 
                     when 'ANZAHL_WE' then 
@@ -9461,6 +9469,9 @@ create or replace package body pck_glascontainer as
                     'FTTH BSA L2'
                 when '90' then
                     'FTTH BSA L2 DG' -- @krakar @Ticket Ftth-3360: Einfügen der Technologie DG
+                when '91' then
+                    'FTTH BSA L2 WCO' --FTTH-6718
+
                 --- zusätzliche Werte aus @ticket FTTH-4077:
                 when '52' then
                     'FTTB' -- im Original ist das "VDSL2"
@@ -9970,6 +9981,8 @@ URL, wie bei "get orders" oder "cancel order" mit folgender Endung:
                     'FTTH BSA L2'
                 when 'FTTH BSA L2 DG' then
                     'FTTH BSA L2 DG'
+                when 'FTTH BSA L2 WCO' then
+                    'FTTH BSA L2 WCO' --FTTH-6718
                 when 'VDSL2' then
                     'FTTB' -- eigentlich 'VDSL2'?
                 else piv_technology
@@ -10768,12 +10781,25 @@ URL, wie bei "get orders" oder "cancel order" mit folgender Endung:
         where
                 order_id = piv_uuid
             and upper(type) = 'QEB' -- Typ
-            and code = '0000'; -- Error Code    
+            and code = '0000'; -- Error Code   
 
   -- keine QEB vorhanden -> Bearbeitung ist nicht erlaubt
         if l_count = 0 then
-            v_errorstring := 'keine QEB vorhanden';
+    -- Bedingung 3: Wenn keine QEB vorliegt dann prüfen, ob eine ABBM Meldung vorliegt
+            select
+                count(1)
+            into l_count
+            from
+                romaintinf.v_wholebuy_event
+            where
+                    order_id = piv_uuid
+                and upper(type) = 'ABBM'; -- Typ
+
+            if l_count = 0 then
+                v_errorstring := 'keine QEB vorhanden';
+            end if;
         end if;
+
         return v_errorstring;
     exception
         when others then
@@ -11186,8 +11212,137 @@ URL, wie bei "get orders" oder "cancel order" mit folgender Endung:
             return null;
     end f_get_vorwahl;
 
+    function f_get_wholebuy_events (
+        piv_uuid in varchar2,
+        piv_user in varchar2
+    ) return wholebuy_events_tab
+        pipelined
+    is
+
+        l_json          clob;
+      -- Hilfsroutine zur Fehlerbehandlung------------------------------------------ 
+        cv_routine_name constant logs.routine_name%type := 'f_get_wholebuy_events';
+
+        function fcl_params return logs.message%type is
+        begin
+            pck_format.p_add('piv_uuid', piv_uuid);
+            pck_format.p_add('piv_user', piv_user);
+            return pck_format.fcl_params(cv_routine_name);
+        end fcl_params; --
+    begin
+        l_json := pck_pob_rest.f_get_wholebuy_events(
+            piv_uuid     => piv_uuid,
+            piv_username => piv_user
+        );
+        for rec in (
+            select
+                jt.event_id,
+                jt.order_id,
+                jt.event_time,
+                jt.inf_port_ticket_id,
+                jt.connectivity_id,
+                jt.type,
+                jt.glasfaser_id,
+                jt.created,
+                jt.event_processing_date,
+                jt.position_id,
+                jt.code,
+                jt.original_code,
+                jt.text,
+                jt.activity_id,
+                jt.position_processing_date,
+                jt.availability_date
+            from
+                    json_table ( l_json, '$.data[*]'
+                        columns (
+                            event_id number path '$.id',
+                            order_id varchar2 ( 100 ) path '$.orderId',
+                            event_time varchar2 ( 50 ) path '$.eventTime',
+                            inf_port_ticket_id varchar2 ( 20 ) path '$.infPortTicketId',
+                            connectivity_id varchar2 ( 30 ) path '$.connectivityId',
+                            type varchar2 ( 10 ) path '$.type',
+                            glasfaser_id varchar2 ( 20 ) path '$.glasfaserId',
+                            created varchar2 ( 50 ) path '$.created',
+                            event_processing_date varchar2 ( 50 ) path '$.processingDate',
+                            scheduledate varchar2 ( 50 ) path '$.scheduleDate',
+                            availability_date varchar2 ( 50 ) path '$.availabilityDate',
+                            nested path '$.positions[*]'
+                                columns (
+                                    position_id number path '$.id',
+                                    code varchar2 ( 10 ) path '$.code',
+                                    original_code varchar2 ( 10 ) path '$.originalCode',
+                                    text varchar2 ( 4000 ) path '$.text',
+                                    activity_id varchar2 ( 50 ) path '$.activityId',
+                                    position_processing_date varchar2 ( 50 ) path '$.processingDate'
+                                )
+                        )
+                    )
+                jt
+        ) loop
+            pipe row ( rec );
+        end loop;
+
+        return;
+    exception
+        when others then
+            pck_logs.p_error(
+                pic_message      => fcl_params(),
+                piv_routine_name => cv_routine_name,
+                piv_scope        => g_scope
+            );
+    end f_get_wholebuy_events;
+
+    function f_get_infport_ticket_id (
+        piv_uuid               in varchar2,
+        piv_ext_auftragsnummer in varchar2,
+        piv_user               in varchar2
+    ) return varchar2 is
+
+        l_json          clob;
+        l_ret           varchar2(500 char);
+      -- Hilfsroutine zur Fehlerbehandlung------------------------------------------ 
+        cv_routine_name constant logs.routine_name%type := 'f_get_infport_ticket_id';
+
+        function fcl_params return logs.message%type is
+        begin
+            pck_format.p_add('piv_uuid', piv_uuid);
+            pck_format.p_add('piv_user', piv_user);
+            pck_format.p_add('piv_ext_auftragsnummer', piv_ext_auftragsnummer);
+            return pck_format.fcl_params(cv_routine_name);
+        end fcl_params; --
+    begin
+        l_json := pck_pob_rest.f_get_wholebuy_events(
+            piv_uuid     => piv_uuid,
+            piv_username => piv_user
+        );
+        select
+            max(jt.inf_port_ticket_id)
+        into l_ret
+        from
+                json_table ( l_json, '$.data[*]'
+                    columns (
+                        order_id varchar2 ( 100 ) path '$.orderId',
+                        inf_port_ticket_id varchar2 ( 20 ) path '$.infPortTicketId',
+                        connectivity_id varchar2 ( 30 ) path '$.connectivityId'
+                    )
+                )
+            jt
+        where
+                order_id = piv_uuid
+            and connectivity_id = piv_ext_auftragsnummer;
+
+        return l_ret;
+    exception
+        when others then
+            pck_logs.p_error(
+                pic_message      => fcl_params(),
+                piv_routine_name => cv_routine_name,
+                piv_scope        => g_scope
+            );
+    end f_get_infport_ticket_id;
+
 end pck_glascontainer;
 /
 
 
--- sqlcl_snapshot {"hash":"657a3cb724f2b774898f30186646735d0dbc901d","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"340c8b9c89eb5cc0ccf5c0167f754aed75e56b9e","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER","schemaName":"ROMA_MAIN","sxml":""}

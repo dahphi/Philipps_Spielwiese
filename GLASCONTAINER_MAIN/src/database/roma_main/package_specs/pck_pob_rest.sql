@@ -577,8 +577,19 @@ create or replace package pck_pob_rest as
         piv_uuid     in varchar2
     );
 
+/**
+ * FTTH-6417
+ * Nimmt OrderID entgegen und fetched die Wholebuy Events für diese
+ *
+ * @param piv_uuid [IN ] order_id,
+ */
+    function f_get_wholebuy_events (
+        piv_uuid     in varchar2,
+        piv_username in varchar2
+    ) return clob;
+
 end pck_pob_rest;
 /
 
 
--- sqlcl_snapshot {"hash":"2fe7b89e352f145ab4cf20c78bb20ae0ac42902c","type":"PACKAGE_SPEC","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"38e6f3611b7f6ec82d28343cab04e2861e22f6b1","type":"PACKAGE_SPEC","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}

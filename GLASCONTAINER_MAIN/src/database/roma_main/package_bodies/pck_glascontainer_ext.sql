@@ -1,5 +1,5 @@
 create or replace 
-PACKAGE BODY "PCK_GLASCONTAINER_EXT" AS 
+PACKAGE BODY             "PCK_GLASCONTAINER_EXT" AS 
 /**
  * Routinen für die APEX-App 2022 Glascontainer, die in andere Datenbank-Schemata
  * als ROMA_MAIN verzweigen oder hauptsächlich von dort lesen
@@ -863,8 +863,9 @@ Pause                           1573
       raise;
     END fb_is_cust_locked;
 END pck_glascontainer_ext;
+
 /
 
 
 
--- sqlcl_snapshot {"hash":"83698b673caaf53764353baad2431a422fd28879","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_EXT","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"59d5f91bfb478e8d6242669063460599f277ce81","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_EXT","schemaName":"ROMA_MAIN","sxml":""}

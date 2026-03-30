@@ -41,7 +41,7 @@ create or replace package body pck_glascontainer_gk as
     json_true                 constant varchar2(5) := 'true';
     json_false                constant varchar2(5) := 'false';
     db_name                   constant varchar2(30) := core.pck_env.fv_db_name;
-    
+
 --------------------------------------------------------------------------------
 
     function f_show_kontakt_tcom (
@@ -72,7 +72,7 @@ create or replace package body pck_glascontainer_gk as
 
             raise;
     end f_show_kontakt_tcom;
-  
+
 --------------------------------------------------------------------------------
 
     function f_show_kontakt_dg (
@@ -103,15 +103,16 @@ create or replace package body pck_glascontainer_gk as
 
             raise;
     end f_show_kontakt_dg;
-  
+
 --------------------------------------------------------------------------------
 
     function f_has_contact (
-        pi_knd_nr in varchar2
+        pi_knd_nr       in varchar2,
+        pi_unter_knd_nr in varchar2
     ) return boolean as
 
         l_count         number;
-        cv_routine_name constant logs.routine_name%type := 'get_first_contact_details';
+        cv_routine_name constant logs.routine_name%type := 'f_has_contact';
 
         function fcl_params return logs.message%type is
         begin
@@ -125,7 +126,8 @@ create or replace package body pck_glascontainer_gk as
         from
             v_siebel_ansprechpartner
         where
-            kundennummer = pi_knd_nr;
+                kundennummer = pi_knd_nr
+            and filialnummer = pi_unter_knd_nr;
 
         if l_count > 0 then
             return true;
@@ -147,6 +149,7 @@ create or replace package body pck_glascontainer_gk as
 
     procedure get_first_contact_details (
         pi_knd_nr                in varchar2,
+        pi_unter_knd_nr          in varchar2,
         po_ap_row_id             out varchar2,
         po_anrede                out varchar2,
         po_titel                 out varchar2,
@@ -178,11 +181,21 @@ create or replace package body pck_glascontainer_gk as
                 titel,
                 vorname,
                 nachname,
-                '+'
+                case
+                    when ap_x_fix_phon_country is not null then
+                            '+'
+                    else
+                        ''
+                end
                 || ap_x_fix_phon_country
                 || ap_x_fix_phon_onkz
                 || ap_x_fix_phon_nr as phone_number,
-                '+'
+                case
+                    when ap_mobil_country is not null then
+                            '+'
+                    else
+                        ''
+                end
                 || ap_mobil_country
                 || ap_mobil_onkz
                 || ap_x_mobil_nr    as mobile_number,
@@ -215,6 +228,8 @@ create or replace package body pck_glascontainer_gk as
                 v_siebel_ansprechpartner
             where
                     kundennummer = pi_knd_nr
+                and filialnummer = pi_unter_knd_nr
+                and rolle = 'Technischer Ansprechpartner'
                 and rownum = 1
             order by
                 nachname,
@@ -302,7 +317,7 @@ create or replace package body pck_glascontainer_gk as
         ) in ( '1', 'TRUE', 'Y', 'YES', 'J',
                'JA' );
     end; 
-    
+
 -------------------------------------------------------------------------------
 
   /** 
@@ -325,7 +340,7 @@ create or replace package body pck_glascontainer_gk as
                                || substr(i_timestamp, 12, 8), 'YYYY-MM-DD HH24:MI:SS' )
             end;
     end fd_json_timestamp; 
-    
+
 --------------------------------------------------------------------------------
 
   /** 
@@ -345,7 +360,7 @@ create or replace package body pck_glascontainer_gk as
                || '.'
                || upper(i_routine_name);
     end; 
-  
+
 --------------------------------------------------------------------------------
 
 /**
@@ -392,7 +407,7 @@ create or replace package body pck_glascontainer_gk as
         return l_siebel_link || v_account_id;
     end fv_href_siebel_kundenmaske;
 
-  
+
 --------------------------------------------------------------------------------
 
 /**
@@ -1188,7 +1203,7 @@ create or replace package body pck_glascontainer_gk as
                         landlord_addr_addition varchar2 ( 50 ) path "propertyOwnerDeclaration"."landlord"."address"."postalAddition",
                         landlord_addr_country varchar2 ( 50 ) path "propertyOwnerDeclaration"."landlord"."address"."country",
                         landlord_email varchar2 ( 50 ) path "propertyOwnerDeclaration"."landlord"."email",
-                        landlord_phone_countrycode varchar2 ( 50 ) path "propertyOwnerDeclaration"."landlord"."phoneNumber.countryCode"
+                        landlord_phone_countrycode varchar2 ( 50 ) path "propertyOwnerDeclaration"."landlord"."phoneNumber"."countryCode"
                         ,
                         landlord_phone_areacode varchar2 ( 50 ) path "propertyOwnerDeclaration"."landlord"."phoneNumber"."areaCode",
                         landlord_phone_number varchar2 ( 50 ) path "propertyOwnerDeclaration"."landlord"."phoneNumber"."number",
@@ -1541,7 +1556,7 @@ create or replace package body pck_glascontainer_gk as
 
             raise;
     end p_auftragsdaten_synchronisieren; 
-  
+
 --------------------------------------------------------------------------------
 
 /**
@@ -1598,7 +1613,7 @@ create or replace package body pck_glascontainer_gk as
                 end strav;
         end pob_adressen;
     end p_get_adresse; 
-  
+
 --------------------------------------------------------------------------------
 
   /** 
@@ -1737,9 +1752,9 @@ create or replace package body pck_glascontainer_gk as
             raise;
     end fr_preorder_from_json; 
 
- 
 
-    
+
+
 --------------------------------------------------------------------------------
 
   /** 
@@ -2241,7 +2256,7 @@ create or replace package body pck_glascontainer_gk as
 
             raise;
     end fc_preorders_wsget; 
-    
+
 --------------------------------------------------------------------------------
 
   /** 
@@ -2412,7 +2427,7 @@ create or replace package body pck_glascontainer_gk as
                                        || ' gesperrt. Änderungen am Auftrag können erst nach Ablauf der Sperre gespeichert werden.';
 
                     end if;
-          
+
             -- Auftragsdaten fuer externe Auftragsdaten Seite 32/34 ermitteln
                     l_stornokosten := pck_glascontainer.fv_stornokosten(
                         piv_uuid              => pov_auftragsdaten_gk.uuid,
@@ -2478,7 +2493,7 @@ create or replace package body pck_glascontainer_gk as
                     pov_ort_kompl     => pov_auftragsdaten_gk.anschluss_ort_kompl,
                     pov_adresse_kompl => pov_auftragsdaten_gk.anschluss_adresse_kompl
                 );
-        
+
         -- Auftragsdaten fuer externe Auftragsdaten Seite 32/34 ermitteln
                 l_stornokosten := pck_glascontainer.fv_stornokosten(
                     piv_uuid              => pov_auftragsdaten_gk.uuid,
@@ -2520,7 +2535,7 @@ create or replace package body pck_glascontainer_gk as
         v_can_cancel     varchar2(4000);
         d_last_sync      date;
     begin
-  
+
     -- CAN_CANCEL ermittteln        
         if ( piv_wholebuy_partner is not null ) then
             v_can_cancel := pck_glascontainer.fv_can_cancel(piv_uuid);
@@ -2610,7 +2625,6 @@ create or replace package body pck_glascontainer_gk as
             return v_return_warning;
         end if;  
 
-  
     -- Last Exit
         pov_alert_type := 't-Alert--info';
         return null;
@@ -2623,7 +2637,7 @@ create or replace package body pck_glascontainer_gk as
     ) return varchar2 as
 
         l_ret           varchar2(4000 char);
-    
+
     -- Hilfsroutine zur Fehlerbehandlung------------------------------------------ 
         cv_routine_name constant logs.routine_name%type := 'fv_new_connectivity_id';
 
@@ -2659,4 +2673,4 @@ end pck_glascontainer_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"3f8de7129a8cf3ad17b8557162abd43ebba9e2e3","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"71c251c1d522e11fcbabc819ce457b062a9ca445","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_GK","schemaName":"ROMA_MAIN","sxml":""}

@@ -5,9 +5,9 @@ create or replace package body pck_rufnummer as
  * @creation 2023-12-07  Andreas Wismann  <wismann@when-others.com>
  * @usage    @ticket FTTH-2904
  */
- 
+
   -- Test auf Umlaute/Euro: ÄÖÜäöüß/?
-  
+
   -- Im Unterschied zu PCK_RUFNUMMER.version ist die Version im PACKAGE BODY
   -- meist höher (die informelle APEX-Abfrage auf Seite 2022:10050 ermittelt den 
   -- höheren der beiden Werte über die FUNCTION get_body_version)
@@ -24,8 +24,7 @@ create or replace package body pck_rufnummer as
     begin
         null;
     end na;
-  
-  
+
 /**
  * Gibt anhand dreier separater Bestandteile einer Festnetz- oder Mobil-Rufnummer
  * einen formatierten Rufnummer-Gesamtstring zurück, der sich als
@@ -76,11 +75,10 @@ create or replace package body pck_rufnummer as
         then
             return null;
         end if;
-    
-    
+
     -- Normalfall:
         return trim(
-      
+
       -- Laenderkennzeichen:
       ----------------------------------------------------------------------------
             case
@@ -92,7 +90,7 @@ create or replace package body pck_rufnummer as
                     )))
             end
             || piv_leerzeichen
-      
+
       -- Netzvorwahl:
       ----------------------------------------------------------------------------
             ||
@@ -105,7 +103,7 @@ create or replace package body pck_rufnummer as
                 else '--?--'
             end
             || piv_leerzeichen
-      
+
       -- Rufnummer:
       ----------------------------------------------------------------------------
             || case
@@ -117,10 +115,9 @@ create or replace package body pck_rufnummer as
         );
 
     end fv_anzeige;
-   
-   
-   
-   
+
+
+
 /**
  * Wandelt eine vollständig übergebene Rufnummer ins E.164-Format um, soweit dies
  * möglich ist, ansonsten wird sie 1:1 zurückgegeben
@@ -153,7 +150,7 @@ create or replace package body pck_rufnummer as
         if v_rufnummer is null then
             return null;
         end if;
-  
+
     -- Fehlerfall 1: Es kommen ausschließlich Buchstaben oder Sonderzeichen vor:
         if
             trim(piv_rufnummer) is not null
@@ -161,7 +158,7 @@ create or replace package body pck_rufnummer as
         then
             return fehlerfall;
         end if;  
-  
+
     -- Fehlerfall 2: Nummer ist zu lang gemäß Spezifikation
         if length(v_rufnummer) > 15 then
             return fehlerfall;
@@ -174,9 +171,8 @@ create or replace package body pck_rufnummer as
 --  EXCEPTION
 --    WHEN OTHERS THEN RETURN NULL;
     end fv_e164;
-  
-  
-  
+
+
 /**
  * Gibt anhand dreier separater Bestandteile einer Festnetz- oder Mobil-Rufnummer
  * einen formatierten Rufnummer-Gesamtstring im Format E.164 zurück, der sich als
@@ -225,13 +221,12 @@ create or replace package body pck_rufnummer as
         v_3         varchar2(15); -- Subscriber Number
         fehlercode  constant varchar2(15) := '';
     begin
-  
-  
+
     -- Alle nicht-nummerischen Bestandteile entfernen
         v_1 := trim(leading '0' from regexp_replace(piv_1, not_a_number));
         v_2 := trim(leading '0' from regexp_replace(piv_2, not_a_number));
         v_3 := regexp_replace(piv_3, not_a_number);
-    
+
     -- Fehlerfall 1: Keine der Eingaben enthält eine Nummer
         if
             v_1 is null
@@ -240,15 +235,14 @@ create or replace package body pck_rufnummer as
         then
             return null;
         end if;
-    
+
     -- Fehlerfall: Irgendein Bestandteil der Rufnummer fehlt
         if v_1 is null
            or v_2 is null
         or v_3 is null then
             return fehlercode;
         end if;  
-  
-  
+
     -- Normalfall:
         v_rufnummer := trim(
           -- Laenderkennzeichen:
@@ -257,7 +251,7 @@ create or replace package body pck_rufnummer as
                             || v_2 -- || piv_leerzeichen
           -- Rufnummer:
                             || v_3);
-    
+
     -- Fehlerfall 3: Nummer ist zu lang gemäß Spezifikation
         if length(v_rufnummer) > 15 then
             return fehlercode;
@@ -267,9 +261,8 @@ create or replace package body pck_rufnummer as
         when others then
             return null;
     end fv_e164;
-  
-  
-  
+
+
   -- Wird benötigt von vf_e164, nicht exportieren.
     procedure split_laendervorwahl (
         i_rufnummer      in varchar2,
@@ -1037,8 +1030,7 @@ create or replace package body pck_rufnummer as
             );
             raise;
     end split_laendervorwahl;
- 
- 
+
   -- Wird benötigt von vf_e164, nicht exportieren.
     function fv_laendervorwahl (
         i_rufnummer in varchar2
@@ -1056,8 +1048,7 @@ create or replace package body pck_rufnummer as
         );
         return v_laendervorwahl;
     end fv_laendervorwahl;
-  
-  
+
 --@progress 2024-01-18----------------------------------------------------------  
 /**
  * Gibt alle in der Glasfaser-Bestellstrecke erlaubten Landesvorwahlen als List of Values zurück
@@ -1123,8 +1114,7 @@ create or replace package body pck_rufnummer as
         pipe row ( new t_extended_lov('971', 'Vereinigte Arabische Emirate', null, null) );
         pipe row ( new t_extended_lov('972', 'Israel', null, null) );
     end;
-  
-  
+
 -- @progress 2024-06-26
   /**
    * Gibt anhand dreier separater Bestandteile einer Festnetz- oder Mobil-Rufnummer
@@ -1148,7 +1138,7 @@ create or replace package body pck_rufnummer as
     is
     begin
         return trim(
-  
+
       -- Laenderkennzeichen:
       ----------------------------------------------------------------------------
             case
@@ -1160,7 +1150,7 @@ create or replace package body pck_rufnummer as
                     )))
             end
             || piv_leerzeichen
-  
+
       -- Netzvorwahl:
       ----------------------------------------------------------------------------
             ||
@@ -1173,7 +1163,7 @@ create or replace package body pck_rufnummer as
                 else '--?--'
             end
             || piv_leerzeichen
-  
+
       -- Rufnummer:
       ----------------------------------------------------------------------------
             || case
@@ -1189,4 +1179,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"4c0001d449d381381448048d5f176eaab7f3d85f","type":"PACKAGE_BODY","name":"PCK_RUFNUMMER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"6beb25a68e1a1fd894af875cf6e71df2aeb0382e","type":"PACKAGE_BODY","name":"PCK_RUFNUMMER","schemaName":"ROMA_MAIN","sxml":""}

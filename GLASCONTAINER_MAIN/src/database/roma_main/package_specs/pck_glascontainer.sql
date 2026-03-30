@@ -109,6 +109,10 @@ create or replace package pck_glascontainer as
   -- Konstanten, die mit den ENUMs des Webservice korrespondieren: 
     enum_anrede_maennlich constant t_enum := 'MISTER';
     enum_anrede_weiblich constant t_enum := 'MISS';
+    enum_anrede_unknown constant t_enum := 'UNKNOWN';
+    enum_anrede_bruder constant t_enum := 'BROTHER';
+    enum_anrede_schwester constant t_enum := 'SISTER';
+    enum_anrede_familie constant t_enum := 'FAMILY';
     enum_devicecategory_byod constant t_enum := 'BYOD';
     enum_devicecategory_basic constant t_enum := 'BASIC'; -- neu @ticket FTTH-3546, @ticket FTTH-3562
     enum_devicecategory_premium constant t_enum := 'PREMIUM';
@@ -142,6 +146,27 @@ create or replace package pck_glascontainer as
   -- Siehe auch Trigger auf Tabelle FTTH_WS_SYNC_PREORDERS (dort wird derselbe 
   -- String verwendet, aber ohne Bezug auf dieses Package, da sonst der 
   -- Trigger überflüssigerweise ein komplettes Package instanziieren müsste 
+
+    type wholebuy_events_rec is record (
+            event_id                 number,
+            order_id                 varchar2(100),
+            event_time               varchar2(50),
+            inf_port_ticket_id       varchar2(20),
+            connectivity_id          varchar2(30),
+            type                     varchar2(10),
+            glasfaser_id             varchar2(20),
+            created                  varchar2(50),
+            event_processing_date    varchar2(50),
+            position_id              number,
+            code                     varchar2(10),
+            original_code            varchar2(10),
+            text                     varchar2(4000),
+            activity_id              varchar2(50),
+            position_processing_date varchar2(50),
+            availability_date        varchar2(50)
+    );
+    type wholebuy_events_tab is
+        table of wholebuy_events_rec;
 
   /** 
    * Gibt den Versionsstring des Package Bodies zurück 
@@ -2691,8 +2716,20 @@ TYPE T_KOMMENTARE IS TABLE OF T_KOMMENTAR;
         pi_haus_lfd_nr in number
     ) return varchar2;
 
+    function f_get_wholebuy_events (
+        piv_uuid in varchar2,
+        piv_user in varchar2
+    ) return wholebuy_events_tab
+        pipelined;
+
+    function f_get_infport_ticket_id (
+        piv_uuid               in varchar2,
+        piv_ext_auftragsnummer in varchar2,
+        piv_user               in varchar2
+    ) return varchar2;
+
 end pck_glascontainer;
 /
 
 
--- sqlcl_snapshot {"hash":"909e4a128adbadb2eebdbaf55a7347f63202ae72","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"ae64564201b98df0d1faedfa379918804907ec5a","type":"PACKAGE_SPEC","name":"PCK_GLASCONTAINER","schemaName":"ROMA_MAIN","sxml":""}

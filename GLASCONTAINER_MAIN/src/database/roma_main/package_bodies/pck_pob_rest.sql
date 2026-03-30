@@ -2063,6 +2063,97 @@ create or replace package body pck_pob_rest as
             raise;
     end p_provider_change_post;
 
+/**
+ * FTTH-6417
+ * Nimmt OrderID entgegen und fetched die Wholebuy Events für diese
+ *
+ * @param piv_uuid [IN ] order_id,
+ */
+    function f_get_wholebuy_events (
+        piv_uuid     in varchar2,
+        piv_username in varchar2
+    ) return clob is
+
+        v_ws_url             varchar2(255);
+        v_ws_username        varchar2(255);
+        v_ws_password        varchar2(255);
+        v_ws_response        clob;
+        v_ws_statuscode      integer;
+        v_rest_error_message varchar2(5000 char);
+  -- Hilfsroutine zur Fehlerbehandlung------------------------------------------
+        cv_routine_name      constant logs.routine_name%type := 'f_get_wholebuy_events';
+
+        function fcl_params return logs.message%type is
+        begin
+            pck_format.p_add('piv_uuid',
+                             dbms_lob.substr(piv_uuid, 1000, 1));
+            return pck_format.fcl_params(cv_routine_name);
+        end fcl_params;
+  -- /Hilfsroutine zur Fehlerbehandlung ----------------------------------------     
+    begin
+    -- Header clearen:
+        p_init_webservice(
+            piv_kontext     => kontext_preorderbuffer,
+            piv_ws_key      => 'WHOLEBUY_EVENTS_GET',
+            pov_ws_url      => v_ws_url,
+            pov_ws_username => v_ws_username,
+            pov_ws_password => v_ws_password
+        );
+
+        v_ws_url := replace(v_ws_url, c_ws_orderid_token, piv_uuid);
+        v_ws_response := apex_web_service.make_rest_request(
+            p_url              => v_ws_url,
+            p_http_method      => c_ws_method_get,
+            p_username         => v_ws_username,
+            p_password         => v_ws_password,
+            p_transfer_timeout => c_ws_transfer_timeout,
+            p_wallet_path      => c_ws_wallet_path,
+            p_wallet_pwd       => c_ws_wallet_pwd,
+            p_body             => null
+        );
+
+        v_ws_statuscode := apex_web_service.g_status_code;
+        p_log_webservice_aufruf(
+            piv_application         => g_app_id_glascontainer,
+            piv_scope               => cv_routine_name,
+            piv_request_url         => v_ws_url,
+            piv_method              => c_ws_method_post,
+            piv_parameters          => 'ID',
+            piv_parameter_values    => piv_uuid,
+            piv_body                => null,
+            piv_response_statuscode => v_ws_statuscode,
+            piv_app_user            => piv_username,
+            piv_errormessage        => v_ws_response
+        );
+
+        if v_ws_statuscode <> c_ws_statuscode_ok then
+            v_rest_error_message := pck_pob_rest.fv_get_error_message(piv_json_response => v_ws_response);
+            if v_rest_error_message is null then
+                if v_ws_statuscode is not null then
+                    v_rest_error_message := pck_glascontainer.fv_http_statusmessage(v_ws_statuscode);
+                else
+                    v_rest_error_message := 'Es ist ein unerwarteter Fehler aufgetreten!';
+                end if;
+
+            end if;
+
+            raise e_request_not_successful;
+        end if;
+
+        return v_ws_response;
+    exception
+        when e_request_not_successful then
+            raise_application_error(-20000 - v_ws_statuscode, v_rest_error_message);
+        when others then
+            pck_logs.p_error(
+                pic_message      => fcl_params(),
+                piv_routine_name => qualified_name(cv_routine_name),
+                piv_scope        => g_scope
+            );
+
+            raise;
+    end f_get_wholebuy_events;
+
 --------------------------------------------------------------------------------  
 -- Package-Initialisierung                                                    --
 --------------------------------------------------------------------------------
@@ -2075,4 +2166,4 @@ end;
 /
 
 
--- sqlcl_snapshot {"hash":"28ab8ed66dc6625b473d4a604d93e64a60046093","type":"PACKAGE_BODY","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"080c6348af27882c0b88dfe8831ddfcbcc3ba89f","type":"PACKAGE_BODY","name":"PCK_POB_REST","schemaName":"ROMA_MAIN","sxml":""}

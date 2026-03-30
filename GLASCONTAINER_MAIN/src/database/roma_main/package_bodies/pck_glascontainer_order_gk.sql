@@ -16,24 +16,27 @@ create or replace package body pck_glascontainer_order_gk as
     c_nein       constant varchar2(1) := '0';
     c_ja         constant varchar2(1) := '1';
 
- 
+
 ---------------------------------------------------------------------------------------------------
+
     procedure p_gk_daten_acheck_light (
-        pin_haus_lfd_nr        in number,
-        piv_app_user           in varchar2,
-        pov_mandant            out varchar2,
-        pov_wholebuy_partner   out varchar2,
-        pov_ausbaus_status     out varchar2,
-        pov_merged_access_type out varchar2,
-        pov_planned_bandwidth  out varchar2,
-        pov_eigentuemerdaten   out varchar2,
-        pov_adress_complete    out varchar2
+        pin_haus_lfd_nr           in number,
+        piv_app_user              in varchar2,
+        pov_mandant               out varchar2,
+        pov_wholebuy_partner      out varchar2,
+        pov_ausbaus_status        out varchar2,
+        pov_merged_access_type    out varchar2,
+        pov_planned_bandwidth     out varchar2,
+        pov_eigentuemerdaten      out varchar2,
+        pov_adress_complete       out varchar2,
+        pov_availability_date_raw out varchar2
     ) is
 
-        v_json          varchar2(32767); -- 32k ist wesentlich größer als die Antwort vom Anschlusscheck
+        v_json                  varchar2(32767); -- 32k ist wesentlich größer als die Antwort vom Anschlusscheck
+        v_ausbaustatus_landline varchar2(100);
 
   -- Hilfsroutine zur Fehlerbehandlung------------------------------------------
-        cv_routine_name constant logs.routine_name%type := 'p_gk_daten_acheck_light';
+        cv_routine_name         constant logs.routine_name%type := 'p_gk_daten_acheck_light';
 
         function fcl_params return logs.message%type is
         begin
@@ -55,14 +58,16 @@ create or replace package body pck_glascontainer_order_gk as
             jt.partner,
             jt.merged_access_type,
             jt.adress_complete,
-            jt.mandant
+            jt.mandant,
+            jt.ausbau_status
         into
             pov_planned_bandwidth,
             pov_eigentuemerdaten,
             pov_wholebuy_partner,
             pov_merged_access_type,
             pov_adress_complete,
-            pov_mandant
+            pov_mandant,
+            pov_ausbaus_status
         from
             dual,
             json_table ( v_json, '$'
@@ -70,20 +75,24 @@ create or replace package body pck_glascontainer_order_gk as
                         planned_bandwidth varchar2 path '$.objectInformation.technicalPlannedBandwidth',
                         eigentuemerdaten varchar2 path '$.objectInformation.wholebuy.eigentuemerdatenErforderlich',
                         partner varchar2 path '$.objectInformation.wholebuy.partner',
+                        ausbau_status varchar2 path '$.objectInformation.ausbauStatus',
                         merged_access_type varchar2 path '$.objectInformation.mergedAccessType',
+                        availabilitydateraw varchar2 path '$.objectInformation.availabilityDateRaw',
                         adress_complete varchar2 path '$.address.addressComplete',
                         mandant varchar2 path '$.address.mandant'
                     )
                 )
             jt;
+    -- AvailabilityDate ermitteln:
+        pov_availability_date_raw := pck_glascontainer_order_gk.f_get_availability_date(v_json);
 
-    -- Ausbaustatus soll aus den LandlinePromotions ermittelt werden
+    -- Ausbaustatus soll aus den LandlinePromotions ermittelt werden, wenn eine vorhanden ist
     -- Diese müssen über den mergedAccessType abgeglichen werden.
     -- Und es exisitert nicht immer Eintrag mit der entsprechenden Technologie 
         begin
             select
                 jt.ausbaustatus
-            into pov_ausbaus_status
+            into v_ausbaustatus_landline
             from
                 dual,
                 json_table ( v_json, '$'
@@ -101,9 +110,15 @@ create or replace package body pck_glascontainer_order_gk as
 
         exception
             when others then
-                pov_ausbaus_status := 'UNBEKANNT';
+                v_ausbaustatus_landline := null;
         end;
 
+        if ( v_ausbaustatus_landline is not null ) then
+            pov_ausbaus_status := v_ausbaustatus_landline;
+        end if;
+        if ( pov_ausbaus_status is null ) then
+            pov_ausbaus_status := 'UNBEKANNT';
+        end if;
     exception
         when others then
             pck_logs.p_error(
@@ -114,7 +129,97 @@ create or replace package body pck_glascontainer_order_gk as
 
             raise;
     end p_gk_daten_acheck_light;
-  
+
+    function f_get_availability_date (
+        pi_json in varchar2
+    ) return varchar2 as
+
+        l_ret                varchar2(50);
+        l_availability_date  varchar2(50);
+        l_merged_access_type varchar2(50 char);
+        l_ausbau_status      varchar2(50 char);
+
+    -- Hilfsroutine zur Fehlerbehandlung------------------------------------------
+        cv_routine_name      constant logs.routine_name%type := 'p_gk_daten_acheck_light';
+
+        function fcl_params return logs.message%type is
+        begin
+            pck_format.p_add('pi_json', pi_json);
+            return pck_format.fcl_params(cv_routine_name);
+        end fcl_params;
+
+    begin
+        select
+            jt.merged_access_type,
+            jt.ausbau_status,
+            availabilitydateraw
+        into
+            l_merged_access_type,
+            l_ausbau_status,
+            l_availability_date
+        from
+                json_table ( pi_json, '$'
+                    columns (
+                        merged_access_type varchar2 path '$.objectInformation.mergedAccessType',
+                        ausbau_status varchar2 path '$.objectInformation.ausbauStatus',
+                        availabilitydateraw varchar2 ( 50 ) path '$.objectInformation.availabilityDateRaw'
+                    )
+                )
+            jt;
+
+        if
+            l_merged_access_type in ( 'FTTH_BSA_L2', 'FTTH_BSA_L2_DG' )
+            and l_ausbau_status in ( 'AREAPLANNED', 'PREMARKETING', 'UNDER_CONSTRUCTION' )
+        then
+            l_ret := l_availability_date;
+        else
+            select
+                case
+                    when jt.availability = 'REALIZABLE' then
+                        plannedavailabilitydate
+                    else
+                        null
+                end as availability_date
+            into l_availability_date
+            from
+                    json_table ( pi_json, '$'
+                        columns (
+                            merged_access_type varchar2 path '$.objectInformation.mergedAccessType',
+                            nested path '$.landlinePromotions[*]'
+                                columns (
+                                    technology varchar2 ( 50 ) path '$.technology',
+                                    ausbau_status_llp varchar2 ( 50 ) path '$.ausbauStatus',
+                                    availability varchar2 ( 50 ) path '$.availability',
+                                    plannedavailabilitydate varchar2 ( 50 ) path '$.plannedAvailabilityDate'
+                                )
+                        )
+                    )
+                jt  -- Variante 1 Homes Connected: Landline Promotion Ausbaustatus ist Homes Connected und Technologie und Merged Access Type = FTTH_BSA_L2_DG
+            where
+                ( jt.merged_access_type = 'FTTH_BSA_L2_DG'
+                  and jt.ausbau_status_llp = 'HOMES_CONNECTED'
+                  and jt.technology = 'FTTH_BSA_L2_DG' )
+                or
+              -- Variante 2 Homes Ready: Landline Promotion Ausbaustatus ist Homes Ready und Technologie und Merged Access Type = FTTH_BSA_L2
+                 ( jt.merged_access_type = 'FTTH_BSA_L2'
+                     and jt.ausbau_status_llp = 'HOMES_READY'
+                     and jt.technology = 'FTTH_BSA_L2' );
+
+            l_ret := l_availability_date;
+        end if;
+
+        return l_ret;
+    exception
+        when others then
+            pck_logs.p_error(
+                pic_message      => fcl_params(),
+                piv_routine_name => cv_routine_name,
+                piv_scope        => g_scope
+            );
+
+            raise;
+    end f_get_availability_date;
+
 ---------------------------------------------------------------------------------------------------
 
     function fv_format_knd_nr (
@@ -140,7 +245,7 @@ create or replace package body pck_glascontainer_order_gk as
         when others then
             return null;
     end fv_format_knd_nr;
-  
+
 ---------------------------------------------------------------------------------------------------
 
     function fv_format_haus_lfd_nr (
@@ -164,7 +269,7 @@ create or replace package body pck_glascontainer_order_gk as
         when others then
             return null;
     end;
-  
+
 ---------------------------------------------------------------------------------------------------
 
     function fv_format_bandwith (
@@ -247,7 +352,7 @@ create or replace package body pck_glascontainer_order_gk as
 
         return v_ret_error_message;
     end fv_check_link_parameter;
-  
+
 --------------------------------------------------------------------------------------------------- 
 
     function fv_check_gk_wb_order (
@@ -258,7 +363,7 @@ create or replace package body pck_glascontainer_order_gk as
         v_ret_order_yn  varchar2(1);
         v_json          varchar2(32767); -- 32k ist wesentlich größer als die Antwort vom Anschlusscheck
         n_anz           pls_integer;
-    
+
   -- Hilfsroutine zur Fehlerbehandlung------------------------------------------
         cv_routine_name constant logs.routine_name%type := 'fv_check_gk_wb_order';
 
@@ -332,7 +437,7 @@ create or replace package body pck_glascontainer_order_gk as
     end fv_check_gk_wb_order;
 
 --------------------------------------------------------------------------------------------------- 
-  
+
   /**
  * Wertet das User-Verhalten in der Bestellerfassung anonym aus und gibt die Zahlen pipelined zurück,
  * die dann vom Classic Report auf Seite 10056 im Glascontainer angezeigt werden.
@@ -375,10 +480,9 @@ create or replace package body pck_glascontainer_order_gk as
         eigentuemer_daten_n naturaln := 0;
         page_160_visited    naturaln := 0;
         page_170_visited    naturaln := 0;
-    
-    
-    
-    
+
+
+
     --------------------------
         bestellungen        naturaln := 0;
         pos_unbekannt       natural := null;
@@ -623,20 +727,6 @@ create or replace package body pck_glascontainer_order_gk as
         piv_propertyownerdeclaration_landlord_phonenumber_areacode    in varchar2,
         piv_propertyownerdeclaration_landlord_phonenumber_number      in varchar2,
         piv_contactpersons                                            in t_contact_persons
-                          /*
-                          piv_propertyOwnerDeclaration_customer_contactPersons_type                           IN VARCHAR2,
-                          piv_propertyOwnerDeclaration__contactPersons_siebelRowId                    IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_salutation                     IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_firstName                      IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_lastName                       IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_phoneNumber_countryCode        IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_phoneNumber_areaCode           IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_phoneNumber_number             IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_mobilePhoneNumber_countryCode  IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_mobilePhoneNumber_areaCode     IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_mobilePhoneNumber_number       IN VARCHAR2,
-                          piv_propertyOwnerDeclaration_landlord_contactPersons_email                          IN VARCHAR2
-                          */
     ) return clob is
         vj_body json_object_t := new json_object_t(c_empty_json);
     begin
@@ -706,18 +796,18 @@ create or replace package body pck_glascontainer_order_gk as
 */
 
         vj_body.put('customerNumber', piv_customernumber);
-        vj_body.put('subCustomerNumber', piv_subcustomernumber);
+        vj_body.put('subCustomerNumber', to_number(piv_subcustomernumber));
         vj_body.put('siebelOrderNumber', piv_siebelordernumber);
         vj_body.put('siebelOrderRowId', piv_siebelorderrowid);
         vj_body.put('client', piv_client);
         vj_body.put('templateId', piv_templateid);
     --vj_body.put('expansionStatus', piv_expansionStatus);
-        vj_body.put('availabilityDate', piv_availabilitydate);
+   -- vj_body.put('availabilityDate' , piv_availabilityDate);
         vj_body.put('createdBy', piv_createdby);
         << installation >> declare
             vj_installation json_object_t := new json_object_t(c_empty_json);
         begin
-            vj_installation.put('houseSerialNumber', piv_houseserialnumber);
+            vj_installation.put('houseSerialNumber', to_number(piv_houseserialnumber));
         end;
 
         << propertyownerdeclaration >> declare
@@ -725,73 +815,76 @@ create or replace package body pck_glascontainer_order_gk as
         begin
             vj_propertyownerdeclaration.put('propertyOwnerRole', piv_propertyownerdeclaration_propertyownerrole);
             vj_propertyownerdeclaration.put('residentialUnit', piv_propertyownerdeclaration_residentialunit);
-            vj_propertyownerdeclaration.put('email', piv_propertyownerdeclaration_landlord_email);
-            if piv_propertyownerdeclaration_propertyownerrole <> 'OWNER' then
+      --vj_propertyownerdeclaration.put('email'            , piv_propertyOwnerDeclaration_landlord_email);
+
+            if piv_gee_kontaktdaten_bekannt = 1 then
                 declare
                     vj_landlord             json_object_t := new json_object_t(c_empty_json);
                     vj_landlord_address     json_object_t := new json_object_t(c_empty_json);
                     vj_landlord_phonenumber json_object_t := new json_object_t(c_empty_json);
                     vj_landlord_name        json_object_t := new json_object_t(c_empty_json);
                 begin
-                    if piv_gee_kontaktdaten_bekannt = 1 then
-                        vj_landlord.put('legalForm', piv_propertyownerdeclaration_landlord_legalform);
-                        if piv_propertyownerdeclaration_landlord_legalform <> 'PRIVATE_CITIZEN' then
-                            vj_landlord.put('businessOrName', piv_propertyownerdeclaration_landlord_businessorname);
-                        end if;
+                    vj_landlord.put('legalForm', piv_propertyownerdeclaration_landlord_legalform);
+                    if piv_propertyownerdeclaration_landlord_legalform <> 'PRIVATE_CITIZEN' then
+                        vj_landlord.put('businessOrName', piv_propertyownerdeclaration_landlord_businessorname);
+                    end if;
               -- Die Felder zu den Persönlichen Daten zum Vermieter nur mitsenden, wenn dieser eine Privatperson ist
               -- (ansonsten wären diese Werte null):
-                        if piv_propertyownerdeclaration_landlord_legalform = 'PRIVATE_CITIZEN' then
-                            vj_landlord.put('salutation', piv_propertyownerdeclaration_landlord_salutation);
-                            vj_landlord.put('title', piv_propertyownerdeclaration_landlord_title);
-                            vj_landlord_name.put('first', piv_propertyownerdeclaration_landlord_name_first);
-                            vj_landlord_name.put('last', piv_propertyownerdeclaration_landlord_name_last);
-                            vj_landlord.put('name', vj_landlord_name);
-                        end if;
-
-                        vj_landlord_address.put('street', piv_propertyownerdeclaration_landlord_address_street);
-                        vj_landlord_address.put('houseNumber', piv_propertyownerdeclaration_landlord_address_housenumber);
-                        vj_landlord_address.put('zipCode', piv_propertyownerdeclaration_landlord_address_zipcode);
-                        vj_landlord_address.put('city', piv_propertyownerdeclaration_landlord_address_city);
-                        vj_landlord_address.put('postalAddition', piv_propertyownerdeclaration_landlord_address_postaladdition);
-                        vj_landlord_address.put('country', piv_propertyownerdeclaration_landlord_address_country);
-                        vj_landlord.put('address', vj_landlord_address);
-                        vj_landlord.put('email', piv_propertyownerdeclaration_landlord_email);
-                        vj_landlord_phonenumber.put('countryCode', piv_propertyownerdeclaration_landlord_phonenumber_countrycode);
-                        vj_landlord_phonenumber.put('areaCode', piv_propertyownerdeclaration_landlord_phonenumber_areacode);
-                        vj_landlord_phonenumber.put('number', piv_propertyownerdeclaration_landlord_phonenumber_number);
-                        vj_landlord.put('phoneNumber', vj_landlord_phonenumber);
-                        vj_propertyownerdeclaration.put('landlord', vj_landlord);
+                    if piv_propertyownerdeclaration_landlord_legalform = 'PRIVATE_CITIZEN' then
+                        vj_landlord.put('salutation', piv_propertyownerdeclaration_landlord_salutation);
+                        vj_landlord.put('title', piv_propertyownerdeclaration_landlord_title);
+                        vj_landlord_name.put('first', piv_propertyownerdeclaration_landlord_name_first);
+                        vj_landlord_name.put('last', piv_propertyownerdeclaration_landlord_name_last);
+                        vj_landlord.put('name', vj_landlord_name);
                     end if;
 
-                end;
-            end if; -- /!OWNER
+                    vj_landlord_address.put('street', piv_propertyownerdeclaration_landlord_address_street);
+                    vj_landlord_address.put('houseNumber', piv_propertyownerdeclaration_landlord_address_housenumber);
+                    vj_landlord_address.put('zipCode', piv_propertyownerdeclaration_landlord_address_zipcode);
+                    vj_landlord_address.put('city', piv_propertyownerdeclaration_landlord_address_city);
+                    vj_landlord_address.put('postalAddition', piv_propertyownerdeclaration_landlord_address_postaladdition);
+                    vj_landlord_address.put('country', piv_propertyownerdeclaration_landlord_address_country);
+                    vj_landlord.put('address', vj_landlord_address);
+                    vj_landlord.put('email', piv_propertyownerdeclaration_landlord_email);
+                    vj_landlord_phonenumber.put('countryCode', piv_propertyownerdeclaration_landlord_phonenumber_countrycode);
+                    vj_landlord_phonenumber.put('areaCode', piv_propertyownerdeclaration_landlord_phonenumber_areacode);
+                    vj_landlord_phonenumber.put('number', piv_propertyownerdeclaration_landlord_phonenumber_number);
+                    vj_landlord.put('phoneNumber', vj_landlord_phonenumber);
+                    vj_propertyownerdeclaration.put('landlord', vj_landlord);
+                end; -- Eigentuemerdaten erforderlich
+            end if;
 
             vj_body.put('propertyOwnerDeclaration', vj_propertyownerdeclaration);
         end propertyownerdeclaration;
+
+        << installation >> declare
+            vj_installation json_object_t := new json_object_t(c_empty_json);
+        begin
+            vj_installation.put('houseSerialNumber', to_number(piv_houseserialnumber));
+            vj_body.put('installation', vj_installation);
+        end installation;
 
         << contactpersons >> declare
             vj_contactpersons    json_array_t := new json_array_t();
             vj_contactperson     json_object_t := new json_object_t(c_empty_json);
             vj_phonenumber       json_object_t := new json_object_t(c_empty_json);
             vj_mobilephonenumber json_object_t := new json_object_t(c_empty_json);
+            vj_name              json_object_t := new json_object_t(c_empty_json);
         begin
-    
+
       -- Schleife über die Collection
             for i in 1..piv_contactpersons.count loop
-        --vj_contactPerson     := c_empty_json;
-        --vj_PhoneNumber       := c_empty_json;
-        --vj_mobilePhoneNumber := c_empty_json;
-
                 vj_contactperson.put('type',
                                      piv_contactpersons(i).contact_type);
                 vj_contactperson.put('siebelRowId',
                                      piv_contactpersons(i).siebelrowid);
                 vj_contactperson.put('salutation',
                                      piv_contactpersons(i).salutation);
-                vj_contactperson.put('firstName',
-                                     piv_contactpersons(i).firstname);
-                vj_contactperson.put('lastName',
-                                     piv_contactpersons(i).lastname);
+                vj_name.put('first',
+                            piv_contactpersons(i).firstname);
+                vj_name.put('last',
+                            piv_contactpersons(i).lastname);
+                vj_contactperson.put('name', vj_name);
                 vj_contactperson.put('email',
                                      piv_contactpersons(i).email);
                 vj_phonenumber.put('countryCode',
@@ -800,7 +893,7 @@ create or replace package body pck_glascontainer_order_gk as
                                    piv_contactpersons(i).phonenumber_areacode);
                 vj_phonenumber.put('number',
                                    piv_contactpersons(i).phonenumber_number);
-                vj_contactperson.put('phoneNumber', vj_phonenumber);
+                vj_contactperson.put('landlinePhoneNumber', vj_phonenumber);
                 vj_mobilephonenumber.put('countryCode',
                                          piv_contactpersons(i).mobilephonenumber_countrycode);
                 vj_mobilephonenumber.put('areaCode',
@@ -810,26 +903,9 @@ create or replace package body pck_glascontainer_order_gk as
                 vj_contactperson.put('mobilePhoneNumber', vj_mobilephonenumber);
                 vj_contactpersons.append(vj_contactperson);
             end loop;
-  
-    /*
-         vj_contactPersons.put('type'             , piv_contactPersons_endkunde(1).contact_type); 
-         vj_contactPersons.put('siebelRowId'      , piv_contactPersons_endkunde(1).siebelRowId); 
-         
-         vj_contactPersons.put('salutation'       , piv_propertyOwnerDeclaration_landlord_contactPersons_salutation); 
-         vj_contactPersons.put('firstName'        , piv_propertyOwnerDeclaration_landlord_contactPersons_firstName); 
-         vj_contactPersons.put('lastName'         , piv_propertyOwnerDeclaration_landlord_contactPersons_lastName); 
-         vj_contactPersons.put('email'            , piv_propertyOwnerDeclaration_landlord_contactPersons_email); 
-            vj_phoneNumber.put('countryCode'      , piv_propertyOwnerDeclaration_landlord_contactPersons_phoneNumber_countryCode); 
-            vj_phoneNumber.put('areaCode'         , piv_propertyOwnerDeclaration_landlord_contactPersons_phoneNumber_areaCode); 
-            vj_phoneNumber.put('number'           , piv_propertyOwnerDeclaration_landlord_contactPersons_phoneNumber_number); 
-         vj_contactPersons.put('phoneNumber'      , vj_phoneNumber);
-      vj_mobilePhoneNumber.put('countryCode'      , piv_propertyOwnerDeclaration_landlord_contactPersons_mobilePhoneNumber_countryCode); 
-      vj_mobilePhoneNumber.put('areaCode'         , piv_propertyOwnerDeclaration_landlord_contactPersons_mobilePhoneNumber_areaCode); 
-      vj_mobilePhoneNumber.put('number'           , piv_propertyOwnerDeclaration_landlord_contactPersons_mobilePhoneNumber_number); 
-         vj_contactPersons.put('mobilePhoneNumber', vj_mobilePhoneNumber);
-*/
+
             vj_body.put('contactPersons', vj_contactpersons);
-        end;
+        end contactpersons;
 
         return vj_body.to_clob();
     end fj_gk_order;
@@ -942,7 +1018,7 @@ create or replace package body pck_glascontainer_order_gk as
         end fcl_params;
 -- /Hilfsroutine zur Fehlerbehandlung ---------------------------------------- 
     begin
-  
+
     -- Zuordnung zum Datensatz:
         vj_internal_order_gk := fj_gk_order(
             piv_gee_kontaktdaten_bekannt                                  => piv_gee_kontaktdaten_bekannt, -- 1|0
@@ -992,14 +1068,14 @@ piv_propertyOwnerDeclaration_landlord_contactPersons_type                       
         );
 
     -- Auftrag zum Webservice senden und sofort die neue orderId zurückerhalten:
-    /*
-    v_uuid := PCK_POB_REST.fn_internal_order_gk_post (
-              piv_kontext  => PCK_POB_REST.KONTEXT_PREORDERBUFFER
-            , piv_app_user => piv_app_user
-            , pic_body     => vj_internal_order_gk
+
+        v_uuid := pck_pob_rest.fn_internal_order_gk_post(
+            piv_kontext  => pck_pob_rest.kontext_preorderbuffer,
+            piv_app_user => piv_app_user,
+            pic_body     => vj_internal_order_gk
         );
-    */
-        v_uuid := 2;
+
+  --v_uuid := 2;
         pck_logs.p_error(
             pic_message      => vj_internal_order_gk,
             piv_routine_name => cv_routine_name,
@@ -1110,10 +1186,10 @@ piv_propertyOwnerDeclaration_landlord_contactPersons_type                       
             ) );
 
         end loop;
-    end;
+    end fp_funnel_gk;
 
 end pck_glascontainer_order_gk;
 /
 
 
--- sqlcl_snapshot {"hash":"22b230cde2d746d92acdf5d94991ca2a20162d96","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"6876cd39cdf63be2b8d33a674f1a67264ef1ef64","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER_GK","schemaName":"ROMA_MAIN","sxml":""}

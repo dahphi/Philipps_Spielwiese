@@ -6,9 +6,9 @@ create or replace package pck_rufnummer as
  * @usage    @ticket FTTH-2904
  *
  */
-  
+
   -- Test auf Umlaute/Euro: ÄÖÜäöüß/?
-  
+
   -- Wird angezeigt auf der Seite 10050 "Über diese Anwendung".
   -- Der gesamte String sollte als Ganzes aufsteigend sortierbar sein
   -- (an erster Stelle ist also das Datum maßgeblich)
@@ -57,8 +57,7 @@ create or replace package pck_rufnummer as
         piv_leerzeichen in varchar2 default chr(32)
     ) return varchar2
         deterministic;
-    
-    
+
 /**
  * Wandelt eine vollständig übergebene Rufnummer ins E.164-Format um, soweit dies
  * möglich ist, ansonsten wird sie 1:1 zurückgegeben
@@ -80,8 +79,7 @@ create or replace package pck_rufnummer as
         piv_rufnummer in varchar2
     ) return varchar2
         deterministic;
-    
-    
+
 /**
  * Gibt anhand dreier separater Bestandteile einer Festnetz- oder Mobil-Rufnummer
  * einen formatierten Rufnummer-Gesamtstring im Format E.164 zurück, der sich als
@@ -122,16 +120,15 @@ create or replace package pck_rufnummer as
         piv_3 in varchar2
     ) return varchar2
         deterministic;
- 
+
   -- Nur intern und für Testzwecke zugänglich:
     function fv_laendervorwahl (
         i_rufnummer in varchar2
     ) return varchar2
         deterministic
         accessible by ( package ut_rufnummer );   
-  
-  
-   
+
+
   -- Nur intern und für Testzwecke zugänglich:
     procedure split_laendervorwahl (
         i_rufnummer      in varchar2,
@@ -139,8 +136,7 @@ create or replace package pck_rufnummer as
         o_land           out varchar2
     )
         accessible by ( package ut_rufnummer ); 
-  
-  
+
 /**
  * Gibt alle in der Glasfaser-Bestellstrecke erlaubten Landesvorwahlen als List of Values zurück
  *
@@ -150,7 +146,7 @@ create or replace package pck_rufnummer as
  */
     function fp_laendervorwahl_bestellstrecke return t_extended_lov_table
         pipelined;
-  
+
 -- @progress 2024-06-26
   /**
    * Gibt anhand dreier separater Bestandteile einer Festnetz- oder Mobil-Rufnummer
@@ -176,4 +172,4 @@ end pck_rufnummer;
 /
 
 
--- sqlcl_snapshot {"hash":"a37a30863a5bdba44a548d8ad73fc30e1864d39a","type":"PACKAGE_SPEC","name":"PCK_RUFNUMMER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"737678bc965f98892eab7c119c1f7f2a03afec55","type":"PACKAGE_SPEC","name":"PCK_RUFNUMMER","schemaName":"ROMA_MAIN","sxml":""}

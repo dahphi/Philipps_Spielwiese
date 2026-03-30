@@ -5003,8 +5003,7 @@ create or replace package body pck_glascontainer_order as
 
             raise;
     end ft_vorbestellung_dublettencheck;     
-  
-  
+
   /*
   --@ticket FTTH-6261
   -- Availability Check Light Aufrufen und die maximal mögliche Bandbreite ermitteln
@@ -5069,4 +5068,4 @@ end pck_glascontainer_order;
 /
 
 
--- sqlcl_snapshot {"hash":"dd389b60e3991d1650fbabaf5653d1a73d57c720","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER","schemaName":"ROMA_MAIN","sxml":""}
+-- sqlcl_snapshot {"hash":"9cbcc074ab53c39974c1dd12741613ce030710cc","type":"PACKAGE_BODY","name":"PCK_GLASCONTAINER_ORDER","schemaName":"ROMA_MAIN","sxml":""}
