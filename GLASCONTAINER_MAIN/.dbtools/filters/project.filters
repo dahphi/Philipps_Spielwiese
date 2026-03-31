@@ -1,0 +1,96 @@
+GC leeren
+bb42b53
+GLASCONTAINER_MAIN/.dbtools/filters/project.filters
+@@ -1,92 +0,0 @@
+/* Comma separated list of predicates to be fine-tuned for individual project. 
+   Run 
+       project export -debug 
+   to double check the dictionary queries 
+   with internal and custom filters applied. 
+*/
+
+
+-- Uncomment the line below if don't want to export grants:
+-- export_type not in ('ALL_TAB_PRIVS','USER_SYS_PRIVS'),
+/** Reference list of export_types from internal.fixed.filters 
+                'ALL_OBJECTS',
+                'APEX_APPLICATION', 
+                'ALL_COL_COMMENTS',
+                'ALL_TAB_COMMENTS',
+                'ALL_TAB_PRIVS',
+                --'USER_SYS_PRIVS',
+                'ALL_DEPENDENCIES',
+                'ALL_MVIEW_LOGS',
+                'USER', 
+                'ORDS_SCHEMA'
+*/    
+
+-- Liquibase Tables
+object_type != 'TABLE' or object_name not in ('DATABASECHANGELOG',
+                                              'DATABASECHANGELOGLOCK',
+                                              'DATABASECHANGELOG_ACTIONS'
+                                              ),
+not (object_type = 'VIEW'    and object_name ='DATABASECHANGELOG_DETAILS'),
+not (object_type = 'TRIGGER' and object_name ='DATABASECHANGELOG_ACTIONS_TRG'),
+
+
+-- DM generated tables
+--not (object_type = 'TABLE' and object_name like 'DM$%' ),
+--not (object_type = 'VIEW' and object_name like 'DM$V%' ),
+object_type != 'SYNONYM',
+object_name not like 'DM$%',      -- covers tables, views, indexes 
+
+export_type not in ('USER','ORDS_SCHEMA'),
+
+( export_type not in ('ALL_TAB_PRIVS','APEX_APPLICATIONS')),
+
+
+object_name = 'FTTH_GLASCONTAINER_PRODUKTE'
+or object_name = 'PCK_GLASCONTAINER_ORDER' 
+or object_name = 'PCK_GLASCONTAINER_ORDER_GK' 
+or object_name = 'PCK_STR' 
+or object_name = 'FB_IS_VALID_VKZ' 
+or object_name = 'FV_VKZ' 
+or object_name = 'ENUM' 
+or object_name = 'FTTH_DUBLETTEN_BEWERTUNG'
+or object_name = 'FTTH_FACTORY_ANSICHTSGRUPPEN'
+or object_name = 'FTTH_FUZZY_REQUESTS'
+or object_name = 'FTTH_GLASCONTAINER_AKTIONEN'
+or object_name = 'FTTH_GLASCONTAINER_PRODUKTE'
+or object_name = 'FTTH_PREORDERS_FUZZYDOUBLE'
+or object_name = 'FTTH_PRODUKTE_GK'
+or object_name = 'FTTH_WEBSERVICE_AUFRUFE'
+or object_name = 'FTTH_WS_SYNC_PREORDERS'
+or object_name = 'FTTH_WS_SYNC_STORNOGRUENDE'
+or object_name = 'GC_TASK_SEQ' -- SEQUENCE
+or object_name = 'LOV_SIEBEL_ANSPRECHPARTNER' 
+or object_name = 'PCK_ADRESSE' 
+or object_name = 'PCK_FTTH_VALIDATE_EMAIL' 
+or object_name = 'PCK_FUZZYDOUBLE' 
+or object_name = 'PCK_GLASCONTAINER' 
+or object_name = 'PCK_GLASCONTAINER_ADMIN' 
+or object_name = 'PCK_GLASCONTAINER_DUBLETTEN' 
+or object_name = 'PCK_GLASCONTAINER_EXT' 
+or object_name = 'PCK_GLASCONTAINER_GK' 
+or object_name = 'PCK_GLASCONTAINER_JOBS' 
+or object_name = 'PCK_GLASCONTAINER_ORDER' 
+or object_name = 'PCK_GLASCONTAINER_ORDER_GK' 
+or object_name = 'PCK_GLASCONTAINER_POB' 
+or object_name = 'PCK_POB_REST' 
+or object_name = 'PCK_RUFNUMMER' 
+or object_name = 'PCK_STR' 
+or object_name = 'PCK_STRAV_QUERY' 
+-- or object_name = 'PCK_VERMARKTUNGSCLUSTER' 
+or object_name = 'POB' 
+or object_name = 'POB_ADRESSEN'
+or object_name = 'POB_TRACKING'
+or object_name = 'V_ADRESSEN' 
+or object_name = 'V_FTTH_FACTORY' 
+or object_name = 'V_FTTH_PROVIDER' 
+or object_name = 'V_FTTH_WS_SYNC_PREORDERS_GK' 
+or object_name = 'V_POB_TRACKING' 
+or object_name = 'V_SIEBEL_KUNDENDATEN' 
+or object_name = 'V_SIEBEL_VKZ'  
+--or object_name = 'VERMARKTUNGSCLUSTER'
+--or object_name = 'VERMARKTUNGSCLUSTER_OBJEKT'
+or object_name = 'FTTH_WS_SYNC_STORNOGRUENDE'
