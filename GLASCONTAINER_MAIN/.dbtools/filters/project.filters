@@ -1,7 +1,3 @@
-GC leeren
-bb42b53
-GLASCONTAINER_MAIN/.dbtools/filters/project.filters
-@@ -1,92 +0,0 @@
 /* Comma separated list of predicates to be fine-tuned for individual project. 
    Run 
        project export -debug 
@@ -32,7 +28,6 @@ object_type != 'TABLE' or object_name not in ('DATABASECHANGELOG',
                                               ),
 not (object_type = 'VIEW'    and object_name ='DATABASECHANGELOG_DETAILS'),
 not (object_type = 'TRIGGER' and object_name ='DATABASECHANGELOG_ACTIONS_TRG'),
-
 
 -- DM generated tables
 --not (object_type = 'TABLE' and object_name like 'DM$%' ),
