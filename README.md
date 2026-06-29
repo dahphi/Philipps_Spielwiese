@@ -219,6 +219,22 @@ Install as you would normally install.
 Reach out to the SQLcl Project Extension documentation by visiting the [Database Application CI/CD Doc Link](https://docs.oracle.com/en/database/oracle/sql-developer-command-line/24.3/sqcug/database-application-ci-cd.html).
 # Example Template
 
+## Confluence Meeting Notes Helper
+
+Create next weekly meeting note by copying the latest one under the configured parent page and shifting date by +7 days.
+
+Prerequisites:
+- `setup_secrets` exists in VS Code settings and contains Confluence keys.
+
+Usage:
+
+```bash
+node scripts/create-next-meeting-note.js --dry-run
+node scripts/create-next-meeting-note.js
+node scripts/create-next-meeting-note.js --date 2026-08-07
+node scripts/create-next-meeting-note.js --settings "/path/to/settings.json"
+```
+
 The introduction summarizes the purpose and function of the project, and should be concise (a brief paragraph or two). This introduction may be the same as the first paragraph on the project page.
 
 For a full description of the module, visit the
